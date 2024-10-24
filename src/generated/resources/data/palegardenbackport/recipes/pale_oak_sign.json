@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "S": {
+      "tag": "forge:rods/wooden"
+    },
+    "X": {
+      "item": "palegardenbackport:pale_oak_planks"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XXX",
+    " S "
+  ],
+  "result": {
+    "count": 3,
+    "item": "palegardenbackport:pale_oak_sign"
+  },
+  "show_notification": true
+}

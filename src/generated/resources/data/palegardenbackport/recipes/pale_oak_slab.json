@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "pale_oak_slab",
+  "key": {
+    "X": {
+      "item": "palegardenbackport:pale_oak_planks"
+    }
+  },
+  "pattern": [
+    "XXX"
+  ],
+  "result": {
+    "count": 6,
+    "item": "palegardenbackport:pale_oak_slab"
+  },
+  "show_notification": true
+}

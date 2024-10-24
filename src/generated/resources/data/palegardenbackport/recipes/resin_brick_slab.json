@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "resin_brick_slab",
+  "key": {
+    "X": {
+      "item": "palegardenbackport:resin_bricks"
+    }
+  },
+  "pattern": [
+    "XXX"
+  ],
+  "result": {
+    "count": 6,
+    "item": "palegardenbackport:resin_brick_slab"
+  },
+  "show_notification": true
+}

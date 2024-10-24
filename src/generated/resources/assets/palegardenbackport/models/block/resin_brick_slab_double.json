@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "palegardenbackport:block/resin_bricks",
+    "side": "palegardenbackport:block/resin_bricks"
+  }
+}

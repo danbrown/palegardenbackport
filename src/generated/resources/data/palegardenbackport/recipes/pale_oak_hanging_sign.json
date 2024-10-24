@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:chain"
+    },
+    "X": {
+      "item": "palegardenbackport:stripped_pale_oak_log"
+    }
+  },
+  "pattern": [
+    "C C",
+    "XXX",
+    "XXX"
+  ],
+  "result": {
+    "count": 6,
+    "item": "palegardenbackport:pale_oak_hanging_sign"
+  },
+  "show_notification": true
+}

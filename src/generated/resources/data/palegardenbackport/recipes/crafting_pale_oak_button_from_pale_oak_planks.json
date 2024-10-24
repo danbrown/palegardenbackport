@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "palegardenbackport:pale_oak_planks"
+    }
+  ],
+  "result": {
+    "item": "palegardenbackport:pale_oak_button"
+  }
+}

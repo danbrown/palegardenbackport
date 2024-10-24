@@ -1,0 +1,94 @@
+{
+  "type": "minecraft:tree",
+  "config": {
+    "decorators": [
+      {
+        "type": "palegardenbackport:pale_oak_ground_decorator",
+        "provider": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "palegardenbackport:pale_moss_block"
+          }
+        },
+        "secondary_provider": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "palegardenbackport:pale_moss_carpet"
+          }
+        }
+      },
+      {
+        "type": "palegardenbackport:pale_oak_vine_decorator",
+        "block_provider": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "palegardenbackport:pale_hanging_moss_plant"
+          }
+        },
+        "directions": [
+          "down"
+        ],
+        "exclusion_radius_xz": 1,
+        "exclusion_radius_y": 0,
+        "probability": 0.14,
+        "required_empty_blocks": 2,
+        "tip_block_provider": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "palegardenbackport:pale_hanging_moss",
+            "Properties": {
+              "age": "0"
+            }
+          }
+        }
+      }
+    ],
+    "dirt_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:dirt"
+      }
+    },
+    "foliage_placer": {
+      "type": "palegardenbackport:pale_oak",
+      "offset": 0,
+      "radius": 0
+    },
+    "foliage_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "palegardenbackport:pale_oak_leaves",
+        "Properties": {
+          "distance": "7",
+          "persistent": "false",
+          "waterlogged": "false"
+        }
+      }
+    },
+    "force_dirt": false,
+    "ignore_vines": true,
+    "minimum_size": {
+      "type": "minecraft:three_layers_feature_size",
+      "limit": 1,
+      "lower_size": 0,
+      "middle_size": 1,
+      "upper_limit": 1,
+      "upper_size": 2
+    },
+    "trunk_placer": {
+      "type": "palegardenbackport:pale_oak",
+      "base_height": 6,
+      "height_rand_a": 2,
+      "height_rand_b": 1
+    },
+    "trunk_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "palegardenbackport:pale_oak_log",
+        "Properties": {
+          "axis": "y"
+        }
+      }
+    }
+  }
+}

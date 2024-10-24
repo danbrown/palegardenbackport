@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "palegardenbackport:resin_bricks"
+  },
+  "result": "palegardenbackport:resin_brick_stairs"
+}

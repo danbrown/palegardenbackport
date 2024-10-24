@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8.5",
+  "package": "com.dannbrown.palegardenbackport.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "palegardenbackport.mixins.refmap.json",
+  "mixins": [],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_pale_oak_slab": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "palegardenbackport:pale_oak_slab"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "palegardenbackport:crafting_pale_oak_slab_to_pale_oak_planks_recycle"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_pale_oak_slab",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "palegardenbackport:crafting_pale_oak_slab_to_pale_oak_planks_recycle"
+    ]
+  },
+  "sends_telemetry_event": false
+}

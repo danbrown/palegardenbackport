@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "palegardenbackport:block/pale_oak_planks",
+    "side": "palegardenbackport:block/pale_oak_planks",
+    "top": "palegardenbackport:block/pale_oak_planks"
+  }
+}
