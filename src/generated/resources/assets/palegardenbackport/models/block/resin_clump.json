@@ -1,0 +1,35 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "north": {
+          "texture": "#face",
+          "uv": [
+            16.0,
+            0.0,
+            0.0,
+            16.0
+          ]
+        },
+        "south": {
+          "texture": "#face"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0.1
+      ],
+      "to": [
+        16,
+        16,
+        0.1
+      ]
+    }
+  ],
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "face": "palegardenbackport:block/resin_clump",
+    "particle": "palegardenbackport:block/resin_clump"
+  }
+}

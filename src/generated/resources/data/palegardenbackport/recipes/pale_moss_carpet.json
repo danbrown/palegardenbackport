@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "X": {
+      "item": "palegardenbackport:pale_moss_block"
+    }
+  },
+  "pattern": [
+    "XX"
+  ],
+  "result": {
+    "count": 3,
+    "item": "palegardenbackport:pale_moss_carpet"
+  },
+  "show_notification": true
+}

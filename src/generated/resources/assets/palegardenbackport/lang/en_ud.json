@@ -32,6 +32,7 @@
   "block.palegardenbackport.resin_brick_stairs": "sɹıɐʇS ʞɔıɹᗺ uısǝᴚ",
   "block.palegardenbackport.resin_brick_wall": "ןןɐM ʞɔıɹᗺ uısǝᴚ",
   "block.palegardenbackport.resin_bricks": "sʞɔıɹᗺ uısǝᴚ",
+  "block.palegardenbackport.resin_clump": "dɯnןƆ uısǝᴚ",
   "block.palegardenbackport.stripped_pale_oak_log": "boꞀ ʞɐO ǝןɐԀ pǝddıɹʇS",
   "block.palegardenbackport.stripped_pale_oak_wood": "pooM ʞɐO ǝןɐԀ pǝddıɹʇS",
   "entity.palegardenbackport.pale_oak_boat": "ʇɐoᗺ ʞɐO ǝןɐԀ",
@@ -39,6 +40,6 @@
   "item.palegardenbackport.pale_oak_boat": "ʇɐoᗺ ʞɐO ǝןɐԀ",
   "item.palegardenbackport.pale_oak_chest_boat": "ʇɐoᗺ ʇsǝɥƆ ʞɐO ǝןɐԀ",
   "item.palegardenbackport.resin_brick": "ʞɔıɹᗺ uısǝᴚ",
-  "item.palegardenbackport.resin_clump": "dɯnןƆ uısǝᴚ",
-  "itemGroup.palegardenbackport.palegardenbackport_tab": "ʇɹodʞɔɐᗺ ʞɐO ǝןɐԀ"
+  "itemGroup.palegardenbackport.palegardenbackport_tab": "ʇɹodʞɔɐᗺ ʞɐO ǝןɐԀ",
+  "trim_material.palegardenbackport.resin_clump": "ןɐıɹǝʇɐW dɯnןƆ uısǝᴚ"
 }

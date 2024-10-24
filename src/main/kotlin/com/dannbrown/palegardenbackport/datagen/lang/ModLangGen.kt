@@ -22,5 +22,6 @@ object ModLangGen {
             "pale_garden",
             "Pale Garden"
     )
+    ModContent.REGISTRATE.addRawLang("trim_material.${ModContent.MOD_ID}.resin_clump", "Resin Clump Material")
   }
 }

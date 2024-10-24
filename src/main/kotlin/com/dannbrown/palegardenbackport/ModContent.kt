@@ -31,6 +31,7 @@ import com.dannbrown.deltaboxlib.registry.transformers.BlockstatePresets
 import com.dannbrown.deltaboxlib.registry.transformers.ItemModelPresets
 import com.dannbrown.deltaboxlib.registry.transformers.RecipePresets
 import com.dannbrown.palegardenbackport.content.block.EyeBlossomBlock
+import com.dannbrown.palegardenbackport.content.block.ResinClumpBlock
 import com.tterrag.registrate.util.DataIngredient
 import com.tterrag.registrate.util.entry.BlockEntry
 import java.util.function.Supplier
@@ -45,6 +46,7 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
+import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.CreativeModeTabs
 import net.minecraft.world.item.ItemStack
@@ -54,6 +56,8 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.FlowerPotBlock
+import net.minecraft.world.level.block.GlowLichenBlock
+import net.minecraft.world.level.block.MultifaceBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
 import net.minecraft.world.level.block.state.properties.BlockSetType
@@ -136,6 +140,9 @@ class ModContent {
       .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null)
       .properties { p -> p.strength(0.1F).sound(SoundType.MOSS_CARPET).pushReaction(PushReaction.DESTROY) }
       .blockstate(BlockstatePresets.simpleCarpetBlock("pale_moss_carpet"))
+      .recipe { c, p ->
+        RecipePresets.simpleCarpetRecipe(c, p) { DataIngredient.items(PALE_MOSS_BLOCK.get()) }
+      }
       .register()
 
     val PALE_HANGING_MOSS_PLANT: BlockEntry<PaleVinePlantBlock> = BLOCKS.create<PaleVinePlantBlock>("pale_hanging_moss_plant")
@@ -214,6 +221,19 @@ class ModContent {
       }
       .register()
 
+    val RESIN_CLUMP = BLOCKS.create<ResinClumpBlock>("resin_clump")
+      .color(MapColor.COLOR_ORANGE)
+      .blockFactory { p -> ResinClumpBlock(p) }
+      .properties { p -> p.strength(0.1F).sound(SoundType.AMETHYST).pushReaction(PushReaction.DESTROY) }
+      .blockstate(BlockstatePresets.simpleMultifaceBlock("resin_clump"))
+      .itemTags(listOf(ItemTags.TRIM_MATERIALS))
+      .transform { t ->
+        t.item { b, p -> BlockItem(b, p) }
+          .model(ItemModelPresets.simpleItem("resin_clump"))
+          .build()
+      }
+      .register()
+
     val BLOCK_OF_RESIN = BLOCKS.create<Block>("block_of_resin")
       .storageBlock({ RESIN_CLUMP.get()}, { DataIngredient.ingredient(Ingredient.of(RESIN_CLUMP.get()), LibTags.forgeItemTag("resin")) }, false)
       .properties { p -> p.instabreak().sound(SoundType.AMETHYST) }
@@ -241,6 +261,8 @@ class ModContent {
       .register()
 
 
+
+
     // ----- End Blocks -----
 
     // ----- Items -----
@@ -248,7 +270,6 @@ class ModContent {
 
     val BOAT = ITEMS.simpleItem("${WOOD_NAME}_boat", { p -> BoatItem(WOOD_NAME, { MOD_BOAT.get() }, false, p.stacksTo(1)) })
     val CHEST_BOAT = ITEMS.simpleItem("${WOOD_NAME}_chest_boat", { p -> BoatItem(WOOD_NAME, { MOD_CHEST_BOAT.get() }, true, p.stacksTo(1)) })
-    val RESIN_CLUMP = ITEMS.simpleItem("resin_clump")
     val RESIN_BRICK = ITEMS.simpleItem("resin_brick")
     // ----- End Items -----
 
