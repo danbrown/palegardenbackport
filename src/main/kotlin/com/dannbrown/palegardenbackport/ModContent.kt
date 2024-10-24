@@ -233,6 +233,7 @@ class ModContent {
 
     val CHISELED_RESIN_BRICKS = BLOCKS.create<Block>("chiseled_resin_bricks")
       .itemTags(listOf(LibTags.modItemTag(MOD_ID, "resin_blocks")))
+      .properties { p -> p.sound(SoundType.AMETHYST) }
       .recipe { c, p ->
         RecipePresets.slabToChiseledRecipe(c, p) { DataIngredient.items(RESIN_BRICKS.blocks[BlockFamily.Type.BRICK_SLAB]!!.get()) }
         RecipePresets.simpleStonecuttingRecipe(c, p, { DataIngredient.items(RESIN_BRICKS.blocks[BlockFamily.Type.BRICKS]!!.get()) })
