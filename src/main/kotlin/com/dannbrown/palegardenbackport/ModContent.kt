@@ -30,6 +30,7 @@ import com.dannbrown.deltaboxlib.registry.transformers.BlockLootPresets
 import com.dannbrown.deltaboxlib.registry.transformers.BlockstatePresets
 import com.dannbrown.deltaboxlib.registry.transformers.ItemModelPresets
 import com.dannbrown.deltaboxlib.registry.transformers.RecipePresets
+import com.dannbrown.palegardenbackport.content.block.EyeBlossomBlock
 import com.tterrag.registrate.util.DataIngredient
 import com.tterrag.registrate.util.entry.BlockEntry
 import java.util.function.Supplier
@@ -41,6 +42,7 @@ import net.minecraft.client.renderer.entity.EntityRenderers
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
+import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.item.CreativeModeTab
@@ -51,7 +53,9 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.FlowerPotBlock
 import net.minecraft.world.level.block.SoundType
+import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
 import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType
@@ -156,6 +160,57 @@ class ModContent {
         t.item()
           .model(ItemModelPresets.simpleLayerItem("pale_hanging_moss_tip"))
           .build()
+      }
+      .register()
+
+    val EYE_BLOSSOM: BlockEntry<EyeBlossomBlock> = BLOCKS.create<EyeBlossomBlock>("open_eyeblossom")
+      .blockFactory { p -> EyeBlossomBlock({ CLOSED_EYE_BLOSSOM.get() }, EyeBlossomBlock.EyeBlossomState.OPEN, { MobEffects.BLINDNESS }, 7, p) }
+      .copyFrom {Blocks.POPPY}
+      .color(MapColor.PLANT)
+      .properties { p -> p.noCollission().instabreak().sound(SoundType.GRASS).offsetType(OffsetType.XZ).pushReaction(PushReaction.DESTROY).randomTicks() }
+      .blockstate(BlockstatePresets.simpleCrossBlock("open_eyeblossom"))
+      .transform { t ->
+        t
+          .item()
+          .model(ItemModelPresets.simpleLayerItem("open_eyeblossom"))
+          .build()
+      }
+      .register()
+    val CLOSED_EYE_BLOSSOM: BlockEntry<EyeBlossomBlock> = BLOCKS.create<EyeBlossomBlock>("closed_eyeblossom")
+      .blockFactory { p -> EyeBlossomBlock({ EYE_BLOSSOM.get() }, EyeBlossomBlock.EyeBlossomState.CLOSED, { MobEffects.CONFUSION }, 7, p) }
+      .copyFrom {Blocks.POPPY}
+      .color(MapColor.PLANT)
+      .properties { p -> p.noCollission().instabreak().sound(SoundType.GRASS).offsetType(OffsetType.XZ).pushReaction(PushReaction.DESTROY).randomTicks() }
+      .blockstate(BlockstatePresets.simpleCrossBlock("closed_eyeblossom"))
+      .transform { t ->
+        t
+          .item()
+          .model(ItemModelPresets.simpleLayerItem("closed_eyeblossom"))
+          .build()
+      }
+      .register()
+    val POTTED_EYE_BLOSSOM: BlockEntry<FlowerPotBlock> = BLOCKS.create<FlowerPotBlock>("potted_open_eyeblossom")
+      .blockFactory { p -> FlowerPotBlock({ Blocks.FLOWER_POT as FlowerPotBlock }, { EYE_BLOSSOM.get() }, p) }
+      .copyFrom { Blocks.POTTED_POPPY }
+      .color(MapColor.PLANT)
+      .noItem()
+      .properties { p -> p.noOcclusion() }
+      .transform { t ->
+        t
+          .blockstate(BlockstatePresets.pottedPlantBlock("open_eyeblossom"))
+          .loot(BlockLootPresets.pottedPlantLoot { EYE_BLOSSOM.get() })
+      }
+      .register()
+    val POTTED_CLOSED_EYE_BLOSSOM: BlockEntry<FlowerPotBlock> = BLOCKS.create<FlowerPotBlock>("potted_closed_eyeblossom")
+      .blockFactory { p -> FlowerPotBlock({ Blocks.FLOWER_POT as FlowerPotBlock }, { CLOSED_EYE_BLOSSOM.get() }, p) }
+      .copyFrom { Blocks.POTTED_POPPY }
+      .color(MapColor.PLANT)
+      .noItem()
+      .properties { p -> p.noOcclusion() }
+      .transform { t ->
+        t
+          .blockstate(BlockstatePresets.pottedPlantBlock("closed_eyeblossom"))
+          .loot(BlockLootPresets.pottedPlantLoot { CLOSED_EYE_BLOSSOM.get() })
       }
       .register()
 
@@ -314,15 +369,18 @@ class ModContent {
                           WOOD_FAMILY.blocks[BlockFamily.Type.LEAVES]!!.asItem() to 0.3f,
                           PALE_HANGING_MOSS.asItem() to 0.3f,
                           PALE_MOSS_BLOCK.asItem() to 0.65f,
-                          PALE_MOSS_CARPET_BLOCK.asItem() to 0.3f
+                          PALE_MOSS_CARPET_BLOCK.asItem() to 0.3f,
+                          EYE_BLOSSOM.asItem() to 0.3f,
+                          CLOSED_EYE_BLOSSOM.asItem() to 0.3f
                   )
           )
 
   object ModFlowerPots :
           DeltaboxFlowerPots(
                   mutableMapOf(
-                          WOOD_FAMILY.blocks[BlockFamily.Type.SAPLING]!! to
-                                  WOOD_FAMILY.blocks[BlockFamily.Type.POTTED_SAPLING]!!,
+                    WOOD_FAMILY.blocks[BlockFamily.Type.SAPLING]!! to WOOD_FAMILY.blocks[BlockFamily.Type.POTTED_SAPLING]!!,
+                    EYE_BLOSSOM to POTTED_EYE_BLOSSOM,
+                    CLOSED_EYE_BLOSSOM to POTTED_CLOSED_EYE_BLOSSOM
                   )
           )
 

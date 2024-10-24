@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "palegardenbackport:smoking/resin_brick_smoking"
+        "recipe": "palegardenbackport:crafting_shapeless/orange_dye"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "palegardenbackport:smoking/resin_brick_smoking"
+      "palegardenbackport:crafting_shapeless/orange_dye"
     ]
   },
   "sends_telemetry_event": false

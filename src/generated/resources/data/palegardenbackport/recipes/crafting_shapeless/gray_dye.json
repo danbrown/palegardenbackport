@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "palegardenbackport:closed_eyeblossom"
+    }
+  ],
+  "result": {
+    "item": "minecraft:gray_dye"
+  }
+}

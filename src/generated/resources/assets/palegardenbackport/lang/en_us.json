@@ -1,6 +1,9 @@
 {
+  "biome.palegardenbackport.pale_garden": "Pale Garden",
   "block.palegardenbackport.block_of_resin": "Block of Resin",
   "block.palegardenbackport.chiseled_resin_bricks": "Chiseled Resin Bricks",
+  "block.palegardenbackport.closed_eyeblossom": "Closed Eyeblossom",
+  "block.palegardenbackport.open_eyeblossom": "Open Eyeblossom",
   "block.palegardenbackport.pale_hanging_moss": "Pale Hanging Moss",
   "block.palegardenbackport.pale_hanging_moss_plant": "Pale Hanging Moss Plant",
   "block.palegardenbackport.pale_moss_block": "Pale Moss Block",
@@ -22,6 +25,8 @@
   "block.palegardenbackport.pale_oak_trapdoor": "Pale Oak Trapdoor",
   "block.palegardenbackport.pale_oak_wall_sign": "Pale Oak Wall Sign",
   "block.palegardenbackport.pale_oak_wood": "Pale Oak Wood",
+  "block.palegardenbackport.potted_closed_eyeblossom": "Potted Closed Eyeblossom",
+  "block.palegardenbackport.potted_open_eyeblossom": "Potted Open Eyeblossom",
   "block.palegardenbackport.potted_pale_oak_sapling": "Potted Pale Oak Sapling",
   "block.palegardenbackport.resin_brick_slab": "Resin Brick Slab",
   "block.palegardenbackport.resin_brick_stairs": "Resin Brick Stairs",

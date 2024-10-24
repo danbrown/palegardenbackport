@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "palegardenbackport:campfire_cooking/resin_brick_campfire_cooking"
+        "recipe": "palegardenbackport:blasting/resin_brick_blasting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "palegardenbackport:campfire_cooking/resin_brick_campfire_cooking"
+      "palegardenbackport:blasting/resin_brick_blasting"
     ]
   },
   "sends_telemetry_event": false

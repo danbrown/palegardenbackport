@@ -1,6 +1,9 @@
 {
+  "biome.palegardenbackport.pale_garden": "uǝpɹɐ⅁ ǝןɐԀ",
   "block.palegardenbackport.block_of_resin": "uısǝᴚ ɟo ʞɔoןᗺ",
   "block.palegardenbackport.chiseled_resin_bricks": "sʞɔıɹᗺ uısǝᴚ pǝןǝsıɥƆ",
+  "block.palegardenbackport.closed_eyeblossom": "ɯossoןqǝʎƎ pǝsoןƆ",
+  "block.palegardenbackport.open_eyeblossom": "ɯossoןqǝʎƎ uǝdO",
   "block.palegardenbackport.pale_hanging_moss": "ssoW buıbuɐH ǝןɐԀ",
   "block.palegardenbackport.pale_hanging_moss_plant": "ʇuɐןԀ ssoW buıbuɐH ǝןɐԀ",
   "block.palegardenbackport.pale_moss_block": "ʞɔoןᗺ ssoW ǝןɐԀ",
@@ -22,6 +25,8 @@
   "block.palegardenbackport.pale_oak_trapdoor": "ɹoopdɐɹ⟘ ʞɐO ǝןɐԀ",
   "block.palegardenbackport.pale_oak_wall_sign": "ubıS ןןɐM ʞɐO ǝןɐԀ",
   "block.palegardenbackport.pale_oak_wood": "pooM ʞɐO ǝןɐԀ",
+  "block.palegardenbackport.potted_closed_eyeblossom": "ɯossoןqǝʎƎ pǝsoןƆ pǝʇʇoԀ",
+  "block.palegardenbackport.potted_open_eyeblossom": "ɯossoןqǝʎƎ uǝdO pǝʇʇoԀ",
   "block.palegardenbackport.potted_pale_oak_sapling": "buıןdɐS ʞɐO ǝןɐԀ pǝʇʇoԀ",
   "block.palegardenbackport.resin_brick_slab": "qɐןS ʞɔıɹᗺ uısǝᴚ",
   "block.palegardenbackport.resin_brick_stairs": "sɹıɐʇS ʞɔıɹᗺ uısǝᴚ",

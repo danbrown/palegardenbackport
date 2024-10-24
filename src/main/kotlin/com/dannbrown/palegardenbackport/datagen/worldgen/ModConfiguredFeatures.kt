@@ -1,16 +1,18 @@
 package com.dannbrown.palegardenbackport.datagen.worldgen
 
+import com.dannbrown.deltaboxlib.registry.generators.BlockFamily
+import com.dannbrown.deltaboxlib.registry.worldgen.AbstractConfiguredFeaturesGen
 import com.dannbrown.palegardenbackport.ModContent
 import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakFoliagePlacer
 import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakTrunkPlacer
 import com.dannbrown.palegardenbackport.content.treeDecorator.PaleOakGroundDecorator
 import com.dannbrown.palegardenbackport.content.treeDecorator.PaleOakVineDecorator
-import com.dannbrown.deltaboxlib.registry.generators.BlockFamily
-import com.dannbrown.deltaboxlib.registry.worldgen.AbstractConfiguredFeaturesGen
-import com.google.common.collect.ImmutableList
 import net.minecraft.core.Direction
+import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstapContext
+import net.minecraft.data.worldgen.features.FeatureUtils
+import net.minecraft.data.worldgen.features.VegetationFeatures
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.BlockTags
@@ -18,21 +20,22 @@ import net.minecraft.util.random.SimpleWeightedRandomList
 import net.minecraft.util.valueproviders.ConstantInt
 import net.minecraft.util.valueproviders.UniformInt
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.MangrovePropaguleBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.feature.Feature
+import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature
+import net.minecraft.world.level.levelgen.feature.configurations.RandomFeatureConfiguration
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration
 import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleRandomFeatureConfiguration
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration.TreeConfigurationBuilder
 import net.minecraft.world.level.levelgen.feature.configurations.VegetationPatchConfiguration
 import net.minecraft.world.level.levelgen.feature.featuresize.ThreeLayersFeatureSize
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
-import net.minecraft.world.level.levelgen.feature.stateproviders.RandomizedIntStateProvider
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider
-import net.minecraft.world.level.levelgen.feature.treedecorators.AlterGroundDecorator
-import net.minecraft.world.level.levelgen.feature.treedecorators.AttachedToLeavesDecorator
 import net.minecraft.world.level.levelgen.placement.CaveSurface
+import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import java.util.*
 
 object ModConfiguredFeatures: AbstractConfiguredFeaturesGen() {
@@ -41,9 +44,12 @@ object ModConfiguredFeatures: AbstractConfiguredFeaturesGen() {
   val PALE_MOSS_PATCH_BONEMEAL: ResourceKey<ConfiguredFeature<*, *>> = registerKey("pale_moss_patch_bonemeal")
   val PALE_MOSS_VEGETATION: ResourceKey<ConfiguredFeature<*, *>> = registerKey("pale_moss_vegetation")
   val PALE_OAK_TREE: ResourceKey<ConfiguredFeature<*, *>> = registerKey("pale_oak_tree")
+  val PALE_GARDEN_PATCH: ResourceKey<ConfiguredFeature<*, *>> = registerKey("pale_garden_patch")
+  val PALE_GARDEN_VEGETATION: ResourceKey<ConfiguredFeature<*, *>> = registerKey("pale_garden_vegetation")
 
   override fun bootstrap(context: BootstapContext<ConfiguredFeature<*, *>>) {
     val lookup = context.lookup(Registries.CONFIGURED_FEATURE)
+    val placed = context.lookup(Registries.PLACED_FEATURE)
 
     register<SimpleBlockConfiguration, Feature<SimpleBlockConfiguration>>(context,
       PALE_MOSS_VEGETATION,
@@ -76,6 +82,17 @@ object ModConfiguredFeatures: AbstractConfiguredFeaturesGen() {
           )
       )
       .build()
+    )
+
+    register<SimpleRandomFeatureConfiguration, Feature<SimpleRandomFeatureConfiguration>>(context, PALE_GARDEN_PATCH, Feature.SIMPLE_RANDOM_SELECTOR, SimpleRandomFeatureConfiguration(HolderSet.direct(
+      PlacementUtils.inlinePlaced<RandomPatchConfiguration, Feature<RandomPatchConfiguration>>(Feature.NO_BONEMEAL_FLOWER, FeatureUtils.simplePatchConfiguration<SimpleBlockConfiguration, Feature<SimpleBlockConfiguration>>(Feature.SIMPLE_BLOCK, SimpleBlockConfiguration(BlockStateProvider.simple(ModContent.CLOSED_EYE_BLOSSOM.get()))))))
+    )
+
+    register(context, PALE_GARDEN_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfiguration(
+      listOf(
+        WeightedPlacedFeature(placed.getOrThrow(ModPlacedFeatures.PALE_OAK_CHECKED), 0.5F),
+        WeightedPlacedFeature(placed.getOrThrow(ModPlacedFeatures.PALE_OAK_CHECKED), 0.5F),
+      ), placed.getOrThrow(ModPlacedFeatures.PALE_OAK_CHECKED))
     )
   }
 }

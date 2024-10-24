@@ -18,5 +18,9 @@ object ModLangGen {
             "${ModContent.MOD_ID}_tab",
             "Pale Oak Backport"
     )
+    ModContent.REGISTRATE.addBiomeLang(
+            "pale_garden",
+            "Pale Garden"
+    )
   }
 }
