@@ -41,6 +41,10 @@
             }
           }
         }
+      },
+      {
+        "type": "palegardenbackport:resin_clump_decorator",
+        "probability": 0.05
       }
     ],
     "dirt_provider": {

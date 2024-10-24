@@ -32,6 +32,7 @@ import com.dannbrown.deltaboxlib.registry.transformers.ItemModelPresets
 import com.dannbrown.deltaboxlib.registry.transformers.RecipePresets
 import com.dannbrown.palegardenbackport.content.block.EyeBlossomBlock
 import com.dannbrown.palegardenbackport.content.block.ResinClumpBlock
+import com.dannbrown.palegardenbackport.content.treeDecorator.ResinTreeDecorator
 import com.tterrag.registrate.util.DataIngredient
 import com.tterrag.registrate.util.entry.BlockEntry
 import java.util.function.Supplier
@@ -224,7 +225,7 @@ class ModContent {
     val RESIN_CLUMP = BLOCKS.create<ResinClumpBlock>("resin_clump")
       .color(MapColor.COLOR_ORANGE)
       .blockFactory { p -> ResinClumpBlock(p) }
-      .properties { p -> p.strength(0.1F).sound(SoundType.AMETHYST).pushReaction(PushReaction.DESTROY) }
+      .properties { p -> p.strength(0.1F).sound(SoundType.AMETHYST).pushReaction(PushReaction.DESTROY).noCollission().noOcclusion() }
       .blockstate(BlockstatePresets.simpleMultifaceBlock("resin_clump"))
       .itemTags(listOf(ItemTags.TRIM_MATERIALS))
       .transform { t ->
@@ -259,8 +260,6 @@ class ModContent {
         RecipePresets.simpleStonecuttingRecipe(c, p, { DataIngredient.items(RESIN_BRICKS.blocks[BlockFamily.Type.BRICKS]!!.get()) })
       }
       .register()
-
-
 
 
     // ----- End Blocks -----
@@ -311,6 +310,7 @@ class ModContent {
 
     val GROUND_DECORATOR = TREE_DECORATOR_TYPES.register("pale_oak_ground_decorator") { TreeDecoratorType(PaleOakGroundDecorator.CODEC) }
     val VINE_DECORATOR = TREE_DECORATOR_TYPES.register("pale_oak_vine_decorator") { TreeDecoratorType(PaleOakVineDecorator.CODEC) }
+    val RESIN_DECORATOR = TREE_DECORATOR_TYPES.register("resin_clump_decorator") { TreeDecoratorType(ResinTreeDecorator.CODEC) }
 
     val PALE_OAK_FOLIAGE_PLACER = FOLIAGE_PLACER_TYPES.register("pale_oak") { FoliagePlacerType(PaleOakFoliagePlacer.CODEC) }
     val PALE_OAK_TRUNK_PLACER = TRUNK_PLACER_TYPES.register("pale_oak") { TrunkPlacerType(PaleOakTrunkPlacer.CODEC) }

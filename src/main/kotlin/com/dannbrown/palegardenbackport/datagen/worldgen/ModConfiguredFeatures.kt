@@ -7,6 +7,7 @@ import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakFoliagePlacer
 import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakTrunkPlacer
 import com.dannbrown.palegardenbackport.content.treeDecorator.PaleOakGroundDecorator
 import com.dannbrown.palegardenbackport.content.treeDecorator.PaleOakVineDecorator
+import com.dannbrown.palegardenbackport.content.treeDecorator.ResinTreeDecorator
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
@@ -78,7 +79,8 @@ object ModConfiguredFeatures: AbstractConfiguredFeaturesGen() {
           .decorators(
             listOf(
               PaleOakGroundDecorator(BlockStateProvider.simple(ModContent.PALE_MOSS_BLOCK.get()), BlockStateProvider.simple(ModContent.PALE_MOSS_CARPET_BLOCK.get())),
-              PaleOakVineDecorator(0.14F, 1, 0, BlockStateProvider.simple(ModContent.PALE_HANGING_MOSS_PLANT.get().defaultBlockState()), 2, mutableListOf(Direction.DOWN), BlockStateProvider.simple(ModContent.PALE_HANGING_MOSS.get().defaultBlockState()))
+              PaleOakVineDecorator(0.14F, 1, 0, BlockStateProvider.simple(ModContent.PALE_HANGING_MOSS_PLANT.get().defaultBlockState()), 2, mutableListOf(Direction.DOWN), BlockStateProvider.simple(ModContent.PALE_HANGING_MOSS.get().defaultBlockState())),
+              ResinTreeDecorator(0.05F)
           )
       )
       .build()
