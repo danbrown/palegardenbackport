@@ -1,4 +1,4 @@
-// 1.20.1	2024-10-24T19:49:45.252653	Registrate Provider for palegardenbackport [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2024-10-25T00:12:06.261857	Registrate Provider for palegardenbackport [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 8b7708dfb9ee94d1ca4f49e8f8584aea90019105 assets/palegardenbackport/blockstates/block_of_resin.json
 9d4f89db1275a975fb115c81c924186458a686f7 assets/palegardenbackport/blockstates/chiseled_resin_bricks.json
 b9dd2f1086e0cf04f6a3eb95b026bece10b57000 assets/palegardenbackport/blockstates/closed_eyeblossom.json
@@ -153,8 +153,8 @@ ddce6e0b1a475058715e1dffe34989638a78d45c data/minecraft/tags/blocks/doors.json
 480b5e3eb7dd133b2446e0dd9f9309201deaeb91 data/minecraft/tags/blocks/mangrove_logs_can_grow_through.json
 480b5e3eb7dd133b2446e0dd9f9309201deaeb91 data/minecraft/tags/blocks/mangrove_roots_can_grow_through.json
 3efa2d1e385f8a1ef70cb6a76e1dc348fafb5ccb data/minecraft/tags/blocks/mineable/axe.json
-946f2641f11e52ebbefabc257e4ec9d5a65e4d93 data/minecraft/tags/blocks/mineable/hoe.json
-f0cb6ff4c706799dacb8b32ba514a23805080a9d data/minecraft/tags/blocks/mineable/pickaxe.json
+e1f20d586094002b48c0ee88fc9f4c8003844774 data/minecraft/tags/blocks/mineable/hoe.json
+9746712508fe63b465e023b90d4da7a6caa8fe4a data/minecraft/tags/blocks/mineable/pickaxe.json
 8b0aecd2bb85f6fe8615ceb7e1048b2078f68412 data/minecraft/tags/blocks/moss_replaceable.json
 1c2d6149f262e4b8ce5c8c1875fd5b6329674d68 data/minecraft/tags/blocks/planks.json
 13d916e8b13d76b6a6d4c63d79d7f69182ba37c1 data/minecraft/tags/blocks/pressure_plates.json

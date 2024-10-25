@@ -128,8 +128,8 @@ class ModContent {
       .color(MapColor.SNOW)
       .blockTags(listOf(BlockTags.DIRT, BlockTags.MOSS_REPLACEABLE, BlockTags.SNIFFER_DIGGABLE_BLOCK, BlockTags.SMALL_DRIPLEAF_PLACEABLE, BlockTags.SNIFFER_EGG_HATCH_BOOST))
       .itemTags(listOf(ItemTags.DIRT))
-      .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null)
-      .properties { p -> p.strength(0.1F).sound(SoundType.MOSS).pushReaction(PushReaction.DESTROY) }
+      .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null, false)
+      .properties { p -> p.strength(0.1F).sound(SoundType.MOSS).pushReaction(PushReaction.DESTROY).instabreak() }
       .blockstate(BlockstatePresets.simpleBlock())
       .register()
 
@@ -138,8 +138,8 @@ class ModContent {
       .blockFactory { p -> PaleMossCarpetBlock(p) }
       .color(MapColor.SNOW)
       .blockTags(listOf(BlockTags.COMBINATION_STEP_SOUND_BLOCKS, BlockTags.MANGROVE_LOGS_CAN_GROW_THROUGH, BlockTags.MANGROVE_ROOTS_CAN_GROW_THROUGH, BlockTags.SWORD_EFFICIENT))
-      .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null)
-      .properties { p -> p.strength(0.1F).sound(SoundType.MOSS_CARPET).pushReaction(PushReaction.DESTROY) }
+      .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null, false)
+      .properties { p -> p.strength(0.1F).sound(SoundType.MOSS_CARPET).pushReaction(PushReaction.DESTROY).instabreak() }
       .blockstate(BlockstatePresets.simpleCarpetBlock("pale_moss_carpet"))
       .recipe { c, p ->
         RecipePresets.simpleCarpetRecipe(c, p) { DataIngredient.items(PALE_MOSS_BLOCK.get()) }
@@ -152,6 +152,7 @@ class ModContent {
       .color(MapColor.SNOW)
       .properties { p -> p.randomTicks().noCollission().instabreak().sound(SoundType.WEEPING_VINES).pushReaction(PushReaction.DESTROY) }
       .blockstate(BlockstatePresets.simpleCrossBlock("pale_hanging_moss"))
+      .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null, false)
       .loot(BlockLootPresets.dropOtherLoot { PALE_HANGING_MOSS.get() })
       .noItem()
       .register()
@@ -161,7 +162,7 @@ class ModContent {
       .blockFactory { p -> PaleVineBlock({ PALE_HANGING_MOSS_PLANT.get() },  p) }
       .color(MapColor.SNOW)
       .blockTags(listOf(BlockTags.CLIMBABLE, BlockTags.SWORD_EFFICIENT))
-      .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null)
+      .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null, false)
       .properties { p -> p.randomTicks().noCollission().instabreak().sound(SoundType.WEEPING_VINES).pushReaction(PushReaction.DESTROY) }
       .blockstate(BlockstatePresets.simpleCrossBlock("pale_hanging_moss_tip"))
       .transform { t ->
@@ -223,11 +224,14 @@ class ModContent {
       .register()
 
     val RESIN_CLUMP = BLOCKS.create<ResinClumpBlock>("resin_clump")
-      .color(MapColor.COLOR_ORANGE)
       .blockFactory { p -> ResinClumpBlock(p) }
-      .properties { p -> p.strength(0.1F).sound(SoundType.AMETHYST).pushReaction(PushReaction.DESTROY).noCollission().noOcclusion() }
+      .copyFrom { Blocks.GLOW_LICHEN }
+      .properties { p -> p.strength(0.1F).sound(SoundType.AMETHYST).pushReaction(PushReaction.DESTROY).noCollission().noOcclusion().instabreak() }
+      .color(MapColor.COLOR_ORANGE)
       .blockstate(BlockstatePresets.simpleMultifaceBlock("resin_clump"))
       .itemTags(listOf(ItemTags.TRIM_MATERIALS))
+      .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, false)
+      .loot(BlockLootPresets.dropItselfLoot())
       .transform { t ->
         t.item { b, p -> BlockItem(b, p) }
           .model(ItemModelPresets.simpleItem("resin_clump"))
@@ -237,10 +241,12 @@ class ModContent {
 
     val BLOCK_OF_RESIN = BLOCKS.create<Block>("block_of_resin")
       .storageBlock({ RESIN_CLUMP.get()}, { DataIngredient.ingredient(Ingredient.of(RESIN_CLUMP.get()), LibTags.forgeItemTag("resin")) }, false)
-      .properties { p -> p.instabreak().sound(SoundType.AMETHYST) }
+      .copyFrom { Blocks.WHITE_CARPET }
+      .properties { p -> p.instabreak().sound(SoundType.AMETHYST).instabreak() }
       .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, false)
       .color(MapColor.COLOR_ORANGE)
       .itemTags(listOf(LibTags.modItemTag(MOD_ID, "resin_blocks")))
+      .loot(BlockLootPresets.dropItselfLoot())
       .transform { t ->
         t.lang("Block of Resin")
       }
@@ -250,15 +256,19 @@ class ModContent {
       .color(MapColor.COLOR_ORANGE, MapColor.COLOR_ORANGE)
       .sharedProps { p -> p.sound(SoundType.AMETHYST) }
       .copyFrom { Blocks.BRICKS }
+      .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, false)
       .bricksBlockFamily { RESIN_BRICK.get() }
 
     val CHISELED_RESIN_BRICKS = BLOCKS.create<Block>("chiseled_resin_bricks")
       .itemTags(listOf(LibTags.modItemTag(MOD_ID, "resin_blocks")))
       .properties { p -> p.sound(SoundType.AMETHYST) }
+      .copyFrom { Blocks.BRICKS }
+      .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, false)
       .recipe { c, p ->
         RecipePresets.slabToChiseledRecipe(c, p) { DataIngredient.items(RESIN_BRICKS.blocks[BlockFamily.Type.BRICK_SLAB]!!.get()) }
         RecipePresets.simpleStonecuttingRecipe(c, p, { DataIngredient.items(RESIN_BRICKS.blocks[BlockFamily.Type.BRICKS]!!.get()) })
       }
+      .loot(BlockLootPresets.dropItselfLoot())
       .register()
 
 
