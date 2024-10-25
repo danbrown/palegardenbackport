@@ -7,6 +7,7 @@ import com.dannbrown.palegardenbackport.datagen.worldgen.ModConfiguredFeatures
 import com.dannbrown.deltaboxlib.registry.datagen.DatagenRootInterface
 import com.dannbrown.deltaboxlib.registry.datagen.recipe.DeltaboxRecipeProvider
 import com.dannbrown.palegardenbackport.datagen.tags.ModBiomeTags
+import com.dannbrown.palegardenbackport.datagen.worldgen.ModBiomeModifiers
 import com.dannbrown.palegardenbackport.datagen.worldgen.ModBiomes
 import com.dannbrown.palegardenbackport.datagen.worldgen.ModPlacedFeatures
 import java.util.concurrent.CompletableFuture
@@ -16,6 +17,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider
 import net.minecraftforge.data.event.GatherDataEvent
+import net.minecraftforge.registries.ForgeRegistries
 
 class ModDatagen(output: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : DatapackBuiltinEntriesProvider(output, future, BUILDER, modIds) {
   companion object : DatagenRootInterface {
@@ -24,6 +26,7 @@ class ModDatagen(output: PackOutput, future: CompletableFuture<HolderLookup.Prov
       .add(Registries.CONFIGURED_FEATURE, ModConfiguredFeatures::bootstrap)
       .add(Registries.PLACED_FEATURE, ModPlacedFeatures::bootstrap)
       .add(Registries.BIOME, ModBiomes::bootstrap)
+      .add(ForgeRegistries.Keys.BIOME_MODIFIERS, ModBiomeModifiers::bootstrap)
 
     override fun gatherData(event: GatherDataEvent) {
       val generator = event.generator

@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#palegardenbackport:has_pale_oak",
+  "features": "palegardenbackport:pale_oak_placed",
+  "step": "vegetal_decoration"
+}

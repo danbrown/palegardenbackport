@@ -13,7 +13,6 @@ import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstapContext
 import net.minecraft.data.worldgen.features.FeatureUtils
-import net.minecraft.data.worldgen.features.VegetationFeatures
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.BlockTags
@@ -36,7 +35,6 @@ import net.minecraft.world.level.levelgen.feature.featuresize.ThreeLayersFeature
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider
 import net.minecraft.world.level.levelgen.placement.CaveSurface
-import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import java.util.*
 
 object ModConfiguredFeatures: AbstractConfiguredFeaturesGen() {
@@ -49,7 +47,7 @@ object ModConfiguredFeatures: AbstractConfiguredFeaturesGen() {
   val PALE_GARDEN_VEGETATION: ResourceKey<ConfiguredFeature<*, *>> = registerKey("pale_garden_vegetation")
 
   override fun bootstrap(context: BootstapContext<ConfiguredFeature<*, *>>) {
-    val lookup = context.lookup(Registries.CONFIGURED_FEATURE)
+    val configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE)
     val placed = context.lookup(Registries.PLACED_FEATURE)
 
     register<SimpleBlockConfiguration, Feature<SimpleBlockConfiguration>>(context,
@@ -64,7 +62,7 @@ object ModConfiguredFeatures: AbstractConfiguredFeaturesGen() {
     register<VegetationPatchConfiguration, Feature<VegetationPatchConfiguration>>(context,
       PALE_MOSS_PATCH_BONEMEAL,
       Feature.VEGETATION_PATCH,
-      VegetationPatchConfiguration(BlockTags.MOSS_REPLACEABLE, BlockStateProvider.simple(ModContent.PALE_MOSS_BLOCK.get()), PlacementUtils.inlinePlaced(lookup.getOrThrow(PALE_MOSS_VEGETATION)), CaveSurface.FLOOR, ConstantInt.of(1), 0.0f, 5, 0.6f, UniformInt.of(1, 2), 0.75f)
+      VegetationPatchConfiguration(BlockTags.MOSS_REPLACEABLE, BlockStateProvider.simple(ModContent.PALE_MOSS_BLOCK.get()), PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(PALE_MOSS_VEGETATION)), CaveSurface.FLOOR, ConstantInt.of(1), 0.0f, 5, 0.6f, UniformInt.of(1, 2), 0.75f)
     )
 
     register<TreeConfiguration, Feature<TreeConfiguration>>(

@@ -25,6 +25,7 @@ object ModPlacedFeatures : AbstractPlacedFeaturesGen() {
   val PALE_OAK_CHECKED: ResourceKey<PlacedFeature> = registerKey("pale_oak_checked")
   val PALE_GARDEN_FLOWERS: ResourceKey<PlacedFeature> = registerKey("pale_garden_flowers")
   val PALE_GARDEN_VEGETATION: ResourceKey<PlacedFeature> = registerKey("pale_garden_vegetation")
+  val PALE_OAK_PLACED: ResourceKey<PlacedFeature> = registerKey("pale_oak_placed")
 
   override fun bootstrap(context: BootstapContext<PlacedFeature>) {
     val configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE)
@@ -35,6 +36,14 @@ object ModPlacedFeatures : AbstractPlacedFeaturesGen() {
       listOf(
         BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(ModContent.WOOD_FAMILY.blocks[BlockFamily.Type.SAPLING]!!.get().defaultBlockState(), BlockPos.ZERO)),
         BlockPredicateFilter.forPredicate(BlockPredicate.noFluid())
+      )
+    )
+
+    register(
+      context, PALE_OAK_PLACED, configuredFeatures.getOrThrow(ModConfiguredFeatures.PALE_OAK_TREE),
+      VegetationPlacements.treePlacement(
+        RarityFilter.onAverageOnceEvery(5),
+        ModContent.WOOD_FAMILY.blocks[BlockFamily.Type.SAPLING]!!.get()
       )
     )
 

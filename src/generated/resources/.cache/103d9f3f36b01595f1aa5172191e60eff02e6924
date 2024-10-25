@@ -1,4 +1,5 @@
-// 1.20.1	2024-10-24T19:52:51.042992	Registries
+// 1.20.1	2024-10-24T22:00:44.081904	Registries
+1ec3a7e9a22939ab834aef50a04da5e9e736678e data/palegardenbackport/forge/biome_modifier/add_pale_oak.json
 c093bcb72582e052239c4eeed75feb958384b521 data/palegardenbackport/worldgen/biome/pale_garden.json
 9266f646f49fab5ae24c9e3887ff204d280fc8c6 data/palegardenbackport/worldgen/configured_feature/pale_garden_patch.json
 79ccd16da511446cb060b2040ce4586d848d88f5 data/palegardenbackport/worldgen/configured_feature/pale_garden_vegetation.json
@@ -8,3 +9,4 @@ c093bcb72582e052239c4eeed75feb958384b521 data/palegardenbackport/worldgen/biome/
 659b3bcdec380e3a081a743ca41ecbe64a1a58cb data/palegardenbackport/worldgen/placed_feature/pale_garden_flowers.json
 23bcf225724a1d64a08d0a4597f2235c9aebeb87 data/palegardenbackport/worldgen/placed_feature/pale_garden_vegetation.json
 8f255ef69fe05e53707b647db5a91808d9f726c1 data/palegardenbackport/worldgen/placed_feature/pale_oak_checked.json
+5cbb6725e6204087b54a9805d6bb4587d5a64833 data/palegardenbackport/worldgen/placed_feature/pale_oak_placed.json
