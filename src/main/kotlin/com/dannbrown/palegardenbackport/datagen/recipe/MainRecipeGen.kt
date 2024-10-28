@@ -27,5 +27,9 @@ class MainRecipeGen : DeltaboxRecipeSlice(ModContent.MOD_ID) {
     val GRAY_DYE_FROM_EYEBLOSSOM = crafting(recipeConsumer, { Items.GRAY_DYE }) { b ->
       b.shapeless(1, "", "", listOf(DataIngredient.items(ModContent.CLOSED_EYE_BLOSSOM.get())))
     }
+
+    val RESIN_DUPLICATION = crafting(recipeConsumer, { ModContent.RESIN_CLUMP.get() }) { b ->
+      b.shapeless(1, "", "", listOf(DataIngredient.items(ModContent.RESIN_CLUMP.get()), DataIngredient.items(Items.HONEY_BOTTLE)))
+    }
   }
 }
