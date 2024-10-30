@@ -1,8 +1,9 @@
 {
-  "parent": "minecraft:block/cross",
+  "parent": "minecraft:block/cross_emissive",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
     "cross": "palegardenbackport:block/open_eyeblossom",
+    "cross_emissive": "palegardenbackport:block/open_eyeblossom_emissive",
     "particle": "palegardenbackport:block/open_eyeblossom"
   }
 }

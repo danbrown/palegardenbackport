@@ -177,7 +177,7 @@ class ModContent {
       .copyFrom {Blocks.POPPY}
       .color(MapColor.PLANT)
       .properties { p -> p.noCollission().instabreak().sound(SoundType.GRASS).offsetType(OffsetType.XZ).pushReaction(PushReaction.DESTROY).randomTicks() }
-      .blockstate(BlockstatePresets.simpleCrossBlock("open_eyeblossom"))
+      .blockstate(BlockstatePresets.emissiveCrossBlock("open_eyeblossom"))
       .transform { t ->
         t
           .item()
