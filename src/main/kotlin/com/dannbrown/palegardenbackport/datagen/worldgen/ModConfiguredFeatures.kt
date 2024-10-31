@@ -70,7 +70,7 @@ object ModConfiguredFeatures: AbstractConfiguredFeaturesGen() {
       TreeConfigurationBuilder(
         BlockStateProvider.simple(ModContent.WOOD_FAMILY.blocks[BlockFamily.Type.LOG]!!.get()),
         PaleOakTrunkPlacer(6, 2, 1),
-        BlockStateProvider.simple(ModContent.WOOD_FAMILY.blocks[BlockFamily.Type.LEAVES]!!.get()),
+        BlockStateProvider.simple(ModContent.PALE_OAK_LEAVES.get()),
         PaleOakFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0)),
         ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty()))
           .ignoreVines()

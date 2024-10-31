@@ -1,6 +1,7 @@
 package com.dannbrown.palegardenbackport
 
 import com.dannbrown.deltaboxlib.DeltaboxLib
+import com.dannbrown.deltaboxlib.content.block.FlammableLeavesBlock
 import com.dannbrown.palegardenbackport.content.block.PaleMossBlock
 import com.dannbrown.palegardenbackport.content.block.PaleMossCarpetBlock
 import com.dannbrown.palegardenbackport.content.block.PaleVineBlock
@@ -31,8 +32,10 @@ import com.dannbrown.deltaboxlib.registry.transformers.BlockstatePresets
 import com.dannbrown.deltaboxlib.registry.transformers.ItemModelPresets
 import com.dannbrown.deltaboxlib.registry.transformers.RecipePresets
 import com.dannbrown.palegardenbackport.content.block.EyeBlossomBlock
+import com.dannbrown.palegardenbackport.content.block.PaleOakLeavesBlock
 import com.dannbrown.palegardenbackport.content.block.ResinClumpBlock
 import com.dannbrown.palegardenbackport.content.treeDecorator.ResinTreeDecorator
+import com.dannbrown.palegardenbackport.init.ModParticles
 import com.tterrag.registrate.util.DataIngredient
 import com.tterrag.registrate.util.entry.BlockEntry
 import java.util.function.Supplier
@@ -117,10 +120,29 @@ class ModContent {
     val BLOCKS = BlockGenerator(REGISTRATE)
 
     val WOOD_FAMILY = BLOCKS.createFamily(WOOD_NAME)
-      .color(MapColor.COLOR_ORANGE, MapColor.COLOR_ORANGE)
+      .color(MapColor.SNOW, MapColor.COLOR_GRAY)
       .copyFrom { Blocks.OAK_LOG }
       .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null)
+      .denyList(BlockFamily.Type.LEAVES)
       .woodFamily(WOOD_TYPE, PaleOakTreeGrower())
+    val PALE_OAK_LEAVES = BLOCKS.create<PaleOakLeavesBlock>(WOOD_NAME + "_leaves")
+      .blockFactory { p -> PaleOakLeavesBlock(p) }
+      .color(MapColor.COLOR_GREEN)
+      .copyFrom { Blocks.OAK_LEAVES }
+      .properties { p ->
+        p.randomTicks()
+          .noOcclusion()
+          .isSuffocating { s, b, p -> false }
+          .isViewBlocking { s, b, p -> false }
+          .isRedstoneConductor { s, b, p -> false }
+          .pushReaction(PushReaction.DESTROY)
+          .ignitedByLava()
+      }
+      .blockTags(listOf(BlockTags.LEAVES, LibTags.forgeBlockTag("leaves"), BlockTags.MINEABLE_WITH_HOE))
+      .itemTags(listOf(ItemTags.LEAVES, LibTags.forgeItemTag("leaves")))
+      .loot(BlockLootPresets.leavesLoot { WOOD_FAMILY.blocks[BlockFamily.Type.SAPLING]!!.get() })
+      .blockstate(BlockstatePresets.leavesBlock(WOOD_NAME + "_leaves"))
+      .register()
 
     val PALE_MOSS_BLOCK: BlockEntry<PaleMossBlock> = BLOCKS.create<PaleMossBlock>("pale_moss_block")
       .copyFrom { Blocks.MOSS_BLOCK }
@@ -225,7 +247,6 @@ class ModContent {
 
     val RESIN_CLUMP = BLOCKS.create<ResinClumpBlock>("resin_clump")
       .blockFactory { p -> ResinClumpBlock(p) }
-      .copyFrom { Blocks.GLOW_LICHEN }
       .properties { p -> p.strength(0.1F).sound(SoundType.AMETHYST).pushReaction(PushReaction.DESTROY).noCollission().noOcclusion().instabreak() }
       .color(MapColor.COLOR_ORANGE)
       .blockstate(BlockstatePresets.simpleMultifaceBlock("resin_clump"))
@@ -263,6 +284,7 @@ class ModContent {
       .itemTags(listOf(LibTags.modItemTag(MOD_ID, "resin_blocks")))
       .properties { p -> p.sound(SoundType.AMETHYST) }
       .copyFrom { Blocks.BRICKS }
+      .color(MapColor.COLOR_ORANGE)
       .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, false)
       .recipe { c, p ->
         RecipePresets.slabToChiseledRecipe(c, p) { DataIngredient.items(RESIN_BRICKS.blocks[BlockFamily.Type.BRICK_SLAB]!!.get()) }
@@ -337,6 +359,7 @@ class ModContent {
       TRUNK_PLACER_TYPES.register(modBus)
       TREE_DECORATOR_TYPES.register(modBus)
       TABS.register(modBus)
+      ModParticles.register(modBus)
 
       REGISTRATE.registerEventListeners(modBus)
       modBus.addListener(::commonSetup)
@@ -353,6 +376,8 @@ class ModContent {
         event.registerLayerDefinition(ModModelLayers.BOAT_LAYER, BoatModel::createBodyModel)
         event.registerLayerDefinition(ModModelLayers.CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel)
       }
+
+      modBus.addListener(ModParticles::registerParticleFactories)
     }
 
     // RUN SETUP
@@ -398,7 +423,7 @@ class ModContent {
           DeltaboxCompostables(
                   mutableMapOf(
                           WOOD_FAMILY.blocks[BlockFamily.Type.SAPLING]!!.asItem() to 0.3f,
-                          WOOD_FAMILY.blocks[BlockFamily.Type.LEAVES]!!.asItem() to 0.3f,
+                          PALE_OAK_LEAVES.asItem() to 0.3f,
                           PALE_HANGING_MOSS.asItem() to 0.3f,
                           PALE_MOSS_BLOCK.asItem() to 0.65f,
                           PALE_MOSS_CARPET_BLOCK.asItem() to 0.3f,

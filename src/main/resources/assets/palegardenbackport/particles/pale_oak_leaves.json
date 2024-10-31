@@ -1,16 +1,16 @@
 {
   "textures": [
-    "minecraft:pale_oak_0",
-    "minecraft:pale_oak_1",
-    "minecraft:pale_oak_2",
-    "minecraft:pale_oak_3",
-    "minecraft:pale_oak_4",
-    "minecraft:pale_oak_5",
-    "minecraft:pale_oak_6",
-    "minecraft:pale_oak_7",
-    "minecraft:pale_oak_8",
-    "minecraft:pale_oak_9",
-    "minecraft:pale_oak_10",
-    "minecraft:pale_oak_11"
+    "palegardenbackport:pale_oak_0",
+    "palegardenbackport:pale_oak_1",
+    "palegardenbackport:pale_oak_2",
+    "palegardenbackport:pale_oak_3",
+    "palegardenbackport:pale_oak_4",
+    "palegardenbackport:pale_oak_5",
+    "palegardenbackport:pale_oak_6",
+    "palegardenbackport:pale_oak_7",
+    "palegardenbackport:pale_oak_8",
+    "palegardenbackport:pale_oak_9",
+    "palegardenbackport:pale_oak_10",
+    "palegardenbackport:pale_oak_11"
   ]
 }
