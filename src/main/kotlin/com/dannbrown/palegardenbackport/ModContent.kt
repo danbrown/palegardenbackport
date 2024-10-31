@@ -37,6 +37,7 @@ import com.dannbrown.palegardenbackport.content.block.ResinClumpBlock
 import com.dannbrown.palegardenbackport.content.treeDecorator.ResinTreeDecorator
 import com.dannbrown.palegardenbackport.init.ModParticles
 import com.dannbrown.palegardenbackport.init.ModSounds
+import com.dannbrown.palegardenbackport.terrablender.ModTerraBlenderAPI
 import com.tterrag.registrate.util.DataIngredient
 import com.tterrag.registrate.util.entry.BlockEntry
 import java.util.function.Supplier
@@ -364,6 +365,8 @@ class ModContent {
       TABS.register(modBus)
       ModParticles.register(modBus)
       ModSounds.register(modBus)
+
+      ModTerraBlenderAPI.registerRegions()
 
       REGISTRATE.registerEventListeners(modBus)
       modBus.addListener(::commonSetup)
