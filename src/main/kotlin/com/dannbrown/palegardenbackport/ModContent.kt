@@ -176,7 +176,7 @@ class ModContent {
       .properties { p -> p.randomTicks().noCollission().instabreak().sound(SoundType.WEEPING_VINES).pushReaction(PushReaction.DESTROY) }
       .blockstate(BlockstatePresets.simpleCrossBlock("pale_hanging_moss"))
       .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null, false)
-      .loot(BlockLootPresets.dropOtherLoot { PALE_HANGING_MOSS.get() })
+      .loot(BlockLootPresets.dropOtherSilkShearsLoot({ PALE_HANGING_MOSS.get() }))
       .noItem()
       .register()
 
@@ -188,6 +188,7 @@ class ModContent {
       .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null, false)
       .properties { p -> p.randomTicks().noCollission().instabreak().sound(SoundType.WEEPING_VINES).pushReaction(PushReaction.DESTROY) }
       .blockstate(BlockstatePresets.simpleCrossBlock("pale_hanging_moss_tip"))
+      .loot(BlockLootPresets.dropSelfSilkShearsLoot())
       .transform { t ->
         t.item()
           .model(ItemModelPresets.simpleLayerItem("pale_hanging_moss_tip"))
@@ -248,6 +249,7 @@ class ModContent {
 
     val RESIN_CLUMP = BLOCKS.create<ResinClumpBlock>("resin_clump")
       .blockFactory { p -> ResinClumpBlock(p) }
+      .copyFrom { Blocks.OAK_PLANKS }
       .properties { p -> p.strength(0.1F).sound(ModSounds.BLOCK_OF_RESIN_SOUNDS).pushReaction(PushReaction.DESTROY).noCollission().noOcclusion().instabreak() }
       .color(MapColor.COLOR_ORANGE)
       .blockstate(BlockstatePresets.simpleMultifaceBlock("resin_clump"))

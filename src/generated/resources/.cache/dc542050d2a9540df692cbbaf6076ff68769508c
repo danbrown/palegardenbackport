@@ -1,4 +1,4 @@
-// 1.20.1	2024-10-30T23:07:32.597861	Registrate Provider for palegardenbackport [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2024-10-31T00:13:11.707833	Registrate Provider for palegardenbackport [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 8b7708dfb9ee94d1ca4f49e8f8584aea90019105 assets/palegardenbackport/blockstates/block_of_resin.json
 9d4f89db1275a975fb115c81c924186458a686f7 assets/palegardenbackport/blockstates/chiseled_resin_bricks.json
 b9dd2f1086e0cf04f6a3eb95b026bece10b57000 assets/palegardenbackport/blockstates/closed_eyeblossom.json
@@ -236,8 +236,8 @@ bf6576b8007225e7434acaafe59872d35d65a8d7 data/palegardenbackport/advancements/re
 f7c36931449ad7214ea9e3def5f6c8fb832e6660 data/palegardenbackport/loot_tables/blocks/chiseled_resin_bricks.json
 7ea4c7543030b0cd0280646b8434b715524e7325 data/palegardenbackport/loot_tables/blocks/closed_eyeblossom.json
 c8f641f53e28ebb96d0f3846f62823b7f37b83a7 data/palegardenbackport/loot_tables/blocks/open_eyeblossom.json
-bfbbea7bb02ef0542e478bf1cf6ab28627ac3808 data/palegardenbackport/loot_tables/blocks/pale_hanging_moss.json
-afc8a23df5f1bcaf331ea928720d49017e77f025 data/palegardenbackport/loot_tables/blocks/pale_hanging_moss_plant.json
+d5540fab0066a41b710b034a21f45ad07c1ab8e2 data/palegardenbackport/loot_tables/blocks/pale_hanging_moss.json
+34e5d8482dc502fb7bb1e4bbf5694a02c3684285 data/palegardenbackport/loot_tables/blocks/pale_hanging_moss_plant.json
 d2de589877ca690cda0f89b5cfebf4d3d5d20afa data/palegardenbackport/loot_tables/blocks/pale_moss_block.json
 0d5729db00c03522e233301cefcb72a78b3c4522 data/palegardenbackport/loot_tables/blocks/pale_moss_carpet.json
 8da409dac2a3209504d60b9a18b7774b66ae9cc7 data/palegardenbackport/loot_tables/blocks/pale_oak_button.json
