@@ -41,5 +41,15 @@
   "item.palegardenbackport.pale_oak_chest_boat": "Pale Oak Chest Boat",
   "item.palegardenbackport.resin_brick": "Resin Brick",
   "itemGroup.palegardenbackport.palegardenbackport_tab": "Pale Oak Backport",
+  "sound.palegardenbackport.block_of_resin_break": "Resin Break",
+  "sound.palegardenbackport.block_of_resin_fall": "Resin Fall",
+  "sound.palegardenbackport.block_of_resin_hit": "Resin Hit",
+  "sound.palegardenbackport.block_of_resin_place": "Resin Place",
+  "sound.palegardenbackport.block_of_resin_step": "Resin Step",
+  "sound.palegardenbackport.resin_brick_break": "Resin Brick Break",
+  "sound.palegardenbackport.resin_brick_fall": "Resin Brick Fall",
+  "sound.palegardenbackport.resin_brick_hit": "Resin Brick Hit",
+  "sound.palegardenbackport.resin_brick_place": "Resin Brick Place",
+  "sound.palegardenbackport.resin_brick_step": "Resin Brick Step",
   "trim_material.palegardenbackport.resin_clump": "Resin Clump Material"
 }

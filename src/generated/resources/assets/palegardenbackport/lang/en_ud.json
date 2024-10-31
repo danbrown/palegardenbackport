@@ -41,5 +41,15 @@
   "item.palegardenbackport.pale_oak_chest_boat": "ʇɐoᗺ ʇsǝɥƆ ʞɐO ǝןɐԀ",
   "item.palegardenbackport.resin_brick": "ʞɔıɹᗺ uısǝᴚ",
   "itemGroup.palegardenbackport.palegardenbackport_tab": "ʇɹodʞɔɐᗺ ʞɐO ǝןɐԀ",
+  "sound.palegardenbackport.block_of_resin_break": "ʞɐǝɹᗺ uısǝᴚ",
+  "sound.palegardenbackport.block_of_resin_fall": "ןןɐℲ uısǝᴚ",
+  "sound.palegardenbackport.block_of_resin_hit": "ʇıH uısǝᴚ",
+  "sound.palegardenbackport.block_of_resin_place": "ǝɔɐןԀ uısǝᴚ",
+  "sound.palegardenbackport.block_of_resin_step": "dǝʇS uısǝᴚ",
+  "sound.palegardenbackport.resin_brick_break": "ʞɐǝɹᗺ ʞɔıɹᗺ uısǝᴚ",
+  "sound.palegardenbackport.resin_brick_fall": "ןןɐℲ ʞɔıɹᗺ uısǝᴚ",
+  "sound.palegardenbackport.resin_brick_hit": "ʇıH ʞɔıɹᗺ uısǝᴚ",
+  "sound.palegardenbackport.resin_brick_place": "ǝɔɐןԀ ʞɔıɹᗺ uısǝᴚ",
+  "sound.palegardenbackport.resin_brick_step": "dǝʇS ʞɔıɹᗺ uısǝᴚ",
   "trim_material.palegardenbackport.resin_clump": "ןɐıɹǝʇɐW dɯnןƆ uısǝᴚ"
 }

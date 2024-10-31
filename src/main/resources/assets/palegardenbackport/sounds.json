@@ -1,0 +1,76 @@
+{
+  "resin_bricks_break": {
+    "subtitle": "sounds.palegardenbackport.resin_bricks_break",
+    "sounds": ["palegardenbackport:resin_bricks_break_1"]
+  },
+  "resin_bricks_step": {
+    "subtitle": "sounds.palegardenbackport.resin_bricks_step",
+    "sounds": [
+      "palegardenbackport:resin_bricks_step_1",
+      "palegardenbackport:resin_bricks_step_2",
+      "palegardenbackport:resin_bricks_step_3",
+      "palegardenbackport:resin_bricks_step_4",
+      "palegardenbackport:resin_bricks_step_5"
+    ]
+  },
+  "resin_bricks_place": {
+    "subtitle": "sounds.palegardenbackport.resin_bricks_place",
+    "sounds": [
+      "palegardenbackport:resin_bricks_place_1",
+      "palegardenbackport:resin_bricks_place_2",
+      "palegardenbackport:resin_bricks_place_3",
+      "palegardenbackport:resin_bricks_place_4"
+    ]
+  },
+  "resin_bricks_hit": {
+    "subtitle": "sounds.palegardenbackport.resin_bricks_hit",
+    "sounds": [
+      "palegardenbackport:resin_bricks_hit_1",
+      "palegardenbackport:resin_bricks_hit_2",
+      "palegardenbackport:resin_bricks_hit_3",
+      "palegardenbackport:resin_bricks_hit_4",
+      "palegardenbackport:resin_bricks_hit_5"
+    ]
+  },
+  "resin_bricks_fall": {
+    "subtitle": "sounds.palegardenbackport.resin_bricks_fall",
+    "sounds": ["palegardenbackport:resin_bricks_fall_1"]
+  },
+  "block_of_resin_break": {
+    "subtitle": "sounds.palegardenbackport.block_of_resin_break",
+    "sounds": ["palegardenbackport:block_of_resin_break_1"]
+  },
+  "block_of_resin_step": {
+    "subtitle": "sounds.palegardenbackport.block_of_resin_step",
+    "sounds": [
+      "palegardenbackport:block_of_resin_step_1",
+      "palegardenbackport:block_of_resin_step_2",
+      "palegardenbackport:block_of_resin_step_3",
+      "palegardenbackport:block_of_resin_step_4",
+      "palegardenbackport:block_of_resin_step_5"
+    ]
+  },
+  "block_of_resin_place": {
+    "subtitle": "sounds.palegardenbackport.block_of_resin_place",
+    "sounds": [
+      "palegardenbackport:block_of_resin_place_1",
+      "palegardenbackport:block_of_resin_place_2",
+      "palegardenbackport:block_of_resin_place_3",
+      "palegardenbackport:block_of_resin_place_4"
+    ]
+  },
+  "block_of_resin_hit": {
+    "subtitle": "sounds.palegardenbackport.block_of_resin_hit",
+    "sounds": [
+      "palegardenbackport:block_of_resin_hit_1",
+      "palegardenbackport:block_of_resin_hit_2",
+      "palegardenbackport:block_of_resin_hit_3",
+      "palegardenbackport:block_of_resin_hit_4",
+      "palegardenbackport:block_of_resin_hit_5"
+    ]
+  },
+  "block_of_resin_fall": {
+    "subtitle": "sounds.palegardenbackport.block_of_resin_fall",
+    "sounds": ["palegardenbackport:block_of_resin_fall_1"]
+  }
+}

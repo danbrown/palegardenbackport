@@ -36,6 +36,7 @@ import com.dannbrown.palegardenbackport.content.block.PaleOakLeavesBlock
 import com.dannbrown.palegardenbackport.content.block.ResinClumpBlock
 import com.dannbrown.palegardenbackport.content.treeDecorator.ResinTreeDecorator
 import com.dannbrown.palegardenbackport.init.ModParticles
+import com.dannbrown.palegardenbackport.init.ModSounds
 import com.tterrag.registrate.util.DataIngredient
 import com.tterrag.registrate.util.entry.BlockEntry
 import java.util.function.Supplier
@@ -247,7 +248,7 @@ class ModContent {
 
     val RESIN_CLUMP = BLOCKS.create<ResinClumpBlock>("resin_clump")
       .blockFactory { p -> ResinClumpBlock(p) }
-      .properties { p -> p.strength(0.1F).sound(SoundType.AMETHYST).pushReaction(PushReaction.DESTROY).noCollission().noOcclusion().instabreak() }
+      .properties { p -> p.strength(0.1F).sound(ModSounds.BLOCK_OF_RESIN_SOUNDS).pushReaction(PushReaction.DESTROY).noCollission().noOcclusion().instabreak() }
       .color(MapColor.COLOR_ORANGE)
       .blockstate(BlockstatePresets.simpleMultifaceBlock("resin_clump"))
       .itemTags(listOf(ItemTags.TRIM_MATERIALS))
@@ -263,7 +264,7 @@ class ModContent {
     val BLOCK_OF_RESIN = BLOCKS.create<Block>("block_of_resin")
       .storageBlock({ RESIN_CLUMP.get()}, { DataIngredient.ingredient(Ingredient.of(RESIN_CLUMP.get()), LibTags.forgeItemTag("resin")) }, false)
       .copyFrom { Blocks.WHITE_CARPET }
-      .properties { p -> p.instabreak().sound(SoundType.AMETHYST).instabreak() }
+      .properties { p -> p.instabreak().sound(ModSounds.BLOCK_OF_RESIN_SOUNDS).instabreak() }
       .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, false)
       .color(MapColor.COLOR_ORANGE)
       .itemTags(listOf(LibTags.modItemTag(MOD_ID, "resin_blocks")))
@@ -275,14 +276,14 @@ class ModContent {
 
     val RESIN_BRICKS = BLOCKS.createFamily("resin")
       .color(MapColor.COLOR_ORANGE, MapColor.COLOR_ORANGE)
-      .sharedProps { p -> p.sound(SoundType.AMETHYST) }
+      .sharedProps { p -> p.sound(ModSounds.RESIN_BRICK_SOUNDS) }
       .copyFrom { Blocks.BRICKS }
       .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, false)
       .bricksBlockFamily { RESIN_BRICK.get() }
 
     val CHISELED_RESIN_BRICKS = BLOCKS.create<Block>("chiseled_resin_bricks")
       .itemTags(listOf(LibTags.modItemTag(MOD_ID, "resin_blocks")))
-      .properties { p -> p.sound(SoundType.AMETHYST) }
+      .properties { p -> p.sound(ModSounds.RESIN_BRICK_SOUNDS) }
       .copyFrom { Blocks.BRICKS }
       .color(MapColor.COLOR_ORANGE)
       .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, false)
@@ -360,6 +361,7 @@ class ModContent {
       TREE_DECORATOR_TYPES.register(modBus)
       TABS.register(modBus)
       ModParticles.register(modBus)
+      ModSounds.register(modBus)
 
       REGISTRATE.registerEventListeners(modBus)
       modBus.addListener(::commonSetup)

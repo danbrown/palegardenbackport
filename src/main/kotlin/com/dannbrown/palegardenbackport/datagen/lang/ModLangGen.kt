@@ -23,5 +23,17 @@ object ModLangGen {
             "Pale Garden"
     )
     ModContent.REGISTRATE.addRawLang("trim_material.${ModContent.MOD_ID}.resin_clump", "Resin Clump Material")
+
+    // Sounds
+    ModContent.REGISTRATE.addSoundLang("resin_brick_break", "Resin Brick Break")
+    ModContent.REGISTRATE.addSoundLang("resin_brick_step", "Resin Brick Step")
+    ModContent.REGISTRATE.addSoundLang("resin_brick_fall", "Resin Brick Fall")
+    ModContent.REGISTRATE.addSoundLang("resin_brick_place", "Resin Brick Place")
+    ModContent.REGISTRATE.addSoundLang("resin_brick_hit", "Resin Brick Hit")
+    ModContent.REGISTRATE.addSoundLang("block_of_resin_break", "Resin Break")
+    ModContent.REGISTRATE.addSoundLang("block_of_resin_step", "Resin Step")
+    ModContent.REGISTRATE.addSoundLang("block_of_resin_fall", "Resin Fall")
+    ModContent.REGISTRATE.addSoundLang("block_of_resin_place", "Resin Place")
+    ModContent.REGISTRATE.addSoundLang("block_of_resin_hit", "Resin Hit")
   }
 }
