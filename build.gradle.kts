@@ -71,11 +71,6 @@ dependencies {
             implementation("thedarkcolour:kotlinforforge-neoforge:${property("deps.kff")}") {
                 isTransitive = false
             }
-//            compileOnly("org.jetbrains.kotlin:kotlin-stdlib")
-//            compileOnly("org.jetbrains.kotlin:kotlin-reflect")
-//            compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-//            compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-core")
-//            compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json")
         }
     }
 }
@@ -151,8 +146,6 @@ tasks.processResources {
         "target_minecraft" to mcDep,
         "target_loader" to stonecutter.project.property("deps.target_loader").toString(),
         "target_forge" to stonecutter.project.property("deps.target_forge").toString(),
-//        "fml" to if (loader == "neoforge") "1" else "45",
-//        "mnd" to if (loader == "neoforge") "" else "mandatory = true"
     )
 
     if(isFabric) {
