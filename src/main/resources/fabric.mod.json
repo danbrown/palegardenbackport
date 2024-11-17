@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "provides": [],
+  "name": "${mod_name}",
+  "version": "${mod_version}",
+  "description": "${mod_description}",
+  "authors": ["${mod_authors}"],
+  "contact": {
+    "homepage": "${mod_discord}",
+    "sources": "${mod_discord}",
+    "issues": "${mod_issue_tracker}"
+  },
+  "mixins": ["${mod_id}.mixins.json"],
+  "icon": "assets/${mod_id}/icon.png",
+  "license": "${mod_license}",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "com.dannbrown.deltaboxlib.platform.DeltaboxLibWrapper"
+      }
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "minecraft": "${target_minecraft}",
+    "fabric-language-kotlin": ">=0.11"
+  },
+  "conflicts": {},
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "${mod_discord}"
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+modLoader = "javafml"
+loaderVersion = "${target_loader}"
+license = "${mod_license}"
+
+[[mods]]
+modId = "${mod_id}"
+version = "${mod_version}"
+displayName = "${mod_name}"
+authors = "${mod_authors}"
+logoFile = "assets/${mod_id}/icon.png"
+description = '''${mod_description}'''
+issueTrackerURL = "${mod_issue_tracker}"
+
+[[mixins]]
+config = "${mod_id}.mixins.json"
+
+[[dependencies.${mod_id}]]
+modId="minecraft"
+mandatory=true
+versionRange="${target_minecraft}"
+ordering="NONE"
+side="BOTH"
+
