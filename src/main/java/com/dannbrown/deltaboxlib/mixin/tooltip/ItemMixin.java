@@ -1,6 +1,6 @@
 package com.dannbrown.deltaboxlib.mixin.tooltip;
 
-import com.dannbrown.deltaboxlib.common.lib.LibLang;
+import com.dannbrown.deltaboxlib.platform.util.Util;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -25,21 +25,21 @@ public abstract class ItemMixin {
     // create or get an item description id, get the last key and add as suffix to
     String itemDescription = itemStack.getDescriptionId();
     String[] parts = itemDescription.split("\\.");
-    String tooltipTranslationKey = parts.length > 1 ? LibLang.Companion.getTooltipKey(parts[parts.length - 2], parts[parts.length - 1]) : "";
-    String genericTranslationKey = parts.length > 1 ? LibLang.Companion.getTooltipKey(null, parts[parts.length - 1]) : "";
+    String tooltipTranslationKey = parts.length > 1 ? Util.LANG.getTooltipKey(parts[parts.length - 2], parts[parts.length - 1]) : "";
+    String genericTranslationKey = parts.length > 1 ? Util.LANG.getTooltipKey(null, parts[parts.length - 1]) : "";
 
     // here we use translations as a logic matter,
     // it is not recommended but is the way to dynamically add formula tooltips to
     // vanilla and other mod items
-    boolean doExistTooltip = parts.length > 1 && !LibLang.translateDirect(tooltipTranslationKey).getString().contains(".");
-    boolean doExistGeneric = parts.length > 1 && !LibLang.translateDirect(genericTranslationKey).getString().contains(".");
+    boolean doExistTooltip = parts.length > 1 && !Util.LANG.translateDirect(tooltipTranslationKey).getString().contains(".");
+    boolean doExistGeneric = parts.length > 1 && !Util.LANG.translateDirect(genericTranslationKey).getString().contains(".");
 
     // check if the translation exists and add it to the tooltip
     if (doExistTooltip) {
-      list.add(LibLang.translateDirect(tooltipTranslationKey).withStyle(ChatFormatting.GRAY));
+      list.add(Util.LANG.translateDirect(tooltipTranslationKey).withStyle(ChatFormatting.GRAY));
     }
     if (doExistGeneric) {
-      list.add(LibLang.translateDirect(genericTranslationKey).withStyle(ChatFormatting.GRAY));
+      list.add(Util.LANG.translateDirect(genericTranslationKey).withStyle(ChatFormatting.GRAY));
     }
   }
 }

@@ -11,6 +11,5 @@
     "tooltip.ItemMixin"
   ],
   "client": [
-    "client.ItemMixin"
   ]
 }

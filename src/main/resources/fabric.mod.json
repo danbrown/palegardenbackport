@@ -21,6 +21,9 @@
         "adapter": "kotlin",
         "value": "com.dannbrown.deltaboxlib.platform.DeltaboxLibWrapper"
       }
+    ],
+    "fabric-datagen": [
+      "com.dannbrown.deltaboxlib.platform.registrate.DataFabric"
     ]
   },
   "depends": {

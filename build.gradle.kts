@@ -42,6 +42,9 @@ repositories {
     strictMaven("https://thedarkcolour.github.io/KotlinForForge/", "thedarkcolour")
     maven("https://maven.neoforged.net/releases/")
     maven("https://maven.terraformersmc.com/releases/")
+    maven("https://maven.tterrag.com/") // Registrate
+    maven("https://mvn.devos.one/snapshots/") // Registrate Fabric
+    maven("https://maven.ithundxr.dev/snapshots/") // Registrate 1.21
 }
 
 dependencies {
@@ -62,21 +65,38 @@ dependencies {
         modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
         modImplementation("net.fabricmc:fabric-language-kotlin:${property("deps.flk")}+kotlin.2.0.0")
         ifStable("com.terraformersmc:modmenu:${property("deps.modmenu")}")
+        modApi("com.tterrag.registrate_fabric:Registrate:${property("deps.registrate")}")
     } else {
         if (loader == "forge") {
             "forge"("net.minecraftforge:forge:${mcVersion}-${property("fml.version")}")
             implementation("thedarkcolour:kotlinforforge:${property("deps.kff")}")
+            modImplementation("com.tterrag.registrate:Registrate:${property("deps.registrate")}")
         } else{
             "neoForge"("net.neoforged:neoforge:${property("fml.version")}")
             implementation("thedarkcolour:kotlinforforge-neoforge:${property("deps.kff")}") {
                 isTransitive = false
             }
+            modImplementation("com.tterrag.registrate:Registrate:${property("deps.registrate")}")
         }
+    }
+}
+
+sourceSets {
+    val generatedResources = file("src/generated")
+    main {
+        resources.srcDir(generatedResources)
     }
 }
 
 // Loom config
 loom {
+    fabricApi {
+        configureDataGeneration {
+            modId = mod.id
+            outputDirectory = file("src/generated")
+        }
+    }
+
     if (loader == "forge") {
         forge {
             mixinConfigs(
@@ -86,6 +106,7 @@ loom {
     }
     else if (loader == "neoforge") {
         neoForge {
+
             runs {
                 
             }
