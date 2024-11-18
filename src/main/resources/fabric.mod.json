@@ -23,7 +23,7 @@
       }
     ],
     "fabric-datagen": [
-      "com.dannbrown.deltaboxlib.platform.registrate.DataFabric"
+      "DatagenEntry"
     ]
   },
   "depends": {

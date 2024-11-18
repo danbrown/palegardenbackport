@@ -18,6 +18,8 @@ object DeltaboxLibWrapper : ModInitializer {
 import net.minecraftforge.eventbus.api.IEventBus
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.data.event.GatherDataEvent
+import net.minecraftforge.eventbus.api.EventPriority
 
 @Mod(DeltaboxLib.MOD_ID)
 class DeltaboxLibWrapper {
@@ -31,6 +33,7 @@ class DeltaboxLibWrapper {
 
         fun register(modBus: IEventBus, forgeEventBus: IEventBus) {
             DeltaboxLib.init()
+            modBus.addListener(EventPriority.LOWEST) { event: GatherDataEvent -> DeltaboxLib.gatherData(event.generator.getVanillaPack(true)) }
             DeltaboxLib.REGISTRATE.registerEventListeners(modBus) // forge exclusive registrate
         }
     }
@@ -40,6 +43,7 @@ class DeltaboxLibWrapper {
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.neoforge.common.NeoForge
+import net.neoforged.neoforge.data.event.GatherDataEvent
 
 @Mod(DeltaboxLib.MOD_ID)
 class DeltaboxLibWrapper(eventBus: IEventBus, modContainer: ModContainer) {
@@ -50,6 +54,7 @@ class DeltaboxLibWrapper(eventBus: IEventBus, modContainer: ModContainer) {
     }
     fun register(modBus: IEventBus, forgeEventBus: IEventBus) {
         DeltaboxLib.init()
+        modBus.addListener { event: GatherDataEvent -> DeltaboxLib.gatherData(event.generator.getVanillaPack(true)) }
         DeltaboxLib.REGISTRATE.registerEventListeners(modBus) // neoforged exclusive registrate
     }
 }

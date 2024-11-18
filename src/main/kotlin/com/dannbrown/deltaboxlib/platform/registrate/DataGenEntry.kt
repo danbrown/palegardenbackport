@@ -1,14 +1,14 @@
 package com.dannbrown.deltaboxlib.platform.registrate
 
 /*? if fabric {*/
-import com.dannbrown.deltaboxlib.common.DeltaboxLib
-import com.dannbrown.deltaboxlib.platform.util.Util
 import io.github.fabricators_of_create.porting_lib.data.ExistingFileHelper
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
+import com.dannbrown.deltaboxlib.common.DeltaboxLib
+import com.dannbrown.deltaboxlib.platform.util.Util
 import java.nio.file.Paths
 
-class DataFabric: DataGeneratorEntrypoint {
+class DataGenEntry: DataGeneratorEntrypoint {
   override fun onInitializeDataGenerator(gen: FabricDataGenerator) {
     val mods = listOf("minecraft")
     // Ensure that all mods are present if they are needed for data gen

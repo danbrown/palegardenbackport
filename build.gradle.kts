@@ -73,7 +73,6 @@ dependencies {
             modImplementation("com.tterrag.registrate:Registrate:${property("deps.registrate")}")
         } else{
             "neoForge"("net.neoforged:neoforge:${property("fml.version")}")
-//            runtimeOnly("thedarkcolour:kotlinforforge-neoforge:${property("deps.kff")}")
             runtimeOnly(modrinth("kotlin-for-forge", property("deps.kff")))
             modImplementation("com.tterrag.registrate:Registrate:${property("deps.registrate")}")
         }
@@ -82,25 +81,36 @@ dependencies {
 
 sourceSets {
     val generatedResources = file("../../src/generated/resources")
+    val generatedResources20 = file("../../src/generated/resources/20")
+    val generatedResources21 = file("../../src/generated/resources/21")
     main {
-        resources.srcDir(generatedResources)
+        if (isFabric) {
+            resources.srcDir(generatedResources) // fabric is the default data gen (currently broken)
+        } else if (isForge) {
+            resources.srcDir(generatedResources20) // forge is used for 1.20- data gen
+        } else if (isNeoForge) {
+            resources.srcDir(generatedResources21) // neoforge is used for 1.21+ data gen
+        }
     }
 }
 
 // Loom config
 loom {
-    runs {
-        create("datagen") {
-            client()
-
-            name = "Minecraft Data"
-            vmArg("-Dfabric-api.datagen")
-            vmArg("-Dfabric-api.datagen.output-dir=${file("../../src/generated/resources")}")
-            vmArg("-Dfabric-api.datagen.modid=${mod.id}")
-            vmArg("-Dporting_lib.datagen.existing_resources=${file("../../src/main/resources")}")
-
-            environmentVariable("DATAGEN", "TRUE")
-        }
+    fabricApi {
+        // example of fabric datagen, however it is broken for 1.21+
+        //        runs {
+        //            create("datagen") {
+        //                client()
+        //
+        //                name = "Minecraft Data"
+        //                vmArg("-Dfabric-api.datagen")
+        //                vmArg("-Dfabric-api.datagen.output-dir=${file("../../src/generated/resources")}")
+        //                vmArg("-Dfabric-api.datagen.modid=${mod.id}")
+        //                vmArg("-Dporting_lib.datagen.existing_resources=${file("../../src/main/resources")}")
+        //
+        //                environmentVariable("DATAGEN", "TRUE")
+        //            }
+        //        }
     }
 
     if (loader == "forge") {
@@ -108,12 +118,28 @@ loom {
             mixinConfigs(
                 "${mod.id}.mixins.json",
             )
+
+            runs {
+                // create a run configuration for FORGE datagen, for 1.20-
+                create("data") {
+                    data()
+                    programArgs("--all", "--mod", mod.id)
+                    programArgs("--output", "${file("../../src/generated/resources/20")}")
+                    programArgs("--existing", "${file("../../src/main/resources")}")
+                }
+            }
         }
     }
     else if (loader == "neoforge") {
         neoForge {
             runs {
-
+                // create a run configuration for FORGE datagen, for 1.21+
+                create("data") {
+                    data()
+                    programArgs("--all", "--mod", mod.id)
+                    programArgs("--output", "${file("../../src/generated/resources/21")}")
+                    programArgs("--existing", "${file("../../src/main/resources")}")
+                }
             }
         }
     }
