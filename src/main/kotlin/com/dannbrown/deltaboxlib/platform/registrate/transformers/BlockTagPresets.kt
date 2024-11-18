@@ -8,81 +8,87 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 
 object BlockTagPresets {
-  fun oreBlockTags(name: String, replace: String = "stone"): Pair<Array<TagKey<Block>>, Array<TagKey<Item>>> {
-    val forgeOreBlockTag = DeltaboxUtil.TAGS.forgeBlockTag("ores/$name")
-    val forgeOreItemTag = DeltaboxUtil.TAGS.forgeItemTag("ores/$name")
-    val forgeOreGroundBlockTag = DeltaboxUtil.TAGS.forgeBlockTag("ores_in_ground/$replace")
-    val forgeOreGroundItemTag = DeltaboxUtil.TAGS.forgeItemTag("ores_in_ground/$replace")
+  fun oreBlockTags(name: String, replace: String = "stone"): Pair<List<TagKey<Block>>, List<TagKey<Item>>> {
+    val oreBlockTag = DeltaboxUtil.TAGS.modloaderBlockTag("ores/$name")
+    val oreItemTag = DeltaboxUtil.TAGS.modloaderItemTag("ores/$name")
+    val oreGroundBlockTag = DeltaboxUtil.TAGS.modloaderBlockTag("ores_in_ground/$replace")
+    val oreGroundItemTag = DeltaboxUtil.TAGS.modloaderItemTag("ores_in_ground/$replace")
+    val oresBlockTag = DeltaboxUtil.TAGS.modloaderBlockTag("ores")
+    val oresItemTag = DeltaboxUtil.TAGS.modloaderItemTag("ores")
 
-    // net.minecraftforge.common.Tags, Tags.Blocks.ORES, Tags.Items.ORES
-
-    return Pair(arrayOf(forgeOreBlockTag, forgeOreGroundBlockTag), arrayOf(forgeOreItemTag, forgeOreGroundItemTag))
+    return Pair(
+      listOf(*oreBlockTag.toTypedArray(), *oresBlockTag.toTypedArray(), *oreGroundBlockTag.toTypedArray()),
+      listOf(*oreItemTag.toTypedArray(), *oresItemTag.toTypedArray(), *oreGroundItemTag.toTypedArray())
+    )
   }
 
-  fun storageBlockTags(name: String): Pair<Array<TagKey<Block>>, Array<TagKey<Item>>> {
-    val forgeStorageBlockTag = DeltaboxUtil.TAGS.forgeBlockTag("storage_blocks/$name")
-    val forgeStorageItemTag = DeltaboxUtil.TAGS.forgeItemTag("storage_blocks/$name")
+  fun storageBlockTags(name: String): Pair<List<TagKey<Block>>, List<TagKey<Item>>> {
+    val namedStorageBlockTag = DeltaboxUtil.TAGS.modloaderBlockTag("storage_blocks/$name")
+    val namedStorageItemTag = DeltaboxUtil.TAGS.modloaderItemTag("storage_blocks/$name")
+    val storageBlockTag = DeltaboxUtil.TAGS.modloaderBlockTag("storage_blocks")
+    val storageItemTag = DeltaboxUtil.TAGS.modloaderItemTag("storage_blocks")
 
-    // net.minecraftforge.common.Tags, Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS
-
-    return Pair(arrayOf(forgeStorageBlockTag), arrayOf(forgeStorageItemTag))
+    return Pair(
+      listOf(*namedStorageBlockTag.toTypedArray(), *storageBlockTag.toTypedArray()),
+      listOf(*namedStorageItemTag.toTypedArray(), *storageItemTag.toTypedArray())
+    )
   }
 
-  fun woodenStairsTags(): Pair<Array<TagKey<Block>>, Array<TagKey<Item>>> {
-    return Pair(arrayOf(BlockTags.STAIRS, BlockTags.WOODEN_STAIRS), arrayOf(ItemTags.STAIRS, ItemTags.WOODEN_STAIRS))
+  fun woodenStairsTags(): Pair<List<TagKey<Block>>, List<TagKey<Item>>> {
+    return Pair(listOf(BlockTags.STAIRS, BlockTags.WOODEN_STAIRS), listOf(ItemTags.STAIRS, ItemTags.WOODEN_STAIRS))
   }
 
-  fun stairsTags(): Pair<Array<TagKey<Block>>, Array<TagKey<Item>>> {
-    return Pair(arrayOf(BlockTags.STAIRS), arrayOf(ItemTags.STAIRS))
+  fun stairsTags(): Pair<List<TagKey<Block>>, List<TagKey<Item>>> {
+    return Pair(listOf(BlockTags.STAIRS), listOf(ItemTags.STAIRS))
   }
 
-  fun woodenSlabTags(): Pair<Array<TagKey<Block>>, Array<TagKey<Item>>> {
-    return Pair(arrayOf(BlockTags.SLABS, BlockTags.WOODEN_SLABS), arrayOf(ItemTags.SLABS, ItemTags.WOODEN_SLABS))
+  fun woodenSlabTags(): Pair<List<TagKey<Block>>, List<TagKey<Item>>> {
+    return Pair(listOf(BlockTags.SLABS, BlockTags.WOODEN_SLABS), listOf(ItemTags.SLABS, ItemTags.WOODEN_SLABS))
   }
 
-  fun slabTags(): Pair<Array<TagKey<Block>>, Array<TagKey<Item>>> {
-    return Pair(arrayOf(BlockTags.SLABS), arrayOf(ItemTags.SLABS))
+  fun slabTags(): Pair<List<TagKey<Block>>, List<TagKey<Item>>> {
+    return Pair(listOf(BlockTags.SLABS), listOf(ItemTags.SLABS))
   }
 
-  fun wallTags(): Pair<Array<TagKey<Block>>, Array<TagKey<Item>>> {
-    return Pair(arrayOf(BlockTags.WALLS), arrayOf(ItemTags.WALLS))
-  }
-
-
-  fun ladderBlockTags(): Pair<Array<TagKey<Block>>, Array<TagKey<Item>>> {
-    return Pair(arrayOf(BlockTags.CLIMBABLE), arrayOf())
-  }
-
-  fun woodenTrapdoorTags(): Pair<Array<TagKey<Block>>, Array<TagKey<Item>>> {
-    return Pair(arrayOf(BlockTags.WOODEN_TRAPDOORS, BlockTags.TRAPDOORS), arrayOf(ItemTags.WOODEN_TRAPDOORS, ItemTags.TRAPDOORS))
-  }
-
-  fun trapdoorTags(): Pair<Array<TagKey<Block>>, Array<TagKey<Item>>> {
-    return Pair(arrayOf(BlockTags.TRAPDOORS), arrayOf(ItemTags.TRAPDOORS))
+  fun wallTags(): Pair<List<TagKey<Block>>, List<TagKey<Item>>> {
+    return Pair(listOf(BlockTags.WALLS), listOf(ItemTags.WALLS))
   }
 
 
-  fun fenceTags(isWooden: Boolean): Pair<Array<TagKey<Block>>, Array<TagKey<Item>>> {
-    return if (isWooden) Pair(arrayOf(BlockTags.FENCES, BlockTags.WOODEN_FENCES), arrayOf(ItemTags.FENCES, ItemTags.WOODEN_FENCES))
-    else Pair(arrayOf(BlockTags.FENCES), arrayOf(ItemTags.FENCES))
+  fun ladderBlockTags(): Pair<List<TagKey<Block>>, List<TagKey<Item>>> {
+    return Pair(listOf(BlockTags.CLIMBABLE), listOf())
   }
 
-  fun pressurePlateTags(isWooden: Boolean): Pair<Array<TagKey<Block>>, Array<TagKey<Item>>> {
-    return if (isWooden) Pair(arrayOf(BlockTags.PRESSURE_PLATES, BlockTags.WOODEN_PRESSURE_PLATES), arrayOf(ItemTags.WOODEN_PRESSURE_PLATES))
-    else Pair(arrayOf(BlockTags.PRESSURE_PLATES), arrayOf())
+  fun woodenTrapdoorTags(): Pair<List<TagKey<Block>>, List<TagKey<Item>>> {
+    return Pair(listOf(BlockTags.WOODEN_TRAPDOORS, BlockTags.TRAPDOORS), listOf(ItemTags.WOODEN_TRAPDOORS, ItemTags.TRAPDOORS))
   }
 
-  fun buttonTags(isWooden: Boolean): Pair<Array<TagKey<Block>>, Array<TagKey<Item>>> {
-    return if (isWooden) Pair(arrayOf(BlockTags.BUTTONS, BlockTags.WOODEN_BUTTONS), arrayOf(ItemTags.WOODEN_BUTTONS, ItemTags.BUTTONS))
-    else Pair(arrayOf(BlockTags.BUTTONS), arrayOf(ItemTags.BUTTONS))
+  fun trapdoorTags(): Pair<List<TagKey<Block>>, List<TagKey<Item>>> {
+    return Pair(listOf(BlockTags.TRAPDOORS), listOf(ItemTags.TRAPDOORS))
   }
 
-  fun doorTags(isWooden: Boolean): Pair<Array<TagKey<Block>>, Array<TagKey<Item>>> {
-    return if (isWooden) Pair(arrayOf(BlockTags.DOORS, BlockTags.WOODEN_DOORS), arrayOf(ItemTags.DOORS, ItemTags.WOODEN_DOORS))
-    else Pair(arrayOf(BlockTags.DOORS), arrayOf(ItemTags.DOORS))
+
+  fun fenceTags(isWooden: Boolean): Pair<List<TagKey<Block>>, List<TagKey<Item>>> {
+    return if (isWooden) Pair(listOf(BlockTags.FENCES, BlockTags.WOODEN_FENCES), listOf(ItemTags.FENCES, ItemTags.WOODEN_FENCES))
+    else Pair(listOf(BlockTags.FENCES), listOf(ItemTags.FENCES))
   }
 
-  fun caveReplaceableTags(): Pair<Array<TagKey<Block>>, Array<TagKey<Item>>> {
-    return Pair(arrayOf(BlockTags.DRIPSTONE_REPLACEABLE, BlockTags.AZALEA_ROOT_REPLACEABLE, BlockTags.MOSS_REPLACEABLE, BlockTags.LUSH_GROUND_REPLACEABLE), arrayOf())
+  fun pressurePlateTags(isWooden: Boolean): Pair<List<TagKey<Block>>, List<TagKey<Item>>> {
+    return if (isWooden) Pair(listOf(BlockTags.PRESSURE_PLATES, BlockTags.WOODEN_PRESSURE_PLATES), listOf(ItemTags.WOODEN_PRESSURE_PLATES))
+    else Pair(listOf(BlockTags.PRESSURE_PLATES), listOf())
+  }
+
+  fun buttonTags(isWooden: Boolean): Pair<List<TagKey<Block>>, List<TagKey<Item>>> {
+    return if (isWooden) Pair(listOf(BlockTags.BUTTONS, BlockTags.WOODEN_BUTTONS), listOf(ItemTags.WOODEN_BUTTONS, ItemTags.BUTTONS))
+    else Pair(listOf(BlockTags.BUTTONS), listOf(ItemTags.BUTTONS))
+  }
+
+  fun doorTags(isWooden: Boolean): Pair<List<TagKey<Block>>, List<TagKey<Item>>> {
+    return if (isWooden) Pair(listOf(BlockTags.DOORS, BlockTags.WOODEN_DOORS), listOf(ItemTags.DOORS, ItemTags.WOODEN_DOORS))
+    else Pair(listOf(BlockTags.DOORS), listOf(ItemTags.DOORS))
+  }
+
+  fun caveReplaceableTags(): Pair<List<TagKey<Block>>, List<TagKey<Item>>> {
+    return Pair(listOf(BlockTags.DRIPSTONE_REPLACEABLE, BlockTags.AZALEA_ROOT_REPLACEABLE, BlockTags.MOSS_REPLACEABLE, BlockTags.LUSH_GROUND_REPLACEABLE), listOf())
   }
 }

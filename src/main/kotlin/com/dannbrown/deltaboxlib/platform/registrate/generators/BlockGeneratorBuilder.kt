@@ -1,17 +1,21 @@
 package com.dannbrown.deltaboxlib.platform.registrate.generators
 
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
+import com.dannbrown.deltaboxlib.platform.registrate.transformers.RecipePresets
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
+import com.dannbrown.deltaboxlib.registry.transformers.BlockTagPresets
 import com.tterrag.registrate.builders.BlockBuilder
 import com.tterrag.registrate.providers.DataGenContext
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider
 import com.tterrag.registrate.providers.RegistrateRecipeProvider
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables
+import com.tterrag.registrate.util.DataIngredient
 import com.tterrag.registrate.util.entry.BlockEntry
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
@@ -133,7 +137,18 @@ class BlockGeneratorBuilder<T : Block>(name: String, private val registrate: Del
     return this
   }
 
-  // UTILITY
+  fun toolAndTier(
+    tool: TagKey<Block>? = null,
+    tier: TagKey<Block>? = null,
+    correctToolForDrops: Boolean = true,
+  ): BlockGeneratorBuilder<T> {
+    this._toolTier = tier
+    this._toolType = tool
+    this._correctToolForDrops = correctToolForDrops
+    return this
+  }
+
+  // Only called when creating a family
   fun fromFamily(
     copyFrom: Supplier<Block>,
     props: (Properties) -> Properties = { p: Properties -> p },
@@ -150,18 +165,6 @@ class BlockGeneratorBuilder<T : Block>(name: String, private val registrate: Del
     this._correctToolForDrops = correctToolForDrops
     return this
   }
-
-  fun toolAndTier(
-    tool: TagKey<Block>? = null,
-    tier: TagKey<Block>? = null,
-    correctToolForDrops: Boolean = true,
-  ): BlockGeneratorBuilder<T> {
-    this._toolTier = tier
-    this._toolType = tool
-    this._correctToolForDrops = correctToolForDrops
-    return this
-  }
-
 
   private fun checkCurrentBuilder() {
     if (_builder == null) throw Exception("No block started")

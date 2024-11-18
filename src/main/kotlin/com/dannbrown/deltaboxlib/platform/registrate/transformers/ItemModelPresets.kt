@@ -109,11 +109,4 @@ object ItemModelPresets {
         .texture("layer0", p.modLoc("item/${c.name}"))
     }
   }
-
-  fun <B : Item> thrusterItem(name: String? = null): NonNullBiConsumer<DataGenContext<Item, B>, RegistrateItemModelProvider> {
-    return NonNullBiConsumer { c, p ->
-      p.withExistingParent(c.name, p.modLoc("block/thrusters/thruster_item"))
-        .texture("0", p.modLoc("block/thrusters/${c.name}"))
-    }
-  }
 }

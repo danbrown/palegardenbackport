@@ -662,51 +662,5 @@ object BlockstatePresets {
     }
   }
 
-
-  fun <B : Block> poweredBlock(): NonNullBiConsumer<DataGenContext<Block, B>, RegistrateBlockstateProvider> {
-    return NonNullBiConsumer { c, p ->
-      p.getVariantBuilder(c.get())
-        .forAllStatesExcept({ state ->
-          val powered = state.getValue(BlockStateProperties.POWERED)
-          val poweredSuffix = if (powered) "_on" else ""
-          ConfiguredModel.builder()
-            .modelFile(p.models()
-              .cubeAll(c.name + poweredSuffix, p.modLoc("block/${c.name}" + poweredSuffix)))
-            .build()
-        }, BlockStateProperties.WATERLOGGED)
-    }
-  }
-
-
-  // Angular sensor
-  fun <B : Block> angularSensor(name: String): NonNullBiConsumer<DataGenContext<Block, B>, RegistrateBlockstateProvider> {
-    return NonNullBiConsumer { c, p ->
-      p.getVariantBuilder(c.entry)
-        .forAllStates { state: BlockState ->
-          val direction = state.getValue(BlockStateProperties.FACING)
-          val powered = state.getValue(BlockStateProperties.POWERED)
-          val axis = direction.axis.toString()
-          val isZed = ((direction == Direction.NORTH || direction == Direction.SOUTH))
-          val xRot = if (direction == Direction.DOWN) 270 else if (direction == Direction.UP) 90 else 0
-          val yRot = if (direction.axis.isVertical) 90
-          else direction.toYRot()
-            .toInt()
-          val model = p.models()
-            .withExistingParent(c.name + if (isZed) "" else "_$axis" + if (powered) "_on" else "", p.mcLoc("block/orientable"))
-            .texture("side", p.modLoc("block/${name}_side"))
-            .texture("front", p.modLoc("block/${name}_front_${axis}"))
-            .texture("south", p.modLoc("block/${name}_back${if (powered) "_on" else ""}"))
-            .texture("bottom", p.modLoc("block/${name}_side"))
-            .texture("top", p.modLoc("block/${name}_side"))
-
-
-          ConfiguredModel.builder()
-            .modelFile(model.apply { state })
-            .rotationX(xRot)
-            .rotationY(yRot)
-            .build()
-        }
-    }
-  }
 //
 }

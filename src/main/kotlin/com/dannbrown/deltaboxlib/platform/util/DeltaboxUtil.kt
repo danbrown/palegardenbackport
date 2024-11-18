@@ -2,6 +2,7 @@ package com.dannbrown.deltaboxlib.platform.util
 
 import com.dannbrown.deltaboxlib.common.DeltaboxLib
 import com.mojang.serialization.DataResult
+import com.tterrag.registrate.util.DataIngredient
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
@@ -11,11 +12,13 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import org.apache.logging.log4j.LogManager
 import java.nio.file.Path
+import java.util.stream.Stream
 
 object DeltaboxUtil {
     private val LOGGER = LogManager.getLogger()
@@ -150,7 +153,7 @@ object DeltaboxUtil {
 
         // VANILLA
         fun <R, T: Registry<R>> vanillaTag(registry: ResourceKey<T>, path: String): TagKey<R> {
-            return optionalTag(registry, DeltaboxUtil.resourceLocation("minecraft", path))
+            return optionalTag(registry, resourceLocation("minecraft", path))
         }
 
         fun vanillaBlockTag(path: String): TagKey<Block> {
@@ -161,26 +164,9 @@ object DeltaboxUtil {
             return vanillaTag(Registries.ITEM, path)
         }
 
-        // FORGE
-        fun <R, T: Registry<R>> forgeTag(registry: ResourceKey<T>, path: String): TagKey<R> {
-            return optionalTag(registry, DeltaboxUtil.resourceLocation("forge", path))
-        }
-
-        fun forgeBlockTag(path: String): TagKey<Block> {
-            return forgeTag(Registries.BLOCK, path)
-        }
-
-        fun forgeItemTag(path: String): TagKey<Item> {
-            return forgeTag(Registries.ITEM, path)
-        }
-
-        fun forgeFluidTag(path: String): TagKey<Fluid> {
-            return forgeTag(Registries.FLUID, path)
-        }
-
         // DELTABOX
         fun <R, T: Registry<R>> deltaboxTag(registry: ResourceKey<T>, path: String): TagKey<R> {
-            return optionalTag(registry, DeltaboxUtil.resourceLocation(DeltaboxLib.MOD_ID, path))
+            return optionalTag(registry, resourceLocation(DeltaboxLib.MOD_ID, path))
         }
 
         fun deltaboxBlockTag(path: String): TagKey<Block> {
@@ -205,7 +191,7 @@ object DeltaboxUtil {
 
         // ANY MOD
         fun <R, T: Registry<R>> modTag(modId: String, registry: ResourceKey<T>, path: String): TagKey<R> {
-            return optionalTag(registry, DeltaboxUtil.resourceLocation(modId, path))
+            return optionalTag(registry, resourceLocation(modId, path))
         }
 
         fun modBlockTag(modId: String, path: String): TagKey<Block> {
@@ -226,6 +212,40 @@ object DeltaboxUtil {
 
         fun modFluidTag(modId: String, path: String): TagKey<Fluid> {
             return modTag(modId, Registries.FLUID, path)
+        }
+
+        // MODLOADERS
+        fun <R, T: Registry<R>> modloaderTag(registry: ResourceKey<T>, path: String): MutableList<TagKey<R>> {
+            return mutableListOf(
+                optionalTag(registry, resourceLocation("c", path)), // tag for fabric
+                optionalTag(registry, resourceLocation("forge", path)), // tag for forge
+                optionalTag(registry, resourceLocation("neoforge", path)) // tag for neoforged
+            )
+        }
+
+        fun modloaderBlockTag(path: String): MutableList<TagKey<Block>> {
+            return modloaderTag(Registries.BLOCK, path)
+        }
+
+        fun modloaderItemTag(path: String): MutableList<TagKey<Item>> {
+            return modloaderTag(Registries.ITEM, path)
+        }
+
+        fun modloaderFluidTag(path: String): MutableList<TagKey<Fluid>> {
+            return modloaderTag(Registries.FLUID, path)
+        }
+
+        fun modloaderBiomeTag(path: String): MutableList<TagKey<Biome>> {
+            return modloaderTag(Registries.BIOME, path)
+        }
+
+        fun modloaderEntityTag(path: String): MutableList<TagKey<EntityType<*>>> {
+            return modloaderTag(Registries.ENTITY_TYPE, path)
+        }
+
+        // allow to use for recipe tags
+        fun modloaderItemIngredient(path: String): Ingredient {
+            return Ingredient.fromValues(modloaderItemTag(path).stream().map { Ingredient.TagValue(it) })
         }
     }
 }

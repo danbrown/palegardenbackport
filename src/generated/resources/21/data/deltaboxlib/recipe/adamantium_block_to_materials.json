@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "deltaboxlib:adamantium_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "minecraft:iron_ingot"
+  }
+}

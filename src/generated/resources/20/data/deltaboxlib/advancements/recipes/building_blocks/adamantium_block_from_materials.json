@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_iron_block": {
+    "has_ingredient": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:iron_block"
+              "minecraft:flint"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "deltaboxlib:adamantium_block_from_iron_block_stonecutting"
+        "recipe": "deltaboxlib:adamantium_block_from_materials"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_iron_block",
+      "has_ingredient",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "deltaboxlib:adamantium_block_from_iron_block_stonecutting"
+      "deltaboxlib:adamantium_block_from_materials"
     ]
   },
   "sends_telemetry_event": false
