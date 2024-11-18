@@ -1,6 +1,6 @@
 package com.dannbrown.deltaboxlib.registry.transformers
 
-import com.dannbrown.deltaboxlib.platform.util.Util
+import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -9,10 +9,10 @@ import net.minecraft.world.level.block.Block
 
 object BlockTagPresets {
   fun oreBlockTags(name: String, replace: String = "stone"): Pair<Array<TagKey<Block>>, Array<TagKey<Item>>> {
-    val forgeOreBlockTag = Util.TAGS.forgeBlockTag("ores/$name")
-    val forgeOreItemTag = Util.TAGS.forgeItemTag("ores/$name")
-    val forgeOreGroundBlockTag = Util.TAGS.forgeBlockTag("ores_in_ground/$replace")
-    val forgeOreGroundItemTag = Util.TAGS.forgeItemTag("ores_in_ground/$replace")
+    val forgeOreBlockTag = DeltaboxUtil.TAGS.forgeBlockTag("ores/$name")
+    val forgeOreItemTag = DeltaboxUtil.TAGS.forgeItemTag("ores/$name")
+    val forgeOreGroundBlockTag = DeltaboxUtil.TAGS.forgeBlockTag("ores_in_ground/$replace")
+    val forgeOreGroundItemTag = DeltaboxUtil.TAGS.forgeItemTag("ores_in_ground/$replace")
 
     // net.minecraftforge.common.Tags, Tags.Blocks.ORES, Tags.Items.ORES
 
@@ -20,8 +20,8 @@ object BlockTagPresets {
   }
 
   fun storageBlockTags(name: String): Pair<Array<TagKey<Block>>, Array<TagKey<Item>>> {
-    val forgeStorageBlockTag = Util.TAGS.forgeBlockTag("storage_blocks/$name")
-    val forgeStorageItemTag = Util.TAGS.forgeItemTag("storage_blocks/$name")
+    val forgeStorageBlockTag = DeltaboxUtil.TAGS.forgeBlockTag("storage_blocks/$name")
+    val forgeStorageItemTag = DeltaboxUtil.TAGS.forgeItemTag("storage_blocks/$name")
 
     // net.minecraftforge.common.Tags, Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS
 

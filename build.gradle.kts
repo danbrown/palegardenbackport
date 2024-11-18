@@ -80,15 +80,12 @@ dependencies {
 }
 
 sourceSets {
-    val generatedResources = file("../../src/generated/resources")
     val generatedResources20 = file("../../src/generated/resources/20")
     val generatedResources21 = file("../../src/generated/resources/21")
     main {
-        if (isFabric) {
-            resources.srcDir(generatedResources) // fabric is the default data gen (currently broken)
-        } else if (isForge) {
-            resources.srcDir(generatedResources20) // forge is used for 1.20- data gen
-        } else if (isNeoForge) {
+        if (isForge  || (isFabric && stonecutter.current.version < "1.20.6")) {
+            resources.srcDir(generatedResources20) // forge is used for 1.20.6- data gen
+        } else if (isNeoForge || (isFabric && stonecutter.current.version >= "1.20.6")) {
             resources.srcDir(generatedResources21) // neoforge is used for 1.21+ data gen
         }
     }
@@ -120,7 +117,7 @@ loom {
             )
 
             runs {
-                // create a run configuration for FORGE datagen, for 1.20-
+                // create a run configuration for FORGE datagen, for 1.20.6-
                 create("data") {
                     data()
                     programArgs("--all", "--mod", mod.id)

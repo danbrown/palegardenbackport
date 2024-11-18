@@ -15,11 +15,14 @@ import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import org.apache.logging.log4j.LogManager
-import org.slf4j.Logger
 import java.nio.file.Path
 
-object Util {
-    val LOGGER = LogManager.getLogger()
+object DeltaboxUtil {
+    private val LOGGER = LogManager.getLogger()
+
+    fun logInfo(message: String, modId: String = DeltaboxLib.MOD_ID) {
+        LOGGER.info("[${modId}] $message")
+    }
 
     fun <K, V> memoize(provider: (K) -> V): (K) -> V = object : (K) -> V {
         val cache: MutableMap<K, V> = mutableMapOf()
@@ -43,13 +46,13 @@ object Util {
         fun getConfigPath(modID: String, configFileName: String, configExtension: String): Path {
             /*? if fabric {*/
 
-            return net.fabricmc.loader.api.FabricLoader.getInstance().configDir.resolve(modID).resolve("$configFileName.$configExtension")
+            /*return net.fabricmc.loader.api.FabricLoader.getInstance().configDir.resolve(modID).resolve("$configFileName.$configExtension")
 
-            /*?} elif forge {*/
+            *//*?} elif forge {*/
 
-            /*return net.minecraftforge.fml.loading.FMLLoader.getGamePath().resolve("config").resolve(modID).resolve("$configFileName.$configExtension");
+            return net.minecraftforge.fml.loading.FMLLoader.getGamePath().resolve("config").resolve(modID).resolve("$configFileName.$configExtension");
 
-            *//*?} else {*/
+            /*?} else {*/
 
             /*return net.neoforged.fml.loading.FMLLoader.getGamePath().resolve("config").resolve(modID).resolve("$configFileName.$configExtension");
 
@@ -59,13 +62,13 @@ object Util {
         fun isModInstalled(modid: String): Boolean {
             /*? if fabric {*/
 
-            return net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded(modid)
+            /*return net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded(modid)
 
-            /*?} elif forge {*/
+            *//*?} elif forge {*/
 
-            /*return net.minecraftforge.fml.loading.FMLLoader.getLoadingModList().getModFileById(modid) != null;
+            return net.minecraftforge.fml.loading.FMLLoader.getLoadingModList().getModFileById(modid) != null;
 
-            *//*?} else {*/
+            /*?} else {*/
 
             /*return net.neoforged.fml.loading.FMLLoader.getLoadingModList().getModFileById(modid) != null;
 
@@ -74,13 +77,13 @@ object Util {
 
         fun gameDir(): Path {
             /*? if fabric {*/
-            return net.fabricmc.loader.api.FabricLoader.getInstance().getGameDir()
+            /*return net.fabricmc.loader.api.FabricLoader.getInstance().getGameDir()
 
-            /*?} elif forge {*/
+            *//*?} elif forge {*/
 
-            /*return net.minecraftforge.fml.loading.FMLLoader.getGamePath();
+            return net.minecraftforge.fml.loading.FMLLoader.getGamePath();
 
-            *//*?} else {*/
+            /*?} else {*/
 
             /*return net.neoforged.fml.loading.FMLLoader.getGamePath();
 
@@ -90,13 +93,13 @@ object Util {
         fun getConfigFolder(modID: String): Path {
             /*? if fabric {*/
 
-            return net.fabricmc.loader.api.FabricLoader.getInstance().gameDir.resolve("config").resolve(modID)
+            /*return net.fabricmc.loader.api.FabricLoader.getInstance().gameDir.resolve("config").resolve(modID)
 
-            /*?} elif forge {*/
+            *//*?} elif forge {*/
 
-            /*return net.minecraftforge.fml.loading.FMLLoader.getGamePath().resolve("config").resolve(modID);
+            return net.minecraftforge.fml.loading.FMLLoader.getGamePath().resolve("config").resolve(modID);
 
-            *//*?} else {*/
+            /*?} else {*/
 
             /*return net.neoforged.fml.loading.FMLLoader.getGamePath().resolve("config").resolve(modID);
 
@@ -147,7 +150,7 @@ object Util {
 
         // VANILLA
         fun <R, T: Registry<R>> vanillaTag(registry: ResourceKey<T>, path: String): TagKey<R> {
-            return optionalTag(registry, Util.resourceLocation("minecraft", path))
+            return optionalTag(registry, DeltaboxUtil.resourceLocation("minecraft", path))
         }
 
         fun vanillaBlockTag(path: String): TagKey<Block> {
@@ -160,7 +163,7 @@ object Util {
 
         // FORGE
         fun <R, T: Registry<R>> forgeTag(registry: ResourceKey<T>, path: String): TagKey<R> {
-            return optionalTag(registry, Util.resourceLocation("forge", path))
+            return optionalTag(registry, DeltaboxUtil.resourceLocation("forge", path))
         }
 
         fun forgeBlockTag(path: String): TagKey<Block> {
@@ -177,7 +180,7 @@ object Util {
 
         // DELTABOX
         fun <R, T: Registry<R>> deltaboxTag(registry: ResourceKey<T>, path: String): TagKey<R> {
-            return optionalTag(registry, Util.resourceLocation(DeltaboxLib.MOD_ID, path))
+            return optionalTag(registry, DeltaboxUtil.resourceLocation(DeltaboxLib.MOD_ID, path))
         }
 
         fun deltaboxBlockTag(path: String): TagKey<Block> {
@@ -202,7 +205,7 @@ object Util {
 
         // ANY MOD
         fun <R, T: Registry<R>> modTag(modId: String, registry: ResourceKey<T>, path: String): TagKey<R> {
-            return optionalTag(registry, Util.resourceLocation(modId, path))
+            return optionalTag(registry, DeltaboxUtil.resourceLocation(modId, path))
         }
 
         fun modBlockTag(modId: String, path: String): TagKey<Block> {

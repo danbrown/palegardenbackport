@@ -1,6 +1,6 @@
 package com.dannbrown.deltaboxlib.platform.registrate.types
 
-import com.dannbrown.deltaboxlib.platform.util.Util
+import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.tterrag.registrate.providers.RegistrateLangProvider
 
 abstract class IDeltaboxLang(val modid: String) {
@@ -30,7 +30,7 @@ abstract class IDeltaboxLang(val modid: String) {
     phrase: String,
     mId: String = modid,
   ) {
-    provider.add(Util.LANG.getTooltipKey(mId, itemId), phrase)
+    provider.add(DeltaboxUtil.LANG.getTooltipKey(mId, itemId), phrase)
   }
 
   fun addGenericTooltipLang(
@@ -38,7 +38,7 @@ abstract class IDeltaboxLang(val modid: String) {
     itemId: String,
     phrase: String,
   ) {
-    provider.add(Util.LANG.getTooltipKey(null, itemId), phrase)
+    provider.add(DeltaboxUtil.LANG.getTooltipKey(null, itemId), phrase)
   }
 
   fun addCreativeTabLang(

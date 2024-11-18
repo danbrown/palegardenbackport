@@ -1,20 +1,20 @@
 package com.dannbrown.deltaboxlib.platform
 
 import com.dannbrown.deltaboxlib.common.*
-import com.dannbrown.deltaboxlib.platform.util.Util
+import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 /*? if fabric {*/
 
-import net.fabricmc.api.ModInitializer;
+/*import net.fabricmc.api.ModInitializer;
 
 object DeltaboxLibWrapper : ModInitializer {
     override fun onInitialize() {
-        Util.LOGGER.info("${DeltaboxLib.MOD_ID} has started!")
+        DeltaboxUtil.logInfo("mod has started!")
         DeltaboxLib.init()
         DeltaboxLib.REGISTRATE.register() // fabric exclusive registrate
     }
 }
-/*?} elif forge {*/
-/*import net.minecraftforge.fml.common.Mod
+*//*?} elif forge {*/
+import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.eventbus.api.IEventBus
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import net.minecraftforge.common.MinecraftForge
@@ -25,7 +25,7 @@ import net.minecraftforge.eventbus.api.EventPriority
 class DeltaboxLibWrapper {
     companion object {
         init {
-            Util.LOGGER.info("$DeltaboxLib.MOD_ID has started!")
+            DeltaboxUtil.logInfo("mod has started!")
             val eventBus = FMLJavaModLoadingContext.get().modEventBus
             val forgeEventBus = MinecraftForge.EVENT_BUS
             register(eventBus, forgeEventBus)
@@ -38,7 +38,7 @@ class DeltaboxLibWrapper {
         }
     }
 }
-*//*?} else {*/
+/*?} else {*/
 /*import net.neoforged.fml.common.Mod
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
@@ -48,7 +48,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent
 @Mod(DeltaboxLib.MOD_ID)
 class DeltaboxLibWrapper(eventBus: IEventBus, modContainer: ModContainer) {
     init {
-        Util.LOGGER.info("${DeltaboxLib.MOD_ID} has started!")
+        DeltaboxUtil.logInfo("mod has started!")
         val forgeEventBus = NeoForge.EVENT_BUS
         register(eventBus, forgeEventBus)
     }

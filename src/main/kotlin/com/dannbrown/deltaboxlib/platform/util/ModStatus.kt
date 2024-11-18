@@ -3,7 +3,7 @@ package com.dannbrown.deltaboxlib.platform.util
 import java.nio.file.Path
 
 /*? if fabric {*/
-import net.fabricmc.api.EnvType
+/*import net.fabricmc.api.EnvType
 import net.fabricmc.loader.api.FabricLoader
 import kotlin.jvm.optionals.getOrNull
 
@@ -17,8 +17,8 @@ object ModStatus : IModStatus {
     override fun isLoaded(mod: String) = fabric.isModLoaded(mod)
     override fun getVersion(mod: String) = fabric.getModContainer(mod).getOrNull()?.metadata?.version?.friendlyString
 }
-/*?} elif forge {*/
-/*import net.minecraftforge.fml.loading.FMLLoader
+*//*?} elif forge {*/
+import net.minecraftforge.fml.loading.FMLLoader
 import java.util.function.Predicate
 import kotlin.io.path.createDirectories
 import kotlin.io.path.notExists
@@ -36,7 +36,7 @@ object ModStatus : IModStatus {
     override fun isLoaded(mod: String) = cache.computeIfAbsent(mod, Predicate {FMLLoader.getLoadingModList().getModFileById(mod) != null})
     override fun getVersion(mod: String): String? = FMLLoader.getLoadingModList().getModFileById(mod)?.versionString()
 }
-*//*?} else {*/
+/*?} else {*/
 /*import net.neoforged.fml.loading.FMLLoader
 import kotlin.io.path.createDirectories
 import kotlin.io.path.notExists
