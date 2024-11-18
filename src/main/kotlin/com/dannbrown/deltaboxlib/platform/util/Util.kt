@@ -43,13 +43,13 @@ object Util {
         fun getConfigPath(modID: String, configFileName: String, configExtension: String): Path {
             /*? if fabric {*/
 
-            /*return net.fabricmc.loader.api.FabricLoader.getInstance().configDir.resolve(modID).resolve("$configFileName.$configExtension")
+            return net.fabricmc.loader.api.FabricLoader.getInstance().configDir.resolve(modID).resolve("$configFileName.$configExtension")
 
-            *//*?} elif forge {*/
+            /*?} elif forge {*/
 
-            return net.minecraftforge.fml.loading.FMLLoader.getGamePath().resolve("config").resolve(modID).resolve("$configFileName.$configExtension");
+            /*return net.minecraftforge.fml.loading.FMLLoader.getGamePath().resolve("config").resolve(modID).resolve("$configFileName.$configExtension");
 
-            /*?} else {*/
+            *//*?} else {*/
 
             /*return net.neoforged.fml.loading.FMLLoader.getGamePath().resolve("config").resolve(modID).resolve("$configFileName.$configExtension");
 
@@ -59,13 +59,13 @@ object Util {
         fun isModInstalled(modid: String): Boolean {
             /*? if fabric {*/
 
-            /*return net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded(modid)
+            return net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded(modid)
 
-            *//*?} elif forge {*/
+            /*?} elif forge {*/
 
-            return net.minecraftforge.fml.loading.FMLLoader.getLoadingModList().getModFileById(modid) != null;
+            /*return net.minecraftforge.fml.loading.FMLLoader.getLoadingModList().getModFileById(modid) != null;
 
-            /*?} else {*/
+            *//*?} else {*/
 
             /*return net.neoforged.fml.loading.FMLLoader.getLoadingModList().getModFileById(modid) != null;
 
@@ -74,13 +74,13 @@ object Util {
 
         fun gameDir(): Path {
             /*? if fabric {*/
-            /*return net.fabricmc.loader.api.FabricLoader.getInstance().getGameDir()
+            return net.fabricmc.loader.api.FabricLoader.getInstance().getGameDir()
 
-            *//*?} elif forge {*/
+            /*?} elif forge {*/
 
-            return net.minecraftforge.fml.loading.FMLLoader.getGamePath();
+            /*return net.minecraftforge.fml.loading.FMLLoader.getGamePath();
 
-            /*?} else {*/
+            *//*?} else {*/
 
             /*return net.neoforged.fml.loading.FMLLoader.getGamePath();
 
@@ -90,13 +90,13 @@ object Util {
         fun getConfigFolder(modID: String): Path {
             /*? if fabric {*/
 
-            /*return net.fabricmc.loader.api.FabricLoader.getInstance().gameDir.resolve("config").resolve(modID)
+            return net.fabricmc.loader.api.FabricLoader.getInstance().gameDir.resolve("config").resolve(modID)
 
-            *//*?} elif forge {*/
+            /*?} elif forge {*/
 
-            return net.minecraftforge.fml.loading.FMLLoader.getGamePath().resolve("config").resolve(modID);
+            /*return net.minecraftforge.fml.loading.FMLLoader.getGamePath().resolve("config").resolve(modID);
 
-            /*?} else {*/
+            *//*?} else {*/
 
             /*return net.neoforged.fml.loading.FMLLoader.getGamePath().resolve("config").resolve(modID);
 

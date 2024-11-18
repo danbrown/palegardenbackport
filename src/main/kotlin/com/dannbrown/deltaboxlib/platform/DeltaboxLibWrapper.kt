@@ -4,7 +4,7 @@ import com.dannbrown.deltaboxlib.common.*
 import com.dannbrown.deltaboxlib.platform.util.Util
 /*? if fabric {*/
 
-/*import net.fabricmc.api.ModInitializer;
+import net.fabricmc.api.ModInitializer;
 
 object DeltaboxLibWrapper : ModInitializer {
     override fun onInitialize() {
@@ -12,8 +12,8 @@ object DeltaboxLibWrapper : ModInitializer {
         DeltaboxLib.REGISTRATE.register() // fabric exclusive registrate
     }
 }
-*//*?} elif forge {*/
-import net.minecraftforge.fml.common.Mod
+/*?} elif forge {*/
+/*import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.eventbus.api.IEventBus
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import net.minecraftforge.common.MinecraftForge
@@ -34,7 +34,7 @@ class DeltaboxLibWrapper {
         }
     }
 }
-/*?} else {*/
+*//*?} else {*/
 /*import net.neoforged.fml.common.Mod
 
 @Mod(DeltaboxLib.MOD_ID)
