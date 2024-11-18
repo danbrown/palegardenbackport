@@ -21,3 +21,9 @@ versionRange="${target_minecraft}"
 ordering="NONE"
 side="BOTH"
 
+[[dependencies.${mod_id}]]
+modId="kotlinforforge"
+mandatory=true
+versionRange="${target_loader}"
+ordering="NONE"
+side="BOTH"

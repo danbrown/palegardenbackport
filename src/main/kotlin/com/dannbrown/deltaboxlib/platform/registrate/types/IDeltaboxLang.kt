@@ -1,9 +1,7 @@
-package com.dannbrown.deltaboxlib.platform.registrate.abstract
+package com.dannbrown.deltaboxlib.platform.registrate.types
 
 import com.dannbrown.deltaboxlib.platform.util.Util
 import com.tterrag.registrate.providers.RegistrateLangProvider
-import net.minecraft.network.chat.MutableComponent
-import oshi.util.tuples.Quartet
 
 abstract class IDeltaboxLang(val modid: String) {
   abstract fun addLang(provider: RegistrateLangProvider)

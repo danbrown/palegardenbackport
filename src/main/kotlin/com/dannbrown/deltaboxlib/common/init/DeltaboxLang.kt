@@ -1,7 +1,7 @@
 package com.dannbrown.deltaboxlib.common.init
 
 import com.dannbrown.deltaboxlib.common.DeltaboxLib
-import com.dannbrown.deltaboxlib.platform.registrate.abstract.IDeltaboxLang
+import com.dannbrown.deltaboxlib.platform.registrate.types.IDeltaboxLang
 import com.tterrag.registrate.providers.RegistrateLangProvider
 
 object DeltaboxLang: IDeltaboxLang(DeltaboxLib.MOD_ID) {
