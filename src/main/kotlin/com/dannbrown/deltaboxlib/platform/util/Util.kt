@@ -28,16 +28,16 @@ object Util {
     }
 
     fun <R> DataResult<R>.getAnyway(): R =
-      /*? if <=1.20.4*//*getOrThrow(false) {}*/
-        /*? if >1.20.4*/orThrow
+      /*? if <=1.20.4*/getOrThrow(false) {}
+        /*? if >1.20.4*//*orThrow*/
 
     fun resourceLocation(id: String): ResourceLocation =
-      /*? if <1.21 {*//*ResourceLocation(id)
-    *//*?} else*/if (':' in id) ResourceLocation.parse(id) else ResourceLocation.fromNamespaceAndPath("minecraft", id)
+      /*? if <1.21 {*/ResourceLocation(id)
+    /*?} else*//*if (':' in id) ResourceLocation.parse(id) else ResourceLocation.fromNamespaceAndPath("minecraft", id)*/
 
     fun resourceLocation(path: String, id: String): ResourceLocation =
-      /*? if <1.21 {*//*ResourceLocation(path, id)
-    *//*?} else*/ResourceLocation.fromNamespaceAndPath(path, id)
+      /*? if <1.21 {*/ResourceLocation(path, id)
+    /*?} else*//*ResourceLocation.fromNamespaceAndPath(path, id)*/
 
     object PATH {
         fun getConfigPath(modID: String, configFileName: String, configExtension: String): Path {

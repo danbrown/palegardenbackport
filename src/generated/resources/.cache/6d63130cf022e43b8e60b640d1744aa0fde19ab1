@@ -1,5 +1,6 @@
-// 1.20.1	2024-11-18T13:17:50.060392	Deltabox Lib/Registrate Provider for deltaboxlib [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2024-11-18T13:55:25.33101	Deltabox Lib/Registrate Provider for deltaboxlib [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 b1ed82c12ecd5171d3513832bae6668b574f0f41 data/deltaboxlib/advancements/recipes/building_blocks/adamantium_block_from_iron_block_stonecutting.json
+aaefc18c1e21abbc86b33ca2aeb4c27edfcbb816 data/minecraft/tags/blocks/mineable/pickaxe.json
 af4e5fdd38c7b2f93f16c67a9badac29fccb3092 assets/deltaboxlib/models/block/adamantium_block.json
 a98aa667fa28a4a1866fd919c9795c84716289e3 assets/deltaboxlib/lang/en_ud.json
 5fbffb139fe62d0bb2fe33de2db3d6b19b2727d2 data/deltaboxlib/loot_tables/blocks/adamantium_block.json
