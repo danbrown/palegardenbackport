@@ -73,9 +73,8 @@ dependencies {
             modImplementation("com.tterrag.registrate:Registrate:${property("deps.registrate")}")
         } else{
             "neoForge"("net.neoforged:neoforge:${property("fml.version")}")
-            implementation("thedarkcolour:kotlinforforge-neoforge:${property("deps.kff")}") {
-                isTransitive = false
-            }
+//            runtimeOnly("thedarkcolour:kotlinforforge-neoforge:${property("deps.kff")}")
+            runtimeOnly(modrinth("kotlin-for-forge", property("deps.kff")))
             modImplementation("com.tterrag.registrate:Registrate:${property("deps.registrate")}")
         }
     }

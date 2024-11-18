@@ -6,7 +6,6 @@ import com.dannbrown.deltaboxlib.platform.registrate.transformers.BlockstatePres
 import com.dannbrown.deltaboxlib.platform.registrate.transformers.RecipePresets
 import com.tterrag.registrate.util.DataIngredient
 import com.tterrag.registrate.util.entry.BlockEntry
-import net.minecraft.world.item.CreativeModeTabs
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -20,9 +19,6 @@ object DeltaboxBlocks {
       RecipePresets.simpleStonecuttingRecipe(c, p, { DataIngredient.items(Items.IRON_BLOCK) })
     }
     .item()
-    .transform { t ->
-      t.tab(CreativeModeTabs.BUILDING_BLOCKS)
-    }
     .build()
     .register()
 

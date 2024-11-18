@@ -18,9 +18,9 @@ public abstract class ItemMixin {
   @Inject(method = { "appendHoverText" }, at = { @At("HEAD") }, require = 1)
   protected void deltaboxlib$appendHoverText(
           //? if >=1.21 {
-          /*ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag, CallbackInfo ci
-          *///?} else
-          ItemStack itemStack, net.minecraft.world.level.Level level, List<Component> list, TooltipFlag tooltipFlag, CallbackInfo ci
+          ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag, CallbackInfo ci
+          //?} else
+          /*ItemStack itemStack, net.minecraft.world.level.Level level, List<Component> list, TooltipFlag tooltipFlag, CallbackInfo ci*/
   ) {
     // create or get an item description id, get the last key and add as suffix to
     String itemDescription = itemStack.getDescriptionId();

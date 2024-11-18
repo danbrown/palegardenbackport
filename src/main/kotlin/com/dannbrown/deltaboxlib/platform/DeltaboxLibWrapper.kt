@@ -8,6 +8,7 @@ import net.fabricmc.api.ModInitializer;
 
 object DeltaboxLibWrapper : ModInitializer {
     override fun onInitialize() {
+        Util.LOGGER.info("${DeltaboxLib.MOD_ID} has started!")
         DeltaboxLib.init()
         DeltaboxLib.REGISTRATE.register() // fabric exclusive registrate
     }
@@ -36,11 +37,20 @@ class DeltaboxLibWrapper {
 }
 *//*?} else {*/
 /*import net.neoforged.fml.common.Mod
+import net.neoforged.bus.api.IEventBus
+import net.neoforged.fml.ModContainer
+import net.neoforged.neoforge.common.NeoForge
 
 @Mod(DeltaboxLib.MOD_ID)
-class DeltaboxLibWrapper() {
+class DeltaboxLibWrapper(eventBus: IEventBus, modContainer: ModContainer) {
     init {
+        Util.LOGGER.info("${DeltaboxLib.MOD_ID} has started!")
+        val forgeEventBus = NeoForge.EVENT_BUS
+        register(eventBus, forgeEventBus)
+    }
+    fun register(modBus: IEventBus, forgeEventBus: IEventBus) {
         DeltaboxLib.init()
+        DeltaboxLib.REGISTRATE.registerEventListeners(modBus) // neoforged exclusive registrate
     }
 }
 *//*?}*/
