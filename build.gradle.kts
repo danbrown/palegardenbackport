@@ -82,7 +82,7 @@ dependencies {
 }
 
 sourceSets {
-    val generatedResources = file("src/generated")
+    val generatedResources = file("../../src/generated/resources")
     main {
         resources.srcDir(generatedResources)
     }
@@ -90,10 +90,17 @@ sourceSets {
 
 // Loom config
 loom {
-    fabricApi {
-        configureDataGeneration {
-            modId = mod.id
-            outputDirectory = file("src/generated")
+    runs {
+        create("datagen") {
+            client()
+
+            name = "Minecraft Data"
+            vmArg("-Dfabric-api.datagen")
+            vmArg("-Dfabric-api.datagen.output-dir=${file("../../src/generated/resources")}")
+            vmArg("-Dfabric-api.datagen.modid=${mod.id}")
+            vmArg("-Dporting_lib.datagen.existing_resources=${file("../../src/main/resources")}")
+
+            environmentVariable("DATAGEN", "TRUE")
         }
     }
 
@@ -106,9 +113,8 @@ loom {
     }
     else if (loader == "neoforge") {
         neoForge {
-
             runs {
-                
+
             }
         }
     }

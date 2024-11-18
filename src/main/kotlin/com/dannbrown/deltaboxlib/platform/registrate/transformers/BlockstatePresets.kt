@@ -25,12 +25,18 @@ import net.minecraft.world.level.block.state.properties.Property
 import net.minecraft.world.level.block.state.properties.WallSide
 
 /*? if fabric {*/
-/*import io.github.fabricators_of_create.porting_lib.models.generators.ConfiguredModel
-import io.github.fabricators_of_create.porting_lib.models.generators.BlockStateProvider
-*//*?} elif forge {*/
- import net.minecraftforge.client.model.generators.ConfiguredModel
-* import net.minecraftforge.client.model.generators.BlockStateProvider 
+import io.github.fabricators_of_create.porting_lib.models.generators.ConfiguredModel
+
+/* if <1.21 {*/
+import io.github.fabricators_of_create.porting_lib.models.generators.block.BlockStateProvider
+/*?} else {*/
+// import io.github.fabricators_of_create.porting_lib.models.generators.BlockStateProvider
 /*?}*/
+
+/*?} elif forge {*/
+ /*import net.minecraftforge.client.model.generators.ConfiguredModel
+* import net.minecraftforge.client.model.generators.BlockStateProvider 
+*//*?}*/
 
 object BlockstatePresets {
   fun <B : Block> noBlockState(): NonNullBiConsumer<DataGenContext<Block, B>, RegistrateBlockstateProvider> {

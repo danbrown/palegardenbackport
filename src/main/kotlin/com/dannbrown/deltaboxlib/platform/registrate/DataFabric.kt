@@ -1,7 +1,7 @@
 package com.dannbrown.deltaboxlib.platform.registrate
 
 /*? if fabric {*/
-/*import com.dannbrown.deltaboxlib.common.DeltaboxLib
+import com.dannbrown.deltaboxlib.common.DeltaboxLib
 import com.dannbrown.deltaboxlib.platform.util.Util
 import io.github.fabricators_of_create.porting_lib.data.ExistingFileHelper
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
@@ -17,12 +17,10 @@ class DataFabric: DataGeneratorEntrypoint {
     }
 
     val resources = Paths.get(System.getProperty("user.dir"), "../src", "main", "resources")
-    val helper = ExistingFileHelper(
-      setOf(resources), setOf("minecraft"), false, null, null
-    )
+    val helper = ExistingFileHelper.withResources(resources)
     val pack: FabricDataGenerator.Pack = gen.createPack()
     DeltaboxLib.REGISTRATE.setupDatagen(pack, helper)
     DeltaboxLib.gatherData(pack)
   }
 }
-*//*?}*/
+/*?}*/
