@@ -1,6 +1,7 @@
 {
   "block.deltaboxlib.adamantium_block": "Adamantium Block",
   "block.deltaboxlib.flammable_block": "Flammable Block",
+  "block.deltaboxlib.flammable_block_2": "Flammable Block 2",
   "block.deltaboxlib.flammable_sand": "Flammable Sand",
   "tooltip.deltaboxlib.flint": "It's a Delta!"
 }

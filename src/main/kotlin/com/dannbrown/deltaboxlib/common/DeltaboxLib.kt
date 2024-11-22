@@ -21,7 +21,6 @@ object DeltaboxLib {
     private var initialized = false
 
     fun init() {
-        println("HELLO WORLD IM A MOD INITIALIZER")
         DeltaboxBlocks.register()
     }
 
