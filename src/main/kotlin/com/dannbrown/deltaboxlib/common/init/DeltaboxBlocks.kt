@@ -1,13 +1,13 @@
 package com.dannbrown.deltaboxlib.common.init
 
 import com.dannbrown.deltaboxlib.common.DeltaboxLib
-import com.dannbrown.deltaboxlib.common.content.block.FlammableBlock
 import com.dannbrown.deltaboxlib.common.content.block.FlammablePillarBlock
 import com.dannbrown.deltaboxlib.common.content.block.FlammableSandBlock
+import com.dannbrown.deltaboxlib.common.content.block.GenericSaplingBlock
 import com.dannbrown.deltaboxlib.common.content.block.StrippableFlammablePillarBlock
+import com.dannbrown.deltaboxlib.common.content.tree.DeltaboxTreeGrower
 import com.dannbrown.deltaboxlib.platform.registrate.generators.BlockGenerator
 import com.dannbrown.deltaboxlib.platform.registrate.transformers.BlockLootPresets
-import com.dannbrown.deltaboxlib.platform.registrate.transformers.RecipePresets
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.tterrag.registrate.util.entry.BlockEntry
 import net.minecraft.tags.BlockTags
@@ -15,6 +15,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.FlowerPotBlock
 
 object DeltaboxBlocks {
   val BLOCKS = BlockGenerator(DeltaboxLib.REGISTRATE)
@@ -39,6 +40,12 @@ object DeltaboxBlocks {
   val FLAMMABLE_SAND: BlockEntry<FlammableSandBlock> = BLOCKS.create<FlammableSandBlock>("flammable_sand")
     .blockFactory { p -> FlammableSandBlock(p, 123) }
     .flammable(20, 5)
+    .register()
+
+  val LEMON_SAPLING: BlockEntry<GenericSaplingBlock> = BLOCKS.saplingBlock("lemon", DeltaboxTreeGrower.SAMPLE) { blockState, _, _ -> blockState.`is`(BlockTags.SAND) }
+    .register()
+  val POTTED_LEMON_SAPLING: BlockEntry<FlowerPotBlock> = BLOCKS.pottedBlock("lemon", { LEMON_SAPLING.get() })
+    .potted(LEMON_SAPLING)
     .register()
 
   fun register() {

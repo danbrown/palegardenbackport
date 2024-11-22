@@ -40,7 +40,9 @@ class BlockGeneratorBuilder<T : Block>(name: String, private val registrate: Del
 
   // @ Other properties
   private var _flammability: Pair<Int, Int>? = null
-  private var _strippedBlock: Supplier<Block>? = null
+  private var _strippedBlock: Supplier<out Block>? = null
+  private var _pottedBlock: BlockEntry<out Block>? = null
+  private var _cutoutRender: Boolean = false
   // End of properties
 
 
@@ -68,9 +70,21 @@ class BlockGeneratorBuilder<T : Block>(name: String, private val registrate: Del
     return this
   }
 
-  fun strippable(block: Supplier<Block>): BlockGeneratorBuilder<T> {
+  fun strippable(block: Supplier<out Block>): BlockGeneratorBuilder<T> {
     this.checkCurrentBuilder()
     this._strippedBlock = block
+    return this
+  }
+
+  fun potted(block: BlockEntry<out Block>): BlockGeneratorBuilder<T> {
+    this.checkCurrentBuilder()
+    this._pottedBlock = block
+    return this
+  }
+
+  fun cutoutRender(): BlockGeneratorBuilder<T> {
+    this.checkCurrentBuilder()
+    this._cutoutRender = true
     return this
   }
 
@@ -216,6 +230,16 @@ class BlockGeneratorBuilder<T : Block>(name: String, private val registrate: Del
     // add stripped block capability if present
     if (_strippedBlock != null) {
       registrate.addStrippableBlock(block, _strippedBlock!!)
+    }
+
+    // add potted block capability if present
+    if (_pottedBlock != null) {
+      registrate.addPottedBlock(_pottedBlock!!, block)
+    }
+
+    // add cutout render capability if present
+    if (_cutoutRender) {
+      registrate.addCutoutRender(block)
     }
 
     // return

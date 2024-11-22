@@ -22,8 +22,11 @@
         "value": "com.dannbrown.deltaboxlib.platform.DeltaboxLibWrapper"
       }
     ],
-    "fabric-datagen": [
-      "DatagenEntry"
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "com.dannbrown.deltaboxlib.platform.DeltaboxLibWrapper"
+      }
     ]
   },
   "depends": {

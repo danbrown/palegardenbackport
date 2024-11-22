@@ -10,10 +10,8 @@ import org.slf4j.LoggerFactory
 
 object DeltaboxLib {
     const val MOD_ID: String = "deltaboxlib"
-
     @JvmField
     val LOGGER = LoggerFactory.getLogger(MOD_ID)
-
     val REGISTRATE = DeltaboxRegistrate(MOD_ID)
 
     fun id(path: String) = DeltaboxUtil.resourceLocation(MOD_ID, path)

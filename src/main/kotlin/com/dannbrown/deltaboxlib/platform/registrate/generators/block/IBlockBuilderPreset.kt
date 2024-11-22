@@ -4,6 +4,6 @@ import com.dannbrown.deltaboxlib.platform.registrate.generators.BlockGenerator
 import com.dannbrown.deltaboxlib.platform.registrate.generators.BlockGeneratorBuilder
 import net.minecraft.world.level.block.Block
 
-abstract class IBlockBuilderPreset {
-  abstract fun <T: Block> create(generator: BlockGenerator): BlockGeneratorBuilder<T>
+abstract class IBlockBuilderPreset <T: Block> {
+  abstract fun create(generator: BlockGenerator): BlockGeneratorBuilder<T>
 }

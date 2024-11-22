@@ -2,15 +2,25 @@ package com.dannbrown.deltaboxlib.platform
 
 import com.dannbrown.deltaboxlib.common.*
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
+
+
 /*? if fabric {*/
-
 /*import net.fabricmc.api.ModInitializer;
+import net.fabricmc.api.ClientModInitializer
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
 
-object DeltaboxLibWrapper : ModInitializer {
+object DeltaboxLibWrapper : ModInitializer, ClientModInitializer {
     override fun onInitialize() {
         DeltaboxUtil.logInfo("mod has started!")
         DeltaboxLib.init()
         DeltaboxLib.REGISTRATE.register() // fabric exclusive registrate
+    }
+
+    @Environment(EnvType.CLIENT)
+    override fun onInitializeClient() {
+        DeltaboxUtil.logInfo("client mod has started!")
+        DeltaboxLib.REGISTRATE.registerClient() // fabric exclusive registrate
     }
 }
 *//*?} elif forge {*/
