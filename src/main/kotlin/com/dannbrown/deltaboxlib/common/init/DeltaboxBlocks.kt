@@ -1,6 +1,8 @@
 package com.dannbrown.deltaboxlib.common.init
 
 import com.dannbrown.deltaboxlib.common.DeltaboxLib
+import com.dannbrown.deltaboxlib.common.content.block.FlammableBlock
+import com.dannbrown.deltaboxlib.common.content.block.FlammableSandBlock
 import com.dannbrown.deltaboxlib.platform.registrate.generators.BlockGenerator
 import com.dannbrown.deltaboxlib.platform.registrate.transformers.BlockLootPresets
 import com.dannbrown.deltaboxlib.platform.registrate.transformers.RecipePresets
@@ -19,6 +21,17 @@ object DeltaboxBlocks {
     .copyFrom { Blocks.IRON_BLOCK }
     .loot(BlockLootPresets.dropItselfLoot())
     .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_IRON_TOOL)
+    .register()
+
+  val FLAMMABLE_BLOCK: BlockEntry<FlammableBlock> = BLOCKS.create<FlammableBlock>("flammable_block")
+    .blockFactory { p -> FlammableBlock(p) }
+    .flammable(20, 5)
+    .register()
+
+  val FLAMMABLE_SAND: BlockEntry<FlammableSandBlock> = BLOCKS.create<FlammableSandBlock>("flammable_sand")
+    .blockFactory { p -> FlammableSandBlock(p, 123) }
+    .flammable(20, 5)
+    .strippable { FLAMMABLE_BLOCK.get() }
     .register()
 
   fun register() {

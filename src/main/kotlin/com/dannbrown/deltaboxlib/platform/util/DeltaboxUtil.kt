@@ -245,7 +245,7 @@ object DeltaboxUtil {
 
         // allow to use for recipe tags
         fun modloaderItemIngredient(path: String): Ingredient {
-            return Ingredient.fromValues(modloaderItemTag(path).stream().map { Ingredient.TagValue(it) })
+            return Ingredient.of(modloaderItemTag(path).map { Ingredient.of(it).items }.toTypedArray().flatten().stream())
         }
     }
 }

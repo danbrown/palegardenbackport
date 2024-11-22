@@ -34,7 +34,7 @@ class DeltaboxLibWrapper {
         fun register(modBus: IEventBus, forgeEventBus: IEventBus) {
             DeltaboxLib.init()
             modBus.addListener(EventPriority.LOWEST) { event: GatherDataEvent -> DeltaboxLib.gatherData(event.generator.getVanillaPack(true)) }
-            DeltaboxLib.REGISTRATE.registerEventListeners(modBus) // forge exclusive registrate
+            DeltaboxLib.REGISTRATE.register(modBus, forgeEventBus) // forge exclusive registrate
         }
     }
 }
@@ -55,7 +55,7 @@ class DeltaboxLibWrapper(eventBus: IEventBus, modContainer: ModContainer) {
     fun register(modBus: IEventBus, forgeEventBus: IEventBus) {
         DeltaboxLib.init()
         modBus.addListener { event: GatherDataEvent -> DeltaboxLib.gatherData(event.generator.getVanillaPack(true)) }
-        DeltaboxLib.REGISTRATE.registerEventListeners(modBus) // neoforged exclusive registrate
+        DeltaboxLib.REGISTRATE.register(modBus, forgeEventBus) // neoforged exclusive registrate
     }
 }
 *//*?}*/

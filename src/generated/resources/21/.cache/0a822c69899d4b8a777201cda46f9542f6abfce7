@@ -1,16 +1,24 @@
-// 1.21.1	2024-11-18T18:45:01.313997	Registrate Provider for deltaboxlib [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+// 1.21.1	2024-11-18T19:36:55.464786	Registrate Provider for deltaboxlib [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
 b47ba9037d146b0124a187e02cd01cfb1e28905f assets/deltaboxlib/blockstates/adamantium_block.json
-a98aa667fa28a4a1866fd919c9795c84716289e3 assets/deltaboxlib/lang/en_ud.json
-c54d8aee36271c8c865a71e85c9708b1bbdcd2ed assets/deltaboxlib/lang/en_us.json
+232181b56321d8645220706efafacc3a147ec0ca assets/deltaboxlib/blockstates/flammable_block.json
+aeac4d14a1270dee0c19209ba0a72280de957b62 assets/deltaboxlib/blockstates/flammable_sand.json
+bdf6d56467df99175b43d783406f09f18c5c23ba assets/deltaboxlib/lang/en_ud.json
+b2b1dc19fe4eebbc566615e82b668668e3da5f55 assets/deltaboxlib/lang/en_us.json
 af4e5fdd38c7b2f93f16c67a9badac29fccb3092 assets/deltaboxlib/models/block/adamantium_block.json
+39493b1e3bd7d433287fbce37721792478c9268e assets/deltaboxlib/models/block/flammable_block.json
+9a9943ce876d5bce1dcb5b904898f8d610ec1d3a assets/deltaboxlib/models/block/flammable_sand.json
 4cf9a2f37d5ec43c866937ac4b666ab5faff26ad assets/deltaboxlib/models/item/adamantium_block.json
+d7764982abbb057174621ee30963be1fcb02cb1f assets/deltaboxlib/models/item/flammable_block.json
+00a1b4efaec01f16c89562f17b4e4bfc6701a7a6 assets/deltaboxlib/models/item/flammable_sand.json
 5f48848c6593826630528a5e345adc35a7d95baa data/c/tags/block/storage_blocks.json
 5f48848c6593826630528a5e345adc35a7d95baa data/c/tags/block/storage_blocks/adamantium.json
 5f48848c6593826630528a5e345adc35a7d95baa data/c/tags/item/storage_blocks.json
 5f48848c6593826630528a5e345adc35a7d95baa data/c/tags/item/storage_blocks/adamantium.json
-843bd12d1c80ded9624c944e0161eceec35dea2a data/deltaboxlib/advancement/recipes/building_blocks/adamantium_block_from_materials.json
+f52b40aae34ce3e4cfc80985a665eeb450739094 data/deltaboxlib/advancement/recipes/building_blocks/adamantium_block_from_materials.json
 4f71e87469971451ee3442066d816157e2f7466c data/deltaboxlib/advancement/recipes/building_blocks/adamantium_block_to_materials.json
 5fbffb139fe62d0bb2fe33de2db3d6b19b2727d2 data/deltaboxlib/loot_table/blocks/adamantium_block.json
+b5213b1cf6bcc23a36e49eb4121948ea9b71abf6 data/deltaboxlib/loot_table/blocks/flammable_block.json
+f1471b244a97f8b22d8edd44df6489d30454d15c data/deltaboxlib/loot_table/blocks/flammable_sand.json
 c108a8face3661732325a198c1c6b6bfbee17567 data/deltaboxlib/recipe/adamantium_block_from_materials.json
 fda054e77f0b1e346c7d0d684f3206ce84ba4184 data/deltaboxlib/recipe/adamantium_block_to_materials.json
 5f48848c6593826630528a5e345adc35a7d95baa data/forge/tags/block/storage_blocks.json

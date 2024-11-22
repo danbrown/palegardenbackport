@@ -1,5 +1,6 @@
 package com.dannbrown.deltaboxlib.platform.registrate
 
+// FABRIC ONLY DATA GEN ENTRY (in beta)
 /*? if fabric {*/
 /*import io.github.fabricators_of_create.porting_lib.data.ExistingFileHelper
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint

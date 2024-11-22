@@ -37,6 +37,13 @@ class BlockGeneratorBuilder<T : Block>(name: String, private val registrate: Del
   private var _textureName = name
   private var _noItem = false
   private var _builder: NonNullUnaryOperator<BlockBuilder<T, DeltaboxRegistrate>> = NonNullUnaryOperator { b: BlockBuilder<T, DeltaboxRegistrate> -> b }
+
+  // @ Other properties
+  private var _flammability: Pair<Int, Int>? = null
+  private var _strippedBlock: Supplier<Block>? = null
+  // End of properties
+
+
   private fun createBlockBase(registerName: String): BlockBuilder<T, DeltaboxRegistrate> {
     return registrate.block<T>(registerName, _blockFactory)
       .initialProperties { _copyFrom.get() }
@@ -52,6 +59,19 @@ class BlockGeneratorBuilder<T : Block>(name: String, private val registrate: Del
           .tag(*_itemTags.toTypedArray())
           .build()
       })
+  }
+
+  // @ Properties
+  fun flammable(burnChance: Int = 20, spreadChance: Int = 5): BlockGeneratorBuilder<T> {
+    this.checkCurrentBuilder()
+    this._flammability = Pair(burnChance, spreadChance)
+    return this
+  }
+
+  fun strippable(block: Supplier<Block>): BlockGeneratorBuilder<T> {
+    this.checkCurrentBuilder()
+    this._strippedBlock = block
+    return this
   }
 
   // @ Builder Chaining Methods
@@ -184,6 +204,21 @@ class BlockGeneratorBuilder<T : Block>(name: String, private val registrate: Del
 
   fun register(): BlockEntry<T> {
     this.checkCurrentBuilder()
-    return createBlockBase(fullName()).transform(_builder).register()
+
+    // create the block to return
+    val block = createBlockBase(fullName()).transform(_builder).register()
+
+    // add to flammable blocks if flammable
+    if (_flammability != null) {
+      registrate.addFlammableBlock(block, _flammability!!.first, _flammability!!.second)
+    }
+
+    // add stripped block capability if present
+    if (_strippedBlock != null) {
+      registrate.addStrippableBlock(block, _strippedBlock!!)
+    }
+
+    // return
+    return block
   }
 }
