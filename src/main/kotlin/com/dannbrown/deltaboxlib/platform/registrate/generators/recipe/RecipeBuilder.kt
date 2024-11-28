@@ -70,6 +70,17 @@ class RecipeBuilder(
 
     simpleShapelessRecipe(ingotItem, listOf( Supplier { Ingredient.of(result.get()) } ), 9, DeltaboxUtil.itemId(result), "_to_materials")
   }
+
+  fun smallStorageBlockRecipe(result: Supplier<ItemLike>, ingotItem: Supplier<ItemLike>, ingredient: Supplier<Ingredient>) {
+    simpleShapedRecipe(result,
+      arrayOf("II", "II"),
+      mapOf('I' to ingredient),
+      1,
+      "_from_materials"
+    )
+
+    simpleShapelessRecipe(ingotItem, listOf( Supplier { Ingredient.of(result.get()) } ), 4, DeltaboxUtil.itemId(result), "_to_materials")
+  }
   // End Storage Blocks
 
   // Stonecutting

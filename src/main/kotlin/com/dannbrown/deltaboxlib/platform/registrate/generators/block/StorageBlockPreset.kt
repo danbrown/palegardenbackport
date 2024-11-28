@@ -14,4 +14,12 @@ class StorageBlockPreset<T : Block>(val _name: String, val ingotItem: Supplier<I
       .recipe { c, p, b -> b.storageBlockRecipe({ c.get() }, ingotItem, ingredient) }
       .itemTags(BlockTagPresets.storageBlockTags(_name).second.toList())
   }
+
+  fun createSmall(generator: BlockGenerator): BlockGeneratorBuilder<T> {
+    return generator.create<T>(_name)
+      .suffix(if (addSuffix) { "_block" } else { "" })
+      .blockTags(BlockTagPresets.storageBlockTags(_name).first.toList())
+      .recipe { c, p, b -> b.smallStorageBlockRecipe({ c.get() }, ingotItem, ingredient) }
+      .itemTags(BlockTagPresets.storageBlockTags(_name).second.toList())
+  }
 }

@@ -27,13 +27,23 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
   // functions to make it easier to create common block types
 
   /**
-   * Add Storage Block properties, tags and block-items, items-block recipes
+   * Add Storage Block (3x3) properties, tags and block-items, items-block recipes
    * @param ingotItem The ingot item to use in the block-items recipe
    * @param ingredient The ingredient to use in the items-block recipe
    * @param addSuffix Whether to add the "_block" suffix to the block name
    */
   fun <T: Block> storageBlock(_name: String, ingotItem: Supplier<ItemLike>, ingredient: Supplier<Ingredient>, addSuffix: Boolean = true): BlockGeneratorBuilder<T> {
     return StorageBlockPreset<T>(_name, ingotItem, ingredient, addSuffix).create(this)
+  }
+
+  /**
+   * Add Small Storage Block (2x2) properties, tags and block-items, items-block recipes
+   * @param ingotItem The ingot item to use in the block-items recipe
+   * @param ingredient The ingredient to use in the items-block recipe
+   * @param addSuffix Whether to add the "_block" suffix to the block name
+   */
+  fun <T: Block> smallStorageBlock(_name: String, ingotItem: Supplier<ItemLike>, ingredient: Supplier<Ingredient>, addSuffix: Boolean = true): BlockGeneratorBuilder<T> {
+    return StorageBlockPreset<T>(_name, ingotItem, ingredient, addSuffix).createSmall(this)
   }
 
   /**
