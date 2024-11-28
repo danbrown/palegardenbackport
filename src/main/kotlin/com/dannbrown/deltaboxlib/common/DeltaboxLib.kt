@@ -1,6 +1,7 @@
 package com.dannbrown.deltaboxlib.common
 
 import com.dannbrown.deltaboxlib.common.init.DeltaboxBlocks
+import com.dannbrown.deltaboxlib.common.init.DeltaboxItems
 import com.dannbrown.deltaboxlib.common.init.DeltaboxLang
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
 import com.tterrag.registrate.providers.ProviderType
@@ -15,6 +16,7 @@ object DeltaboxLib {
 
     fun init() {
         DeltaboxBlocks.register()
+        DeltaboxItems.register()
     }
 
     fun gatherData(gen: DataGenerator.PackGenerator) {

@@ -12,6 +12,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import java.util.function.Supplier
+import net.minecraft.world.item.Item
 
 /*? if <1.21 {*/
 import net.minecraft.data.recipes.FinishedRecipe
@@ -21,6 +22,20 @@ object RecipePresets {
   fun <B : Block> simpleStonecuttingRecipe(c: DataGenContext<Block, B>, p: RegistrateRecipeProvider, ingredient: Supplier<DataIngredient>, amount: Int = 1
   ) {
     p.stonecutting(ingredient.get(), RecipeCategory.BUILDING_BLOCKS, { c.get() }, amount)
+  }
+
+  fun <B : Item> simpleShapedRecipe(c: DataGenContext<Item, B>, p: RegistrateRecipeProvider, pattern: Array<String>, key: Map<Char, Supplier<Ingredient>>, amount: Int = 1) {
+    val builder = ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, c.get(), amount)
+
+    for (line in pattern) builder.pattern(line)
+    for ((k, v) in key) { builder.define(k, v.get()) }
+
+    builder.unlockedBy("has_ingredient", InventoryChangeTrigger.TriggerInstance.hasItems(*key.values.map { it.get().items[0].item }.toTypedArray()))
+    /*? if >=1.21 {*/
+     /*builder.save(p, p.safeId(DeltaboxUtil.resourceLocation(c.name)))
+    *//*?} else {*/
+    builder.save({ t: FinishedRecipe -> p.accept(t) }, p.safeId(DeltaboxUtil.resourceLocation(c.name)))
+    /*?}*/
   }
 
   fun <B : Block> storageBlockRecipe(c: DataGenContext<Block, B>, p: RegistrateRecipeProvider, ingotItem: Supplier<ItemLike>, ingredient: Supplier<Ingredient>) {
