@@ -9,7 +9,7 @@ import java.util.function.Supplier
 
 
 
-class StrippableFlammablePillarBlock(props: Properties, private val strippedBlock: Supplier<Block>, private val flammability: Int = 20, private val fireSpread: Int = 5): FlammablePillarBlock(props, flammability, fireSpread) {
+class StrippableFlammablePillarBlock(props: Properties, private val strippedBlock: Supplier<out Block>, private val flammability: Int = 20, private val fireSpread: Int = 5): FlammablePillarBlock(props, flammability, fireSpread) {
   /*? if forge || neoforge {*/
   override fun getToolModifiedState(
     state: BlockState,

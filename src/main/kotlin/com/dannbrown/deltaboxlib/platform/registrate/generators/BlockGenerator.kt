@@ -5,6 +5,7 @@ import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
 import com.dannbrown.deltaboxlib.platform.registrate.generators.block.PottedBlockPreset
 import com.dannbrown.deltaboxlib.platform.registrate.generators.block.SaplingBlockPreset
 import com.dannbrown.deltaboxlib.platform.registrate.generators.block.StorageBlockPreset
+import com.tterrag.registrate.util.entry.BlockEntry
 import net.minecraft.core.BlockPos
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.crafting.Ingredient
@@ -56,7 +57,7 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
    * @param block The block to put in the flower pot
    * @param suffix The suffix to add to the block name
    */
-  fun pottedBlock(_name: String, block: Supplier<Block>, suffix: String = "_sapling"): BlockGeneratorBuilder<FlowerPotBlock> {
+  fun pottedBlock(_name: String, block: BlockEntry<out Block>, suffix: String = "_sapling"): BlockGeneratorBuilder<FlowerPotBlock> {
     return PottedBlockPreset(_name, block, suffix).create(this)
   }
 }

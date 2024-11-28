@@ -26,7 +26,7 @@ class BlockGeneratorBuilder<T : Block>(name: String, private val registrate: Del
   private val _name: String = name
   private var _prefix = ""
   private var _suffix = ""
-  private var _blockFactory: (Properties) -> T = { p: Properties -> Block(p) as T }
+  private var _blockFactory: (Properties, BlockGeneratorContext) -> T = { p, c -> Block(p) as T }
   private var _blockTags = mutableListOf<TagKey<Block>>()
   private var _itemTags = mutableListOf<TagKey<Item>>()
   private var _color: MapColor? = null
@@ -45,9 +45,9 @@ class BlockGeneratorBuilder<T : Block>(name: String, private val registrate: Del
   private var _cutoutRender: Boolean = false
   // End of properties
 
-
   private fun createBlockBase(registerName: String): BlockBuilder<T, DeltaboxRegistrate> {
-    return registrate.block<T>(registerName, _blockFactory)
+    val ctx = BlockGeneratorContext(_flammability, _strippedBlock, _pottedBlock, _cutoutRender)
+    return registrate.block<T>(registerName) { p -> _blockFactory(p, ctx)}
       .initialProperties { _copyFrom.get() }
       .properties { p -> p.mapColor(if (_color !== null) { _color } else { MapColor.COLOR_GRAY }) }
       .properties(if (_correctToolForDrops) { p -> p.requiresCorrectToolForDrops() } else { p -> p })
@@ -89,8 +89,13 @@ class BlockGeneratorBuilder<T : Block>(name: String, private val registrate: Del
   }
 
   // @ Builder Chaining Methods
-  fun blockFactory(factory: (Properties) -> T = { p: Properties -> Block(p) as T }): BlockGeneratorBuilder<T> {
-    this._blockFactory = factory
+  fun blockFactory(factory: (Properties, BlockGeneratorContext) -> T = { p, c -> Block(p) as T }): BlockGeneratorBuilder<T> {
+    this._blockFactory = { p, c -> factory(p, c) }
+    return this
+  }
+
+  fun blockFactory(factory: (Properties) -> T = { p -> Block(p) as T }): BlockGeneratorBuilder<T> {
+    this._blockFactory = { p, c -> factory(p) }
     return this
   }
 
@@ -244,5 +249,8 @@ class BlockGeneratorBuilder<T : Block>(name: String, private val registrate: Del
 
     // return
     return block
+  }
+
+  class BlockGeneratorContext(val flammability: Pair<Int, Int>?, val strippedBlock: Supplier<out Block>?, val pottedBlock: BlockEntry<out Block>?, val cutoutRender: Boolean) {
   }
 }

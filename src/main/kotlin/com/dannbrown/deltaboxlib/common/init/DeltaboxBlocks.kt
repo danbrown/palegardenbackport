@@ -27,24 +27,24 @@ object DeltaboxBlocks {
     .register()
 
   val FLAMMABLE_BLOCK: BlockEntry<FlammablePillarBlock> = BLOCKS.create<FlammablePillarBlock>("flammable_block")
-    .blockFactory { p -> FlammablePillarBlock(p) }
-    .flammable(20, 5)
+    .blockFactory { p, c -> FlammablePillarBlock(p, c.flammability!!.first, c.flammability.second) }
+    .flammable()
     .register()
 
   val FLAMMABLE_BLOCK_2: BlockEntry<StrippableFlammablePillarBlock> = BLOCKS.create<StrippableFlammablePillarBlock>("flammable_block_2")
-    .blockFactory { p -> StrippableFlammablePillarBlock(p, { FLAMMABLE_BLOCK.get() }) }
-    .flammable(20, 5)
+    .blockFactory { p, c -> StrippableFlammablePillarBlock(p, c.strippedBlock!!, c.flammability!!.first, c.flammability.second) }
+    .flammable()
     .strippable { FLAMMABLE_BLOCK.get() }
     .register()
 
   val FLAMMABLE_SAND: BlockEntry<FlammableSandBlock> = BLOCKS.create<FlammableSandBlock>("flammable_sand")
-    .blockFactory { p -> FlammableSandBlock(p, 123) }
-    .flammable(20, 5)
+    .blockFactory { p, c -> FlammableSandBlock(p, 123, c.flammability!!.first, c.flammability.second) }
+    .flammable()
     .register()
 
   val LEMON_SAPLING: BlockEntry<GenericSaplingBlock> = BLOCKS.saplingBlock("lemon", DeltaboxTreeGrower.SAMPLE) { blockState, _, _ -> blockState.`is`(BlockTags.SAND) }
     .register()
-  val POTTED_LEMON_SAPLING: BlockEntry<FlowerPotBlock> = BLOCKS.pottedBlock("lemon", { LEMON_SAPLING.get() })
+  val POTTED_LEMON_SAPLING: BlockEntry<FlowerPotBlock> = BLOCKS.pottedBlock("lemon", LEMON_SAPLING)
     .potted(LEMON_SAPLING)
     .register()
 
