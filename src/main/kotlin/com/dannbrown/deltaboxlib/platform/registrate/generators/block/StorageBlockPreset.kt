@@ -12,7 +12,7 @@ class StorageBlockPreset<T : Block>(val _name: String, val ingotItem: Supplier<I
     return generator.create<T>(_name)
       .suffix(if (addSuffix) { "_block" } else { "" })
       .blockTags(BlockTagPresets.storageBlockTags(_name).first.toList())
-      .recipe { c, p -> RecipeBuilder(generator.registrate, p).storageBlockRecipe({ c.get() }, ingotItem, ingredient) }
+      .recipe { c, p, b -> b.storageBlockRecipe({ c.get() }, ingotItem, ingredient) }
       .itemTags(BlockTagPresets.storageBlockTags(_name).second.toList())
   }
 }

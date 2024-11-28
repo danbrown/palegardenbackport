@@ -2,7 +2,6 @@ package com.dannbrown.deltaboxlib.common.init
 
 import com.dannbrown.deltaboxlib.common.DeltaboxLib
 import com.dannbrown.deltaboxlib.platform.registrate.generators.item.ItemGenerator
-import com.dannbrown.deltaboxlib.platform.registrate.generators.recipe.RecipeBuilder
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -13,8 +12,8 @@ object DeltaboxItems {
   val ITEMS = ItemGenerator(DeltaboxLib.REGISTRATE)
 
   val WARP_CRYSTAL = ITEMS.create<Item>("warp_crystal")
-    .recipe { c, p ->
-      RecipeBuilder(ITEMS.registrate, p).simpleShapedRecipe(
+    .recipe { c, p, b ->
+      b.simpleShapedRecipe(
         { c.get() },
         arrayOf("GSG", "SBS", "GSG"),
         mapOf(

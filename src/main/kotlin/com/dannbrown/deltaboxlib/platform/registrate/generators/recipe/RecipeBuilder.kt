@@ -1,6 +1,5 @@
 package com.dannbrown.deltaboxlib.platform.registrate.generators.recipe
 
-/*? if <1.21 {*/
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.tterrag.registrate.util.DataIngredient
@@ -15,10 +14,8 @@ import net.minecraft.world.level.ItemLike
 import java.util.function.Consumer
 import java.util.function.Supplier
 
-/*?}*/
 
 class RecipeBuilder(val registrate: DeltaboxRegistrate, val p: Consumer<FinishedRecipe>) {
-
   // Shaped
   fun simpleShapedRecipe(result: Supplier<ItemLike>, pattern: Array<String>, key: Map<Char, Supplier<Ingredient>>, amount: Int = 1, name: String, suffix: String = "") {
     val builder = ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, result.get(), amount)
