@@ -3,7 +3,6 @@ package com.dannbrown.deltaboxlib.platform.registrate.generators.recipe
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import net.minecraft.advancements.critereon.InventoryChangeTrigger
-
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
