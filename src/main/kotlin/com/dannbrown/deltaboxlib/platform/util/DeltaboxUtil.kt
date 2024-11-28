@@ -17,7 +17,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
-import net.minecraftforge.registries.ForgeRegistries
 import org.apache.logging.log4j.LogManager
 import java.nio.file.Path
 import java.util.function.Supplier
