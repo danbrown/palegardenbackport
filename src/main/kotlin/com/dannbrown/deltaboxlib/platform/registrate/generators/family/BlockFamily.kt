@@ -1,4 +1,4 @@
-package com.dannbrown.deltaboxlib.platform.registrate.generators
+package com.dannbrown.deltaboxlib.platform.registrate.generators.family
 
 import com.tterrag.registrate.util.entry.BlockEntry
 import net.minecraft.world.level.block.Block

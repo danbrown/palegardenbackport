@@ -6,7 +6,7 @@ import com.dannbrown.deltaboxlib.common.content.block.FlammableSandBlock
 import com.dannbrown.deltaboxlib.common.content.block.GenericSaplingBlock
 import com.dannbrown.deltaboxlib.common.content.block.StrippableFlammablePillarBlock
 import com.dannbrown.deltaboxlib.common.content.tree.DeltaboxTreeGrower
-import com.dannbrown.deltaboxlib.platform.registrate.generators.BlockGenerator
+import com.dannbrown.deltaboxlib.platform.registrate.generators.block.BlockGenerator
 import com.dannbrown.deltaboxlib.platform.registrate.transformers.BlockLootPresets
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.tterrag.registrate.util.entry.BlockEntry

@@ -1,5 +1,6 @@
-package com.dannbrown.deltaboxlib.platform.registrate.generators
+package com.dannbrown.deltaboxlib.platform.registrate.generators.family
 
+import com.dannbrown.deltaboxlib.platform.registrate.generators.block.BlockGenerator
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks

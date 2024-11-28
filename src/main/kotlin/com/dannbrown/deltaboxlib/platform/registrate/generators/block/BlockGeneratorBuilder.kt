@@ -1,21 +1,17 @@
-package com.dannbrown.deltaboxlib.platform.registrate.generators
+package com.dannbrown.deltaboxlib.platform.registrate.generators.block
 
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
-import com.dannbrown.deltaboxlib.platform.registrate.transformers.RecipePresets
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
-import com.dannbrown.deltaboxlib.registry.transformers.BlockTagPresets
 import com.tterrag.registrate.builders.BlockBuilder
 import com.tterrag.registrate.providers.DataGenContext
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider
 import com.tterrag.registrate.providers.RegistrateRecipeProvider
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables
-import com.tterrag.registrate.util.DataIngredient
 import com.tterrag.registrate.util.entry.BlockEntry
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties

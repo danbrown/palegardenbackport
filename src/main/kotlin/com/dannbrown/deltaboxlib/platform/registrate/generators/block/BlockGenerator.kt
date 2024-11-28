@@ -1,20 +1,17 @@
-package com.dannbrown.deltaboxlib.platform.registrate.generators
+package com.dannbrown.deltaboxlib.platform.registrate.generators.block
 
+import com.dannbrown.deltaboxlib.common.content.block.GenericSaplingBlock
 import com.dannbrown.deltaboxlib.common.content.tree.DeltaboxTreeGrower
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
-import com.dannbrown.deltaboxlib.platform.registrate.generators.block.PottedBlockPreset
-import com.dannbrown.deltaboxlib.platform.registrate.generators.block.SaplingBlockPreset
-import com.dannbrown.deltaboxlib.platform.registrate.generators.block.StorageBlockPreset
+import com.dannbrown.deltaboxlib.platform.registrate.generators.family.BlockFamilyGeneratorBuilder
 import com.tterrag.registrate.util.entry.BlockEntry
 import net.minecraft.core.BlockPos
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.FlowerPotBlock
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.material.MapColor
 import java.util.function.Supplier
 
 class BlockGenerator(val registrate: DeltaboxRegistrate) {
@@ -48,7 +45,7 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     _name: String,
     treeGrower: DeltaboxTreeGrower,
     placeOn: ((blockState: BlockState, blockGetter: BlockGetter, blockPos: BlockPos) -> Boolean)? = null
-  ): BlockGeneratorBuilder<com.dannbrown.deltaboxlib.common.content.block.GenericSaplingBlock> {
+  ): BlockGeneratorBuilder<GenericSaplingBlock> {
     return SaplingBlockPreset(_name, treeGrower, placeOn).create(this)
   }
 

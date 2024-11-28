@@ -13,12 +13,14 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
+import net.minecraftforge.registries.ForgeRegistries
 import org.apache.logging.log4j.LogManager
 import java.nio.file.Path
-import java.util.stream.Stream
+import java.util.function.Supplier
 
 object DeltaboxUtil {
     private val LOGGER = LogManager.getLogger()
@@ -44,6 +46,11 @@ object DeltaboxUtil {
     fun resourceLocation(path: String, id: String): ResourceLocation =
       /*? if <1.21 {*/ResourceLocation(path, id)
     /*?} else*//*ResourceLocation.fromNamespaceAndPath(path, id)*/
+
+    fun itemId(item: Supplier<ItemLike>): String {
+        val names = item.get().asItem().descriptionId.split(".")
+        return names[names.size - 1]
+    }
 
     object PATH {
         fun getConfigPath(modID: String, configFileName: String, configExtension: String): Path {

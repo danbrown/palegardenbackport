@@ -1,4 +1,4 @@
-package com.dannbrown.deltaboxlib.platform.registrate.generators
+package com.dannbrown.deltaboxlib.platform.registrate.generators.item
 
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
 import net.minecraft.world.item.Item
