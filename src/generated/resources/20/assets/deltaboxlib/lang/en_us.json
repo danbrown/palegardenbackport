@@ -9,6 +9,8 @@
   "block.deltaboxlib.potted_simple_grass": "Potted Simple Grass",
   "block.deltaboxlib.simple_flower": "Simple Flower",
   "block.deltaboxlib.simple_grass": "Simple Grass",
+  "block.deltaboxlib.sparse_dry_grass": "Sparse Dry Grass",
+  "block.deltaboxlib.tall_sparse_dry_grass": "Tall Sparse Dry Grass",
   "item.deltaboxlib.warp_crystal": "Warp Crystal",
   "tooltip.deltaboxlib.flint": "It's a Delta!"
 }

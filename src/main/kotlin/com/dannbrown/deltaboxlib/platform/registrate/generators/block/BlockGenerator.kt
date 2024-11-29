@@ -1,7 +1,9 @@
 package com.dannbrown.deltaboxlib.platform.registrate.generators.block
 
+import com.dannbrown.deltaboxlib.common.content.block.GenericDoublePlantBlock
 import com.dannbrown.deltaboxlib.common.content.block.GenericGrassBlock
 import com.dannbrown.deltaboxlib.common.content.block.GenericSaplingBlock
+import com.dannbrown.deltaboxlib.common.content.block.GenericTallGrassBlock
 import com.dannbrown.deltaboxlib.common.content.tree.DeltaboxTreeGrower
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
 import com.dannbrown.deltaboxlib.platform.registrate.generators.family.BlockFamilyGeneratorBuilder
@@ -107,5 +109,29 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     placeOn: ((blockState: BlockState, blockGetter: BlockGetter, blockPos: BlockPos) -> Boolean)? = null
   ): BlockGeneratorBuilder<GenericGrassBlock> {
     return GrassBlockPreset(_name, null, isSticky, isHarmful, isBonemealable, 0f, 0, placeOn).createFlower(this)
+  }
+
+  fun createSmallTallGrassBlock(
+    _name: String,
+    doubleBlock: Supplier<GenericDoublePlantBlock>,
+    dropItem: Supplier<ItemLike>,
+    needBonemeal: Boolean = false,
+    placeOn: ((blockState: BlockState, blockGetter: BlockGetter, blockPos: BlockPos) -> Boolean)? = null,
+    chance: Float = 0.25f,
+    multiplier: Int = 2,
+  ): BlockGeneratorBuilder<GenericTallGrassBlock> {
+    return GrassBlockPreset(_name, dropItem, false, false, false, chance, multiplier, placeOn).createSmallTallGrassBlock(this, doubleBlock, needBonemeal)
+  }
+
+  fun createDoubleTallGrassBlock(
+    _name: String,
+    dropItem: Supplier<ItemLike>,
+    seedItem: Supplier<ItemLike>? = null,
+    placeOn: ((blockState: BlockState, blockGetter: BlockGetter, blockPos: BlockPos) -> Boolean)? = null,
+    prefix: String = "tall_",
+    chance: Float = 0.25f,
+    multiplier: Int = 2,
+  ): BlockGeneratorBuilder<GenericDoublePlantBlock> {
+    return GrassBlockPreset(_name, dropItem, false, false, false, chance, multiplier, placeOn).createDoubleTallGrassBlock(this, seedItem, prefix)
   }
 }

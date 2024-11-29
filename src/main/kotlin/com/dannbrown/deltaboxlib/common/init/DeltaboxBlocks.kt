@@ -3,8 +3,10 @@ package com.dannbrown.deltaboxlib.common.init
 import com.dannbrown.deltaboxlib.common.DeltaboxLib
 import com.dannbrown.deltaboxlib.common.content.block.FlammablePillarBlock
 import com.dannbrown.deltaboxlib.common.content.block.FlammableSandBlock
+import com.dannbrown.deltaboxlib.common.content.block.GenericDoublePlantBlock
 import com.dannbrown.deltaboxlib.common.content.block.GenericGrassBlock
 import com.dannbrown.deltaboxlib.common.content.block.GenericSaplingBlock
+import com.dannbrown.deltaboxlib.common.content.block.GenericTallGrassBlock
 import com.dannbrown.deltaboxlib.common.content.block.StrippableFlammablePillarBlock
 import com.dannbrown.deltaboxlib.common.content.tree.DeltaboxTreeGrower
 import com.dannbrown.deltaboxlib.platform.registrate.generators.block.BlockGenerator
@@ -17,6 +19,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.FlowerPotBlock
+import net.minecraft.world.level.material.MapColor
 
 object DeltaboxBlocks {
   val BLOCKS = BlockGenerator(DeltaboxLib.REGISTRATE)
@@ -56,6 +59,14 @@ object DeltaboxBlocks {
   val POTTED_SIMPLE_GRASS: BlockEntry<FlowerPotBlock> = BLOCKS.pottedBlock("simple_grass", SIMPLE_GRASS)
     .register()
   val POTTED_SIMPLE_FLOWER: BlockEntry<FlowerPotBlock> = BLOCKS.pottedBlock("simple_flower", SIMPLE_FLOWER)
+    .register()
+
+  // GRASS
+  val TALL_SPARSE_DRY_GRASS: BlockEntry<GenericDoublePlantBlock> = BLOCKS.createDoubleTallGrassBlock("sparse_dry_grass", { Items.BEETROOT_SEEDS }, null, { blockState, _, _ -> blockState.`is`(BlockTags.SAND) })
+    .color(MapColor.TERRACOTTA_YELLOW)
+    .register()
+  val SPARSE_DRY_GRASS: BlockEntry<GenericTallGrassBlock> = BLOCKS.createSmallTallGrassBlock("sparse_dry_grass", { TALL_SPARSE_DRY_GRASS.get() }, { Items.BEETROOT_SEEDS }, false, { blockState, _, _ -> blockState.`is`(BlockTags.SAND) })
+    .color(MapColor.TERRACOTTA_YELLOW)
     .register()
 
   fun register() {

@@ -12,7 +12,7 @@ import net.minecraft.util.ColorRGBA
 
 open class FlammableSandBlock(props: Properties, tone: Int, private val flammability: Int = 20, private val fireSpread: Int = 5): ColoredFallingBlock(ColorRGBA(tone),  props) {
   /^? if forge || neoforge {^/
-  /^override fun isFlammable(state: BlockState, level: BlockGetter, pos: BlockPos, direction: Direction): Boolean {
+  override fun isFlammable(state: BlockState, level: BlockGetter, pos: BlockPos, direction: Direction): Boolean {
     return true
   }
 
@@ -23,7 +23,7 @@ open class FlammableSandBlock(props: Properties, tone: Int, private val flammabi
   override fun getFireSpreadSpeed(state: BlockState, level: BlockGetter, pos: BlockPos, direction: Direction): Int {
     return fireSpread
   }
-  ^//^?}^/
+  /^?}^/
 }
 
 *//*?} else {*/

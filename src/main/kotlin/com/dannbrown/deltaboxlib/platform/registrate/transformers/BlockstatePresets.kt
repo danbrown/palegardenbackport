@@ -28,10 +28,10 @@ import net.minecraft.world.level.block.state.properties.WallSide
 /*import io.github.fabricators_of_create.porting_lib.models.generators.ConfiguredModel
 
 /^? if <1.21 {^/
-import io.github.fabricators_of_create.porting_lib.models.generators.block.BlockStateProvider
-/^?} else {^/
-/^import io.github.fabricators_of_create.porting_lib.models.generators.BlockStateProvider
-^//^?}^/
+/^import io.github.fabricators_of_create.porting_lib.models.generators.block.BlockStateProvider
+^//^?} else {^/
+import io.github.fabricators_of_create.porting_lib.models.generators.BlockStateProvider
+/^?}^/
 
 *//*?} elif forge {*/
 import net.minecraftforge.client.model.generators.ConfiguredModel
@@ -214,6 +214,38 @@ object BlockstatePresets {
             .texture("particle", p.modLoc("block/$name"))
             .renderType("cutout_mipped"))
           .build())
+    }
+  }
+
+  fun <B : Block> simpleDoubleCrossBlock(name: String): NonNullBiConsumer<DataGenContext<Block, B>, RegistrateBlockstateProvider> {
+    return NonNullBiConsumer { c, p ->
+      p.getVariantBuilder(c.get())
+        .partialState()
+        .with(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER)
+        .setModels(
+          *ConfiguredModel.builder()
+            .modelFile(
+              p.models()
+                .withExistingParent(c.name + "_top", p.mcLoc("block/cross"))
+                .texture("cross", p.modLoc("block/${name}_top"))
+                .texture("particle", p.modLoc("block/${name}_top"))
+                .renderType("cutout_mipped")
+            )
+            .build()
+        )
+        .partialState()
+        .with(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER)
+        .setModels(
+          *ConfiguredModel.builder()
+            .modelFile(
+              p.models()
+                .withExistingParent(c.name + "_bottom", p.mcLoc("block/cross"))
+                .texture("cross", p.modLoc("block/${name}_bottom"))
+                .texture("particle", p.modLoc("block/${name}_bottom"))
+                .renderType("cutout_mipped")
+            )
+            .build()
+        )
     }
   }
 
