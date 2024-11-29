@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "deltaboxlib:block/potted_simple_grass"
+    }
+  }
+}

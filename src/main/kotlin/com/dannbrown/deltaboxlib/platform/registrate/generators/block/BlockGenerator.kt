@@ -1,5 +1,6 @@
 package com.dannbrown.deltaboxlib.platform.registrate.generators.block
 
+import com.dannbrown.deltaboxlib.common.content.block.GenericGrassBlock
 import com.dannbrown.deltaboxlib.common.content.block.GenericSaplingBlock
 import com.dannbrown.deltaboxlib.common.content.tree.DeltaboxTreeGrower
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
@@ -64,7 +65,47 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
    * @param block The block to put in the flower pot
    * @param suffix The suffix to add to the block name
    */
-  fun pottedBlock(_name: String, block: BlockEntry<out Block>, suffix: String = "_sapling"): BlockGeneratorBuilder<FlowerPotBlock> {
+  fun pottedBlock(_name: String, block: BlockEntry<out Block>, suffix: String = ""): BlockGeneratorBuilder<FlowerPotBlock> {
     return PottedBlockPreset(_name, block, suffix).create(this)
+  }
+
+  /**
+   * Add Grass Block properties
+   * @param dropItem The item to drop when the block is broken
+   * @param isSticky Whether the block is sticky
+   * @param isHarmful Whether the block is harmful
+   * @param isBonemealable Whether the block can be bonemealed
+   * @param chance The chance to drop the other item
+   * @param multiplier The multiplier for the other item drop
+   * @param placeOn The function to use to determine if the grass block can be placed on a block
+   */
+  fun grassBlock(
+    _name: String,
+    dropItem: Supplier<ItemLike>,
+    isSticky: Boolean = false,
+    isHarmful: Boolean = false,
+    isBonemealable: Boolean = false,
+    chance: Float = 0.6f,
+    multiplier: Int = 2,
+    placeOn: ((blockState: BlockState, blockGetter: BlockGetter, blockPos: BlockPos) -> Boolean)? = null
+  ): BlockGeneratorBuilder<GenericGrassBlock> {
+    return GrassBlockPreset(_name, dropItem, isSticky, isHarmful, isBonemealable, chance, multiplier, placeOn).create(this)
+  }
+
+  /**
+   * Add Flower Block properties
+   * @param isSticky Whether the block is sticky
+   * @param isHarmful Whether the block is harmful
+   * @param isBonemealable Whether the block can be bonemealed
+   * @param placeOn The function to use to determine if the flower block can be placed on a block
+   */
+  fun flowerBlock(
+    _name: String,
+    isSticky: Boolean = false,
+    isHarmful: Boolean = false,
+    isBonemealable: Boolean = false,
+    placeOn: ((blockState: BlockState, blockGetter: BlockGetter, blockPos: BlockPos) -> Boolean)? = null
+  ): BlockGeneratorBuilder<GenericGrassBlock> {
+    return GrassBlockPreset(_name, null, isSticky, isHarmful, isBonemealable, 0f, 0, placeOn).createFlower(this)
   }
 }

@@ -5,6 +5,10 @@
   "block.deltaboxlib.flammable_sand": "puɐS ǝןqɐɯɯɐןℲ",
   "block.deltaboxlib.lemon_sapling": "buıןdɐS uoɯǝꞀ",
   "block.deltaboxlib.potted_lemon_sapling": "buıןdɐS uoɯǝꞀ pǝʇʇoԀ",
+  "block.deltaboxlib.potted_simple_flower": "ɹǝʍoןℲ ǝןdɯıS pǝʇʇoԀ",
+  "block.deltaboxlib.potted_simple_grass": "ssɐɹ⅁ ǝןdɯıS pǝʇʇoԀ",
+  "block.deltaboxlib.simple_flower": "ɹǝʍoןℲ ǝןdɯıS",
+  "block.deltaboxlib.simple_grass": "ssɐɹ⅁ ǝןdɯıS",
   "item.deltaboxlib.warp_crystal": "ןɐʇsʎɹƆ dɹɐM",
   "tooltip.deltaboxlib.flint": "¡ɐʇןǝᗡ ɐ s,ʇI"
 }

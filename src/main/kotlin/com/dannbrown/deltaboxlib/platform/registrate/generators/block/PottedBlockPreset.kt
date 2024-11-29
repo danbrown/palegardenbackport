@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.FlowerPotBlock
 class PottedBlockPreset (
   private val _name: String,
   private val block: BlockEntry<out Block>,
-  private val suffix: String = "_sapling"
+  private val suffix: String = ""
 ): IBlockBuilderPreset<FlowerPotBlock>() {
   override fun create(generator: BlockGenerator): BlockGeneratorBuilder<FlowerPotBlock> {
     return generator.create<FlowerPotBlock>("potted_$_name" + suffix)

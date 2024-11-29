@@ -3,6 +3,7 @@ package com.dannbrown.deltaboxlib.common.init
 import com.dannbrown.deltaboxlib.common.DeltaboxLib
 import com.dannbrown.deltaboxlib.common.content.block.FlammablePillarBlock
 import com.dannbrown.deltaboxlib.common.content.block.FlammableSandBlock
+import com.dannbrown.deltaboxlib.common.content.block.GenericGrassBlock
 import com.dannbrown.deltaboxlib.common.content.block.GenericSaplingBlock
 import com.dannbrown.deltaboxlib.common.content.block.StrippableFlammablePillarBlock
 import com.dannbrown.deltaboxlib.common.content.tree.DeltaboxTreeGrower
@@ -44,8 +45,17 @@ object DeltaboxBlocks {
 
   val LEMON_SAPLING: BlockEntry<GenericSaplingBlock> = BLOCKS.saplingBlock("lemon", DeltaboxTreeGrower.SAMPLE) { blockState, _, _ -> blockState.`is`(BlockTags.SAND) }
     .register()
-  val POTTED_LEMON_SAPLING: BlockEntry<FlowerPotBlock> = BLOCKS.pottedBlock("lemon", LEMON_SAPLING)
-    .potted(LEMON_SAPLING)
+  val POTTED_LEMON_SAPLING: BlockEntry<FlowerPotBlock> = BLOCKS.pottedBlock("lemon", LEMON_SAPLING, "_sapling")
+    .register()
+
+  val SIMPLE_GRASS: BlockEntry<GenericGrassBlock> = BLOCKS.grassBlock("simple_grass", { Items.WHEAT_SEEDS })
+    .register()
+  val SIMPLE_FLOWER: BlockEntry<GenericGrassBlock> = BLOCKS.flowerBlock("simple_flower", true, true, true, { blockState, _, _ -> blockState.`is`(BlockTags.SAND) })
+    .register()
+
+  val POTTED_SIMPLE_GRASS: BlockEntry<FlowerPotBlock> = BLOCKS.pottedBlock("simple_grass", SIMPLE_GRASS)
+    .register()
+  val POTTED_SIMPLE_FLOWER: BlockEntry<FlowerPotBlock> = BLOCKS.pottedBlock("simple_flower", SIMPLE_FLOWER)
     .register()
 
   fun register() {

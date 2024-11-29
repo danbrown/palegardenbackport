@@ -12,18 +12,17 @@ class GenericSaplingBlock(
   props: Properties,
   private val placeOn: ((blockState: BlockState, blockGetter: BlockGetter, blockPos: BlockPos) -> Boolean)? = null
 ) : SaplingBlock(treeGrower.getTreeGrower(), props) {
-
-  override fun mayPlaceOn(blockState: BlockState, blockGetter: BlockGetter, blockPos: BlockPos): Boolean {
-    if (placeOn !== null) { return placeOn.invoke(blockState, blockGetter, blockPos) }
-    return super.mayPlaceOn(blockState, blockGetter, blockPos)
-  }
-
   /*? if forge {*/
   override fun getPlant(world: BlockGetter, pos: BlockPos): BlockState {
     val state = world.getBlockState(pos)
     return if (state.block !== this) defaultBlockState() else state
   }
   /*?}*/
+
+  override fun mayPlaceOn(blockState: BlockState, blockGetter: BlockGetter, blockPos: BlockPos): Boolean {
+    if (placeOn !== null) { return placeOn.invoke(blockState, blockGetter, blockPos) }
+    return super.mayPlaceOn(blockState, blockGetter, blockPos)
+  }
 
   override fun canSurvive(blockState: BlockState, levelReader: LevelReader, blockPos: BlockPos): Boolean {
     val below = blockPos.below()

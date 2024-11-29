@@ -5,6 +5,10 @@
   "block.deltaboxlib.flammable_sand": "Flammable Sand",
   "block.deltaboxlib.lemon_sapling": "Lemon Sapling",
   "block.deltaboxlib.potted_lemon_sapling": "Potted Lemon Sapling",
+  "block.deltaboxlib.potted_simple_flower": "Potted Simple Flower",
+  "block.deltaboxlib.potted_simple_grass": "Potted Simple Grass",
+  "block.deltaboxlib.simple_flower": "Simple Flower",
+  "block.deltaboxlib.simple_grass": "Simple Grass",
   "item.deltaboxlib.warp_crystal": "Warp Crystal",
   "tooltip.deltaboxlib.flint": "It's a Delta!"
 }
