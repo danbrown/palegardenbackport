@@ -1,18 +1,5 @@
 package com.dannbrown.palegardenbackport
 
-import com.dannbrown.deltaboxlib.DeltaboxLib
-import com.dannbrown.deltaboxlib.content.block.FlammableLeavesBlock
-import com.dannbrown.palegardenbackport.content.block.PaleMossBlock
-import com.dannbrown.palegardenbackport.content.block.PaleMossCarpetBlock
-import com.dannbrown.palegardenbackport.content.block.PaleVineBlock
-import com.dannbrown.palegardenbackport.content.block.PaleVinePlantBlock
-import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakFoliagePlacer
-import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakTrunkPlacer
-import com.dannbrown.palegardenbackport.content.treeDecorator.PaleOakGroundDecorator
-import com.dannbrown.palegardenbackport.content.treeDecorator.PaleOakVineDecorator
-import com.dannbrown.palegardenbackport.content.treeGrower.PaleOakTreeGrower
-import com.dannbrown.palegardenbackport.datagen.ModDatagen
-import com.dannbrown.palegardenbackport.init.ModModelLayers
 import com.dannbrown.deltaboxlib.content.entity.boat.BaseBoatEntity
 import com.dannbrown.deltaboxlib.content.entity.boat.BaseBoatRenderer
 import com.dannbrown.deltaboxlib.content.entity.boat.BaseChestBoatEntity
@@ -32,15 +19,28 @@ import com.dannbrown.deltaboxlib.registry.transformers.BlockstatePresets
 import com.dannbrown.deltaboxlib.registry.transformers.ItemModelPresets
 import com.dannbrown.deltaboxlib.registry.transformers.RecipePresets
 import com.dannbrown.palegardenbackport.content.block.EyeBlossomBlock
+import com.dannbrown.palegardenbackport.content.block.PaleMossBlock
+import com.dannbrown.palegardenbackport.content.block.PaleMossCarpetBlock
 import com.dannbrown.palegardenbackport.content.block.PaleOakLeavesBlock
+import com.dannbrown.palegardenbackport.content.block.PaleVineBlock
+import com.dannbrown.palegardenbackport.content.block.PaleVinePlantBlock
 import com.dannbrown.palegardenbackport.content.block.ResinClumpBlock
+import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingModel
+import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingRenderer
+import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakFoliagePlacer
+import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakTrunkPlacer
+import com.dannbrown.palegardenbackport.content.treeDecorator.PaleOakGroundDecorator
+import com.dannbrown.palegardenbackport.content.treeDecorator.PaleOakVineDecorator
 import com.dannbrown.palegardenbackport.content.treeDecorator.ResinTreeDecorator
+import com.dannbrown.palegardenbackport.content.treeGrower.PaleOakTreeGrower
+import com.dannbrown.palegardenbackport.datagen.ModDatagen
+import com.dannbrown.palegardenbackport.init.ModEntityTypes
+import com.dannbrown.palegardenbackport.init.ModModelLayers
 import com.dannbrown.palegardenbackport.init.ModParticles
 import com.dannbrown.palegardenbackport.init.ModSounds
 import com.dannbrown.palegardenbackport.terrablender.ModTerraBlenderAPI
 import com.tterrag.registrate.util.DataIngredient
 import com.tterrag.registrate.util.entry.BlockEntry
-import java.util.function.Supplier
 import net.minecraft.client.model.BoatModel
 import net.minecraft.client.model.ChestBoatModel
 import net.minecraft.client.renderer.Sheets
@@ -62,8 +62,6 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.FlowerPotBlock
-import net.minecraft.world.level.block.GlowLichenBlock
-import net.minecraft.world.level.block.MultifaceBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
 import net.minecraft.world.level.block.state.properties.BlockSetType
@@ -76,6 +74,7 @@ import net.minecraft.world.level.material.PushReaction
 import net.minecraftforge.client.event.EntityRenderersEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.data.event.GatherDataEvent
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent
 import net.minecraftforge.event.village.WandererTradesEvent
 import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.IEventBus
@@ -88,7 +87,7 @@ import net.minecraftforge.registries.ForgeRegistries
 import net.minecraftforge.registries.RegistryObject
 import org.apache.logging.log4j.LogManager
 import thedarkcolour.kotlinforforge.forge.DIST
-import javax.swing.text.TabSet
+import java.util.function.Supplier
 
 @Mod(ModContent.MOD_ID)
 class ModContent {
@@ -362,6 +361,7 @@ class ModContent {
       FOLIAGE_PLACER_TYPES.register(modBus)
       TRUNK_PLACER_TYPES.register(modBus)
       TREE_DECORATOR_TYPES.register(modBus)
+      ModEntityTypes.register(modBus)
       TABS.register(modBus)
       ModParticles.register(modBus)
       ModSounds.register(modBus)
@@ -373,6 +373,7 @@ class ModContent {
       modBus.addListener(EventPriority.LOWEST) { event: GatherDataEvent ->
         ModDatagen.gatherData(event)
       }
+      modBus.addListener { event: EntityAttributeCreationEvent -> ModEntityTypes.registerEntityAttributes(event) }
       forgeEventBus.addListener { event: WandererTradesEvent -> AddonWandererTrades(event).register() }
     }
 
@@ -382,6 +383,7 @@ class ModContent {
       modBus.addListener { event: EntityRenderersEvent.RegisterLayerDefinitions ->
         event.registerLayerDefinition(ModModelLayers.BOAT_LAYER, BoatModel::createBodyModel)
         event.registerLayerDefinition(ModModelLayers.CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel)
+        event.registerLayerDefinition(ModModelLayers.CREAKING) { CreakingModel.create() }
       }
 
       modBus.addListener(ModParticles::registerParticleFactories)
@@ -405,6 +407,9 @@ class ModContent {
       }
       EntityRenderers.register(MOD_CHEST_BOAT.get()) { pContext: EntityRendererProvider.Context ->
         BaseBoatRenderer(MOD_ID, pContext, true)
+      }
+      EntityRenderers.register(ModEntityTypes.CreakingEntity.get()) { pContext: EntityRendererProvider.Context ->
+        CreakingRenderer(pContext)
       }
     }
   }

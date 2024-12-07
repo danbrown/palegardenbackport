@@ -10,5 +10,5 @@ plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
 }
 
-include ":deltaboxlib"
-project(":deltaboxlib").projectDir = new File(settingsDir, "../deltaboxlib")
+include ":deltaboxlib_old"
+project(":deltaboxlib_old").projectDir = new File(settingsDir, "../deltaboxlib_old")

@@ -11,5 +11,7 @@ object ModModelLayers {
     ModelLayerLocation(ResourceLocation(MOD_ID, "boat/$WOOD_NAME"), "main")
   val CHEST_BOAT_LAYER: ModelLayerLocation =
     ModelLayerLocation(ResourceLocation(MOD_ID, "chest_boat/$WOOD_NAME"), "main")
+
+  val CREAKING: ModelLayerLocation = ModelLayerLocation(ResourceLocation(MOD_ID, "creaking"), "main")
   // ----- End Model Layers -----
 }

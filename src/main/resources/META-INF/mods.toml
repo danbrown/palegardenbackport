@@ -41,5 +41,5 @@ description = '''${mod_description}'''
     modId="terrablender"
     mandatory=true
     versionRange="${terrablender_version_range}"
-    ordering="NONE"
+    ordering="AFTER"
     side="BOTH"
