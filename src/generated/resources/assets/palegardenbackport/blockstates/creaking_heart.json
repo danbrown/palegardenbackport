@@ -1,9 +1,9 @@
 {
   "variants": {
-    "enabled=false": {
+    "active=false": {
       "model": "palegardenbackport:block/creaking_heart"
     },
-    "enabled=true": {
+    "active=true": {
       "model": "palegardenbackport:block/creaking_heart_active"
     }
   }

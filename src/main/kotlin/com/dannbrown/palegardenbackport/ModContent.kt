@@ -28,6 +28,7 @@ import com.dannbrown.palegardenbackport.content.block.PaleVineBlock
 import com.dannbrown.palegardenbackport.content.block.PaleVinePlantBlock
 import com.dannbrown.palegardenbackport.content.block.ResinClumpBlock
 import com.dannbrown.palegardenbackport.content.block.creakingHeart.CreakingHeartBlock
+import com.dannbrown.palegardenbackport.content.block.creakingHeart.CreakingHeartBlockEntity
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingModel
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingRenderer
 import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakFoliagePlacer
@@ -42,7 +43,9 @@ import com.dannbrown.palegardenbackport.init.ModModelLayers
 import com.dannbrown.palegardenbackport.init.ModParticles
 import com.dannbrown.palegardenbackport.init.ModSounds
 import com.dannbrown.palegardenbackport.terrablender.ModTerraBlenderAPI
+import com.tterrag.registrate.builders.BlockEntityBuilder.BlockEntityFactory
 import com.tterrag.registrate.util.DataIngredient
+import com.tterrag.registrate.util.entry.BlockEntityEntry
 import com.tterrag.registrate.util.entry.BlockEntry
 import net.minecraft.client.model.BoatModel
 import net.minecraft.client.model.ChestBoatModel
@@ -70,9 +73,11 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.FlowerPotBlock
 import net.minecraft.world.level.block.SoundType
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
 import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument
 import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType
@@ -130,14 +135,18 @@ class ModContent {
       )
     // ----- End Creative Tabs -----
 
+    // ----- Tags -----
+
+    // ----- End Tags -----
+
     // ----- Blocks -----
     val BLOCKS = BlockGenerator(REGISTRATE)
 
-    val CREAKING_HEART = BLOCKS.create<CreakingHeartBlock>("creaking_heart")
+    val CREAKING_HEART: BlockEntry<CreakingHeartBlock> = BLOCKS.create<CreakingHeartBlock>("creaking_heart")
       .copyFrom { Blocks.OAK_LOG }
       .color(MapColor.COLOR_ORANGE)
       .blockFactory { p -> CreakingHeartBlock(p) }
-      .properties { p -> p.sound(ModSounds.CREAKING_HEART_SOUNDS) }
+      .properties { p -> p.sound(ModSounds.CREAKING_HEART_SOUNDS).instrument(NoteBlockInstrument.BASEDRUM).strength(10.0F) }
       .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null)
       .loot { lt, b ->
         lt.add(b, BlockLootHelpers.createSelfDropDispatchTable(b, HAS_SILK_TOUCH))
@@ -154,8 +163,8 @@ class ModContent {
       }
       .blockstate { c, p ->
         p.getVariantBuilder(c.get())
-          .forAllStates { state ->
-            val active = state.getValue(BlockStateProperties.ENABLED)
+          .forAllStatesExcept( { state ->
+            val active = state.getValue(CreakingHeartBlock.ACTIVE)
             val activeSuffix = if (active) "_active" else ""
             ConfiguredModel.builder()
               .modelFile(p.models()
@@ -164,7 +173,7 @@ class ModContent {
                 .texture("bottom", p.modLoc("block/creaking_heart_top$activeSuffix"))
                 .texture("top", p.modLoc("block/creaking_heart_top$activeSuffix")))
               .build()
-          }
+          }, CreakingHeartBlock.NATURAL)
       }
       .register()
 
@@ -356,6 +365,11 @@ class ModContent {
     // ----- End Items -----
 
     // ----- BlockEntities -----
+    val CREAKING_HEART_BLOCK_ENTITY: BlockEntityEntry<CreakingHeartBlockEntity> = REGISTRATE
+      .blockEntity("creaking_heart", BlockEntityFactory(::CreakingHeartBlockEntity))
+      .validBlocks({ CREAKING_HEART.get() })
+      .register()
+
     // ----- End BlockEntities -----
 
     // ----- Entities -----
