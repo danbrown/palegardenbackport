@@ -29,7 +29,7 @@ class MainRecipeGen : DeltaboxRecipeSlice(ModContent.MOD_ID) {
     }
 
     val RESIN_DUPLICATION = crafting(recipeConsumer, { ModContent.RESIN_CLUMP.get() }) { b ->
-      b.shapeless(1, "", "", listOf(DataIngredient.items(ModContent.RESIN_CLUMP.get()), DataIngredient.items(Items.HONEY_BOTTLE)))
+      b.shapeless(2, "", "", listOf(DataIngredient.items(ModContent.RESIN_CLUMP.get()), DataIngredient.items(Items.HONEY_BOTTLE)))
     }
   }
 }

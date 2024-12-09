@@ -1,4 +1,4 @@
-// 1.20.1	2024-10-28T14:51:02.141603	Recipes
+// 1.20.1	2024-12-09T14:04:47.394942	Recipes
 f2e095f95e9c075b78fb0116b6840c1c3f692875 data/palegardenbackport/advancements/recipes/misc/blasting/resin_brick_blasting.json
 3ceed6fa62b0e334807df48d51caf9f8e563a776 data/palegardenbackport/advancements/recipes/misc/crafting_shapeless/gray_dye.json
 c0a27619896f169c30e10449ed5316338c5b4732 data/palegardenbackport/advancements/recipes/misc/crafting_shapeless/orange_dye.json
@@ -7,5 +7,5 @@ c0a27619896f169c30e10449ed5316338c5b4732 data/palegardenbackport/advancements/re
 ddf9474a9018efe800c14d5cccfd6d622a244777 data/palegardenbackport/recipes/blasting/resin_brick_blasting.json
 73d329fed3f614526c9e2fca8ebe05175f378d28 data/palegardenbackport/recipes/crafting_shapeless/gray_dye.json
 a0accaf6b463e16ff36edc145bd4c06a05d93247 data/palegardenbackport/recipes/crafting_shapeless/orange_dye.json
-4af192aa63e1051ff2037c02a92672f8844e4267 data/palegardenbackport/recipes/crafting_shapeless/resin_clump.json
+eccb7e64c57b2d201b24af0d356165340ddca215 data/palegardenbackport/recipes/crafting_shapeless/resin_clump.json
 8c2d595ba5a8d530a2094ec6135a6c5e68420f52 data/palegardenbackport/recipes/smelting/resin_brick_smelting.json

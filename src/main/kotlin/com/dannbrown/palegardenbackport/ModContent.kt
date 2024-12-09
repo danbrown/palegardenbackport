@@ -232,7 +232,7 @@ class ModContent {
       .copyFrom { Blocks.WEEPING_VINES }
       .blockFactory { p -> PaleVineBlock({ PALE_HANGING_MOSS_PLANT.get() },  p) }
       .color(MapColor.SNOW)
-      .blockTags(listOf(BlockTags.CLIMBABLE, BlockTags.SWORD_EFFICIENT))
+      .blockTags(listOf(BlockTags.SWORD_EFFICIENT))
       .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null, false)
       .properties { p -> p.randomTicks().noCollission().instabreak().sound(SoundType.WEEPING_VINES).pushReaction(PushReaction.DESTROY) }
       .blockstate(BlockstatePresets.simpleCrossBlock("pale_hanging_moss_tip"))

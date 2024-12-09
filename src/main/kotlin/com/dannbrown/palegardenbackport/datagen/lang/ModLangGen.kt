@@ -14,6 +14,10 @@ object ModLangGen {
             "${ModContent.WOOD_NAME}_chest_boat",
             "Pale Oak Chest Boat"
     )
+    ModContent.REGISTRATE.addEntityLang(
+            "creaking",
+            "Creaking"
+    )
     ModContent.REGISTRATE.addCreativeTabLang(
             "${ModContent.MOD_ID}_tab",
             "Pale Oak Backport"
