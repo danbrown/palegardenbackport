@@ -3,9 +3,12 @@ package com.dannbrown.palegardenbackport.content.block.creakingHeart
 import com.dannbrown.deltaboxlib.registry.generators.BlockFamily
 import com.dannbrown.palegardenbackport.ModContent
 import com.dannbrown.palegardenbackport.ModContent.Companion.WOOD_FAMILY
+import com.dannbrown.palegardenbackport.content.particle.TrailParticleOption
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
@@ -24,6 +27,7 @@ import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.Vec3
 
 class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
   init {
@@ -45,16 +49,61 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
     return RenderShape.MODEL
   }
 
-  override fun use(pState: BlockState, level: Level, pPos: BlockPos, pPlayer: Player, pHand: InteractionHand, pHit: BlockHitResult): InteractionResult {
+  override fun use(
+    pState: BlockState,
+    level: Level,
+    pPos: BlockPos,
+    pPlayer: Player,
+    pHand: InteractionHand,
+    pHit: BlockHitResult
+  ): InteractionResult {
     if (pPlayer.isShiftKeyDown) {
       val blockEntity = level.getBlockEntity(pPos)
       if (blockEntity is CreakingHeartBlockEntity) {
         level.setBlockAndUpdate(pPos, pState.setValue(ACTIVE, !pState.getValue(ACTIVE)))
+
+        // Emit trail of particles
+        if (level is ServerLevel) {
+          val isActive = pState.getValue(ACTIVE)
+          val particleColor = if (isActive) -10526881 else -231406
+          val playerPos = pPlayer.boundingBox.center
+          val blockCenter = Vec3.atCenterOf(pPos)
+          val direction = blockCenter.subtract(playerPos)
+          val distance = direction.length()
+          val step = 0.25
+          val steps = (distance / step).toInt()
+          val unitDirection = direction.normalize().scale(step)
+
+          for (i in 0..steps) {
+            val currentPos = playerPos.add(unitDirection.scale(i.toDouble()))
+            val trailParticle = TrailParticleOption(
+              blockCenter,
+              particleColor,
+              level.random.nextInt(40) + 10 // Lifespan
+            )
+            level.sendParticles(
+              pPlayer as ServerPlayer,
+              trailParticle,
+              true,
+              currentPos.x,
+              currentPos.y,
+              currentPos.z,
+              1,
+              0.0 + level.random.nextDouble() * 0.3,
+              0.0 + level.random.nextDouble() * 0.3,
+              0.0 + level.random.nextDouble() * 0.3,
+              0.01
+            )
+          }
+        }
+
         return InteractionResult.SUCCESS
       }
     }
     return super.use(pState, level, pPos, pPlayer, pHand, pHit)
   }
+
+
 
   fun hasRequiredLogs(blockState: BlockState, levelReader: LevelReader, blockPos: BlockPos): Boolean {
     val blockAbove = levelReader.getBlockState(blockPos.above())
