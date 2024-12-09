@@ -72,5 +72,144 @@
   "block_of_resin_fall": {
     "subtitle": "sounds.palegardenbackport.block_of_resin_fall",
     "sounds": ["palegardenbackport:block_of_resin_fall_1"]
+  },
+  "creaking_unfreeze": {
+    "subtitle": "sounds.palegardenbackport.creaking_unfreeze",
+    "sounds": [
+      "palegardenbackport:creaking_unfreeze1",
+      "palegardenbackport:creaking_unfreeze2",
+      "palegardenbackport:creaking_unfreeze3"
+    ]
+  },
+  "creaking_activate": {
+    "subtitle": "sounds.palegardenbackport.creaking_activate",
+    "sounds": ["palegardenbackport:creaking_activate"]
+  },
+  "creaking_ambient": {
+    "subtitle": "sounds.palegardenbackport.creaking_ambient",
+    "sounds": [
+      "palegardenbackport:creaking_ambient1",
+      "palegardenbackport:creaking_ambient2",
+      "palegardenbackport:creaking_ambient3",
+      "palegardenbackport:creaking_ambient4",
+      "palegardenbackport:creaking_ambient5",
+      "palegardenbackport:creaking_ambient6"
+    ]
+  },
+  "creaking_attack": {
+    "subtitle": "sounds.palegardenbackport.creaking_attack",
+    "sounds": [
+      "palegardenbackport:creaking_attack1",
+      "palegardenbackport:creaking_attack2",
+      "palegardenbackport:creaking_attack3",
+      "palegardenbackport:creaking_attack4"
+    ]
+  },
+  "creaking_deactivate": {
+    "subtitle": "sounds.palegardenbackport.creaking_deactivate",
+    "sounds": ["palegardenbackport:creaking_deactivate"]
+  },
+  "creaking_death": {
+    "subtitle": "sounds.palegardenbackport.creaking_death",
+    "sounds": ["palegardenbackport:creaking_death"]
+  },
+  "creaking_freeze": {
+    "subtitle": "sounds.palegardenbackport.creaking_freeze",
+    "sounds": [
+      "palegardenbackport:creaking_freeze1",
+      "palegardenbackport:creaking_freeze2",
+      "palegardenbackport:creaking_freeze3",
+      "palegardenbackport:creaking_freeze4"
+    ]
+  },
+  "creaking_hit": {
+    "subtitle": "sounds.palegardenbackport.creaking_hit",
+    "sounds": [
+      "palegardenbackport:creaking_hit1",
+      "palegardenbackport:creaking_hit2",
+      "palegardenbackport:creaking_hit3",
+      "palegardenbackport:creaking_hit4"
+    ]
+  },
+  "creaking_spawn": {
+    "subtitle": "sounds.palegardenbackport.creaking_spawn",
+    "sounds": ["palegardenbackport:creaking_spawn"]
+  },
+  "creaking_step": {
+    "subtitle": "sounds.palegardenbackport.creaking_step",
+    "sounds": [
+      "palegardenbackport:creaking_step1",
+      "palegardenbackport:creaking_step2",
+      "palegardenbackport:creaking_step3",
+      "palegardenbackport:creaking_step4",
+      "palegardenbackport:creaking_step5"
+    ]
+  },
+  "creaking_twitch": {
+    "subtitle": "sounds.palegardenbackport.creaking_twitch",
+    "sounds": ["palegardenbackport:creaking_twitch"]
+  },
+  "creaking_heart_break": {
+    "subtitle": "sounds.palegardenbackport.creaking_heart_break",
+    "sounds": ["palegardenbackport:creaking_heart_break"]
+  },
+  "creaking_heart_fall": {
+    "subtitle": "sounds.palegardenbackport.creaking_heart_fall",
+    "sounds": ["palegardenbackport:creaking_heart_fall"]
+  },
+  "creaking_heart_hit": {
+    "subtitle": "sounds.palegardenbackport.creaking_heart_hit",
+    "sounds": [
+      "palegardenbackport:creaking_heart_hit1",
+      "palegardenbackport:creaking_heart_hit2",
+      "palegardenbackport:creaking_heart_hit3",
+      "palegardenbackport:creaking_heart_hit4",
+      "palegardenbackport:creaking_heart_hit5"
+    ]
+  },
+  "creaking_heart_place": {
+    "subtitle": "sounds.palegardenbackport.creaking_heart_place",
+    "sounds": [
+      "palegardenbackport:creaking_heart_place1",
+      "palegardenbackport:creaking_heart_place2",
+      "palegardenbackport:creaking_heart_place3",
+      "palegardenbackport:creaking_heart_place4"
+    ]
+  },
+  "creaking_heart_step": {
+    "subtitle": "sounds.palegardenbackport.creaking_heart_step",
+    "sounds": [
+      "palegardenbackport:creaking_heart_step1",
+      "palegardenbackport:creaking_heart_step2",
+      "palegardenbackport:creaking_heart_step3",
+      "palegardenbackport:creaking_heart_step4",
+      "palegardenbackport:creaking_heart_step5",
+      "palegardenbackport:creaking_heart_step6"
+    ]
+  },
+  "creaking_heart_trail": {
+    "subtitle": "sounds.palegardenbackport.creaking_heart_trail",
+    "sounds": [
+      "palegardenbackport:creaking_heart_trail1",
+      "palegardenbackport:creaking_heart_trail2",
+      "palegardenbackport:creaking_heart_trail3",
+      "palegardenbackport:creaking_heart_trail4",
+      "palegardenbackport:creaking_heart_trail5",
+      "palegardenbackport:creaking_heart_trail6",
+      "palegardenbackport:creaking_heart_trail7"
+    ]
+  },
+  "creaking_heart_spawnmob": {
+    "subtitle": "sounds.palegardenbackport.creaking_heart_spawnmob",
+    "sounds": ["palegardenbackport:creaking_heart_spawnmob"]
+  },
+  "creaking_heart_idle": {
+    "subtitle": "sounds.palegardenbackport.creaking_heart_idle",
+    "sounds": [
+      "palegardenbackport:creaking_heart_idle1",
+      "palegardenbackport:creaking_heart_idle2",
+      "palegardenbackport:creaking_heart_idle3",
+      "palegardenbackport:creaking_heart_idle4"
+    ]
   }
 }
