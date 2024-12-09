@@ -52,6 +52,7 @@ import net.minecraft.client.model.ChestBoatModel
 import net.minecraft.client.renderer.Sheets
 import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.client.renderer.entity.EntityRenderers
+import net.minecraft.core.Direction
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.FinishedRecipe
 import net.minecraft.data.recipes.RecipeCategory
@@ -165,13 +166,19 @@ class ModContent {
         p.getVariantBuilder(c.get())
           .forAllStatesExcept( { state ->
             val active = state.getValue(CreakingHeartBlock.ACTIVE)
+            val axis = state.getValue(CreakingHeartBlock.AXIS)
             val activeSuffix = if (active) "_active" else ""
+            val axisSuffix = if(axis == Direction.Axis.Y) "" else "_horizontal"
+
             ConfiguredModel.builder()
               .modelFile(p.models()
-                .withExistingParent(c.name + activeSuffix, p.mcLoc("block/cube_bottom_top"))
+                .withExistingParent(c.name + activeSuffix + axisSuffix, p.mcLoc(if(axis == Direction.Axis.Y) "block/cube_column" else "block/cube_column_horizontal"))
                 .texture("side", p.modLoc("block/creaking_heart$activeSuffix"))
-                .texture("bottom", p.modLoc("block/creaking_heart_top$activeSuffix"))
-                .texture("top", p.modLoc("block/creaking_heart_top$activeSuffix")))
+                .texture("end", p.modLoc("block/creaking_heart_top$activeSuffix"))
+                .renderType("cutout_mipped")
+              )
+              .rotationX(if(axis == Direction.Axis.Y) 0 else 90)
+              .rotationY(if(axis == Direction.Axis.X) 90 else 0)
               .build()
           }, CreakingHeartBlock.NATURAL)
       }

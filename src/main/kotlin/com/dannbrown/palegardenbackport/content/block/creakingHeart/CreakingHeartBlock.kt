@@ -6,11 +6,16 @@ import com.dannbrown.palegardenbackport.ModContent.Companion.WOOD_FAMILY
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.RenderShape
+import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -18,18 +23,37 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
+import net.minecraft.world.phys.BlockHitResult
 
 class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
+  init {
+    this.registerDefaultState(this.stateDefinition.any().setValue(NATURAL, false).setValue(ACTIVE, false).setValue(AXIS, Direction.Axis.Y))
+  }
+
   override fun createBlockStateDefinition(pBuilder: StateDefinition.Builder<Block, BlockState>) {
-    super.createBlockStateDefinition(pBuilder.add(NATURAL, ACTIVE))
+    super.createBlockStateDefinition(pBuilder.add(NATURAL, ACTIVE, AXIS))
+  }
+  override fun getStateForPlacement(pContext: BlockPlaceContext): BlockState {
+    return defaultBlockState().setValue(RotatedPillarBlock.AXIS, pContext.clickedFace.axis)
   }
 
   override fun newBlockEntity(blockPos: BlockPos, blockState: BlockState): BlockEntity {
     return CreakingHeartBlockEntity(ModContent.CREAKING_HEART_BLOCK_ENTITY.get(), blockPos, blockState)
   }
 
-  init {
-    this.registerDefaultState(this.stateDefinition.any().setValue(NATURAL, false).setValue(ACTIVE, false))
+  override fun getRenderShape(pState: BlockState): RenderShape {
+    return RenderShape.MODEL
+  }
+
+  override fun use(pState: BlockState, level: Level, pPos: BlockPos, pPlayer: Player, pHand: InteractionHand, pHit: BlockHitResult): InteractionResult {
+    if (pPlayer.isShiftKeyDown) {
+      val blockEntity = level.getBlockEntity(pPos)
+      if (blockEntity is CreakingHeartBlockEntity) {
+        level.setBlockAndUpdate(pPos, pState.setValue(ACTIVE, !pState.getValue(ACTIVE)))
+        return InteractionResult.SUCCESS
+      }
+    }
+    return super.use(pState, level, pPos, pPlayer, pHand, pHit)
   }
 
   fun hasRequiredLogs(blockState: BlockState, levelReader: LevelReader, blockPos: BlockPos): Boolean {
@@ -79,23 +103,22 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
       return 0
     }
     else {
-//      val var5 = level.getBlockEntity(blockPos)
-//      if (var5 is CreakingHeartBlockEntity) {
-//        val `$$3` = var5 as CreakingHeartBlockEntity
-//        return `$$3`.getAnalogOutputSignal()
-        return 15
-//      }
-//      else {
-//        return 0
-//      }
+      val blockEntity = level.getBlockEntity(blockPos)
+      if (blockEntity is CreakingHeartBlockEntity) {
+        val creakingHeartBlockEntity = blockEntity as CreakingHeartBlockEntity
+        return creakingHeartBlockEntity.getAnalogOutputSignal()
+      }
+      else {
+        return 0
+      }
     }
   }
 
   override fun <T : BlockEntity?> getTicker(level: Level, blockState: BlockState, pBlockEntityType: BlockEntityType<T>): BlockEntityTicker<T>? {
     if (level.isClientSide) return null
 
-    return if (blockState.getValue<Boolean>(ACTIVE) as Boolean) {
-      createTickerHelper<CreakingHeartBlockEntity, T>(pBlockEntityType, ModContent.CREAKING_HEART_BLOCK_ENTITY.get(), CreakingHeartBlockEntity::serverTick)
+    return if (blockState.getValue(ACTIVE) as Boolean) {
+      createTickerHelper(pBlockEntityType, ModContent.CREAKING_HEART_BLOCK_ENTITY.get(), CreakingHeartBlockEntity::serverTick)
     } else {
       null
     }
@@ -105,5 +128,6 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
   companion object{
     val NATURAL = BooleanProperty.create("natural")
     val ACTIVE = BooleanProperty.create("active")
+    val AXIS = BlockStateProperties.AXIS
   }
 }

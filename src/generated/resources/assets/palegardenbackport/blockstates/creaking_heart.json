@@ -1,10 +1,28 @@
 {
   "variants": {
-    "active=false": {
+    "active=false,axis=x": {
+      "model": "palegardenbackport:block/creaking_heart_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "active=false,axis=y": {
       "model": "palegardenbackport:block/creaking_heart"
     },
-    "active=true": {
+    "active=false,axis=z": {
+      "model": "palegardenbackport:block/creaking_heart_horizontal",
+      "x": 90
+    },
+    "active=true,axis=x": {
+      "model": "palegardenbackport:block/creaking_heart_active_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "active=true,axis=y": {
       "model": "palegardenbackport:block/creaking_heart_active"
+    },
+    "active=true,axis=z": {
+      "model": "palegardenbackport:block/creaking_heart_active_horizontal",
+      "x": 90
     }
   }
 }
