@@ -74,10 +74,8 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.FlowerPotBlock
 import net.minecraft.world.level.block.SoundType
-import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
 import net.minecraft.world.level.block.state.properties.BlockSetType
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument
 import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType
@@ -85,12 +83,9 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorTy
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
-import net.minecraft.world.level.storage.loot.LootPool
-import net.minecraft.world.level.storage.loot.entries.LootItem
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraftforge.client.event.EntityRenderersEvent
 import net.minecraftforge.client.model.generators.ConfiguredModel
+import net.minecraftforge.common.ForgeSpawnEggItem
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.data.event.GatherDataEvent
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent
@@ -369,6 +364,10 @@ class ModContent {
     val BOAT = ITEMS.simpleItem("${WOOD_NAME}_boat", { p -> BoatItem(WOOD_NAME, { MOD_BOAT.get() }, false, p.stacksTo(1)) })
     val CHEST_BOAT = ITEMS.simpleItem("${WOOD_NAME}_chest_boat", { p -> BoatItem(WOOD_NAME, { MOD_CHEST_BOAT.get() }, true, p.stacksTo(1)) })
     val RESIN_BRICK = ITEMS.simpleItem("resin_brick")
+    val CREAKING_SPAWN_EGG = REGISTRATE.item<ForgeSpawnEggItem>("creaking_spawn_egg") { p -> ForgeSpawnEggItem(ModEntityTypes.CREAKING, -10526881, -231406, p) }
+      .model { c, p -> p.withExistingParent(c.name, p.mcLoc("item/template_spawn_egg"))  }
+      .register()
+
     // ----- End Items -----
 
     // ----- BlockEntities -----
@@ -477,7 +476,7 @@ class ModContent {
       EntityRenderers.register(MOD_CHEST_BOAT.get()) { pContext: EntityRendererProvider.Context ->
         BaseBoatRenderer(MOD_ID, pContext, true)
       }
-      EntityRenderers.register(ModEntityTypes.CreakingEntity.get()) { pContext: EntityRendererProvider.Context ->
+      EntityRenderers.register(ModEntityTypes.CREAKING.get()) { pContext: EntityRendererProvider.Context ->
         CreakingRenderer(pContext)
       }
     }
