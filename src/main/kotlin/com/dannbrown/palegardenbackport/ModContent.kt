@@ -14,6 +14,8 @@ import com.dannbrown.deltaboxlib.registry.generators.BlockFamily
 import com.dannbrown.deltaboxlib.registry.generators.BlockGenerator
 import com.dannbrown.deltaboxlib.registry.generators.CreativeTabGen
 import com.dannbrown.deltaboxlib.registry.generators.ItemGen
+import com.dannbrown.deltaboxlib.registry.transformers.BlockLootHelpers
+import com.dannbrown.deltaboxlib.registry.transformers.BlockLootHelpers.HAS_SILK_TOUCH
 import com.dannbrown.deltaboxlib.registry.transformers.BlockLootPresets
 import com.dannbrown.deltaboxlib.registry.transformers.BlockstatePresets
 import com.dannbrown.deltaboxlib.registry.transformers.ItemModelPresets
@@ -25,6 +27,7 @@ import com.dannbrown.palegardenbackport.content.block.PaleOakLeavesBlock
 import com.dannbrown.palegardenbackport.content.block.PaleVineBlock
 import com.dannbrown.palegardenbackport.content.block.PaleVinePlantBlock
 import com.dannbrown.palegardenbackport.content.block.ResinClumpBlock
+import com.dannbrown.palegardenbackport.content.block.creakingHeart.CreakingHeartBlock
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingModel
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingRenderer
 import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakFoliagePlacer
@@ -47,6 +50,10 @@ import net.minecraft.client.renderer.Sheets
 import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.client.renderer.entity.EntityRenderers
 import net.minecraft.core.registries.Registries
+import net.minecraft.data.recipes.FinishedRecipe
+import net.minecraft.data.recipes.RecipeCategory
+import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.effect.MobEffects
@@ -65,13 +72,19 @@ import net.minecraft.world.level.block.FlowerPotBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
 import net.minecraft.world.level.block.state.properties.BlockSetType
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
+import net.minecraft.world.level.storage.loot.LootPool
+import net.minecraft.world.level.storage.loot.entries.LootItem
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraftforge.client.event.EntityRenderersEvent
+import net.minecraftforge.client.model.generators.ConfiguredModel
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.data.event.GatherDataEvent
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent
@@ -119,6 +132,41 @@ class ModContent {
 
     // ----- Blocks -----
     val BLOCKS = BlockGenerator(REGISTRATE)
+
+    val CREAKING_HEART = BLOCKS.create<CreakingHeartBlock>("creaking_heart")
+      .copyFrom { Blocks.OAK_LOG }
+      .color(MapColor.COLOR_ORANGE)
+      .blockFactory { p -> CreakingHeartBlock(p) }
+      .properties { p -> p.sound(ModSounds.CREAKING_HEART_SOUNDS) }
+      .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null)
+      .loot { lt, b ->
+        lt.add(b, BlockLootHelpers.createSelfDropDispatchTable(b, HAS_SILK_TOUCH))
+      }
+      .recipe { c, p ->
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, c.get(), 1)
+          .define('X', BLOCK_OF_RESIN.get())
+          .define('Y', WOOD_FAMILY.blocks[BlockFamily.Type.LOG]!!.get())
+          .pattern("Y")
+          .pattern("X")
+          .pattern("Y")
+          .unlockedBy("has_creaking_heart_ingredients", DataIngredient.items(BLOCK_OF_RESIN.get(), WOOD_FAMILY.blocks[BlockFamily.Type.LOG]!!.get()).getCritereon(p))
+          .save({ t: FinishedRecipe -> p.accept(t) }, p.safeId(ResourceLocation(MOD_ID, "creaking_heart_from_resin_block")))
+      }
+      .blockstate { c, p ->
+        p.getVariantBuilder(c.get())
+          .forAllStates { state ->
+            val active = state.getValue(BlockStateProperties.ENABLED)
+            val activeSuffix = if (active) "_active" else ""
+            ConfiguredModel.builder()
+              .modelFile(p.models()
+                .withExistingParent(c.name + activeSuffix, p.mcLoc("block/cube_bottom_top"))
+                .texture("side", p.modLoc("block/creaking_heart$activeSuffix"))
+                .texture("bottom", p.modLoc("block/creaking_heart_top$activeSuffix"))
+                .texture("top", p.modLoc("block/creaking_heart_top$activeSuffix")))
+              .build()
+          }
+      }
+      .register()
 
     val WOOD_FAMILY = BLOCKS.createFamily(WOOD_NAME)
       .color(MapColor.SNOW, MapColor.COLOR_GRAY)

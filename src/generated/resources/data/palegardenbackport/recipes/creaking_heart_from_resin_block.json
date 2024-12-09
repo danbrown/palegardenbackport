@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "X": {
+      "item": "palegardenbackport:block_of_resin"
+    },
+    "Y": {
+      "item": "palegardenbackport:pale_oak_log"
+    }
+  },
+  "pattern": [
+    "Y",
+    "X",
+    "Y"
+  ],
+  "result": {
+    "item": "palegardenbackport:creaking_heart"
+  },
+  "show_notification": true
+}
