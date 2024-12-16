@@ -4,6 +4,11 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.RandomSource
 import net.minecraft.world.effect.MobEffect
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.animal.Bee
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.ChangeOverTimeBlock
 import net.minecraft.world.level.block.FlowerBlock
 import net.minecraft.world.level.block.state.BlockState
@@ -42,6 +47,13 @@ class EyeBlossomBlock(private val other: Supplier<EyeBlossomBlock>, private val 
 
   fun getState(): EyeBlossomState {
     return currentAge
+  }
+
+  override fun entityInside(pState: BlockState, pLevel: Level, pPos: BlockPos, pEntity: Entity) {
+    super.entityInside(pState, pLevel, pPos, pEntity)
+    if (pEntity is Bee) {
+      pEntity.addEffect(MobEffectInstance(MobEffects.POISON, 200, 0))
+    }
   }
 
   override fun applyChangeOverTime(pState: BlockState, pLevel: ServerLevel, pPos: BlockPos, pRandom: RandomSource) {

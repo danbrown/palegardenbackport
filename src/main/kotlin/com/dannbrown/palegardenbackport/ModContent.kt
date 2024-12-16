@@ -265,6 +265,8 @@ class ModContent {
       .color(MapColor.PLANT)
       .properties { p -> p.noCollission().instabreak().sound(SoundType.GRASS).offsetType(OffsetType.XZ).pushReaction(PushReaction.DESTROY).randomTicks() }
       .blockstate(BlockstatePresets.emissiveCrossBlock("open_eyeblossom"))
+      .blockTags(listOf(BlockTags.FLOWERS))
+      .itemTags(listOf(ItemTags.FLOWERS))
       .transform { t ->
         t
           .item()
@@ -278,6 +280,8 @@ class ModContent {
       .color(MapColor.PLANT)
       .properties { p -> p.noCollission().instabreak().sound(SoundType.GRASS).offsetType(OffsetType.XZ).pushReaction(PushReaction.DESTROY).randomTicks() }
       .blockstate(BlockstatePresets.simpleCrossBlock("closed_eyeblossom"))
+      .blockTags(listOf(BlockTags.FLOWERS))
+      .itemTags(listOf(ItemTags.FLOWERS))
       .transform { t ->
         t
           .item()
