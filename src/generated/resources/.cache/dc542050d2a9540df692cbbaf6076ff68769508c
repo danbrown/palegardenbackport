@@ -1,4 +1,4 @@
-// 1.20.1	2024-12-16T16:04:37.189527	Registrate Provider for palegardenbackport [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2024-12-16T16:56:16.919472	Registrate Provider for palegardenbackport [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 8b7708dfb9ee94d1ca4f49e8f8584aea90019105 assets/palegardenbackport/blockstates/block_of_resin.json
 9d4f89db1275a975fb115c81c924186458a686f7 assets/palegardenbackport/blockstates/chiseled_resin_bricks.json
 b9dd2f1086e0cf04f6a3eb95b026bece10b57000 assets/palegardenbackport/blockstates/closed_eyeblossom.json
@@ -7,7 +7,7 @@ b9dd2f1086e0cf04f6a3eb95b026bece10b57000 assets/palegardenbackport/blockstates/c
 45443e133c0e42abb2b82a7d3ad9d0ae36d632cd assets/palegardenbackport/blockstates/pale_hanging_moss.json
 5c34fc02cf0ff44f1242f6589b23b974d0c18562 assets/palegardenbackport/blockstates/pale_hanging_moss_plant.json
 c105ab14a15c18d3c431a47aa5686e496cde2048 assets/palegardenbackport/blockstates/pale_moss_block.json
-5cd3d1edf41ec5376b0c7a7f1362e71dc1cefaae assets/palegardenbackport/blockstates/pale_moss_carpet.json
+a06d1f43caf89a1a340c2a2b053851dfb8ae985e assets/palegardenbackport/blockstates/pale_moss_carpet.json
 a59e0ddc36088416833982d3956df57578387225 assets/palegardenbackport/blockstates/pale_oak_button.json
 b7012675105ac3a80b868f720fe9b04330e58af5 assets/palegardenbackport/blockstates/pale_oak_door.json
 89f60e229db8e4b294f7178cf1ec9dd3d87edb90 assets/palegardenbackport/blockstates/pale_oak_fence.json
@@ -48,7 +48,9 @@ c072359d3e3daa8976a3677e40f377be53fde120 assets/palegardenbackport/models/block/
 726a1bd68e500d5352f24da9c337e6c1333d56fe assets/palegardenbackport/models/block/pale_hanging_moss.json
 9e7d6060db95a710f6f8ee28e6d9e6d31d2ed807 assets/palegardenbackport/models/block/pale_hanging_moss_plant.json
 40a0745e88d1bc265f7d5acee31b5ca11f4979ed assets/palegardenbackport/models/block/pale_moss_block.json
-9a1fafc69b4f693da8fe5a1189274acad139bc0c assets/palegardenbackport/models/block/pale_moss_carpet.json
+6a303436f41077d3ec3298eb82c4fa5c842e1061 assets/palegardenbackport/models/block/pale_moss_carpet.json
+7957df4c89c79539cd6f2c3aa4f8ab5561d04b3b assets/palegardenbackport/models/block/pale_moss_carpet_side_small.json
+a7404b2815199e68f05e9ca6347a97ab37d10cbc assets/palegardenbackport/models/block/pale_moss_carpet_side_tall.json
 3e1b028727a541f419c289018c64899d9b373423 assets/palegardenbackport/models/block/pale_oak_button.json
 fabc0d7aff5b2177c43acae93b2ef0fa0d8de6f3 assets/palegardenbackport/models/block/pale_oak_button_pressed.json
 b9a46c8833e2b87c3c324d5b5c8e279725851df9 assets/palegardenbackport/models/block/pale_oak_door_bottom_left.json

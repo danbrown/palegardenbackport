@@ -1,7 +1,6 @@
 {
   "parent": "minecraft:block/carpet",
   "textures": {
-    "particle": "palegardenbackport:block/pale_moss_carpet",
     "wool": "palegardenbackport:block/pale_moss_carpet"
   }
 }

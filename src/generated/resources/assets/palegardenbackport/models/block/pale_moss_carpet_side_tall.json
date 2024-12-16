@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/pale_moss_carpet_side_tall",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "side": "palegardenbackport:block/pale_moss_carpet_side_tall"
+  }
+}

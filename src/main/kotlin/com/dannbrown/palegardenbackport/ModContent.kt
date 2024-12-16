@@ -226,7 +226,7 @@ class ModContent {
       .blockTags(listOf(BlockTags.COMBINATION_STEP_SOUND_BLOCKS, BlockTags.MANGROVE_LOGS_CAN_GROW_THROUGH, BlockTags.MANGROVE_ROOTS_CAN_GROW_THROUGH, BlockTags.SWORD_EFFICIENT))
       .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null, false)
       .properties { p -> p.strength(0.1F).sound(SoundType.MOSS_CARPET).pushReaction(PushReaction.DESTROY).instabreak() }
-      .blockstate(BlockstatePresets.simpleCarpetBlock("pale_moss_carpet"))
+      .blockstate(PaleMossCarpetBlock.generatePaleMossCarpetBlockState())
       .recipe { c, p ->
         RecipePresets.simpleCarpetRecipe(c, p) { DataIngredient.items(PALE_MOSS_BLOCK.get()) }
       }
