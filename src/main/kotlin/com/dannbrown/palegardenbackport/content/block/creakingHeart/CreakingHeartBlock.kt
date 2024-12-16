@@ -148,6 +148,10 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
     val ACTIVE = BooleanProperty.create("active")
     val AXIS = BlockStateProperties.AXIS
 
+    fun getNaturalState(): BlockState {
+      return ModContent.CREAKING_HEART.get().defaultBlockState().setValue(NATURAL, true).setValue(ACTIVE, true)
+    }
+
     fun emitParticleTrail(level: ServerLevel, startPos: Vec3, endPos: Vec3, particleColor: Int, duration: Int = 10) {
       val direction = endPos.subtract(startPos)
       val distance = direction.length()

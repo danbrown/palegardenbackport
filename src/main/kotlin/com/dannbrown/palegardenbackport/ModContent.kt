@@ -33,6 +33,7 @@ import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingEntity
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingModel
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingRenderer
 import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakFoliagePlacer
+import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakHeartTrunkPlacer
 import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakTrunkPlacer
 import com.dannbrown.palegardenbackport.content.treeDecorator.PaleOakGroundDecorator
 import com.dannbrown.palegardenbackport.content.treeDecorator.PaleOakVineDecorator
@@ -187,6 +188,7 @@ class ModContent {
       .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null)
       .denyList(BlockFamily.Type.LEAVES)
       .woodFamily(WOOD_TYPE, PaleOakTreeGrower())
+
     val PALE_OAK_LEAVES = BLOCKS.create<PaleOakLeavesBlock>(WOOD_NAME + "_leaves")
       .blockFactory { p -> PaleOakLeavesBlock(p) }
       .color(MapColor.COLOR_GREEN)
@@ -419,6 +421,7 @@ class ModContent {
 
     val PALE_OAK_FOLIAGE_PLACER = FOLIAGE_PLACER_TYPES.register("pale_oak") { FoliagePlacerType(PaleOakFoliagePlacer.CODEC) }
     val PALE_OAK_TRUNK_PLACER = TRUNK_PLACER_TYPES.register("pale_oak") { TrunkPlacerType(PaleOakTrunkPlacer.CODEC) }
+    val PALE_OAK_HEART_TRUNK_PLACER = TRUNK_PLACER_TYPES.register("pale_oak_heart") { TrunkPlacerType(PaleOakHeartTrunkPlacer.CODEC) }
     // ----- End Placer Types -----
 
     // register

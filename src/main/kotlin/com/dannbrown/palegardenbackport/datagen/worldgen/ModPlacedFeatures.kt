@@ -26,6 +26,8 @@ object ModPlacedFeatures : AbstractPlacedFeaturesGen() {
   val PALE_GARDEN_FLOWERS: ResourceKey<PlacedFeature> = registerKey("pale_garden_flowers")
   val PALE_GARDEN_VEGETATION: ResourceKey<PlacedFeature> = registerKey("pale_garden_vegetation")
   val PALE_OAK_PLACED: ResourceKey<PlacedFeature> = registerKey("pale_oak_placed")
+  val PALE_OAK_HEART_CHECKED = registerKey("pale_oak_heart_checked")
+  val PALE_OAK_HEART_PLACED = registerKey("pale_oak_heart_placed")
 
   override fun bootstrap(context: BootstapContext<PlacedFeature>) {
     val configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE)
@@ -47,8 +49,24 @@ object ModPlacedFeatures : AbstractPlacedFeaturesGen() {
       )
     )
 
+    register(
+      context, PALE_OAK_HEART_CHECKED, configuredFeatures.getOrThrow(ModConfiguredFeatures.PALE_OAK_TREE_HEART),
+      listOf(
+        BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(ModContent.WOOD_FAMILY.blocks[BlockFamily.Type.SAPLING]!!.get().defaultBlockState(), BlockPos.ZERO)),
+        BlockPredicateFilter.forPredicate(BlockPredicate.noFluid())
+      )
+    )
+
+    register(
+      context, PALE_OAK_HEART_PLACED, configuredFeatures.getOrThrow(ModConfiguredFeatures.PALE_OAK_TREE_HEART),
+      VegetationPlacements.treePlacement(
+        RarityFilter.onAverageOnceEvery(5),
+        ModContent.WOOD_FAMILY.blocks[BlockFamily.Type.SAPLING]!!.get()
+      )
+    )
+
     register(context, PALE_GARDEN_VEGETATION, configuredFeatures.getOrThrow(ModConfiguredFeatures.PALE_GARDEN_VEGETATION), listOf(CountPlacement.of(14), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_OCEAN_FLOOR, BiomeFilter.biome()))
 
-    register(context, PALE_GARDEN_FLOWERS, configuredFeatures.getOrThrow(ModConfiguredFeatures.PALE_GARDEN_PATCH), listOf(RarityFilter.onAverageOnceEvery(5), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, CountPlacement.of(ClampedInt.of(UniformInt.of(-1, 3), 0, 3)), BiomeFilter.biome()))
+    register(context, PALE_GARDEN_FLOWERS, configuredFeatures.getOrThrow(ModConfiguredFeatures.PALE_GARDEN_PATCH), listOf(RarityFilter.onAverageOnceEvery(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, CountPlacement.of(ClampedInt.of(UniformInt.of(-1, 3), 0, 3)), BiomeFilter.biome()))
   }
 }

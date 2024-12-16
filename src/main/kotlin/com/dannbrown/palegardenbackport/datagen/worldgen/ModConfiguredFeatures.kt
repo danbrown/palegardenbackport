@@ -4,6 +4,7 @@ import com.dannbrown.deltaboxlib.registry.generators.BlockFamily
 import com.dannbrown.deltaboxlib.registry.worldgen.AbstractConfiguredFeaturesGen
 import com.dannbrown.palegardenbackport.ModContent
 import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakFoliagePlacer
+import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakHeartTrunkPlacer
 import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakTrunkPlacer
 import com.dannbrown.palegardenbackport.content.treeDecorator.PaleOakGroundDecorator
 import com.dannbrown.palegardenbackport.content.treeDecorator.PaleOakVineDecorator
@@ -43,6 +44,7 @@ object ModConfiguredFeatures: AbstractConfiguredFeaturesGen() {
   val PALE_MOSS_PATCH_BONEMEAL: ResourceKey<ConfiguredFeature<*, *>> = registerKey("pale_moss_patch_bonemeal")
   val PALE_MOSS_VEGETATION: ResourceKey<ConfiguredFeature<*, *>> = registerKey("pale_moss_vegetation")
   val PALE_OAK_TREE: ResourceKey<ConfiguredFeature<*, *>> = registerKey("pale_oak_tree")
+  val PALE_OAK_TREE_HEART: ResourceKey<ConfiguredFeature<*, *>> = registerKey("pale_oak_tree_heart")
   val PALE_GARDEN_PATCH: ResourceKey<ConfiguredFeature<*, *>> = registerKey("pale_garden_patch")
   val PALE_GARDEN_VEGETATION: ResourceKey<ConfiguredFeature<*, *>> = registerKey("pale_garden_vegetation")
 
@@ -78,10 +80,28 @@ object ModConfiguredFeatures: AbstractConfiguredFeaturesGen() {
             listOf(
               PaleOakGroundDecorator(BlockStateProvider.simple(ModContent.PALE_MOSS_BLOCK.get()), BlockStateProvider.simple(ModContent.PALE_MOSS_CARPET_BLOCK.get())),
               PaleOakVineDecorator(0.14F, 1, 0, BlockStateProvider.simple(ModContent.PALE_HANGING_MOSS_PLANT.get().defaultBlockState()), 2, mutableListOf(Direction.DOWN), BlockStateProvider.simple(ModContent.PALE_HANGING_MOSS.get().defaultBlockState())),
-              ResinTreeDecorator(0.05F)
           )
       )
       .build()
+    )
+
+    register<TreeConfiguration, Feature<TreeConfiguration>>(
+      context, PALE_OAK_TREE_HEART, Feature.TREE,
+      TreeConfigurationBuilder(
+        BlockStateProvider.simple(ModContent.WOOD_FAMILY.blocks[BlockFamily.Type.LOG]!!.get()),
+        PaleOakHeartTrunkPlacer(6, 2, 1),
+        BlockStateProvider.simple(ModContent.PALE_OAK_LEAVES.get()),
+        PaleOakFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0)),
+        ThreeLayersFeatureSize(1, 1, 0, 1, 2, OptionalInt.empty()))
+        .ignoreVines()
+        .decorators(
+          listOf(
+            PaleOakGroundDecorator(BlockStateProvider.simple(ModContent.PALE_MOSS_BLOCK.get()), BlockStateProvider.simple(ModContent.PALE_MOSS_CARPET_BLOCK.get())),
+            PaleOakVineDecorator(0.14F, 1, 0, BlockStateProvider.simple(ModContent.PALE_HANGING_MOSS_PLANT.get().defaultBlockState()), 2, mutableListOf(Direction.DOWN), BlockStateProvider.simple(ModContent.PALE_HANGING_MOSS.get().defaultBlockState())),
+            ResinTreeDecorator(0.05F)
+          )
+        )
+        .build()
     )
 
     register<SimpleRandomFeatureConfiguration, Feature<SimpleRandomFeatureConfiguration>>(context, PALE_GARDEN_PATCH, Feature.SIMPLE_RANDOM_SELECTOR, SimpleRandomFeatureConfiguration(HolderSet.direct(
@@ -90,8 +110,8 @@ object ModConfiguredFeatures: AbstractConfiguredFeaturesGen() {
 
     register(context, PALE_GARDEN_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfiguration(
       listOf(
-        WeightedPlacedFeature(placed.getOrThrow(ModPlacedFeatures.PALE_OAK_CHECKED), 0.5F),
-        WeightedPlacedFeature(placed.getOrThrow(ModPlacedFeatures.PALE_OAK_CHECKED), 0.5F),
+        WeightedPlacedFeature(placed.getOrThrow(ModPlacedFeatures.PALE_OAK_HEART_CHECKED), 0.15F),
+        WeightedPlacedFeature(placed.getOrThrow(ModPlacedFeatures.PALE_OAK_CHECKED), 0.85F),
       ), placed.getOrThrow(ModPlacedFeatures.PALE_OAK_CHECKED))
     )
   }

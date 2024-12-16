@@ -8,9 +8,9 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType
 
 class PaleOakTrunkPlacer(p_70077_: Int, p_70078_: Int, p_70079_: Int): DarkOakTrunkPlacer(p_70077_, p_70078_, p_70079_) {
   companion object{
-    val CODEC: Codec<DarkOakTrunkPlacer> = RecordCodecBuilder.create { p_70090_: RecordCodecBuilder.Instance<DarkOakTrunkPlacer> ->
+    val CODEC: Codec<PaleOakHeartTrunkPlacer> = RecordCodecBuilder.create { p_70090_: RecordCodecBuilder.Instance<PaleOakHeartTrunkPlacer> ->
       trunkPlacerParts(p_70090_)
-        .apply(p_70090_) { p_70077_: Int?, p_70078_: Int?, p_70079_: Int? -> DarkOakTrunkPlacer(p_70077_!!, p_70078_!!, p_70079_!!) }
+        .apply(p_70090_) { p_70077_: Int?, p_70078_: Int?, p_70079_: Int? -> PaleOakHeartTrunkPlacer(p_70077_!!, p_70078_!!, p_70079_!!) }
     }
   }
 

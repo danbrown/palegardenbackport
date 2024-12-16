@@ -4,11 +4,11 @@
     "default": "palegardenbackport:pale_oak_checked",
     "features": [
       {
-        "chance": 0.5,
-        "feature": "palegardenbackport:pale_oak_checked"
+        "chance": 0.15,
+        "feature": "palegardenbackport:pale_oak_heart_checked"
       },
       {
-        "chance": 0.5,
+        "chance": 0.85,
         "feature": "palegardenbackport:pale_oak_checked"
       }
     ]

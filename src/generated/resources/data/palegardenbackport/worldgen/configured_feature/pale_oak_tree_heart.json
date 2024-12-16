@@ -41,6 +41,10 @@
             }
           }
         }
+      },
+      {
+        "type": "palegardenbackport:resin_clump_decorator",
+        "probability": 0.05
       }
     ],
     "dirt_provider": {
@@ -76,7 +80,7 @@
       "upper_size": 2
     },
     "trunk_placer": {
-      "type": "palegardenbackport:pale_oak",
+      "type": "palegardenbackport:pale_oak_heart",
       "base_height": 6,
       "height_rand_a": 2,
       "height_rand_b": 1
