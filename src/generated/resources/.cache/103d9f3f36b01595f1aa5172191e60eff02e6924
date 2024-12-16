@@ -1,5 +1,4 @@
-// 1.20.1	2024-12-16T16:47:35.269216	Registries
-1ec3a7e9a22939ab834aef50a04da5e9e736678e data/palegardenbackport/forge/biome_modifier/add_pale_oak.json
+// 1.20.1	2024-12-16T17:17:55.978422	Registries
 c093bcb72582e052239c4eeed75feb958384b521 data/palegardenbackport/worldgen/biome/pale_garden.json
 9266f646f49fab5ae24c9e3887ff204d280fc8c6 data/palegardenbackport/worldgen/configured_feature/pale_garden_patch.json
 6d2905a14958f70409a304f8bf9cbaf1fd200814 data/palegardenbackport/worldgen/configured_feature/pale_garden_vegetation.json

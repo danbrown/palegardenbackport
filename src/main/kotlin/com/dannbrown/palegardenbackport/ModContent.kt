@@ -49,6 +49,7 @@ import com.tterrag.registrate.builders.BlockEntityBuilder.BlockEntityFactory
 import com.tterrag.registrate.util.DataIngredient
 import com.tterrag.registrate.util.entry.BlockEntityEntry
 import com.tterrag.registrate.util.entry.BlockEntry
+import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.client.model.BoatModel
 import net.minecraft.client.model.ChestBoatModel
 import net.minecraft.client.renderer.Sheets
@@ -74,10 +75,13 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.DoublePlantBlock
 import net.minecraft.world.level.block.FlowerPotBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
 import net.minecraft.world.level.block.state.properties.BlockSetType
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument
 import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType
@@ -85,6 +89,7 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorTy
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
 import net.minecraftforge.client.event.EntityRenderersEvent
 import net.minecraftforge.client.model.generators.ConfiguredModel
 import net.minecraftforge.common.ForgeSpawnEggItem
@@ -225,8 +230,11 @@ class ModContent {
       .color(MapColor.SNOW)
       .blockTags(listOf(BlockTags.COMBINATION_STEP_SOUND_BLOCKS, BlockTags.MANGROVE_LOGS_CAN_GROW_THROUGH, BlockTags.MANGROVE_ROOTS_CAN_GROW_THROUGH, BlockTags.SWORD_EFFICIENT))
       .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null, false)
-      .properties { p -> p.strength(0.1F).sound(SoundType.MOSS_CARPET).pushReaction(PushReaction.DESTROY).instabreak() }
+      .properties { p -> p.strength(0.1F).sound(SoundType.MOSS_CARPET).pushReaction(PushReaction.DESTROY).instabreak().noOcclusion() }
       .blockstate(PaleMossCarpetBlock.generatePaleMossCarpetBlockState())
+      .loot { lt, b ->
+        lt.add(b, BlockLootHelpers.createSelfDropDispatchTable(b, LootItemBlockStatePropertyCondition.hasBlockStateProperties(b).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BlockStateProperties.BOTTOM, true))))
+      }
       .recipe { c, p ->
         RecipePresets.simpleCarpetRecipe(c, p) { DataIngredient.items(PALE_MOSS_BLOCK.get()) }
       }
