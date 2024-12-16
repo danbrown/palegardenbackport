@@ -66,35 +66,7 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
         if (level is ServerLevel) {
           val isActive = pState.getValue(ACTIVE)
           val particleColor = if (isActive) -10526881 else -231406
-          val playerPos = pPlayer.boundingBox.center
-          val blockCenter = Vec3.atCenterOf(pPos)
-          val direction = blockCenter.subtract(playerPos)
-          val distance = direction.length()
-          val step = 0.25
-          val steps = (distance / step).toInt()
-          val unitDirection = direction.normalize().scale(step)
-
-          for (i in 0..steps) {
-            val currentPos = playerPos.add(unitDirection.scale(i.toDouble()))
-            val trailParticle = TrailParticleOption(
-              blockCenter,
-              particleColor,
-              level.random.nextInt(40) + 10 // Lifespan
-            )
-            level.sendParticles(
-              pPlayer as ServerPlayer,
-              trailParticle,
-              true,
-              currentPos.x,
-              currentPos.y,
-              currentPos.z,
-              1,
-              0.0 + level.random.nextDouble() * 0.3,
-              0.0 + level.random.nextDouble() * 0.3,
-              0.0 + level.random.nextDouble() * 0.3,
-              0.01
-            )
-          }
+          emitParticleTrail(level, pPlayer.boundingBox.center, Vec3.atCenterOf(pPos), particleColor)
         }
 
         return InteractionResult.SUCCESS
@@ -178,5 +150,36 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
     val NATURAL = BooleanProperty.create("natural")
     val ACTIVE = BooleanProperty.create("active")
     val AXIS = BlockStateProperties.AXIS
+
+
+    fun emitParticleTrail(level: ServerLevel, startPos: Vec3, endPos: Vec3, particleColor: Int, duration: Int = 10) {
+      val direction = endPos.subtract(startPos)
+      val distance = direction.length()
+      val step = 0.25
+      val steps = (distance / step).toInt()
+      val unitDirection = direction.normalize().scale(step)
+
+      for (i in 0..steps) {
+        val currentPos = startPos.add(unitDirection.scale(i.toDouble()))
+        val trailParticle = TrailParticleOption(
+          endPos,
+          particleColor,
+          level.random.nextInt(40) + duration // Lifespan
+        )
+        level.sendParticles(
+          trailParticle,
+          currentPos.x,
+          currentPos.y,
+          currentPos.z,
+          1,
+          0.0 + level.random.nextDouble() * 0.3,
+          0.0 + level.random.nextDouble() * 0.3,
+          0.0 + level.random.nextDouble() * 0.3,
+          0.01
+        )
+      }
+    }
+
+    // ----
   }
 }
