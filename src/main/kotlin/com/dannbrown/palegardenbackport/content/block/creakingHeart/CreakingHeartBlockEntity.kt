@@ -14,8 +14,11 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.SpawnUtil
 import net.minecraft.world.Difficulty
+import net.minecraft.world.InteractionHand
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.MobSpawnType
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.GameRules
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
@@ -27,6 +30,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.gameevent.GameEvent
 import net.minecraft.world.phys.AABB
+import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.Vec3
 import org.apache.commons.lang3.mutable.Mutable
 import org.apache.commons.lang3.mutable.MutableObject
@@ -90,18 +94,18 @@ class CreakingHeartBlockEntity(type: BlockEntityType<CreakingHeartBlockEntity>, 
           val chance = this.level!!.getRandom().nextIntBetweenInclusive(2, 3)
 
           for (i in 0 until chance) {
-//            this.spreadResin()
-//              .ifPresent { blockPos: BlockPos ->
-//                this.level!!.playSound(
-//                  null,
-//                  blockPos,
-//                  ModSounds.BLOCK_OF_RESIN_PLACE.get(),
-//                  SoundSource.BLOCKS,
-//                  1.0f,
-//                  1.0f
-//                )
-//                this.level!!.gameEvent(GameEvent.BLOCK_PLACE, blockPos, GameEvent.Context.of(this.level!!.getBlockState(blockPos)))
-//              }
+            this.spreadResin()
+              .ifPresent { blockPos: BlockPos ->
+                level.playSound(
+                  null,
+                  blockPos,
+                  ModSounds.BLOCK_OF_RESIN_PLACE.get(),
+                  SoundSource.BLOCKS,
+                  1.0f,
+                  1.0f
+                )
+                level.gameEvent(GameEvent.BLOCK_PLACE, blockPos, GameEvent.Context.of(level.getBlockState(blockPos)))
+              }
           }
           this.emitter = 50
           this.emitterTarget = mob.boundingBox.center
@@ -116,49 +120,56 @@ class CreakingHeartBlockEntity(type: BlockEntityType<CreakingHeartBlockEntity>, 
       .orElse(false)
   }
 
-
   private fun spreadResin(): Optional<BlockPos> {
-    val posMutable: Mutable<BlockPos?> = MutableObject(null)
+    val level = level ?: return Optional.empty() // Return early if level is null
+    if (level.isClientSide) return Optional.empty() // Return early if client side
 
-    BlockPos.breadthFirstTraversal(this.worldPosition, 2, 64,
-      { blockPos: BlockPos, consumer: Consumer<BlockPos?> ->
-        val var3: Iterator<*> = Util.shuffledCopy(Direction.values(), level!!.random).iterator()
-        while (var3.hasNext()) {
-          val direction = var3.next() as Direction
-          val relative = blockPos.relative(direction)
-          if (CreakingHeartBlock.isPaleOakLog(level!!.getBlockState(relative))) {
-            consumer.accept(relative)
-          }
-        }
-      },
-      { blockPos: BlockPos ->
-        if (!CreakingHeartBlock.isPaleOakLog(level!!.getBlockState(blockPos))){
-          return@breadthFirstTraversal true
-        }
-        else {
-          val iterator: Iterator<*> = Util.shuffledCopy(Direction.values(), level!!.random).iterator()
-          val randomDir = iterator.next() as Direction
-          val oppositeDirection = randomDir.opposite
-          val relative = blockPos.relative(randomDir)
-          var relativeState = level!!.getBlockState(relative)
-          do {
-            if (!iterator.hasNext()) {
-              return@breadthFirstTraversal true
-            }
+    // Get the starting position
+    var currentPos = this.worldPosition
 
-            if (relativeState.isAir) {
-              relativeState = ModContent.RESIN_CLUMP.get().defaultBlockState()
-            }
-            else if (relativeState.`is`(Blocks.WATER) && relativeState.fluidState.isSource) {
-              relativeState = ModContent.RESIN_CLUMP.get().defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, true)
-            }
-          } while (!relativeState.`is`(ModContent.RESIN_CLUMP.get()) || MultifaceBlock.hasFace(relativeState, oppositeDirection))
-          level!!.setBlock(relative, relativeState.setValue(MultifaceBlock.getFaceProperty(oppositeDirection), true) as BlockState, 3)
-          posMutable.value = relative
-          return@breadthFirstTraversal false
+    var maxIterations = 10 // Limit the number of iterations
+    while (maxIterations-- > 0) {
+      // Pick a random direction
+      val randomDir = Direction.values().random()
+
+      // Get the relative position based on the random direction
+      val relativePos = currentPos.relative(randomDir)
+
+      // Ensure the relative position is within world bounds
+      if (!level.isInWorldBounds(relativePos)) {
+        continue
+      }
+
+      // Get the block state of the relative position
+      val blockState = level.getBlockState(relativePos)
+
+      // Check if the block is air or water source and if any adjacent block is a Pale Oak Log
+      if ((blockState.isAir || (blockState.`is`(Blocks.WATER) && blockState.fluidState.isSource)) &&
+        hasAdjacentPaleOakLog(level, relativePos)) {
+
+        // Create the resin clump state
+        var resinState = ModContent.RESIN_CLUMP.get().getStateForPlacement(
+          BlockPlaceContext(level, null, InteractionHand.MAIN_HAND, ItemStack(ModContent.RESIN_CLUMP.get()), BlockHitResult(Vec3.atCenterOf(relativePos), randomDir, relativePos, false))
+        )
+        if(resinState == null) continue
+
+        // If the block was water, set the resin to be waterlogged
+        if (blockState.`is`(Blocks.WATER) && blockState.fluidState.isSource) {
+          resinState = resinState.setValue(BlockStateProperties.WATERLOGGED, true)
         }
-      })
-    return Optional.ofNullable(posMutable.value)
+
+        // Place the resin clump at this position with the appropriate fluid state
+        level.setBlock(relativePos, resinState, 3)
+
+        // Return the position where resin was placed
+        return Optional.of(relativePos)
+      }
+
+      // Update the current position for the next iteration
+      currentPos = relativePos
+    }
+
+    return Optional.empty() // If no suitable spot was found after 10 iterations
   }
 
   override fun load(compoundTag: CompoundTag) {
@@ -234,6 +245,22 @@ class CreakingHeartBlockEntity(type: BlockEntityType<CreakingHeartBlockEntity>, 
       SpawnUtil.Strategy { serverLevel: ServerLevel, blockPos: BlockPos, blockState: BlockState, blockPos2: BlockPos, blockState2: BlockState ->
         blockState2.getCollisionShape(serverLevel, blockPos2).isEmpty && !blockState.`is`(BlockTags.LEAVES) && Block.isFaceFull(blockState.getCollisionShape(serverLevel, blockPos), Direction.UP)
       }
+
+
+    // Check if any adjacent block is a Pale Oak Log
+    private fun hasAdjacentPaleOakLog(level: Level, pos: BlockPos): Boolean {
+      // Check all 6 possible adjacent directions
+      for (dir in Direction.values()) {
+        val adjacentPos = pos.relative(dir)
+        val adjacentState = level.getBlockState(adjacentPos)
+
+        // If the adjacent block is a Pale Oak Log, return true
+        if (CreakingHeartBlock.isPaleOakLog(adjacentState)) {
+          return true
+        }
+      }
+      return false
+    }
 
     private fun spawnProtector(serverLevel: ServerLevel, blockEntity: CreakingHeartBlockEntity): CreakingEntity? {
       val blockPos = blockEntity.blockPos

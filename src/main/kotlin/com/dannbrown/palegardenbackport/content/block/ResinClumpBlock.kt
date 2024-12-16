@@ -21,8 +21,7 @@ import net.minecraft.world.level.material.Fluids
 class ResinClumpBlock(pProperties: Properties) : MultifaceBlock(pProperties), SimpleWaterloggedBlock {
   private val spreader = MultifaceSpreader(this)
   override fun createBlockStateDefinition(pBuilder: StateDefinition.Builder<Block, BlockState>) {
-    super.createBlockStateDefinition(pBuilder)
-    pBuilder.add(*arrayOf<Property<*>>(WATERLOGGED))
+    super.createBlockStateDefinition(pBuilder.add(*arrayOf<Property<*>>(WATERLOGGED)))
   }
 
   override fun updateShape(pState: BlockState, pDirection: Direction, pNeighborState: BlockState, pLevel: LevelAccessor, pPos: BlockPos, pNeighborPos: BlockPos): BlockState {
@@ -50,7 +49,7 @@ class ResinClumpBlock(pProperties: Properties) : MultifaceBlock(pProperties), Si
   }
 
   init {
-    this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false) as BlockState)
+    this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false))
   }
 
   companion object {
