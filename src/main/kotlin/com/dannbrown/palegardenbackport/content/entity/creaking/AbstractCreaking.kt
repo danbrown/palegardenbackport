@@ -13,7 +13,6 @@ import net.minecraft.world.entity.animal.Animal
 import net.minecraft.world.entity.monster.Monster
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.pathfinder.BlockPathTypes
 
 open class AbstractCreaking protected constructor(type: EntityType<out AbstractCreaking>, level: Level) : Animal(type, level) {
@@ -47,16 +46,6 @@ open class AbstractCreaking protected constructor(type: EntityType<out AbstractC
     return false
   }
 
-  override fun isInvulnerable(): Boolean {
-    return true
-  }
-
-  override fun isInvulnerableTo(source: DamageSource): Boolean {
-    return true
-  }
-
-  override fun setHealth(health: Float) {
-  }
 
   override fun onClimbable(): Boolean {
     return false
@@ -93,12 +82,8 @@ open class AbstractCreaking protected constructor(type: EntityType<out AbstractC
     return 0.2
   }
 
-  override fun hurt(source: DamageSource, amount: Float): Boolean {
-    return false
-  }
-
   override fun canBeLeashed(player: Player): Boolean {
-    return true
+    return false
   }
 
   override fun isIgnoringBlockTriggers(): Boolean {
@@ -109,7 +94,12 @@ open class AbstractCreaking protected constructor(type: EntityType<out AbstractC
     return true
   }
 
-  override fun playStepSound(pos: BlockPos, state: BlockState) {
+  override fun canBeHitByProjectile(): Boolean {
+    return false
+  }
+
+  override fun isPushable(): Boolean {
+    return false
   }
 
   companion object {

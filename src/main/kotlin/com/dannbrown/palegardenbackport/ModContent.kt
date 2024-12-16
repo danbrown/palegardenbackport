@@ -29,6 +29,7 @@ import com.dannbrown.palegardenbackport.content.block.PaleVinePlantBlock
 import com.dannbrown.palegardenbackport.content.block.ResinClumpBlock
 import com.dannbrown.palegardenbackport.content.block.creakingHeart.CreakingHeartBlock
 import com.dannbrown.palegardenbackport.content.block.creakingHeart.CreakingHeartBlockEntity
+import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingEntity
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingModel
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingRenderer
 import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakFoliagePlacer
@@ -89,6 +90,7 @@ import net.minecraftforge.common.ForgeSpawnEggItem
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.data.event.GatherDataEvent
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent
+import net.minecraftforge.event.entity.living.LivingKnockBackEvent
 import net.minecraftforge.event.village.WandererTradesEvent
 import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.IEventBus
@@ -443,6 +445,7 @@ class ModContent {
       }
       modBus.addListener { event: EntityAttributeCreationEvent -> ModEntityTypes.registerEntityAttributes(event) }
       forgeEventBus.addListener { event: WandererTradesEvent -> AddonWandererTrades(event).register() }
+      forgeEventBus.addListener { event: LivingKnockBackEvent -> CreakingEntity.cancelKnockback(event) }
     }
 
     fun registerClient(modBus: IEventBus, forgeEventBus: IEventBus) {

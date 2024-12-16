@@ -2,23 +2,21 @@ package com.dannbrown.palegardenbackport.content.block.creakingHeart
 
 import com.dannbrown.deltaboxlib.registry.generators.BlockFamily
 import com.dannbrown.palegardenbackport.ModContent
-import com.dannbrown.palegardenbackport.ModContent.Companion.WOOD_FAMILY
 import com.dannbrown.palegardenbackport.content.particle.TrailParticleOption
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.RenderShape
-import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -37,8 +35,9 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
   override fun createBlockStateDefinition(pBuilder: StateDefinition.Builder<Block, BlockState>) {
     super.createBlockStateDefinition(pBuilder.add(NATURAL, ACTIVE, AXIS))
   }
-  override fun getStateForPlacement(pContext: BlockPlaceContext): BlockState {
-    return defaultBlockState().setValue(RotatedPillarBlock.AXIS, pContext.clickedFace.axis)
+
+  override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
+    return updateState((defaultBlockState().setValue(AXIS, context.clickedFace.axis) as BlockState), context.level, context.clickedPos)
   }
 
   override fun newBlockEntity(blockPos: BlockPos, blockState: BlockState): BlockEntity {
@@ -75,42 +74,31 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
     return super.use(pState, level, pPos, pPlayer, pHand, pHit)
   }
 
-
-
-  fun hasRequiredLogs(blockState: BlockState, levelReader: LevelReader, blockPos: BlockPos): Boolean {
-    val blockAbove = levelReader.getBlockState(blockPos.above())
-    val blockBelow = levelReader.getBlockState(blockPos.below())
-
-    val blockAbovePaleLog = blockAbove.`is`(WOOD_FAMILY.blocks[BlockFamily.Type.LOG]!!.get()) || blockAbove.`is`(WOOD_FAMILY.blocks[BlockFamily.Type.STRIPPED_LOG]!!.get())
-    val blockBelowPaleLog = blockBelow.`is`(WOOD_FAMILY.blocks[BlockFamily.Type.LOG]!!.get()) || blockBelow.`is`(WOOD_FAMILY.blocks[BlockFamily.Type.STRIPPED_LOG]!!.get())
-
-    if(blockAbovePaleLog && blockBelowPaleLog) {
-      if(blockAbove.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y && blockBelow.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y) {
-        return true
-      }
-    }
-
-    return false
+  override fun updateShape(blockState: BlockState, direction: Direction, blockState2: BlockState, pLevel: LevelAccessor, blockPos: BlockPos, blockPos2: BlockPos): BlockState {
+    return updateState(super.updateShape(blockState, direction, blockState2, pLevel, blockPos, blockPos2), pLevel, blockPos)
   }
 
   override fun onRemove(pState: BlockState, pLevel: Level, pPos: BlockPos, pNewState: BlockState, pMovedByPiston: Boolean) {
     super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston)
-//    tryAwardExperience(pLevel, pPos)
-    // TODO: Remove spawned creakings
+    val blockEntity = pLevel.getBlockEntity(pPos)
+    if (blockEntity is CreakingHeartBlockEntity) {
+      blockEntity.removeProtector(null)
+    }
   }
 
-  private fun tryAwardExperience(player: Player, blockState: BlockState, level: Level, blockPos: BlockPos) {
-    if (!player.isCreative && !player.isSpectator && blockState.getValue(NATURAL) as Boolean && level is ServerLevel) {
+  private fun tryAwardExperience(player: Player?, blockState: BlockState, level: Level, blockPos: BlockPos) {
+    if (blockState.getValue(NATURAL) as Boolean && level is ServerLevel) {
+      if(player !== null && (player.isCreative || player.isSpectator)) return // Don't award experience to creative or spectator players
       this.popExperience(level, blockPos, level.random.nextIntBetweenInclusive(20, 24))
     }
   }
 
   override fun playerWillDestroy(level: Level, blockPos: BlockPos, blockState: BlockState, player: Player) {
-//    val var6 = p_361112_.getBlockEntity(p_368479_)
-//    if (var6 is CreakingHeartBlockEntity) {
-////      var6.removeProtector(p_362626_.damageSources().playerAttack(p_362626_))
-//      this.tryAwardExperience(p_362626_, p_363792_!!, p_361112_, p_368479_!!)
-//    }
+    val blockEntity = level.getBlockEntity(blockPos)
+    if (blockEntity is CreakingHeartBlockEntity) {
+      blockEntity.removeProtector(level.damageSources().playerAttack(player))
+      this.tryAwardExperience(player, blockState, level, blockPos)
+    }
 
     return super.playerWillDestroy(level, blockPos, blockState, player)
   }
@@ -125,32 +113,28 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
     }
     else {
       val blockEntity = level.getBlockEntity(blockPos)
-      if (blockEntity is CreakingHeartBlockEntity) {
-        val creakingHeartBlockEntity = blockEntity as CreakingHeartBlockEntity
-        return creakingHeartBlockEntity.getAnalogOutputSignal()
+      return if (blockEntity is CreakingHeartBlockEntity) {
+        blockEntity.getAnalogOutputSignal()
       }
       else {
-        return 0
+        0
       }
     }
   }
 
   override fun <T : BlockEntity?> getTicker(level: Level, blockState: BlockState, pBlockEntityType: BlockEntityType<T>): BlockEntityTicker<T>? {
     if (level.isClientSide) return null
-
     return if (blockState.getValue(ACTIVE) as Boolean) {
       createTickerHelper(pBlockEntityType, ModContent.CREAKING_HEART_BLOCK_ENTITY.get(), CreakingHeartBlockEntity::serverTick)
     } else {
       null
     }
-
   }
 
   companion object{
     val NATURAL = BooleanProperty.create("natural")
     val ACTIVE = BooleanProperty.create("active")
     val AXIS = BlockStateProperties.AXIS
-
 
     fun emitParticleTrail(level: ServerLevel, startPos: Vec3, endPos: Vec3, particleColor: Int, duration: Int = 10) {
       val direction = endPos.subtract(startPos)
@@ -164,7 +148,7 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
         val trailParticle = TrailParticleOption(
           endPos,
           particleColor,
-          level.random.nextInt(40) + duration // Lifespan
+          level.random.nextInt(30) + duration // Lifespan
         )
         level.sendParticles(
           trailParticle,
@@ -172,12 +156,45 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
           currentPos.y,
           currentPos.z,
           1,
-          0.0 + level.random.nextDouble() * 0.3,
-          0.0 + level.random.nextDouble() * 0.3,
-          0.0 + level.random.nextDouble() * 0.3,
-          0.01
+          0.0 + level.random.nextDouble() * 0.4,
+          0.0 + level.random.nextDouble() * 0.4,
+          0.0 + level.random.nextDouble() * 0.4,
+          0.008
         )
       }
+    }
+
+    fun isNaturalNight(level: Level): Boolean {
+      return level.dimensionType().natural() && level.isNight
+    }
+
+    fun isPaleOakLog(blockState: BlockState): Boolean {
+      return blockState.`is`(ModContent.WOOD_FAMILY.blocks[BlockFamily.Type.LOG]!!.get()) || blockState.`is`(ModContent.WOOD_FAMILY.blocks[BlockFamily.Type.STRIPPED_LOG]!!.get())
+    }
+
+    fun hasRequiredLogs(blockState: BlockState, levelReader: LevelReader, blockPos: BlockPos): Boolean {
+      val axis = blockState.getValue(AXIS)
+      val directions: Array<Direction> = when (axis) {
+        Direction.Axis.X -> arrayOf(Direction.EAST, Direction.WEST)
+        Direction.Axis.Y -> arrayOf(Direction.UP, Direction.DOWN)
+        Direction.Axis.Z -> arrayOf(Direction.SOUTH, Direction.NORTH)
+        else -> throw IllegalStateException("Invalid axis: $axis")
+      }
+
+      for (dir in directions) {
+        val relative = levelReader.getBlockState(blockPos.relative(dir))
+        if (!isPaleOakLog(relative) || relative.getValue(AXIS) !== axis) {
+          return false
+        }
+      }
+
+      return true
+    }
+
+
+    private fun updateState(blockState: BlockState, levelReader: LevelReader, blockPos: BlockPos): BlockState {
+      val hasLogs = hasRequiredLogs(blockState, levelReader, blockPos)
+      return if (hasLogs && !blockState.getValue(ACTIVE)) blockState.setValue(ACTIVE, true) else blockState
     }
 
     // ----
