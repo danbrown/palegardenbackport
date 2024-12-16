@@ -121,55 +121,36 @@ class CreakingHeartBlockEntity(type: BlockEntityType<CreakingHeartBlockEntity>, 
   }
 
   private fun spreadResin(): Optional<BlockPos> {
-    val level = level ?: return Optional.empty() // Return early if level is null
-    if (level.isClientSide) return Optional.empty() // Return early if client side
-
-    // Get the starting position
+    val level = level ?: return Optional.empty()
+    if (level.isClientSide) return Optional.empty()
     var currentPos = this.worldPosition
+    var maxIterations = 10
 
-    var maxIterations = 10 // Limit the number of iterations
     while (maxIterations-- > 0) {
-      // Pick a random direction
       val randomDir = Direction.values().random()
-
-      // Get the relative position based on the random direction
       val relativePos = currentPos.relative(randomDir)
+      val blockState = level.getBlockState(relativePos)
 
-      // Ensure the relative position is within world bounds
       if (!level.isInWorldBounds(relativePos)) {
         continue
       }
 
-      // Get the block state of the relative position
-      val blockState = level.getBlockState(relativePos)
-
-      // Check if the block is air or water source and if any adjacent block is a Pale Oak Log
       if ((blockState.isAir || (blockState.`is`(Blocks.WATER) && blockState.fluidState.isSource)) &&
         hasAdjacentPaleOakLog(level, relativePos)) {
-
-        // Create the resin clump state
         var resinState = ModContent.RESIN_CLUMP.get().getStateForPlacement(
           BlockPlaceContext(level, null, InteractionHand.MAIN_HAND, ItemStack(ModContent.RESIN_CLUMP.get()), BlockHitResult(Vec3.atCenterOf(relativePos), randomDir, relativePos, false))
         )
         if(resinState == null) continue
-
-        // If the block was water, set the resin to be waterlogged
         if (blockState.`is`(Blocks.WATER) && blockState.fluidState.isSource) {
           resinState = resinState.setValue(BlockStateProperties.WATERLOGGED, true)
         }
-
-        // Place the resin clump at this position with the appropriate fluid state
         level.setBlock(relativePos, resinState, 3)
-
-        // Return the position where resin was placed
         return Optional.of(relativePos)
       }
-
-      // Update the current position for the next iteration
       currentPos = relativePos
     }
 
-    return Optional.empty() // If no suitable spot was found after 10 iterations
+    return Optional.empty()
   }
 
   override fun load(compoundTag: CompoundTag) {
