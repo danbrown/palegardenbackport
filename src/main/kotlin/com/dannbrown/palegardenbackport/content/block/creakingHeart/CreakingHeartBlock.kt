@@ -3,12 +3,14 @@ package com.dannbrown.palegardenbackport.content.block.creakingHeart
 import com.dannbrown.deltaboxlib.registry.generators.BlockFamily
 import com.dannbrown.palegardenbackport.ModContent
 import com.dannbrown.palegardenbackport.content.particle.TrailParticleOption
+import com.dannbrown.palegardenbackport.init.ModSounds
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundSource
+import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
-import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
@@ -122,6 +124,16 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
     }
   }
 
+  override fun animateTick(state: BlockState, level: Level, blockPos: BlockPos, randomSource: RandomSource) {
+    if (isNaturalNight(level)) {
+      if (state.getValue(ACTIVE) as Boolean) {
+        if (randomSource.nextInt(16) == 0 && isSurroundedByLogs(level, blockPos)) {
+          level.playLocalSound(blockPos.x.toDouble(), blockPos.y.toDouble(), blockPos.z.toDouble(), ModSounds.CREAKING_HEART_IDLE.get(), SoundSource.BLOCKS, 1.0f, 1.0f, false)
+        }
+      }
+    }
+  }
+
   override fun <T : BlockEntity?> getTicker(level: Level, blockState: BlockState, pBlockEntityType: BlockEntityType<T>): BlockEntityTicker<T>? {
     if (level.isClientSide) return null
     return if (blockState.getValue(ACTIVE) as Boolean) {
@@ -195,6 +207,18 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
     private fun updateState(blockState: BlockState, levelReader: LevelReader, blockPos: BlockPos): BlockState {
       val hasLogs = hasRequiredLogs(blockState, levelReader, blockPos)
       return if (hasLogs && !blockState.getValue(ACTIVE)) blockState.setValue(ACTIVE, true) else blockState
+    }
+
+    private fun isSurroundedByLogs(levelAccessor: LevelAccessor, blockPos: BlockPos): Boolean {
+      val directions = Direction.values()
+      for (direction in directions) {
+        val relative = blockPos.relative(direction)
+        val state = levelAccessor.getBlockState(relative)
+        if (!isPaleOakLog(state)) {
+          return false
+        }
+      }
+      return true
     }
 
     // ----

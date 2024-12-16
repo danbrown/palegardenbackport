@@ -144,7 +144,7 @@ class ModContent {
       .copyFrom { Blocks.OAK_LOG }
       .color(MapColor.COLOR_ORANGE)
       .blockFactory { p -> CreakingHeartBlock(p) }
-      .properties { p -> p.sound(ModSounds.CREAKING_HEART_SOUNDS).instrument(NoteBlockInstrument.BASEDRUM).strength(10.0F) }
+      .properties { p -> p.sound(ModSounds.CREAKING_HEART_SOUNDS).instrument(NoteBlockInstrument.BASEDRUM).strength(10.0F).randomTicks() }
       .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null)
       .loot { lt, b ->
         lt.add(b, BlockLootHelpers.createSelfDropDispatchTable(b, HAS_SILK_TOUCH))
