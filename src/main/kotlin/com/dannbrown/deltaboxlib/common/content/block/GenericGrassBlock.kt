@@ -19,7 +19,7 @@ import net.minecraft.world.phys.shapes.VoxelShape
 /*import com.mojang.serialization.MapCodec
 *//*?}*/
 
-class GenericGrassBlock(
+open class GenericGrassBlock(
   props: Properties,
   private val placeOn: ((blockState: BlockState, blockGetter: BlockGetter, blockPos: BlockPos) -> Boolean)? = null,
   private val isSticky: Boolean = false,

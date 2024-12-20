@@ -1,5 +1,6 @@
 package com.dannbrown.deltaboxlib.platform.registrate.transformers
 
+import com.dannbrown.deltaboxlib.common.content.block.CropLeavesBlock
 import com.tterrag.registrate.providers.DataGenContext
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer
@@ -74,6 +75,22 @@ object BlockstatePresets {
     }
   }
 
+  fun <B : Block> cropLeavesBlock(name: String): NonNullBiConsumer<DataGenContext<Block, B>, RegistrateBlockstateProvider> {
+    return NonNullBiConsumer { c, p ->
+      p.getVariantBuilder(c.get()).forAllStates { state ->
+        val age: Int = state.getValue(CropLeavesBlock.AGE)
+        val suffix = if (age > 0) "_stage$age" else ""
+        ConfiguredModel.builder()
+          .modelFile(
+            p.models()
+              .withExistingParent(c.name + suffix, p.mcLoc("block/leaves"))
+              .texture("all", p.modLoc("block/${name}${suffix}"))
+              .renderType("cutout_mipped")
+          )
+          .build()
+      }
+    }
+  }
 
   fun <B : Block> bottomTopBlock(name: String, bottomName: String = name, topName: String = name
   ): NonNullBiConsumer<DataGenContext<Block, B>, RegistrateBlockstateProvider> {

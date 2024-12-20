@@ -1,5 +1,6 @@
 package com.dannbrown.deltaboxlib.platform.registrate.transformers
 
+import com.dannbrown.deltaboxlib.common.content.block.CropLeavesBlock
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer
 import net.minecraft.advancements.critereon.BlockPredicate
@@ -132,6 +133,40 @@ object BlockLootPresets {
   fun <B : Block> leavesLoot(saplingDrop: Supplier<Block>): NonNullBiConsumer<RegistrateBlockLootTables, B> {
     return NonNullBiConsumer { lt, b ->
       lt.add(b, lt.createLeavesDrops(b, saplingDrop.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f))
+    }
+  }
+
+  /**
+   * Create a Leaves loot table, it will drop the sapling if not fully grown, and the stick if fully grown
+   * @param cropItem the item to drop if the block is fully grown
+   * @param saplingItem the item to drop if the block is not fully grown
+   * @param cropChance the chance to drop the crop item
+   * @param cropMultiplier the amount of items to drop
+   */
+  fun <B : Block> dropLeafCropLoot(cropItem: Supplier<ItemLike>, saplingItem: Supplier<ItemLike>, cropChance: Float = 0.5f, cropMultiplier: Int = 2, saplingChance: Float = 0.1f, saplingMultiplier: Int = 1): NonNullBiConsumer<RegistrateBlockLootTables, B> {
+    return NonNullBiConsumer { lt, b ->
+      // drop crop at max age
+      val pool1 = LootPool.lootPool()
+        .setRolls(ConstantValue.exactly(cropMultiplier.toFloat()))
+        .name("crop_max_age")
+        .`when`(LootItemBlockStatePropertyCondition.hasBlockStateProperties(b)
+          .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropLeavesBlock.AGE, CropLeavesBlock.MAX_AGE))
+          .and(LootItemRandomChanceCondition.randomChance(cropChance))
+        )
+        .add(LootItem.lootTableItem(cropItem.get()))
+
+      // drop sapling at any age
+      val pool2 = LootPool.lootPool()
+        .setRolls(ConstantValue.exactly(saplingMultiplier.toFloat()))
+        .name("sapling")
+        .`when`(LootItemRandomChanceCondition.randomChance(saplingChance))
+        .add(LootItem.lootTableItem(saplingItem.get()))
+
+      lt.add(b,
+        LootTable.lootTable()
+          .withPool(pool1)
+          .withPool(pool2)
+      )
     }
   }
 
