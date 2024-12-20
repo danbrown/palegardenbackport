@@ -1,5 +1,8 @@
 package com.dannbrown.deltaboxlib.platform.registrate.generators.block
 
+import com.dannbrown.deltaboxlib.common.content.block.BuddingLeavesBlock
+import com.dannbrown.deltaboxlib.common.content.block.CropLeavesBlock
+import com.dannbrown.deltaboxlib.common.content.block.FlammableLeavesBlock
 import com.dannbrown.deltaboxlib.common.content.block.GenericDoublePlantBlock
 import com.dannbrown.deltaboxlib.common.content.block.GenericGrassBlock
 import com.dannbrown.deltaboxlib.common.content.block.GenericSaplingBlock
@@ -13,6 +16,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.FaceAttachedHorizontalDirectionalBlock
 import net.minecraft.world.level.block.FlowerPotBlock
 import net.minecraft.world.level.block.state.BlockState
 import java.util.function.Supplier
@@ -111,6 +115,15 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     return GrassBlockPreset(_name, null, isSticky, isHarmful, isBonemealable, 0f, 0, placeOn).createFlower(this)
   }
 
+  /**
+   * Add Tall Grass Block properties
+   * @param doubleBlock The double plant block to use for the tall grass block
+   * @param dropItem The item to drop when the block is broken
+   * @param needBonemeal Whether the block needs bonemeal to grow
+   * @param placeOn The function to use to determine if the tall grass block can be placed on a block
+   * @param chance The chance to drop the other item
+   * @param multiplier The multiplier for the other item drop
+   */
   fun createSmallTallGrassBlock(
     _name: String,
     doubleBlock: Supplier<GenericDoublePlantBlock>,
@@ -123,6 +136,15 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     return GrassBlockPreset(_name, dropItem, false, false, false, chance, multiplier, placeOn).createSmallTallGrassBlock(this, doubleBlock, needBonemeal)
   }
 
+  /**
+   * Add Double Tall Grass Block properties
+   * @param dropItem The item to drop when the block is broken
+   * @param seedItem The item to drop when the block is bonemealed
+   * @param placeOn The function to use to determine if the double tall grass block can be placed on a block
+   * @param prefix The prefix to add to the block name
+   * @param chance The chance to drop the other item
+   * @param multiplier The multiplier for the other item drop
+   */
   fun createDoubleTallGrassBlock(
     _name: String,
     dropItem: Supplier<ItemLike>,
@@ -133,5 +155,53 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     multiplier: Int = 2,
   ): BlockGeneratorBuilder<GenericDoublePlantBlock> {
     return GrassBlockPreset(_name, dropItem, false, false, false, chance, multiplier, placeOn).createDoubleTallGrassBlock(this, seedItem, prefix)
+  }
+
+  /**
+   * Add Flammable Leaves Block properties
+   * @param saplingBlock The sapling block to use for the leaves block
+   */
+  fun createLeavesBlock(
+    _name: String,
+    saplingBlock: Supplier<GenericSaplingBlock>,
+  ): BlockGeneratorBuilder<FlammableLeavesBlock> {
+    return LeavesBlockPreset(_name, saplingBlock).create(this)
+  }
+
+  /**
+   * Add Palm Leaves Block properties
+   * @param saplingBlock The sapling block to use for the leaves block
+   */
+  fun createPalmLeavesBlock(
+    _name: String,
+    saplingBlock: Supplier<GenericSaplingBlock>,
+  ): BlockGeneratorBuilder<FlammableLeavesBlock> {
+    return LeavesBlockPreset(_name, saplingBlock).createPalmLeaves(this)
+  }
+
+  /**
+   * Add Budding Leaves Block properties
+   * @param saplingBlock The sapling block to use for the leaves block
+   * @param fruitBlock The fruit block to use for the budding leaves block
+   */
+  fun createBuddingLeavesBlock(
+    _name: String,
+    saplingBlock: Supplier<GenericSaplingBlock>,
+    fruitBlock: Supplier<FaceAttachedHorizontalDirectionalBlock>,
+  ): BlockGeneratorBuilder<BuddingLeavesBlock> {
+    return LeavesBlockPreset(_name, saplingBlock).createBuddingLeaves(this, fruitBlock)
+  }
+
+  /**
+   * Add Crop Leaves Block properties
+   * @param saplingBlock The sapling block to use for the leaves block
+   * @param itemToDrop The item to drop when the block is broken
+   */
+  fun createCropLeavesBlock(
+    _name: String,
+    saplingBlock: Supplier<GenericSaplingBlock>,
+    itemToDrop: Supplier<ItemLike>,
+  ): BlockGeneratorBuilder<CropLeavesBlock> {
+    return LeavesBlockPreset(_name, saplingBlock).createCropLeaves(this, itemToDrop)
   }
 }
