@@ -213,7 +213,7 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     includeSeedOnDrop: Boolean = true,
     chance: Float = 1f,
     multiplier: Int = 1,
-  ): BlockGeneratorBuilder<BushCropBlock>{
+  ): BlockGeneratorBuilder<GenericCropBlock>{
     return CropBlockPreset(_name, seedName, cropLang, seedLang, dropItem, isBush, includeSeedOnDrop, chance, multiplier).create(this)
   }
 
