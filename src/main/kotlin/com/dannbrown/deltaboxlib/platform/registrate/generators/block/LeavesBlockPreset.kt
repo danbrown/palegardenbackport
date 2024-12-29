@@ -11,6 +11,7 @@ import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.FaceAttachedHorizontalDirectionalBlock
 import java.util.function.Supplier
@@ -66,7 +67,7 @@ class LeavesBlockPreset(
       .loot(BlockLootPresets.leavesLoot { sapling.get() })
   }
 
-  fun createBuddingLeaves(generator: BlockGenerator, fruitBlock: Supplier<FaceAttachedHorizontalDirectionalBlock>): BlockGeneratorBuilder<BuddingLeavesBlock> {
+  fun createBuddingLeaves(generator: BlockGenerator, fruitBlock: Supplier<Block>): BlockGeneratorBuilder<BuddingLeavesBlock> {
     return generator
       .create<BuddingLeavesBlock>(_name + suffix)
       .blockFactory { p, c -> BuddingLeavesBlock(p, fruitBlock, c.flammability!!.first, c.flammability.second) }
@@ -84,9 +85,9 @@ class LeavesBlockPreset(
       .blockTags(
         listOf(BlockTags.LEAVES, BlockTags.MINEABLE_WITH_HOE, *DeltaboxUtil.TAGS.modloaderBlockTag("leaves").toTypedArray())
       )
-      .itemTags(listOf(ItemTags.LEAVES, *DeltaboxUtil.TAGS.modloaderItemTag("leaves").toTypedArray()))
       .blockstate(BlockstatePresets.leavesBlock(_name + suffix))
       .loot(BlockLootPresets.leavesLoot { sapling.get() })
+      .noItem()
   }
 
   fun createCropLeaves(generator: BlockGenerator, itemToDrop: Supplier<ItemLike>): BlockGeneratorBuilder<CropLeavesBlock> {

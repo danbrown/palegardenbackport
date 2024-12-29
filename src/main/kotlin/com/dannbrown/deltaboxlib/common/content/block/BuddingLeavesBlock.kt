@@ -12,19 +12,21 @@ import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.BonemealableBlock
 import net.minecraft.world.level.block.FaceAttachedHorizontalDirectionalBlock
+import net.minecraft.world.level.block.MangrovePropaguleBlock
+import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.AttachFace
 import net.minecraft.world.phys.HitResult
 import java.util.function.Supplier
 
-open class BuddingLeavesBlock(props: Properties, private val fruitBlock: Supplier<FaceAttachedHorizontalDirectionalBlock>, private val flammability: Int = 20, private val fireSpread: Int = 5): FlammableLeavesBlock(props, flammability, fireSpread), BonemealableBlock {
+open class BuddingLeavesBlock(props: Properties, private val fruitBlock: Supplier<Block>, private val flammability: Int = 20, private val fireSpread: Int = 5): FlammableLeavesBlock(props, flammability, fireSpread), BonemealableBlock {
   override fun randomTick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
     val blockBelow = level.getBlockState(pos.below())
     // check if block below is air
     if (random.nextInt(100) % 20 == 0) { // 5% chance // TODO: make this configurable
       if (blockBelow.isAir) {
         // place fruit block below
-        level.setBlock(pos.below(), fruitBlock.get().defaultBlockState().setValue(FaceAttachedHorizontalDirectionalBlock.FACE, AttachFace.CEILING), Block.UPDATE_CLIENTS)
+        level.setBlock(pos.below(), getFruitBlockState(), Block.UPDATE_CLIENTS)
       }
     } else{
       super.randomTick(state, level, pos, random)
@@ -33,6 +35,14 @@ open class BuddingLeavesBlock(props: Properties, private val fruitBlock: Supplie
 
   override fun isRandomlyTicking(pState: BlockState): Boolean {
     return true
+  }
+
+  private fun getFruitBlockState(): BlockState {
+    var state = fruitBlock.get().defaultBlockState()
+    if(state.hasProperty(FaceAttachedHorizontalDirectionalBlock.FACE)) state = state.setValue(FaceAttachedHorizontalDirectionalBlock.FACE, AttachFace.CEILING)
+    else if(state.hasProperty(RotatedPillarBlock.AXIS)) state = state.setValue(RotatedPillarBlock.AXIS, Direction.Axis.Y)
+    else if(state.hasProperty(MangrovePropaguleBlock.HANGING)) state = state.setValue(MangrovePropaguleBlock.HANGING, true)
+    return state
   }
 
   /*? if >1.21 {*/
@@ -59,7 +69,7 @@ open class BuddingLeavesBlock(props: Properties, private val fruitBlock: Supplie
 
   override fun performBonemeal(p0: ServerLevel, p1: RandomSource, p2: BlockPos, p3: BlockState) {
     if (p0.getBlockState(p2.below()).isAir) {
-      p0.setBlock(p2.below(), fruitBlock.get().defaultBlockState().setValue(FaceAttachedHorizontalDirectionalBlock.FACE, AttachFace.CEILING), Block.UPDATE_CLIENTS)
+      p0.setBlock(p2.below(), getFruitBlockState(), Block.UPDATE_CLIENTS)
     }
   }
 }

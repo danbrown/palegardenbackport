@@ -70,11 +70,15 @@ object DeltaboxBlocks {
     .register()
 
   // Leaves
-  val COCONUT_LEAVES = BLOCKS.createLeavesBlock("coconut", { LEMON_SAPLING.get() })
+  val ACAI_LEAVES = BLOCKS.createPalmLeavesBlock("acai", { LEMON_SAPLING.get() })
     .color(MapColor.COLOR_LIGHT_GREEN)
     .register()
 
-  val ACAI_LEAVES = BLOCKS.createPalmLeavesBlock("acai", { LEMON_SAPLING.get() })
+  val BUDDING_LEMON_LEAVES = BLOCKS.createCropLeavesBlock("budding_lemon", { LEMON_SAPLING.get() }, { Blocks.MANGROVE_PROPAGULE })
+    .color(MapColor.COLOR_LIGHT_GREEN)
+    .register()
+
+  val CROP_LEAVES = BLOCKS.createBuddingLeavesBlock("coconut", { LEMON_SAPLING.get() }, { Blocks.MANGROVE_PROPAGULE })
     .color(MapColor.COLOR_LIGHT_GREEN)
     .register()
 

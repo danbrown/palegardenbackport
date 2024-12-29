@@ -189,7 +189,7 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
   fun createBuddingLeavesBlock(
     _name: String,
     saplingBlock: Supplier<GenericSaplingBlock>,
-    fruitBlock: Supplier<FaceAttachedHorizontalDirectionalBlock>,
+    fruitBlock: Supplier<Block>,
     suffix: String = "_leaves"
   ): BlockGeneratorBuilder<BuddingLeavesBlock> {
     return LeavesBlockPreset(_name, saplingBlock, suffix).createBuddingLeaves(this, fruitBlock)
