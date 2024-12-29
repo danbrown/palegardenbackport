@@ -1,7 +1,9 @@
 {
   "block.deltaboxlib.acai_leaves": "Acai Leaves",
   "block.deltaboxlib.adamantium_block": "Adamantium Block",
+  "block.deltaboxlib.black_beans": "Black Beans Crop",
   "block.deltaboxlib.budding_lemon_leaves": "Budding Lemon Leaves",
+  "block.deltaboxlib.carioca_beans": "Carioca Beans Crop",
   "block.deltaboxlib.coconut_leaves": "Coconut Leaves",
   "block.deltaboxlib.flammable_block": "Flammable Block",
   "block.deltaboxlib.flammable_block_2": "Flammable Block 2",
@@ -15,6 +17,9 @@
   "block.deltaboxlib.simple_grass": "Simple Grass",
   "block.deltaboxlib.sparse_dry_grass": "Sparse Dry Grass",
   "block.deltaboxlib.tall_sparse_dry_grass": "Tall Sparse Dry Grass",
+  "item.deltaboxlib.bean_pod": "Bean Pod",
+  "item.deltaboxlib.black_beans": "Black Beans",
+  "item.deltaboxlib.carioca_beans": "Carioca Beans",
   "item.deltaboxlib.garlic_clove": "Garlic Clove",
   "item.deltaboxlib.warp_crystal": "Warp Crystal",
   "tooltip.deltaboxlib.flint": "It's a Delta!"

@@ -17,13 +17,14 @@ class CropBlockPreset(
   private val cropLang: String,
   private val seedLang: String,
   private val dropItem: Supplier<ItemLike>,
+  private val isBush: Boolean = true,
   private val includeSeedOnDrop: Boolean = true,
   private val chance: Float = 1f,
   private val multiplier: Int = 1,
 ): IBlockBuilderPreset<GenericCropBlock>() {
   override fun create(generator: BlockGenerator): BlockGeneratorBuilder<GenericCropBlock> {
     return generator.create<GenericCropBlock>(seedName)
-      .blockFactory { p -> GenericCropBlock(p, dropItem) }
+      .blockFactory { p -> GenericCropBlock(p, isBush, includeSeedOnDrop, dropItem, chance, multiplier) }
       .copyFrom { Blocks.WHEAT }
       .properties { p ->
         p
@@ -45,4 +46,5 @@ class CropBlockPreset(
           .build()
       }
   }
+
 }

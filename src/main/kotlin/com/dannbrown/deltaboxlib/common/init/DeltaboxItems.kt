@@ -25,6 +25,8 @@ object DeltaboxItems {
     }
     .register()
 
+  val BEAN_POD = ITEMS.create<Item>("bean_pod").register()
+
   fun register() {
     DeltaboxUtil.logInfo("Registering items...")
   }
