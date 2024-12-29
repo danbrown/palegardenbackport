@@ -1,12 +1,6 @@
 package com.dannbrown.deltaboxlib.platform.registrate.generators.block
 
-import com.dannbrown.deltaboxlib.common.content.block.BuddingLeavesBlock
-import com.dannbrown.deltaboxlib.common.content.block.CropLeavesBlock
-import com.dannbrown.deltaboxlib.common.content.block.FlammableLeavesBlock
-import com.dannbrown.deltaboxlib.common.content.block.GenericDoublePlantBlock
-import com.dannbrown.deltaboxlib.common.content.block.GenericGrassBlock
-import com.dannbrown.deltaboxlib.common.content.block.GenericSaplingBlock
-import com.dannbrown.deltaboxlib.common.content.block.GenericTallGrassBlock
+import com.dannbrown.deltaboxlib.common.content.block.*
 import com.dannbrown.deltaboxlib.common.content.tree.DeltaboxTreeGrower
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
 import com.dannbrown.deltaboxlib.platform.registrate.generators.family.BlockFamilyGeneratorBuilder
@@ -207,5 +201,18 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     suffix: String = "_leaves"
   ): BlockGeneratorBuilder<CropLeavesBlock> {
     return LeavesBlockPreset(_name, saplingBlock, suffix).createCropLeaves(this, itemToDrop)
+  }
+
+  fun createCropBlock(
+    _name: String,
+    seedName: String,
+    cropLang: String,
+    seedLang: String,
+    dropItem: Supplier<ItemLike>,
+    includeSeedOnDrop: Boolean = true,
+    chance: Float = 1f,
+    multiplier: Int = 1,
+  ): BlockGeneratorBuilder<GenericCropBlock>{
+    return CropBlockPreset(_name, seedName, cropLang, seedLang, dropItem, includeSeedOnDrop, chance, multiplier).create(this)
   }
 }

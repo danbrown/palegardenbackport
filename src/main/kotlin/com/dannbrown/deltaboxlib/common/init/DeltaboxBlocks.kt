@@ -82,6 +82,11 @@ object DeltaboxBlocks {
     .color(MapColor.COLOR_LIGHT_GREEN)
     .register()
 
+  // Crops
+  val GARLIC_CROP = BLOCKS.createCropBlock("garlic", "garlic_clove", "Garlic Crop", "Garlic Clove", {DeltaboxItems.WARP_CRYSTAL.get()}, false)
+    .color(MapColor.COLOR_LIGHT_GREEN)
+    .register()
+
   fun register() {
     DeltaboxUtil.logInfo("Registering blocks...")
   }

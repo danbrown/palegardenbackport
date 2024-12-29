@@ -1,4 +1,4 @@
-// 1.20.1	2024-12-29T14:59:02.546534	Registrate Provider for deltaboxlib [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2024-12-29T15:42:15.250281	Registrate Provider for deltaboxlib [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 0f5f6649f8f7b7f0984ec71e9e71f566f3c230dd assets/deltaboxlib/blockstates/acai_leaves.json
 b47ba9037d146b0124a187e02cd01cfb1e28905f assets/deltaboxlib/blockstates/adamantium_block.json
 56eb06205850411f04a55592103647861e9ba6d9 assets/deltaboxlib/blockstates/budding_lemon_leaves.json
@@ -6,6 +6,7 @@ b47ba9037d146b0124a187e02cd01cfb1e28905f assets/deltaboxlib/blockstates/adamanti
 232181b56321d8645220706efafacc3a147ec0ca assets/deltaboxlib/blockstates/flammable_block.json
 254cd102b4c7b2a86fc8031d60429aaa9527123d assets/deltaboxlib/blockstates/flammable_block_2.json
 aeac4d14a1270dee0c19209ba0a72280de957b62 assets/deltaboxlib/blockstates/flammable_sand.json
+73af5144c871aa3df74c11c85078f566e8d54563 assets/deltaboxlib/blockstates/garlic_clove.json
 8155b2b973949b407ad282e76071e7793ae0e14c assets/deltaboxlib/blockstates/lemon_sapling.json
 5358f80b43995db6d7a48babaae36492f238eab1 assets/deltaboxlib/blockstates/potted_lemon_sapling.json
 b5bf129f2a6b37aa5ce42419c267a4ede00e6e33 assets/deltaboxlib/blockstates/potted_simple_flower.json
@@ -14,8 +15,8 @@ b5bf129f2a6b37aa5ce42419c267a4ede00e6e33 assets/deltaboxlib/blockstates/potted_s
 c768c54a7102d4462b9ce699f8fd2cf2e929b967 assets/deltaboxlib/blockstates/simple_grass.json
 873c6b3b6b95a43a87bcd8bb3be67875e8e35f62 assets/deltaboxlib/blockstates/sparse_dry_grass.json
 ecc93271d373e7607320af113f2333aac1f491e9 assets/deltaboxlib/blockstates/tall_sparse_dry_grass.json
-233a0b076604527026e6eae74cef3ba25d690fce assets/deltaboxlib/lang/en_ud.json
-ad65c40c7dcf46497ed1fdb1b5c6e51c0e96e50f assets/deltaboxlib/lang/en_us.json
+2922917a13b139ceb262a89146d51b32fc671768 assets/deltaboxlib/lang/en_ud.json
+2c25494f2a88b0aca890bc3a891bae749a146fde assets/deltaboxlib/lang/en_us.json
 2b4feb39488e364e71c9894ceb639ca9f1d7c70b assets/deltaboxlib/models/block/acai_leaves.json
 af4e5fdd38c7b2f93f16c67a9badac29fccb3092 assets/deltaboxlib/models/block/adamantium_block.json
 29b3e76f03f16542a6e61942f585c53abc264d3c assets/deltaboxlib/models/block/budding_lemon_leaves.json
@@ -26,6 +27,14 @@ e25e77e34a97b2e0195c6e453f42e050b301d2f8 assets/deltaboxlib/models/block/budding
 39493b1e3bd7d433287fbce37721792478c9268e assets/deltaboxlib/models/block/flammable_block.json
 b0197da7ddca01ec33d9fa8a5557a290176eb673 assets/deltaboxlib/models/block/flammable_block_2.json
 9a9943ce876d5bce1dcb5b904898f8d610ec1d3a assets/deltaboxlib/models/block/flammable_sand.json
+c9f277397a90ede099afbe598077ffd86381c407 assets/deltaboxlib/models/block/garlic_clove_stage0.json
+290f031dafdabcb7cccf23179607847a4bd7236e assets/deltaboxlib/models/block/garlic_clove_stage1.json
+f5550421f8e1bdba01776b14b1507c1e72b921fd assets/deltaboxlib/models/block/garlic_clove_stage2.json
+55cbc14a85011c8e245f8df973e8d46a42c3bc7e assets/deltaboxlib/models/block/garlic_clove_stage3.json
+02a3747ce87bc6759496ab29c551fe4d5f59fe7d assets/deltaboxlib/models/block/garlic_clove_stage4.json
+b09d4ca10c44dfd0217481c0064b0789bd72c029 assets/deltaboxlib/models/block/garlic_clove_stage5.json
+3f9049bd1447f597d8597a9a0dc3f60ecd0bb7ac assets/deltaboxlib/models/block/garlic_clove_stage6.json
+bdefeaf98e579705220cc5209f506cc993d83336 assets/deltaboxlib/models/block/garlic_clove_stage7.json
 fbe833c80710b3d889de9dd80e766e395c997d4d assets/deltaboxlib/models/block/lemon_sapling.json
 38fffe0b866fb0331b9876019ecb4ebd4d2b35fc assets/deltaboxlib/models/block/potted_lemon_sapling.json
 8a268af44aa1395fcd6a5bcc4ce4e6e72e19ad10 assets/deltaboxlib/models/block/potted_simple_flower.json
@@ -40,6 +49,7 @@ c857a9a1975080145d705343b91ab38e8b92d8ec assets/deltaboxlib/models/block/tall_sp
 d7764982abbb057174621ee30963be1fcb02cb1f assets/deltaboxlib/models/item/flammable_block.json
 021fc4dc254112190c5a96df9027e046684c5e90 assets/deltaboxlib/models/item/flammable_block_2.json
 00a1b4efaec01f16c89562f17b4e4bfc6701a7a6 assets/deltaboxlib/models/item/flammable_sand.json
+0658640ae0a0a08afef240ea24463d2dd6bd90e8 assets/deltaboxlib/models/item/garlic_clove.json
 67280da1b3cb5e7a1356eaffd73005e90c224378 assets/deltaboxlib/models/item/lemon_sapling.json
 1ec74a4a8067874a3cbce575175e07b4b400fe56 assets/deltaboxlib/models/item/simple_flower.json
 758a3793de10056b58353f085bc2945a2b48ebd6 assets/deltaboxlib/models/item/simple_grass.json
@@ -62,6 +72,7 @@ a6242589d2e6e2f5efd445a9bbe54fb80016f04e data/deltaboxlib/loot_tables/blocks/bud
 b5213b1cf6bcc23a36e49eb4121948ea9b71abf6 data/deltaboxlib/loot_tables/blocks/flammable_block.json
 3212ce82d586e173f77ab8671d09f28019ae6976 data/deltaboxlib/loot_tables/blocks/flammable_block_2.json
 f1471b244a97f8b22d8edd44df6489d30454d15c data/deltaboxlib/loot_tables/blocks/flammable_sand.json
+cc8a247f1fb08e5436e10b5c82b89c44296d3b4d data/deltaboxlib/loot_tables/blocks/garlic_clove.json
 3ffebd3a77903fc997dd11971a6efd7e33fc8d76 data/deltaboxlib/loot_tables/blocks/lemon_sapling.json
 5c1db8687a2acc95b76e39c41f2f22c1a28660f5 data/deltaboxlib/loot_tables/blocks/potted_lemon_sapling.json
 e90a0b3fee01864cec3e7914bd250367d05eeea8 data/deltaboxlib/loot_tables/blocks/potted_simple_flower.json

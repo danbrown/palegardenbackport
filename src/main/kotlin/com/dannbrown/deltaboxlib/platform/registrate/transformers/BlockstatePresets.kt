@@ -9,6 +9,7 @@ import net.minecraft.core.Direction
 import net.minecraft.world.level.block.AmethystClusterBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.ButtonBlock
+import net.minecraft.world.level.block.CropBlock
 import net.minecraft.world.level.block.DoorBlock
 import net.minecraft.world.level.block.DoublePlantBlock
 import net.minecraft.world.level.block.FenceBlock
@@ -280,6 +281,25 @@ object BlockstatePresets {
           .build())
     }
   }
+
+  fun <B : Block> cropBlock(name: String): NonNullBiConsumer<DataGenContext<Block, B>, RegistrateBlockstateProvider> {
+    return NonNullBiConsumer { c, p ->
+      p.getVariantBuilder(c.get()).forAllStates { state ->
+        val suffix = "_stage" + state.getValue(CropBlock.AGE)
+        ConfiguredModel.builder()
+          .modelFile(
+            p.models()
+              .withExistingParent(c.name + suffix, p.mcLoc("block/cross"))
+              .texture("cross", p.modLoc("block/${name}/" + name + suffix))
+              .texture("particle", p.modLoc("block/${name}/" + name + suffix))
+              .renderType("cutout")
+          )
+          .build()
+      }
+    }
+  }
+
+
 
   fun <B : Block> simpleCarpetBlock(name: String): NonNullBiConsumer<DataGenContext<Block, B>, RegistrateBlockstateProvider> {
     return NonNullBiConsumer { c, p ->

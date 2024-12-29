@@ -6,6 +6,7 @@
   "block.deltaboxlib.flammable_block": "ʞɔoןᗺ ǝןqɐɯɯɐןℲ",
   "block.deltaboxlib.flammable_block_2": "ᄅ ʞɔoןᗺ ǝןqɐɯɯɐןℲ",
   "block.deltaboxlib.flammable_sand": "puɐS ǝןqɐɯɯɐןℲ",
+  "block.deltaboxlib.garlic_clove": "doɹƆ ɔıןɹɐ⅁",
   "block.deltaboxlib.lemon_sapling": "buıןdɐS uoɯǝꞀ",
   "block.deltaboxlib.potted_lemon_sapling": "buıןdɐS uoɯǝꞀ pǝʇʇoԀ",
   "block.deltaboxlib.potted_simple_flower": "ɹǝʍoןℲ ǝןdɯıS pǝʇʇoԀ",
@@ -14,6 +15,7 @@
   "block.deltaboxlib.simple_grass": "ssɐɹ⅁ ǝןdɯıS",
   "block.deltaboxlib.sparse_dry_grass": "ssɐɹ⅁ ʎɹᗡ ǝsɹɐdS",
   "block.deltaboxlib.tall_sparse_dry_grass": "ssɐɹ⅁ ʎɹᗡ ǝsɹɐdS ןןɐ⟘",
+  "item.deltaboxlib.garlic_clove": "ǝʌoןƆ ɔıןɹɐ⅁",
   "item.deltaboxlib.warp_crystal": "ןɐʇsʎɹƆ dɹɐM",
   "tooltip.deltaboxlib.flint": "¡ɐʇןǝᗡ ɐ s,ʇI"
 }
