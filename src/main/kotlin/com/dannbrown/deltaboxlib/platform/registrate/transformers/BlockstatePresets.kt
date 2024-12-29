@@ -1,6 +1,7 @@
 package com.dannbrown.deltaboxlib.platform.registrate.transformers
 
 import com.dannbrown.deltaboxlib.common.content.block.CropLeavesBlock
+import com.dannbrown.deltaboxlib.common.content.block.DoubleCropBlock
 import com.tterrag.registrate.providers.DataGenContext
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer
@@ -299,7 +300,24 @@ object BlockstatePresets {
     }
   }
 
-
+  fun <B : Block> doubleCropBlock(name: String): NonNullBiConsumer<DataGenContext<Block, B>, RegistrateBlockstateProvider> {
+    return NonNullBiConsumer { c, p ->
+     p.getVariantBuilder(c.get()).forAllStates { state ->
+            val age: Int = state.getValue(DoubleCropBlock.AGE)
+            val isUpper = state.getValue(DoubleCropBlock.HALF) == DoubleBlockHalf.UPPER
+            val suffix = if (isUpper) "_top_stage$age" else "_bottom_stage$age"
+            ConfiguredModel.builder()
+              .modelFile(
+                p.models()
+                  .withExistingParent(c.name + suffix, p.mcLoc("block/cross"))
+                  .texture("cross", p.modLoc("block/${name}/${name}${suffix}"))
+                  .texture("particle", p.modLoc("block/${name}/${name}${suffix}"))
+                  .renderType("cutout_mipped")
+              )
+              .build()
+      }
+    }
+  }
 
   fun <B : Block> simpleCarpetBlock(name: String): NonNullBiConsumer<DataGenContext<Block, B>, RegistrateBlockstateProvider> {
     return NonNullBiConsumer { c, p ->

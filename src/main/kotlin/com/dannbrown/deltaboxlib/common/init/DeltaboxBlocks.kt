@@ -87,11 +87,23 @@ object DeltaboxBlocks {
     .color(MapColor.COLOR_LIGHT_GREEN)
     .register()
 
+  val CASSAVINHA_CROP = BLOCKS.createCropBlock("cassavinha", "cassavinha", "Cassavinha Crop", "Cassavinha", null, true, true, 1f, 3)
+    .color(MapColor.COLOR_LIGHT_GREEN)
+    .register()
+
   val CARIOCA_BEANS_CROP = BLOCKS.createCropBlock("bean", "carioca_beans", "Carioca Beans Crop", "Carioca Beans", {DeltaboxItems.BEAN_POD.get()}, true, false)
     .color(MapColor.COLOR_LIGHT_GREEN)
     .register()
 
   val BLACK_BEANS_CROP = BLOCKS.createCropBlock("bean", "black_beans", "Black Beans Crop", "Black Beans", {DeltaboxItems.BEAN_POD.get()}, true, false)
+    .color(MapColor.COLOR_LIGHT_GREEN)
+    .register()
+
+  val CORN_CROP = BLOCKS.createDoubleCropBlock("corn", "kernels", "Corn Crop", "Kernels", {DeltaboxItems.BEAN_POD.get()}, true, false)
+    .color(MapColor.COLOR_LIGHT_GREEN)
+    .register()
+
+  val CASSAVA_CROP = BLOCKS.createDoubleCropBlock("cassava", "cassava_root", "Cassava Crop", "Cassava Root", null, false, true)
     .color(MapColor.COLOR_LIGHT_GREEN)
     .register()
 

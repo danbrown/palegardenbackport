@@ -1,0 +1,39 @@
+{
+  "type": "minecraft:block",
+  "functions": [
+    {
+      "function": "minecraft:explosion_decay"
+    }
+  ],
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:all_of",
+              "terms": [
+                {
+                  "chance": 1.0,
+                  "condition": "minecraft:random_chance"
+                },
+                {
+                  "block": "deltaboxlib:cassavinha",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "age": "7"
+                  }
+                }
+              ]
+            }
+          ],
+          "name": "deltaboxlib:cassavinha"
+        }
+      ],
+      "rolls": 3.0
+    }
+  ],
+  "random_sequence": "deltaboxlib:blocks/cassavinha"
+}

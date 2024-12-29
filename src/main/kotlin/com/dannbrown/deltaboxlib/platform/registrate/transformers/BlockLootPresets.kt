@@ -278,7 +278,7 @@ object BlockLootPresets {
    * @param multiplier the amount of items to drop
    * @param age the age to check for
    */
-  fun <B : Block> dropCropLoot(cropItem: Supplier<ItemLike>, _seedItem: Supplier<ItemLike>?, includeSeedOnDrop: Boolean, chance: Float = 0.5f, multiplier: Int = 1, age: Int = 7): NonNullBiConsumer<RegistrateBlockLootTables, B> {
+  fun <B : Block> dropCropLoot(cropItem: Supplier<ItemLike>?, _seedItem: Supplier<ItemLike>?, includeSeedOnDrop: Boolean, chance: Float = 0.5f, multiplier: Int = 1, age: Int = 7): NonNullBiConsumer<RegistrateBlockLootTables, B> {
     return NonNullBiConsumer { lt, b ->
       /*? if >1.21 {*/
       /*val registries = lt.registries
@@ -293,9 +293,9 @@ object BlockLootPresets {
       val dropGrownCondition = LootItemRandomChanceCondition.randomChance(chance)
         .and(LootItemBlockStatePropertyCondition.hasBlockStateProperties(b).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, age)))
 
-      val itemBuilder = LootItem.lootTableItem(cropItem.get()).`when`(dropGrownCondition)
+      val itemBuilder = LootItem.lootTableItem(if(cropItem !== null) cropItem.get() else seedItem.get()).`when`(dropGrownCondition)
 
-      if (seedItem !== null && includeSeedOnDrop) {
+      if (cropItem !== null && includeSeedOnDrop) {
         itemBuilder.otherwise(LootItem.lootTableItem(seedItem.get()))
       }
 
@@ -305,7 +305,7 @@ object BlockLootPresets {
         ).setRolls(ConstantValue.exactly(multiplier.toFloat()))
       )
 
-      if (seedItem !== null && includeSeedOnDrop) {
+      if (cropItem !== null && includeSeedOnDrop) {
         lootBuilder.withPool(
           LootPool.lootPool()
             .`when`(dropGrownCondition)
@@ -318,7 +318,7 @@ object BlockLootPresets {
     }
   }
 
-  fun <B : Block> dropDoubleCropLoot(cropItem: Supplier<ItemLike>, seedItem: Supplier<ItemLike>? = null, chance: Float = 0.25f, count: Float = 2f): NonNullBiConsumer<RegistrateBlockLootTables, B> {
+  fun <B : Block> dropDoubleCropLoot(cropItem: Supplier<ItemLike>?, _seedItem: Supplier<ItemLike>? = null, includeSeedOnDrop: Boolean, chance: Float = 0.25f, multiplier: Int = 1): NonNullBiConsumer<RegistrateBlockLootTables, B> {
     return NonNullBiConsumer { lt, b ->
       /*? if >1.21 {*/
       /*val registries = lt.registries
@@ -326,16 +326,18 @@ object BlockLootPresets {
       val registries = null
       /*?}*/
 
+      val seedItem = _seedItem?: Supplier { b.asItem() }
+
       var builder: LootPoolEntryContainer.Builder<*> = LootItem.lootTableItem(b)
         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1f)))
         .`when`(hasShearsOrSilkTouch(registries))
-      builder = if (seedItem !== null) {
+      builder = if (cropItem !== null && includeSeedOnDrop) {
         builder.otherwise(lt.applyExplosionCondition(b, LootItem.lootTableItem(seedItem.get()))
-          .apply(SetItemCountFunction.setCount(ConstantValue.exactly(count)))
+          .apply(SetItemCountFunction.setCount(ConstantValue.exactly(multiplier.toFloat())))
           .`when`(LootItemRandomChanceCondition.randomChance(chance))
           .otherwise(LootItem.lootTableItem(cropItem.get())))
       } else{
-        builder.otherwise(LootItem.lootTableItem(cropItem.get()))
+        builder.otherwise(LootItem.lootTableItem(if(cropItem !== null) cropItem.get() else seedItem.get()))
       }
       val pool = LootTable.lootTable()
         .withPool(LootPool.lootPool()

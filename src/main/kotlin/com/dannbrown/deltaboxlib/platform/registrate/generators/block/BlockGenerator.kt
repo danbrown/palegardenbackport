@@ -208,13 +208,27 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     seedName: String,
     cropLang: String,
     seedLang: String,
-    dropItem: Supplier<ItemLike>,
+    dropItem: Supplier<ItemLike>?,
     isBush: Boolean = true,
     includeSeedOnDrop: Boolean = true,
     chance: Float = 1f,
     multiplier: Int = 1,
   ): BlockGeneratorBuilder<GenericCropBlock>{
     return CropBlockPreset(_name, seedName, cropLang, seedLang, dropItem, isBush, includeSeedOnDrop, chance, multiplier).create(this)
+  }
+
+  fun createDoubleCropBlock(
+    _name: String,
+    seedName: String,
+    cropLang: String,
+    seedLang: String,
+    dropItem: Supplier<ItemLike>?,
+    isBush: Boolean = true,
+    includeSeedOnDrop: Boolean = true,
+    chance: Float = 1f,
+    multiplier: Int = 1,
+  ): BlockGeneratorBuilder<DoubleCropBlock>{
+    return CropBlockPreset(_name, seedName, cropLang, seedLang, dropItem, isBush, includeSeedOnDrop, chance, multiplier).createDouble(this)
   }
 
 }

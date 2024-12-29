@@ -18,11 +18,11 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
 import java.util.function.Supplier
 
-class GenericCropBlock(
+open class GenericCropBlock(
   props: Properties,
   private val isBush: Boolean = false,
   private val includeSeedOnDrop: Boolean = false,
-  private val fruitItem: Supplier<ItemLike>,
+  private val fruitItem: Supplier<ItemLike>?,
   private val chance: Float = 1f,
   private val multiplier: Int = 1
 ): CropBlock(props) {
@@ -38,7 +38,7 @@ class GenericCropBlock(
   )
 
   override fun getBaseSeedId(): ItemLike {
-    return fruitItem.get()
+    return if(fruitItem !== null) fruitItem.get() else this.asItem()
   }
 
   override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
@@ -51,7 +51,7 @@ class GenericCropBlock(
   }
   *//*?} else {*/
   override fun getCloneItemStack(arg: BlockGetter, pos: BlockPos, state: BlockState): ItemStack {
-    return ItemStack(fruitItem.get())
+    return ItemStack(if(fruitItem !== null) fruitItem.get() else this.asItem())
   }
   /*?}*/
 
@@ -100,7 +100,7 @@ class GenericCropBlock(
     if (seedsToDrop > 0 && includeSeedOnDrop) Block.popResource(pLevel, pPos, ItemStack(this.asItem(), seedsToDrop))
 
     // if have a drop item, do 'multiplier' rows of 'chance' to pop a drop item
-    if (fruitItem != null) {
+    if (fruitItem !== null) {
       var dropsToDrop = 1
       for (i in 0 until multiplier-1) {
         if (pLevel.random.nextFloat() < chance) {

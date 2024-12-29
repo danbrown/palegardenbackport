@@ -99,7 +99,7 @@ class GrassBlockPreset(
       .blockFactory { p -> GenericDoublePlantBlock(p, placeOn) }
       .copyFrom { Blocks.TALL_GRASS }
       .properties { p -> p.strength(0.0f).randomTicks().noCollission().noOcclusion() }
-      .loot(BlockLootPresets.dropDoubleCropLoot(dropItem!!, seedItem ?: dropItem, chance, multiplier.toFloat()))
+      .loot(BlockLootPresets.dropDoubleCropLoot(dropItem!!, seedItem ?: dropItem, true, chance, multiplier))
       .blockstate(BlockstatePresets.simpleDoubleCrossBlock(_name))
       .transform { t ->
         t
