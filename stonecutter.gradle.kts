@@ -1,3 +1,5 @@
+import org.gradle.internal.extensions.stdlib.capitalized
+
 plugins {
     id("dev.kikugie.stonecutter")
     kotlin("jvm") version "2.0.0" apply false

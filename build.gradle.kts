@@ -171,9 +171,14 @@ if (stonecutter.current.isActive) {
         group = "project"
     }
 
-    rootProject.tasks.register("runActive") {
+    rootProject.tasks.register("runActiveClient") {
         group = "project"
         dependsOn(tasks.named("runClient"))
+    }
+
+    rootProject.tasks.register("runActiveData") {
+        group = "project"
+        dependsOn(tasks.named("runData"))
     }
 }
 
