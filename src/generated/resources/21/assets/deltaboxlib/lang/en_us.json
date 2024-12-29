@@ -6,6 +6,7 @@
   "block.deltaboxlib.flammable_block": "Flammable Block",
   "block.deltaboxlib.flammable_block_2": "Flammable Block 2",
   "block.deltaboxlib.flammable_sand": "Flammable Sand",
+  "block.deltaboxlib.garlic_clove": "Garlic Crop",
   "block.deltaboxlib.lemon_sapling": "Lemon Sapling",
   "block.deltaboxlib.potted_lemon_sapling": "Potted Lemon Sapling",
   "block.deltaboxlib.potted_simple_flower": "Potted Simple Flower",
@@ -14,6 +15,7 @@
   "block.deltaboxlib.simple_grass": "Simple Grass",
   "block.deltaboxlib.sparse_dry_grass": "Sparse Dry Grass",
   "block.deltaboxlib.tall_sparse_dry_grass": "Tall Sparse Dry Grass",
+  "item.deltaboxlib.garlic_clove": "Garlic Clove",
   "item.deltaboxlib.warp_crystal": "Warp Crystal",
   "tooltip.deltaboxlib.flint": "It's a Delta!"
 }

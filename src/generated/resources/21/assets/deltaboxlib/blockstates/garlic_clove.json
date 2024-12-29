@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "deltaboxlib:block/garlic_clove_stage0"
+    },
+    "age=1": {
+      "model": "deltaboxlib:block/garlic_clove_stage1"
+    },
+    "age=2": {
+      "model": "deltaboxlib:block/garlic_clove_stage2"
+    },
+    "age=3": {
+      "model": "deltaboxlib:block/garlic_clove_stage3"
+    },
+    "age=4": {
+      "model": "deltaboxlib:block/garlic_clove_stage4"
+    },
+    "age=5": {
+      "model": "deltaboxlib:block/garlic_clove_stage5"
+    },
+    "age=6": {
+      "model": "deltaboxlib:block/garlic_clove_stage6"
+    },
+    "age=7": {
+      "model": "deltaboxlib:block/garlic_clove_stage7"
+    }
+  }
+}

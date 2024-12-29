@@ -32,7 +32,7 @@ open class GenericCropBlock(props: Properties, private val seedItem: Supplier<It
   }
 
   /*? if >1.21 {*/
-  /*override fun getCloneItemStack(arg: LevelReader, pos: BlockPos, state: BlockState): ItemStack {
+  /*override fun getCloneItemStack(arg: net.minecraft.world.level.LevelReader, pos: BlockPos, state: BlockState): ItemStack {
     return ItemStack(seedItem.get())
   }
   *//*?} else {*/

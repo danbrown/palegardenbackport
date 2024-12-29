@@ -35,7 +35,7 @@ class CropBlockPreset(
       }
       .cutoutRender()
       .blockstate(BlockstatePresets.cropBlock(_name))
-      .loot(BlockLootPresets.dropCropLoot(dropItem, includeSeedOnDrop, chance, multiplier))
+      .loot(BlockLootPresets.dropCropLoot(dropItem, null, includeSeedOnDrop, chance, multiplier))
       .transform { t ->
         t
           .lang(cropLang)

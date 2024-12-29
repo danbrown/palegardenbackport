@@ -167,6 +167,57 @@ object BlockLootPresets {
       )
     }
   }
+//
+//  /**
+//   * Create a Crop loot table, it will drop the item if fully grown, and the seed if not fully grown
+//   * @param dropItem the item to drop if the block is fully grown
+//   * @param includeSeedOnDrop if it will drop itself as a seed
+//   * @param chance the chance to drop the crop item
+//   * @param multiplier the amount of items to drop
+//   */
+//  fun <B : Block> dropCropLoot(dropItem: Supplier<ItemLike>, includeSeedOnDrop: Boolean, chance: Float = 0.5f, multiplier: Int = 2): NonNullBiConsumer<RegistrateBlockLootTables, B> {
+//    return NonNullBiConsumer { lt, b ->
+//      val cropItem: Supplier<ItemLike> = dropItem
+//      val seedItem: Supplier<ItemLike>? = if (includeSeedOnDrop) Supplier { b.asItem() } else null
+//      val age = 7
+//
+//      val dropGrownCondition = LootItemRandomChanceCondition.randomChance(chance)
+//        .and(
+//          LootItemBlockStatePropertyCondition.hasBlockStateProperties(b)
+//            .setProperties(
+//              StatePropertiesPredicate.Builder.properties()
+//                .hasProperty(CropBlock.AGE, age)
+//            )
+//        )
+//      val itemBuilder = LootItem.lootTableItem(cropItem.get())
+//        .`when`(dropGrownCondition)
+//
+//      if (seedItem !== null) {
+//        itemBuilder.otherwise(LootItem.lootTableItem(seedItem.get()))
+//      }
+//      val lootBuilder = LootTable.lootTable()
+//        .withPool(
+//          LootPool.lootPool()
+//            .add(
+//              itemBuilder
+//            )
+//            .setRolls(ConstantValue.exactly(multiplier.toFloat()))
+//        )
+//
+//      if (seedItem !== null) {
+//        lootBuilder.withPool(
+//          LootPool.lootPool()
+//            .`when`(dropGrownCondition)
+//            .apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286f, 3))
+//            .add(LootItem.lootTableItem(seedItem.get()))
+//        )
+//      }
+//
+//      lt.add(b, lt.applyExplosionDecay(b, lootBuilder))
+//    }
+//  }
+
+
 
   /**
    * Drops the silk item if the block is mined with silk touch or shears, and the other with a chance and multiplier if not
@@ -219,51 +270,51 @@ object BlockLootPresets {
   }
 
   /**
-   * Create a Crop loot table, it will drop the item if fully grown, and the seed if not fully grown
-   * @param dropItem the item to drop if the block is fully grown
-   * @param includeSeedOnDrop if it will drop itself as a seed
+   * Drops the crop item if the block is fully grown, and the seed item if not
+   * @param cropItem the item to drop if the block is fully grown
+   * @param seedItem the item to drop if the block is not fully grown, if null set itself as a seed drop (optional)
+   * @param includeSeedOnDrop if the seed should be included in drops, if false seeds won't be dropped
    * @param chance the chance to drop the crop item
    * @param multiplier the amount of items to drop
+   * @param age the age to check for
    */
-  fun <B : Block> dropCropLoot(dropItem: Supplier<ItemLike>, includeSeedOnDrop: Boolean, chance: Float = 0.5f, multiplier: Int = 2): NonNullBiConsumer<RegistrateBlockLootTables, B> {
+  fun <B : Block> dropCropLoot(cropItem: Supplier<ItemLike>, _seedItem: Supplier<ItemLike>?, includeSeedOnDrop: Boolean, chance: Float = 0.5f, multiplier: Int = 1, age: Int = 7): NonNullBiConsumer<RegistrateBlockLootTables, B> {
     return NonNullBiConsumer { lt, b ->
-      val cropItem: Supplier<ItemLike> = dropItem
-      val seedItem: Supplier<ItemLike>? = if (includeSeedOnDrop) Supplier { b.asItem() } else null
-      val age = 7
+      /*? if >1.21 {*/
+      /*val registries = lt.registries
+      val enchant = hasEnchant(Enchantments.FORTUNE, registries)
+      *//*?} else {*/
+      val registries = null
+      val enchant = Enchantments.BLOCK_FORTUNE
+      /*?}*/
+
+      val seedItem = _seedItem?: Supplier { b.asItem() }
 
       val dropGrownCondition = LootItemRandomChanceCondition.randomChance(chance)
-        .and(
-          LootItemBlockStatePropertyCondition.hasBlockStateProperties(b)
-            .setProperties(
-              StatePropertiesPredicate.Builder.properties()
-                .hasProperty(CropBlock.AGE, age)
-            )
-        )
-      val itemBuilder = LootItem.lootTableItem(cropItem.get())
-        .`when`(dropGrownCondition)
+        .and(LootItemBlockStatePropertyCondition.hasBlockStateProperties(b).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, age)))
 
-      if (seedItem !== null) {
+      val itemBuilder = LootItem.lootTableItem(cropItem.get()).`when`(dropGrownCondition)
+
+      if (seedItem !== null && includeSeedOnDrop) {
         itemBuilder.otherwise(LootItem.lootTableItem(seedItem.get()))
       }
-      val lootBuilder = LootTable.lootTable()
-        .withPool(
-          LootPool.lootPool()
-            .add(
-              itemBuilder
-            )
-            .setRolls(ConstantValue.exactly(multiplier.toFloat()))
-        )
 
-      if (seedItem !== null) {
+      val lootBuilder = LootTable.lootTable().withPool(
+        LootPool.lootPool().add(
+          itemBuilder
+        ).setRolls(ConstantValue.exactly(multiplier.toFloat()))
+      )
+
+      if (seedItem !== null && includeSeedOnDrop) {
         lootBuilder.withPool(
           LootPool.lootPool()
             .`when`(dropGrownCondition)
-            .apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286f, 3))
+            .apply(ApplyBonusCount.addBonusBinomialDistributionCount(enchant, 0.5714286f, 3))
             .add(LootItem.lootTableItem(seedItem.get()))
         )
       }
 
-      lt.add(b, lt.applyExplosionDecay(b, lootBuilder))
+      lt.add(b, lt.applyExplosionDecay(b,lootBuilder))
     }
   }
 
