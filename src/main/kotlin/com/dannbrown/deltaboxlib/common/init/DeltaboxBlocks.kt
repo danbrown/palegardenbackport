@@ -69,6 +69,15 @@ object DeltaboxBlocks {
     .color(MapColor.TERRACOTTA_YELLOW)
     .register()
 
+  // Leaves
+  val COCONUT_LEAVES = BLOCKS.createLeavesBlock("coconut", { LEMON_SAPLING.get() })
+    .color(MapColor.COLOR_LIGHT_GREEN)
+    .register()
+
+  val ACAI_LEAVES = BLOCKS.createPalmLeavesBlock("acai", { LEMON_SAPLING.get() })
+    .color(MapColor.COLOR_LIGHT_GREEN)
+    .register()
+
   fun register() {
     DeltaboxUtil.logInfo("Registering blocks...")
   }

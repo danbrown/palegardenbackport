@@ -164,8 +164,9 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
   fun createLeavesBlock(
     _name: String,
     saplingBlock: Supplier<GenericSaplingBlock>,
+    suffix: String = "_leaves"
   ): BlockGeneratorBuilder<FlammableLeavesBlock> {
-    return LeavesBlockPreset(_name, saplingBlock).create(this)
+    return LeavesBlockPreset(_name, saplingBlock, suffix).create(this)
   }
 
   /**
@@ -175,8 +176,9 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
   fun createPalmLeavesBlock(
     _name: String,
     saplingBlock: Supplier<GenericSaplingBlock>,
+    suffix: String = "_leaves"
   ): BlockGeneratorBuilder<FlammableLeavesBlock> {
-    return LeavesBlockPreset(_name, saplingBlock).createPalmLeaves(this)
+    return LeavesBlockPreset(_name, saplingBlock, suffix).createPalmLeaves(this)
   }
 
   /**
@@ -188,8 +190,9 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     _name: String,
     saplingBlock: Supplier<GenericSaplingBlock>,
     fruitBlock: Supplier<FaceAttachedHorizontalDirectionalBlock>,
+    suffix: String = "_leaves"
   ): BlockGeneratorBuilder<BuddingLeavesBlock> {
-    return LeavesBlockPreset(_name, saplingBlock).createBuddingLeaves(this, fruitBlock)
+    return LeavesBlockPreset(_name, saplingBlock, suffix).createBuddingLeaves(this, fruitBlock)
   }
 
   /**
@@ -201,7 +204,8 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     _name: String,
     saplingBlock: Supplier<GenericSaplingBlock>,
     itemToDrop: Supplier<ItemLike>,
+    suffix: String = "_leaves"
   ): BlockGeneratorBuilder<CropLeavesBlock> {
-    return LeavesBlockPreset(_name, saplingBlock).createCropLeaves(this, itemToDrop)
+    return LeavesBlockPreset(_name, saplingBlock, suffix).createCropLeaves(this, itemToDrop)
   }
 }

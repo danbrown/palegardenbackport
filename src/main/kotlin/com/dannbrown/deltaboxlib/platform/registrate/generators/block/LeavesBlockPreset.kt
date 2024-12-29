@@ -18,10 +18,11 @@ import java.util.function.Supplier
 class LeavesBlockPreset(
   private val _name: String,
   private val sapling: Supplier<GenericSaplingBlock>,
+  private val suffix: String = "_leaves"
 ) : IBlockBuilderPreset<FlammableLeavesBlock>() {
   override fun create(generator: BlockGenerator): BlockGeneratorBuilder<FlammableLeavesBlock> {
     return generator
-      .create<FlammableLeavesBlock>(_name + "_leaves")
+      .create<FlammableLeavesBlock>(_name + suffix)
       .blockFactory { p, c -> FlammableLeavesBlock(p, c.flammability!!.first, c.flammability.second) }
       .flammable(30, 60)
       .cutoutRender()
@@ -38,13 +39,13 @@ class LeavesBlockPreset(
         listOf(BlockTags.LEAVES, BlockTags.MINEABLE_WITH_HOE, *DeltaboxUtil.TAGS.modloaderBlockTag("leaves").toTypedArray())
       )
       .itemTags(listOf(ItemTags.LEAVES, *DeltaboxUtil.TAGS.modloaderItemTag("leaves").toTypedArray()))
-      .blockstate(BlockstatePresets.leavesBlock(_name + "_leaves"))
+      .blockstate(BlockstatePresets.leavesBlock(_name + suffix))
       .loot(BlockLootPresets.leavesLoot { sapling.get() })
   }
 
   fun createPalmLeaves(generator: BlockGenerator): BlockGeneratorBuilder<FlammableLeavesBlock> {
     return generator
-      .create<FlammableLeavesBlock>(_name + "_leaves")
+      .create<FlammableLeavesBlock>(_name + suffix)
       .blockFactory { p, c -> PalmLeavesBlock(p, c.flammability!!.first, c.flammability.second) }
       .flammable(30, 60)
       .cutoutRender()
@@ -61,13 +62,13 @@ class LeavesBlockPreset(
         listOf(BlockTags.LEAVES, BlockTags.MINEABLE_WITH_HOE, *DeltaboxUtil.TAGS.modloaderBlockTag("leaves").toTypedArray())
       )
       .itemTags(listOf(ItemTags.LEAVES, *DeltaboxUtil.TAGS.modloaderItemTag("leaves").toTypedArray()))
-      .blockstate(BlockstatePresets.leavesBlock(_name + "_leaves"))
+      .blockstate(BlockstatePresets.leavesBlock(_name + suffix))
       .loot(BlockLootPresets.leavesLoot { sapling.get() })
   }
 
   fun createBuddingLeaves(generator: BlockGenerator, fruitBlock: Supplier<FaceAttachedHorizontalDirectionalBlock>): BlockGeneratorBuilder<BuddingLeavesBlock> {
     return generator
-      .create<BuddingLeavesBlock>(_name + "_leaves")
+      .create<BuddingLeavesBlock>(_name + suffix)
       .blockFactory { p, c -> BuddingLeavesBlock(p, fruitBlock, c.flammability!!.first, c.flammability.second) }
       .flammable(30, 60)
       .cutoutRender()
@@ -84,13 +85,13 @@ class LeavesBlockPreset(
         listOf(BlockTags.LEAVES, BlockTags.MINEABLE_WITH_HOE, *DeltaboxUtil.TAGS.modloaderBlockTag("leaves").toTypedArray())
       )
       .itemTags(listOf(ItemTags.LEAVES, *DeltaboxUtil.TAGS.modloaderItemTag("leaves").toTypedArray()))
-      .blockstate(BlockstatePresets.leavesBlock(_name + "_leaves"))
+      .blockstate(BlockstatePresets.leavesBlock(_name + suffix))
       .loot(BlockLootPresets.leavesLoot { sapling.get() })
   }
 
   fun createCropLeaves(generator: BlockGenerator, itemToDrop: Supplier<ItemLike>): BlockGeneratorBuilder<CropLeavesBlock> {
     return generator
-      .create<CropLeavesBlock>(_name + "_leaves")
+      .create<CropLeavesBlock>(_name + suffix)
       .blockFactory { p, c -> CropLeavesBlock(p, itemToDrop) }
       .flammable(30, 60)
       .cutoutRender()
@@ -103,7 +104,7 @@ class LeavesBlockPreset(
           .isRedstoneConductor { s, b, p -> false }
           .ignitedByLava()
       }
-      .blockstate(BlockstatePresets.cropLeavesBlock(_name + "_leaves"))
+      .blockstate(BlockstatePresets.cropLeavesBlock(_name + suffix))
       .blockTags(
         listOf(BlockTags.LEAVES, BlockTags.MINEABLE_WITH_HOE, *DeltaboxUtil.TAGS.modloaderBlockTag("leaves").toTypedArray())
       )
