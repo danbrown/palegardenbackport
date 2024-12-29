@@ -148,7 +148,6 @@ object BlockLootPresets {
       // drop crop at max age
       val pool1 = LootPool.lootPool()
         .setRolls(ConstantValue.exactly(cropMultiplier.toFloat()))
-        .name("crop_max_age")
         .`when`(LootItemBlockStatePropertyCondition.hasBlockStateProperties(b)
           .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropLeavesBlock.AGE, CropLeavesBlock.MAX_AGE))
           .and(LootItemRandomChanceCondition.randomChance(cropChance))
@@ -158,7 +157,6 @@ object BlockLootPresets {
       // drop sapling at any age
       val pool2 = LootPool.lootPool()
         .setRolls(ConstantValue.exactly(saplingMultiplier.toFloat()))
-        .name("sapling")
         .`when`(LootItemRandomChanceCondition.randomChance(saplingChance))
         .add(LootItem.lootTableItem(saplingItem.get()))
 

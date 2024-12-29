@@ -1,0 +1,74 @@
+{
+    "configurations": [
+        {
+            "type": "gradle",
+            "name": "Activate - Forge-1.20.1",
+            "tasks": [
+                "Set active project to 1.20.1-forge"
+            ]
+        },
+        {
+            "type": "gradle",
+            "name": "Activate - Fabric-1.20.1",
+            "tasks": [
+                "Set active project to 1.20.1-fabric"
+            ]
+        },
+        {
+            "type": "gradle",
+            "name": "Activate - NeoForge-1.21.1",
+            "tasks": [
+                "Set active project to 1.21.1-neoforge"
+            ]
+        },
+        {
+            "type": "gradle",
+            "name": "Activate - Fabric-1.21.1",
+            "tasks": [
+                "Set active project to 1.21.1-fabric"
+            ]
+        },
+        {
+            "type": "gradle",
+            "name": "Data - 1.20.1",
+            "tasks": [
+                "1.20.1-forge:runData"
+            ],
+        },
+        {
+            "type": "gradle",
+            "name": "Data - 1.21.1",
+            "tasks": [
+                "1.21.1-neoforge:runData"
+            ],
+        },
+        {
+            "type": "gradle",
+            "name": "Run - Forge 1.20.1",
+            "tasks": [
+                "1.20.1-forge:runClient"
+            ],
+        },
+        {
+            "type": "gradle",
+            "name": "Run - Fabric 1.20.1",
+            "tasks": [
+                "1.20.1-fabric:runClient"
+            ],
+        },
+        {
+            "type": "gradle",
+            "name": "Run - NeoForge 1.21.1",
+            "tasks": [
+                "1.21.1-neoforge:runClient"
+            ],
+        },
+        {
+            "type": "gradle",
+            "name": "Run - Fabric 1.21.1",
+            "tasks": [
+                "1.21.1-fabric:runClient"
+            ],
+        },
+    ]
+}
