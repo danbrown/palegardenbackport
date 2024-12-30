@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cross",
-  "render_type": "minecraft:cutout_mipped",
-  "textures": {
-    "cross": "deltaboxlib:block/corn/corn_top_stage2",
-    "particle": "deltaboxlib:block/corn/corn_top_stage2"
-  }
-}

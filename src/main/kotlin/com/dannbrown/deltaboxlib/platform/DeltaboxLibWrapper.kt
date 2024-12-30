@@ -1,9 +1,7 @@
 package com.dannbrown.deltaboxlib.platform
 
 import com.dannbrown.deltaboxlib.common.*
-import com.dannbrown.deltaboxlib.platform.registrate.generators.trades.VillagerTradeProvider
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
-
 
 /*? if fabric {*/
 /*import net.fabricmc.api.ModInitializer;
@@ -14,14 +12,14 @@ import net.fabricmc.api.Environment
 object DeltaboxLibWrapper : ModInitializer, ClientModInitializer {
     override fun onInitialize() {
         DeltaboxUtil.logInfo("mod has started!")
-        DeltaboxLib.init()
-        DeltaboxLib.REGISTRATE.register() // fabric exclusive registrate
+        DeltaboxLibCommon.init()
+        DeltaboxLibCommon.REGISTRATE.register() // fabric exclusive registrate
     }
 
     @Environment(EnvType.CLIENT)
     override fun onInitializeClient() {
         DeltaboxUtil.logInfo("client mod has started!")
-        DeltaboxLib.REGISTRATE.registerClient() // fabric exclusive registrate
+        DeltaboxLibCommon.REGISTRATE.registerClient() // fabric exclusive registrate
     }
 }
 *//*?} elif forge {*/
@@ -32,7 +30,7 @@ import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.data.event.GatherDataEvent
 import net.minecraftforge.eventbus.api.EventPriority
 
-@Mod(DeltaboxLib.MOD_ID)
+@Mod(DeltaboxLibCommon.MOD_ID)
 class DeltaboxLibWrapper {
     companion object {
         init {
@@ -43,12 +41,12 @@ class DeltaboxLibWrapper {
         }
 
         fun register(modBus: IEventBus, forgeEventBus: IEventBus) {
-            DeltaboxLib.init()
+            DeltaboxLibCommon.init()
             modBus.addListener(EventPriority.LOWEST) { event: GatherDataEvent ->
-                DeltaboxLib.gatherData(event.generator)
-                event.generator.addProvider(event.includeServer(), VillagerTradeProvider(DeltaboxLib.REGISTRATE, event.generator))
+                DeltaboxLibCommon.gatherData(event.generator)
+                event.generator.addProvider(event.includeServer(), com.dannbrown.deltaboxlib.platform.registrate.generators.trades.VillagerTradeProvider(DeltaboxLibCommon.REGISTRATE, event.generator))
             }
-            DeltaboxLib.REGISTRATE.register(modBus, forgeEventBus) // forge exclusive registrate
+            DeltaboxLibCommon.REGISTRATE.register(modBus, forgeEventBus) // forge exclusive registrate
         }
     }
 }
@@ -59,7 +57,7 @@ import net.neoforged.fml.ModContainer
 import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.data.event.GatherDataEvent
 
-@Mod(DeltaboxLib.MOD_ID)
+@Mod(DeltaboxLibCommon.MOD_ID)
 class DeltaboxLibWrapper(eventBus: IEventBus, modContainer: ModContainer) {
     init {
         DeltaboxUtil.logInfo("mod has started!")
@@ -67,12 +65,12 @@ class DeltaboxLibWrapper(eventBus: IEventBus, modContainer: ModContainer) {
         register(eventBus, forgeEventBus)
     }
     fun register(modBus: IEventBus, forgeEventBus: IEventBus) {
-        DeltaboxLib.init()
+        DeltaboxLibCommon.init()
         modBus.addListener { event: GatherDataEvent ->
-            DeltaboxLib.gatherData(event.generator)
-            event.generator.addProvider(event.includeServer(), VillagerTradeProvider(DeltaboxLib.REGISTRATE, event.generator))
+            DeltaboxLibCommon.gatherData(event.generator)
+            event.generator.addProvider(event.includeServer(), com.dannbrown.deltaboxlib.platform.registrate.generators.trades.VillagerTradeProvider(DeltaboxLibCommon.REGISTRATE, event.generator))
         }
-        DeltaboxLib.REGISTRATE.register(modBus, forgeEventBus) // neoforged exclusive registrate
+        DeltaboxLibCommon.REGISTRATE.register(modBus, forgeEventBus) // neoforged exclusive registrate
     }
 }
 *//*?}*/

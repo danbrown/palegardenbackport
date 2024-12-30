@@ -1,6 +1,6 @@
 package com.dannbrown.deltaboxlib.platform.util
 
-import com.dannbrown.deltaboxlib.common.DeltaboxLib
+import com.dannbrown.deltaboxlib.common.DeltaboxLibCommon
 import com.mojang.serialization.DataResult
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
@@ -23,7 +23,7 @@ import java.util.function.Supplier
 object DeltaboxUtil {
     private val LOGGER = LogManager.getLogger()
 
-    fun logInfo(message: String, modId: String = DeltaboxLib.MOD_ID) {
+    fun logInfo(message: String, modId: String = DeltaboxLibCommon.MOD_ID) {
         LOGGER.info("[${modId}] $message")
     }
 
@@ -147,7 +147,7 @@ object DeltaboxUtil {
 
         @JvmStatic
         fun getTooltipKey(modId: String?, itemId: String): String {
-            return "tooltip." + DeltaboxLib.MOD_ID + (if(modId !== null) ".$modId" else "") + "." + itemId
+            return "tooltip." + DeltaboxLibCommon.MOD_ID + (if(modId !== null) ".$modId" else "") + "." + itemId
         }
     }
 
@@ -171,7 +171,7 @@ object DeltaboxUtil {
 
         // DELTABOX
         fun <R, T: Registry<R>> deltaboxTag(registry: ResourceKey<T>, path: String): TagKey<R> {
-            return optionalTag(registry, resourceLocation(DeltaboxLib.MOD_ID, path))
+            return optionalTag(registry, resourceLocation(DeltaboxLibCommon.MOD_ID, path))
         }
 
         fun deltaboxBlockTag(path: String): TagKey<Block> {

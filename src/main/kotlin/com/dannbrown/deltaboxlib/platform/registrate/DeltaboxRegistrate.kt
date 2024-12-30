@@ -24,7 +24,9 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.fabricmc.fabric.api.`object`.builder.v1.trade.TradeOfferHelper
+import net.minecraft.server.MinecraftServer
 import net.minecraft.server.packs.PackType
+import net.minecraft.server.packs.resources.CloseableResourceManager
 import net.minecraft.server.packs.resources.PreparableReloadListener.PreparationBarrier
 import net.minecraft.server.packs.resources.ResourceManager
 import net.minecraft.util.profiling.ProfilerFiller
@@ -65,10 +67,6 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
     POTTED_BLOCKS.add(Pair(block, pottedBlock))
   }
 
-  fun getPottedBlocks(): List<Pair<BlockEntry<out Block>, BlockEntry<out Block>>> {
-    return POTTED_BLOCKS
-  }
-
   // cutout
   fun addCutoutRender(block: BlockEntry<out Block>) {
     CUTOUT_RENDERS.add(block)
@@ -103,7 +101,22 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   /*? if fabric {*/
   /*override fun register() {
     super.register()
+    // register flammable blocks
+    onRegisterFlammableBlocks()
 
+    // register strippable blocks
+    onRegisterStrippableBlocks()
+
+    // load datapack contents
+    onDatapackReload()
+  }
+
+  @Environment(EnvType.CLIENT)
+  fun registerClient(){
+    BlockRenderLayerMap.INSTANCE.putBlocks(net.minecraft.client.renderer.RenderType.cutout(), *CUTOUT_RENDERS.map { it.get() }.toTypedArray())
+  }
+
+  private fun onDatapackReload() {
     val registry: (ResourceLocation, PreparableReloadListener) -> Unit = { id, listener ->
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(object : IdentifiableResourceReloadListener {
             override fun getFabricId(): ResourceLocation = id
@@ -121,63 +134,100 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
         })
     }
 
-    registry(DeltaboxUtil.resourceLocation(modid, VillagerTradeProvider.PATH), VillagerTradeDeserializer(this))
+    // registries
+    registry(DeltaboxUtil.resourceLocation(modid, VillagerTradeDeserializer.PATH), VillagerTradeDeserializer(this))
 
-    // register strippable blocks
+    // call other events
+    net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STARTED.register(::onServerStarted);
+    net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.END_DATA_PACK_RELOAD.register(::onEndDatapackReload);
+  }
+
+  private fun onServerStarted(server: MinecraftServer) {
+    handleLoadVillagerTrades()
+  }
+
+  private fun onEndDatapackReload(server: MinecraftServer, resourceManager: CloseableResourceManager, success: Boolean) {
+    handleLoadVillagerTrades()
+  }
+
+  private fun handleLoadVillagerTrades() {
+    val tradesByProfession: MutableMap<Pair<VillagerProfession, VillagerLevel>, MutableList<VillagerTradeCodec>> = mutableMapOf()
+    TRADES.map {
+      val pair = Pair(it.profession, it.level)
+      val currentList = (tradesByProfession[pair]?: mutableListOf())
+      currentList.add(it)
+      tradesByProfession[pair] = currentList
+    }
+
+    tradesByProfession.forEach { t, u ->
+      TradeOfferHelper.registerVillagerOffers(t.first, t.second.toInt(), {factories ->
+        u.forEach {
+          factories.add({e, r->
+            MerchantOffer(
+              /^? if >1.21 {^/
+              net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              /^?} else {^/
+              /^ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              ^//^?}^/
+              ItemStack(it.tradeSells.first().item.get(), it.tradeSells.first().amount),
+              it.maxUses,
+              it.xpAmount,
+              it.priceMultiplier
+            )
+          })
+        }
+      })
+    }
+  }
+
+  private fun onRegisterStrippableBlocks() {
     STRIPPABLE_BLOCKS.map {
       StrippableBlockRegistry.register(it.first.get(), it.second.get())
     }
+  }
 
-    // register flammable blocks
+  private fun onRegisterFlammableBlocks() {
     FLAMMABLE_BLOCKS.map {
       FlammableBlockRegistry.getDefaultInstance().add(it.first.get(), it.second.toInt(), it.third.toInt())
     }
-
-    fun injectTrades() {
-      val tradesByProfession: MutableMap<Pair<VillagerProfession, VillagerLevel>, MutableList<VillagerTradeCodec>> = mutableMapOf()
-      TRADES.map {
-        val pair = Pair(it.profession, it.level)
-        val currentList = (tradesByProfession[pair]?: mutableListOf())
-        currentList.add(it)
-        tradesByProfession[pair] = currentList
-      }
-
-      tradesByProfession.forEach { t, u ->
-        TradeOfferHelper.registerVillagerOffers(t.first, t.second.toInt(), {factories ->
-          u.forEach {
-            factories.add({e, r->
-              MerchantOffer(
-                /^? if >1.21 {^/
-                net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-                /^?} else {^/
-                /^ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-                ^//^?}^/
-                ItemStack(it.tradeSells.first().item.get(), it.tradeSells.first().amount),
-                it.maxUses,
-                it.xpAmount,
-                it.priceMultiplier
-              )
-            })
-          }
-        })
-      }
-    }
-
-    net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STARTED.register({server -> injectTrades()});
-    net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.END_DATA_PACK_RELOAD.register({server, resourceManager, success -> injectTrades()});
   }
 
-  @Environment(EnvType.CLIENT)
-  fun registerClient(){
-    BlockRenderLayerMap.INSTANCE.putBlocks(net.minecraft.client.renderer.RenderType.cutout(), *CUTOUT_RENDERS.map { it.get() }.toTypedArray())
-  }
+
   *//*?}*/
 
   /*? if forge {*/
-  public fun register(bus: net.minecraftforge.eventbus.api.IEventBus, forgeBus: net.minecraftforge.eventbus.api.IEventBus) {
+  fun register(bus: net.minecraftforge.eventbus.api.IEventBus, forgeBus: net.minecraftforge.eventbus.api.IEventBus) {
     super.registerEventListeners(bus)
 
     // register pot plants
+    onRegisterFlowerPots(bus)
+
+    // datapack reload listeners
+    onDatapackReload(forgeBus)
+
+    // load villager trades
+    onLoadVillagerTrades(forgeBus)
+  }
+
+  private fun onDatapackReload(forgeBus: net.minecraftforge.eventbus.api.IEventBus) {
+    forgeBus.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGH) { event: net.minecraftforge.event.AddReloadListenerEvent ->
+      val registry = BiConsumer<ResourceLocation, PreparableReloadListener> { id, listener -> event.addListener(listener) }
+      // deserialize villager trades
+      registry.accept(DeltaboxUtil.resourceLocation(modid, VillagerTradeDeserializer.PATH), VillagerTradeDeserializer(this))
+    }
+  }
+
+  private fun onLoadVillagerTrades(forgeBus: net.minecraftforge.eventbus.api.IEventBus) {
+    forgeBus.addListener { event: net.minecraftforge.event.village.VillagerTradesEvent ->
+      TRADES.forEach { trade ->
+        if(event.type == trade.profession){
+          event.trades[trade.level.toInt()].add { _, _ -> MerchantOffer(ItemStack(trade.tradeCosts.first().item.get(), trade.tradeCosts.first().amount), ItemStack(trade.tradeSells.first().item.get(), trade.tradeSells.first().amount), trade.maxUses, trade.xpAmount, trade.priceMultiplier) }
+        }
+      }
+    }
+  }
+
+  private fun onRegisterFlowerPots(bus: net.minecraftforge.eventbus.api.IEventBus) {
     bus.addListener { e: net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent ->
       POTTED_BLOCKS.forEach { (plant, pot) ->
         try {
@@ -187,28 +237,23 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
         }
       }
     }
-
-    // datapack reload listeners
-    forgeBus.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGH) { event: net.minecraftforge.event.AddReloadListenerEvent ->
-      val registry = BiConsumer<ResourceLocation, PreparableReloadListener> { id, listener -> event.addListener(listener) }
-      // deserialize villager trades
-      registry.accept(DeltaboxUtil.resourceLocation(modid, VillagerTradeProvider.PATH), VillagerTradeDeserializer(this))
-    }
-
-    // load villager trades
-    forgeBus.addListener { event: net.minecraftforge.event.village.VillagerTradesEvent ->
-      TRADES.forEach { trade ->
-        if(event.type == trade.profession){
-          event.trades[trade.level.toInt()].add { _, _ -> MerchantOffer(ItemStack(trade.tradeCosts.first().item.get(), trade.tradeCosts.first().amount), ItemStack(trade.tradeSells.first().item.get(), trade.tradeSells.first().amount), trade.maxUses, trade.xpAmount, trade.priceMultiplier) }
-        }
-      }
-    }
   }
+
   /*?} elif neoforge {*/
   /*fun register(bus: net.neoforged.bus.api.IEventBus, forgeBus: net.neoforged.bus.api.IEventBus) {
     super.registerEventListeners(bus)
 
     // register pot plants
+    onRegisterFlowerPots(bus)
+
+    // datapack reload listeners
+    onDatapackReload(forgeBus)
+
+    // load villager trades
+    onLoadVillagerTrades(forgeBus)
+  }
+
+  private fun onRegisterFlowerPots(bus: net.neoforged.bus.api.IEventBus) {
     bus.addListener { e: net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent ->
       POTTED_BLOCKS.forEach { (plant, pot) ->
         try {
@@ -218,15 +263,17 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
         }
       }
     }
+  }
 
-    // datapack reload listeners
+  private fun onDatapackReload(forgeBus: net.neoforged.bus.api.IEventBus) {
     forgeBus.addListener(net.neoforged.bus.api.EventPriority.HIGH) { event: net.neoforged.neoforge.event.AddReloadListenerEvent ->
       val registry = BiConsumer<ResourceLocation, PreparableReloadListener> { id, listener -> event.addListener(listener) }
       // deserialize villager trades
-      registry.accept(DeltaboxUtil.resourceLocation(modid, VillagerTradeProvider.PATH), VillagerTradeDeserializer(this))
+      registry.accept(DeltaboxUtil.resourceLocation(modid, VillagerTradeDeserializer.PATH), VillagerTradeDeserializer(this))
     }
+  }
 
-    // load villager trades
+  private fun onLoadVillagerTrades(forgeBus: net.neoforged.bus.api.IEventBus) {
     forgeBus.addListener { event: net.neoforged.neoforge.event.village.VillagerTradesEvent ->
       TRADES.forEach { trade ->
         if(event.type == trade.profession){

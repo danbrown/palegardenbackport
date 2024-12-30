@@ -1,6 +1,6 @@
 package com.dannbrown.deltaboxlib.platform.registrate.generators.trades
 
-import com.dannbrown.deltaboxlib.common.DeltaboxLib
+import com.dannbrown.deltaboxlib.common.DeltaboxLibCommon
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil.getAnyway
 import com.google.gson.GsonBuilder
@@ -12,9 +12,11 @@ import net.minecraft.server.packs.resources.ResourceManager
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener
 import net.minecraft.util.GsonHelper
 import net.minecraft.util.profiling.ProfilerFiller
+import java.io.IOException
 
-class VillagerTradeDeserializer(private val registrate: DeltaboxRegistrate) : SimpleJsonResourceReloadListener(GSON, VillagerTradeProvider.PATH) {
+class VillagerTradeDeserializer(private val registrate: DeltaboxRegistrate) : SimpleJsonResourceReloadListener(GSON, PATH) {
     companion object {
+        const val PATH = "villager_trades"
         private val GSON = GsonBuilder()
             .setPrettyPrinting()
             .disableHtmlEscaping()
@@ -25,10 +27,15 @@ class VillagerTradeDeserializer(private val registrate: DeltaboxRegistrate) : Si
         val villagerTrades: MutableList<VillagerTradeCodec> = ArrayList()
         for ((resourceLocation, jsonElement) in pObject.entries) {
             val jsonObject: JsonObject = GsonHelper.convertToJsonObject(jsonElement, "villager_trades")
-            val villagerTrade = VillagerTradeCodec.CODEC
-                .parse(JsonOps.INSTANCE, jsonObject)
-                .getAnyway()
-            villagerTrades.add(villagerTrade)
+            try {
+                val villagerTrade = VillagerTradeCodec.CODEC
+                    .parse(JsonOps.INSTANCE, jsonObject)
+                    .getAnyway()
+                villagerTrades.add(villagerTrade)
+            } catch (ioException: IOException) {
+                DeltaboxLibCommon.LOGGER.error("Couldn't load villager trade in {}", resourceLocation, ioException)
+                throw ioException
+            }
         }
         registrate.updateTradesData(villagerTrades)
         pProfiler.pop()

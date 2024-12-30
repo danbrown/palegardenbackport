@@ -1,7 +1,7 @@
 package com.dannbrown.deltaboxlib.platform.registrate.generators.trades
 
 
-import com.dannbrown.deltaboxlib.common.DeltaboxLib
+import com.dannbrown.deltaboxlib.common.DeltaboxLibCommon
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil.getAnyway
@@ -14,22 +14,15 @@ import java.io.IOException
 import java.nio.file.Path
 import java.util.concurrent.CompletableFuture
 
+/*? if forge || neoforge {*/
 class VillagerTradeProvider(
     private val registrate: DeltaboxRegistrate,
     private val generator: DataGenerator
 ) : DataProvider {
-    companion object {
-        const val PATH = "villager_trades"
-    }
-
-    /*? if forge || neoforge {*/
-    private val pathProvider = generator.packOutput.createPathProvider(PackOutput.Target.DATA_PACK, PATH)
-    /*?}*/
-
+    private val pathProvider = generator.packOutput.createPathProvider(PackOutput.Target.DATA_PACK, VillagerTradeDeserializer.PATH)
     override fun getName(): String = "Villager Trades Datagen for: ${registrate.modid}"
 
     override fun run(cachedOutput: CachedOutput): CompletableFuture<*> {
-        /*? if forge || neoforge {*/
         val futures: MutableList<CompletableFuture<*>> = ArrayList()
         for (trade in registrate.TRADES) {
             val tradeName = trade.profession.name + "_" + trade.level.toName() + "_" + DeltaboxUtil.itemId({trade.tradeCosts.first().item.get()}) + "_for_" + DeltaboxUtil.itemId({trade.tradeSells.first().item.get()})
@@ -37,9 +30,6 @@ class VillagerTradeProvider(
             futures.add(saveTradeData(cachedOutput, tradePath, trade))
         }
         return CompletableFuture.allOf(*futures.toTypedArray())
-        /*?} else if fabric {*/
-        /*return CompletableFuture.allOf()
-        *//*?}*/
     }
 
     private fun saveTradeData(cachedOutput: CachedOutput, path: Path, trade: VillagerTradeCodec): CompletableFuture<*> {
@@ -50,9 +40,9 @@ class VillagerTradeProvider(
                 .asJsonObject
             DataProvider.saveStable(cachedOutput, jsonObject, path)
         } catch (ioException: IOException) {
-            DeltaboxLib.LOGGER.error("Couldn't save villager trade at {}", path, ioException)
+            DeltaboxLibCommon.LOGGER.error("Couldn't save villager trade at {}", path, ioException)
             throw ioException
         }
     }
-
 }
+/*?}*/

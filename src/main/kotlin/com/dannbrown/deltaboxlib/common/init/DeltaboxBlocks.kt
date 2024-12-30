@@ -1,6 +1,6 @@
 package com.dannbrown.deltaboxlib.common.init
 
-import com.dannbrown.deltaboxlib.common.DeltaboxLib
+import com.dannbrown.deltaboxlib.common.DeltaboxLibCommon
 import com.dannbrown.deltaboxlib.common.content.block.FlammablePillarBlock
 import com.dannbrown.deltaboxlib.common.content.block.FlammableSandBlock
 import com.dannbrown.deltaboxlib.common.content.block.GenericDoublePlantBlock
@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.FlowerPotBlock
 import net.minecraft.world.level.material.MapColor
 
 object DeltaboxBlocks {
-  val BLOCKS = BlockGenerator(DeltaboxLib.REGISTRATE)
+  val BLOCKS = BlockGenerator(DeltaboxLibCommon.REGISTRATE)
 
   val ADAMANTIUM_BLOCK: BlockEntry<Block> = BLOCKS.storageBlock<Block>("adamantium", { Items.IRON_INGOT }, { Ingredient.of(Items.FLINT) })
     .copyFrom { Blocks.IRON_BLOCK }
@@ -110,7 +110,7 @@ object DeltaboxBlocks {
 //    .color(MapColor.COLOR_LIGHT_GREEN)
 //    .register()
 
-  val TRADE = DeltaboxLib.REGISTRATE.villagerTrade(
+  val TRADE = DeltaboxLibCommon.REGISTRATE.villagerTrade(
     VillagerProfession.FARMER,
     VillagerLevel.NOVICE,
     listOf(VillagerTradeItem({DeltaboxItems.BEAN_POD.get()}, 2)),

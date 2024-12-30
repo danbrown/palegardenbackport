@@ -4,12 +4,11 @@ import com.dannbrown.deltaboxlib.common.init.DeltaboxBlocks
 import com.dannbrown.deltaboxlib.common.init.DeltaboxItems
 import com.dannbrown.deltaboxlib.common.init.DeltaboxLang
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
-import com.dannbrown.deltaboxlib.platform.registrate.generators.trades.VillagerTradeProvider
 import com.tterrag.registrate.providers.ProviderType
 import net.minecraft.data.DataGenerator
 import org.slf4j.LoggerFactory
 
-object DeltaboxLib {
+object DeltaboxLibCommon {
     const val MOD_ID: String = "deltaboxlib"
     @JvmField
     val LOGGER = LoggerFactory.getLogger(MOD_ID)
