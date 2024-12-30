@@ -3,6 +3,7 @@ package com.dannbrown.deltaboxlib.common
 import com.dannbrown.deltaboxlib.common.init.DeltaboxBlocks
 import com.dannbrown.deltaboxlib.common.init.DeltaboxItems
 import com.dannbrown.deltaboxlib.common.init.DeltaboxLang
+import com.dannbrown.deltaboxlib.common.init.DeltaboxTrades
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
 import com.tterrag.registrate.providers.ProviderType
 import net.minecraft.data.DataGenerator
@@ -17,6 +18,7 @@ object DeltaboxLibCommon {
     fun init() {
         DeltaboxBlocks.register()
         DeltaboxItems.register()
+        DeltaboxTrades.register()
     }
 
     fun gatherData(gen: DataGenerator) {

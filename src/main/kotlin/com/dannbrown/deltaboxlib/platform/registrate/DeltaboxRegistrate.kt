@@ -78,6 +78,7 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
 
   // Data providers
   val TRADES: MutableList<VillagerTradeCodec> = ArrayList()
+  val WANDERER_TRADES: MutableList<WandererTradeCodec> = ArrayList()
 
   fun villagerTrade(
     profession: VillagerProfession,
@@ -91,11 +92,16 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
       TRADES.add(VillagerTradeCodec(profession, level, tradeCosts, tradeSells, maxUses, xpAmount, priceMultiplier))
   }
 
-  fun updateTradesData(trades: List<VillagerTradeCodec>) {
-    TRADES.clear()
-    TRADES.addAll(trades)
+  fun wandererTrade(
+    rarity: WandererTradeRarity,
+    tradeCosts: List<VillagerTradeItem>,
+    tradeSells: List<VillagerTradeItem>,
+    maxUses: Int,
+    xpAmount: Int,
+    priceMultiplier: Float
+  ) {
+      WANDERER_TRADES.add(WandererTradeCodec(rarity, tradeCosts, tradeSells, maxUses, xpAmount, priceMultiplier))
   }
-
 
   // FABRIC SPECIFIC BLOCKS FEATURES REGISTRATION
   /*? if fabric {*/
@@ -136,6 +142,7 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
 
     // registries
     registry(DeltaboxUtil.resourceLocation(modid, VillagerTradeDeserializer.PATH), VillagerTradeDeserializer(this))
+    registry(DeltaboxUtil.resourceLocation(modid, WandererTradeDeserializer.PATH), WandererTradeDeserializer(this))
 
     // call other events
     net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STARTED.register(::onServerStarted);
@@ -152,6 +159,8 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
 
   private fun handleLoadVillagerTrades() {
     val tradesByProfession: MutableMap<Pair<VillagerProfession, VillagerLevel>, MutableList<VillagerTradeCodec>> = mutableMapOf()
+    val wandererTradesByRarity: MutableMap<WandererTradeRarity, MutableList<WandererTradeCodec>> = mutableMapOf()
+
     TRADES.map {
       val pair = Pair(it.profession, it.level)
       val currentList = (tradesByProfession[pair]?: mutableListOf())
@@ -159,16 +168,42 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
       tradesByProfession[pair] = currentList
     }
 
+    WANDERER_TRADES.forEach {
+      val currentList = (wandererTradesByRarity[it.rarity]?: mutableListOf())
+      currentList.add(it)
+      wandererTradesByRarity[it.rarity] = currentList
+    }
+
     tradesByProfession.forEach { t, u ->
-      TradeOfferHelper.registerVillagerOffers(t.first, t.second.toInt(), {factories ->
+      TradeOfferHelper.registerVillagerOffers(t.first, t.second.toInt(), { factories ->
         u.forEach {
           factories.add({e, r->
             MerchantOffer(
               /^? if >1.21 {^/
-              net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              /^?} else {^/
-              /^ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              ^//^?}^/
+              /^net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              ^//^?} else {^/
+              ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              /^?}^/
+              ItemStack(it.tradeSells.first().item.get(), it.tradeSells.first().amount),
+              it.maxUses,
+              it.xpAmount,
+              it.priceMultiplier
+            )
+          })
+        }
+      })
+    }
+
+    wandererTradesByRarity.forEach { t, u ->
+      TradeOfferHelper.registerWanderingTraderOffers(t.toInt(),  { factories ->
+        u.forEach {
+          factories.add({e, r->
+            MerchantOffer(
+              /^? if >1.21 {^/
+              /^net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              ^//^?} else {^/
+              ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              /^?}^/
               ItemStack(it.tradeSells.first().item.get(), it.tradeSells.first().amount),
               it.maxUses,
               it.xpAmount,
@@ -207,6 +242,8 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
 
     // load villager trades
     onLoadVillagerTrades(forgeBus)
+    // load wanderer trades
+    onLoadWandererTrades(forgeBus)
   }
 
   private fun onDatapackReload(forgeBus: net.minecraftforge.eventbus.api.IEventBus) {
@@ -214,6 +251,8 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
       val registry = BiConsumer<ResourceLocation, PreparableReloadListener> { id, listener -> event.addListener(listener) }
       // deserialize villager trades
       registry.accept(DeltaboxUtil.resourceLocation(modid, VillagerTradeDeserializer.PATH), VillagerTradeDeserializer(this))
+      // deserialize wanderer trades
+      registry.accept(DeltaboxUtil.resourceLocation(modid, WandererTradeDeserializer.PATH), WandererTradeDeserializer(this))
     }
   }
 
@@ -222,6 +261,20 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
       TRADES.forEach { trade ->
         if(event.type == trade.profession){
           event.trades[trade.level.toInt()].add { _, _ -> MerchantOffer(ItemStack(trade.tradeCosts.first().item.get(), trade.tradeCosts.first().amount), ItemStack(trade.tradeSells.first().item.get(), trade.tradeSells.first().amount), trade.maxUses, trade.xpAmount, trade.priceMultiplier) }
+        }
+      }
+    }
+  }
+
+  private fun onLoadWandererTrades(forgeBus: net.minecraftforge.eventbus.api.IEventBus) {
+    forgeBus.addListener { event: net.minecraftforge.event.village.WandererTradesEvent ->
+      val genericTrades = event.genericTrades
+      val rareTrades = event.rareTrades
+      WANDERER_TRADES.forEach { trade ->
+        if(trade.rarity == WandererTradeRarity.GENERIC) {
+          genericTrades.add { _, _ -> MerchantOffer(ItemStack(trade.tradeCosts.first().item.get(), trade.tradeCosts.first().amount), ItemStack(trade.tradeSells.first().item.get(), trade.tradeSells.first().amount), trade.maxUses, trade.xpAmount, trade.priceMultiplier) }
+        } else {
+          rareTrades.add { _, _ -> MerchantOffer(ItemStack(trade.tradeCosts.first().item.get(), trade.tradeCosts.first().amount), ItemStack(trade.tradeSells.first().item.get(), trade.tradeSells.first().amount), trade.maxUses, trade.xpAmount, trade.priceMultiplier) }
         }
       }
     }
@@ -251,6 +304,8 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
 
     // load villager trades
     onLoadVillagerTrades(forgeBus)
+    // load wanderer trades
+    onLoadWandererTrades(forgeBus)
   }
 
   private fun onRegisterFlowerPots(bus: net.neoforged.bus.api.IEventBus) {
@@ -270,6 +325,8 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
       val registry = BiConsumer<ResourceLocation, PreparableReloadListener> { id, listener -> event.addListener(listener) }
       // deserialize villager trades
       registry.accept(DeltaboxUtil.resourceLocation(modid, VillagerTradeDeserializer.PATH), VillagerTradeDeserializer(this))
+      // deserialize wanderer trades
+      registry.accept(DeltaboxUtil.resourceLocation(modid, WandererTradeDeserializer.PATH), WandererTradeDeserializer(this))
     }
   }
 
@@ -278,6 +335,20 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
       TRADES.forEach { trade ->
         if(event.type == trade.profession){
           event.trades[trade.level.toInt()].add { _, _ -> MerchantOffer(net.minecraft.world.item.trading.ItemCost(trade.tradeCosts.first().item.get(), trade.tradeCosts.first().amount), ItemStack(trade.tradeSells.first().item.get(), trade.tradeSells.first().amount), trade.maxUses, trade.xpAmount, trade.priceMultiplier) }
+        }
+      }
+    }
+  }
+
+  private fun onLoadWandererTrades(forgeBus: net.neoforged.bus.api.IEventBus) {
+    forgeBus.addListener { event: net.neoforged.neoforge.event.village.WandererTradesEvent ->
+      val genericTrades = event.genericTrades
+      val rareTrades = event.rareTrades
+      WANDERER_TRADES.forEach { trade ->
+        if(trade.rarity == WandererTradeRarity.GENERIC) {
+          genericTrades.add { _, _ -> MerchantOffer(net.minecraft.world.item.trading.ItemCost(trade.tradeCosts.first().item.get(), trade.tradeCosts.first().amount), ItemStack(trade.tradeSells.first().item.get(), trade.tradeSells.first().amount), trade.maxUses, trade.xpAmount, trade.priceMultiplier) }
+        } else {
+          rareTrades.add { _, _ -> MerchantOffer(net.minecraft.world.item.trading.ItemCost(trade.tradeCosts.first().item.get(), trade.tradeCosts.first().amount), ItemStack(trade.tradeSells.first().item.get(), trade.tradeSells.first().amount), trade.maxUses, trade.xpAmount, trade.priceMultiplier) }
         }
       }
     }

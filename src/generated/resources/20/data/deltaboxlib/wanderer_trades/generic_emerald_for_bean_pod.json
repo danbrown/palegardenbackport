@@ -1,0 +1,18 @@
+{
+  "maxUses": 5,
+  "priceMultiplier": 0.5,
+  "rarity": "generic",
+  "tradeCosts": [
+    {
+      "amount": 2,
+      "item": "minecraft:emerald"
+    }
+  ],
+  "tradeSells": [
+    {
+      "amount": 2,
+      "item": "deltaboxlib:bean_pod"
+    }
+  ],
+  "xpAmount": 10
+}

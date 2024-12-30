@@ -110,16 +110,6 @@ object DeltaboxBlocks {
 //    .color(MapColor.COLOR_LIGHT_GREEN)
 //    .register()
 
-  val TRADE = DeltaboxLibCommon.REGISTRATE.villagerTrade(
-    VillagerProfession.FARMER,
-    VillagerLevel.NOVICE,
-    listOf(VillagerTradeItem({DeltaboxItems.BEAN_POD.get()}, 2)),
-    listOf(VillagerTradeItem({Items.EMERALD}, 2)),
-    5,
-    10,
-    0.5f
-  )
-
   fun register() {
     DeltaboxUtil.logInfo("Registering blocks...")
   }

@@ -14,31 +14,31 @@ import net.minecraft.util.GsonHelper
 import net.minecraft.util.profiling.ProfilerFiller
 import java.io.IOException
 
-class VillagerTradeDeserializer(private val registrate: DeltaboxRegistrate) : SimpleJsonResourceReloadListener(GSON, PATH) {
+class WandererTradeDeserializer(private val registrate: DeltaboxRegistrate) : SimpleJsonResourceReloadListener(GSON, PATH) {
     companion object {
-        const val PATH = "villager_trades"
+        const val PATH = "wanderer_trades"
         private val GSON = GsonBuilder()
             .setPrettyPrinting()
             .disableHtmlEscaping()
             .create()
     }
     override fun apply(pObject: MutableMap<ResourceLocation, JsonElement>, pResourceManager: ResourceManager, pProfiler: ProfilerFiller) {
-        pProfiler.push("Villager Trades Deserialization")
-        val villagerTrades: MutableList<VillagerTradeCodec> = ArrayList()
+        pProfiler.push("Wanderer Trades Deserialization")
+        val wandererTrades: MutableList<WandererTradeCodec> = ArrayList()
         for ((resourceLocation, jsonElement) in pObject.entries) {
             val jsonObject: JsonObject = GsonHelper.convertToJsonObject(jsonElement, PATH)
             try {
-                val villagerTrade = VillagerTradeCodec.CODEC
+                val wandererTrade = WandererTradeCodec.CODEC
                     .parse(JsonOps.INSTANCE, jsonObject)
                     .getAnyway()
-                villagerTrades.add(villagerTrade)
+                wandererTrades.add(wandererTrade)
             } catch (ioException: IOException) {
-                DeltaboxLibCommon.LOGGER.error("Couldn't load villager trade in {}", resourceLocation, ioException)
+                DeltaboxLibCommon.LOGGER.error("Couldn't load wanderer trade in {}", resourceLocation, ioException)
                 throw ioException
             }
         }
-        registrate.TRADES.clear()
-        registrate.TRADES.addAll(villagerTrades)
+        registrate.WANDERER_TRADES.clear()
+        registrate.WANDERER_TRADES.addAll(wandererTrades)
         pProfiler.pop()
     }
 }
