@@ -4,6 +4,7 @@ package com.dannbrown.deltaboxlib.platform.registrate.generators.trades
 import com.dannbrown.deltaboxlib.common.DeltaboxLib
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
+import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil.getAnyway
 import com.mojang.serialization.JsonOps
 import net.minecraft.data.CachedOutput
 import net.minecraft.data.DataGenerator
@@ -45,7 +46,7 @@ class VillagerTradeProvider(
         return try {
             val jsonObject = VillagerTradeCodec.CODEC
                 .encodeStart(JsonOps.INSTANCE, trade)
-                .orThrow
+                .getAnyway()
                 .asJsonObject
             DataProvider.saveStable(cachedOutput, jsonObject, path)
         } catch (ioException: IOException) {

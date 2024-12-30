@@ -2,6 +2,7 @@ package com.dannbrown.deltaboxlib.platform.registrate.generators.trades
 
 import com.dannbrown.deltaboxlib.common.DeltaboxLib
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
+import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil.getAnyway
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
@@ -26,7 +27,7 @@ class VillagerTradeDeserializer(private val registrate: DeltaboxRegistrate) : Si
             val jsonObject: JsonObject = GsonHelper.convertToJsonObject(jsonElement, "villager_trades")
             val villagerTrade = VillagerTradeCodec.CODEC
                 .parse(JsonOps.INSTANCE, jsonObject)
-                .orThrow
+                .getAnyway()
             villagerTrades.add(villagerTrade)
         }
         registrate.updateTradesData(villagerTrades)
