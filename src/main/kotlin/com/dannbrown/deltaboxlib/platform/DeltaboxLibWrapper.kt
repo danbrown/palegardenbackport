@@ -1,6 +1,7 @@
 package com.dannbrown.deltaboxlib.platform
 
 import com.dannbrown.deltaboxlib.common.*
+import com.dannbrown.deltaboxlib.platform.registrate.generators.trades.VillagerTradeProvider
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 
 
@@ -43,7 +44,10 @@ class DeltaboxLibWrapper {
 
         fun register(modBus: IEventBus, forgeEventBus: IEventBus) {
             DeltaboxLib.init()
-            modBus.addListener(EventPriority.LOWEST) { event: GatherDataEvent -> DeltaboxLib.gatherData(event.generator.getVanillaPack(true)) }
+            modBus.addListener(EventPriority.LOWEST) { event: GatherDataEvent ->
+                DeltaboxLib.gatherData(event.generator)
+                event.generator.addProvider(event.includeServer(), VillagerTradeProvider(DeltaboxLib.REGISTRATE, event.generator))
+            }
             DeltaboxLib.REGISTRATE.register(modBus, forgeEventBus) // forge exclusive registrate
         }
     }

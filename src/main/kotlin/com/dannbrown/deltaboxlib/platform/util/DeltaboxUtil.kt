@@ -2,7 +2,6 @@ package com.dannbrown.deltaboxlib.platform.util
 
 import com.dannbrown.deltaboxlib.common.DeltaboxLib
 import com.mojang.serialization.DataResult
-import com.tterrag.registrate.util.DataIngredient
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
@@ -50,7 +49,7 @@ object DeltaboxUtil {
         val names = item.get().asItem().descriptionId.split(".")
         return names[names.size - 1]
     }
-
+    
     object PATH {
         fun getConfigPath(modID: String, configFileName: String, configExtension: String): Path {
             /*? if fabric {*/

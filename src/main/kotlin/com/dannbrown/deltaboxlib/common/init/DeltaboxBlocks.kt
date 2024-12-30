@@ -10,10 +10,13 @@ import com.dannbrown.deltaboxlib.common.content.block.GenericTallGrassBlock
 import com.dannbrown.deltaboxlib.common.content.block.StrippableFlammablePillarBlock
 import com.dannbrown.deltaboxlib.common.content.tree.DeltaboxTreeGrower
 import com.dannbrown.deltaboxlib.platform.registrate.generators.block.BlockGenerator
+import com.dannbrown.deltaboxlib.platform.registrate.generators.trades.VillagerLevel
+import com.dannbrown.deltaboxlib.platform.registrate.generators.trades.VillagerTradeItem
 import com.dannbrown.deltaboxlib.platform.registrate.transformers.BlockLootPresets
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.tterrag.registrate.util.entry.BlockEntry
 import net.minecraft.tags.BlockTags
+import net.minecraft.world.entity.npc.VillagerProfession
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
@@ -106,6 +109,16 @@ object DeltaboxBlocks {
   val CASSAVA_CROP = BLOCKS.createDoubleCropBlock("cassava", "cassava_root", "Cassava Crop", "Cassava Root", null, false, true)
     .color(MapColor.COLOR_LIGHT_GREEN)
     .register()
+
+  val TRADE = DeltaboxLib.REGISTRATE.villagerTrade(
+    VillagerProfession.FARMER,
+    VillagerLevel.NOVICE,
+    listOf(VillagerTradeItem({DeltaboxItems.BEAN_POD.get()}, 2)),
+    listOf(VillagerTradeItem({Items.EMERALD}, 2)),
+    5,
+    10,
+    0.5f
+  )
 
   fun register() {
     DeltaboxUtil.logInfo("Registering blocks...")

@@ -4,6 +4,7 @@ import com.dannbrown.deltaboxlib.common.init.DeltaboxBlocks
 import com.dannbrown.deltaboxlib.common.init.DeltaboxItems
 import com.dannbrown.deltaboxlib.common.init.DeltaboxLang
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
+import com.dannbrown.deltaboxlib.platform.registrate.generators.trades.VillagerTradeProvider
 import com.tterrag.registrate.providers.ProviderType
 import net.minecraft.data.DataGenerator
 import org.slf4j.LoggerFactory
@@ -19,7 +20,7 @@ object DeltaboxLib {
         DeltaboxItems.register()
     }
 
-    fun gatherData(gen: DataGenerator.PackGenerator) {
+    fun gatherData(gen: DataGenerator) {
         REGISTRATE.addDataGenerator(ProviderType.LANG, DeltaboxLang::addLang)
     }
 }

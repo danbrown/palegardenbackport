@@ -20,7 +20,7 @@ class DataGenEntry: DataGeneratorEntrypoint {
     val resources = Paths.get(System.getProperty("user.dir"), "../src", "main", "resources")
     val helper = ExistingFileHelper.withResources(resources)
     val pack: FabricDataGenerator.Pack = gen.createPack()
-    DeltaboxLib.gatherData(pack)
+    DeltaboxLib.gatherData(gen)
     DeltaboxLib.REGISTRATE.setupDatagen(pack, helper)
   }
 }
