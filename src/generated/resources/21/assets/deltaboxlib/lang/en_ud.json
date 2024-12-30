@@ -1,7 +1,10 @@
 {
   "block.deltaboxlib.acai_leaves": "sǝʌɐǝꞀ ıɐɔⱯ",
   "block.deltaboxlib.adamantium_block": "ʞɔoןᗺ ɯnıʇuɐɯɐpⱯ",
+  "block.deltaboxlib.black_beans": "doɹƆ suɐǝᗺ ʞɔɐןᗺ",
   "block.deltaboxlib.budding_lemon_leaves": "sǝʌɐǝꞀ uoɯǝꞀ buıppnᗺ",
+  "block.deltaboxlib.carioca_beans": "doɹƆ suɐǝᗺ ɐɔoıɹɐƆ",
+  "block.deltaboxlib.cassavinha": "doɹƆ ɐɥuıʌɐssɐƆ",
   "block.deltaboxlib.coconut_leaves": "sǝʌɐǝꞀ ʇnuoɔoƆ",
   "block.deltaboxlib.flammable_block": "ʞɔoןᗺ ǝןqɐɯɯɐןℲ",
   "block.deltaboxlib.flammable_block_2": "ᄅ ʞɔoןᗺ ǝןqɐɯɯɐןℲ",
@@ -15,6 +18,10 @@
   "block.deltaboxlib.simple_grass": "ssɐɹ⅁ ǝןdɯıS",
   "block.deltaboxlib.sparse_dry_grass": "ssɐɹ⅁ ʎɹᗡ ǝsɹɐdS",
   "block.deltaboxlib.tall_sparse_dry_grass": "ssɐɹ⅁ ʎɹᗡ ǝsɹɐdS ןןɐ⟘",
+  "item.deltaboxlib.bean_pod": "poԀ uɐǝᗺ",
+  "item.deltaboxlib.black_beans": "suɐǝᗺ ʞɔɐןᗺ",
+  "item.deltaboxlib.carioca_beans": "suɐǝᗺ ɐɔoıɹɐƆ",
+  "item.deltaboxlib.cassavinha": "ɐɥuıʌɐssɐƆ",
   "item.deltaboxlib.garlic_clove": "ǝʌoןƆ ɔıןɹɐ⅁",
   "item.deltaboxlib.warp_crystal": "ןɐʇsʎɹƆ dɹɐM",
   "tooltip.deltaboxlib.flint": "¡ɐʇןǝᗡ ɐ s,ʇI"

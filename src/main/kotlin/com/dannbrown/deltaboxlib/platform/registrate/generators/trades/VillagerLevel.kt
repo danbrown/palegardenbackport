@@ -30,12 +30,12 @@ package com.dannbrown.deltaboxlib.platform.registrate.generators.trades
     companion object{
       fun fromInt(value: Int): VillagerLevel {
         return when(value){
-          1 -> VillagerLevel.NOVICE
-          2 -> VillagerLevel.APPRENTICE
-          3 -> VillagerLevel.JOURNEYMAN
-          4 -> VillagerLevel.EXPERT
-          5 -> VillagerLevel.MASTER
-          else -> {VillagerLevel.NOVICE}
+          1 -> NOVICE
+          2 -> APPRENTICE
+          3 -> JOURNEYMAN
+          4 -> EXPERT
+          5 -> MASTER
+          else -> {NOVICE}
         }
       }
     }

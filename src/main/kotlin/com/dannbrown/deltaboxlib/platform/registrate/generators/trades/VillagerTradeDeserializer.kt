@@ -26,7 +26,7 @@ class VillagerTradeDeserializer(private val registrate: DeltaboxRegistrate) : Si
             val jsonObject: JsonObject = GsonHelper.convertToJsonObject(jsonElement, "villager_trades")
             val villagerTrade = VillagerTradeCodec.CODEC
                 .parse(JsonOps.INSTANCE, jsonObject)
-                .getOrThrow(false, DeltaboxLib.LOGGER::error)
+                .orThrow
             villagerTrades.add(villagerTrade)
         }
         registrate.updateTradesData(villagerTrades)

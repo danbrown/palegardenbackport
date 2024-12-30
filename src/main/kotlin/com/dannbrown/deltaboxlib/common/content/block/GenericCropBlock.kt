@@ -47,7 +47,7 @@ open class GenericCropBlock(
 
   /*? if >1.21 {*/
   /*override fun getCloneItemStack(arg: net.minecraft.world.level.LevelReader, pos: BlockPos, state: BlockState): ItemStack {
-    return ItemStack(fruitItem.get())
+    return ItemStack(if(fruitItem !== null) fruitItem.get() else this.asItem())
   }
   *//*?} else {*/
   override fun getCloneItemStack(arg: BlockGetter, pos: BlockPos, state: BlockState): ItemStack {

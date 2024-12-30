@@ -102,13 +102,13 @@ object DeltaboxBlocks {
     .color(MapColor.COLOR_LIGHT_GREEN)
     .register()
 
-  val CORN_CROP = BLOCKS.createDoubleCropBlock("corn", "kernels", "Corn Crop", "Kernels", {DeltaboxItems.BEAN_POD.get()}, true, false)
-    .color(MapColor.COLOR_LIGHT_GREEN)
-    .register()
-
-  val CASSAVA_CROP = BLOCKS.createDoubleCropBlock("cassava", "cassava_root", "Cassava Crop", "Cassava Root", null, false, true)
-    .color(MapColor.COLOR_LIGHT_GREEN)
-    .register()
+//  val CORN_CROP = BLOCKS.createDoubleCropBlock("corn", "kernels", "Corn Crop", "Kernels", {DeltaboxItems.BEAN_POD.get()}, true, false)
+//    .color(MapColor.COLOR_LIGHT_GREEN)
+//    .register()
+//
+//  val CASSAVA_CROP = BLOCKS.createDoubleCropBlock("cassava", "cassava_root", "Cassava Crop", "Cassava Root", null, false, true)
+//    .color(MapColor.COLOR_LIGHT_GREEN)
+//    .register()
 
   val TRADE = DeltaboxLib.REGISTRATE.villagerTrade(
     VillagerProfession.FARMER,

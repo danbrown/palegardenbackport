@@ -45,7 +45,7 @@ class VillagerTradeProvider(
         return try {
             val jsonObject = VillagerTradeCodec.CODEC
                 .encodeStart(JsonOps.INSTANCE, trade)
-                .getOrThrow(false, DeltaboxLib.LOGGER::error)
+                .orThrow
                 .asJsonObject
             DataProvider.saveStable(cachedOutput, jsonObject, path)
         } catch (ioException: IOException) {

@@ -68,7 +68,10 @@ class DeltaboxLibWrapper(eventBus: IEventBus, modContainer: ModContainer) {
     }
     fun register(modBus: IEventBus, forgeEventBus: IEventBus) {
         DeltaboxLib.init()
-        modBus.addListener { event: GatherDataEvent -> DeltaboxLib.gatherData(event.generator.getVanillaPack(true)) }
+        modBus.addListener { event: GatherDataEvent ->
+            DeltaboxLib.gatherData(event.generator)
+            event.generator.addProvider(event.includeServer(), VillagerTradeProvider(DeltaboxLib.REGISTRATE, event.generator))
+        }
         DeltaboxLib.REGISTRATE.register(modBus, forgeEventBus) // neoforged exclusive registrate
     }
 }

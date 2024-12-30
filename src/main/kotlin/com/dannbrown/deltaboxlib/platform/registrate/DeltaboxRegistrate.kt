@@ -147,7 +147,11 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
           u.forEach {
             factories.add({e, r->
               MerchantOffer(
-                ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+                /^? if >1.21 {^/
+                net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+                /^?} else {^/
+                /^ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+                ^//^?}^/
                 ItemStack(it.tradeSells.first().item.get(), it.tradeSells.first().amount),
                 it.maxUses,
                 it.xpAmount,
@@ -211,6 +215,22 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
           (Blocks.FLOWER_POT as FlowerPotBlock).addPlant(plant.id, pot)
         } catch (e: Exception) {
           println("Failed to add plant ${plant.get().name} to flower pot ${pot.get().name}")
+        }
+      }
+    }
+
+    // datapack reload listeners
+    forgeBus.addListener(net.neoforged.bus.api.EventPriority.HIGH) { event: net.neoforged.neoforge.event.AddReloadListenerEvent ->
+      val registry = BiConsumer<ResourceLocation, PreparableReloadListener> { id, listener -> event.addListener(listener) }
+      // deserialize villager trades
+      registry.accept(DeltaboxUtil.resourceLocation(modid, VillagerTradeProvider.PATH), VillagerTradeDeserializer(this))
+    }
+
+    // load villager trades
+    forgeBus.addListener { event: net.neoforged.neoforge.event.village.VillagerTradesEvent ->
+      TRADES.forEach { trade ->
+        if(event.type == trade.profession){
+          event.trades[trade.level.toInt()].add { _, _ -> MerchantOffer(net.minecraft.world.item.trading.ItemCost(trade.tradeCosts.first().item.get(), trade.tradeCosts.first().amount), ItemStack(trade.tradeSells.first().item.get(), trade.tradeSells.first().amount), trade.maxUses, trade.xpAmount, trade.priceMultiplier) }
         }
       }
     }
