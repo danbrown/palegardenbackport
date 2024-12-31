@@ -11,8 +11,8 @@
   ],
   "tradeSells": [
     {
-      "amount": 2,
-      "item": "minecraft:emerald"
+      "amount": 5,
+      "item": "minecraft:obsidian"
     }
   ],
   "xpAmount": 10

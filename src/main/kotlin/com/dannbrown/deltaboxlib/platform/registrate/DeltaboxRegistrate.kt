@@ -1,12 +1,17 @@
 package com.dannbrown.deltaboxlib.platform.registrate
 
+import com.dannbrown.deltaboxlib.common.DeltaboxLibCommon
 import com.dannbrown.deltaboxlib.platform.registrate.generators.trades.*
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.tterrag.registrate.AbstractRegistrate
 import com.tterrag.registrate.util.entry.BlockEntry
+import net.minecraft.core.registries.Registries
+import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.resources.PreparableReloadListener
 import net.minecraft.world.entity.npc.VillagerProfession
+import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.trading.MerchantOffer
 import net.minecraft.world.level.block.Block
@@ -21,9 +26,12 @@ import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.fabricmc.fabric.api.`object`.builder.v1.trade.TradeOfferHelper
+import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.packs.PackType
 import net.minecraft.server.packs.resources.CloseableResourceManager
@@ -32,12 +40,21 @@ import net.minecraft.server.packs.resources.ResourceManager
 import net.minecraft.util.profiling.ProfilerFiller
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
+*//*?}*/
 
+/*? if forge {*/
+import net.minecraftforge.registries.DeferredRegister
+/*?}*/
+
+/*? if neoforge {*/
+/*import net.neoforged.neoforge.registries.DeferredRegister
 *//*?}*/
 
 class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(modId) {
 
-  // Special Blocks
+
+
+  // Special Blocks lists
   private val FLAMMABLE_BLOCKS: MutableList<Triple<BlockEntry<out Block>, Int, Int>> = mutableListOf()
   private val STRIPPABLE_BLOCKS: MutableList<Pair<BlockEntry<out Block>, Supplier<out Block>>> = mutableListOf()
   private val POTTED_BLOCKS: MutableList<Pair<BlockEntry<out Block>, BlockEntry<out Block>>> = mutableListOf()
@@ -76,7 +93,7 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
     return CUTOUT_RENDERS
   }
 
-  // Data providers
+  // Villager trades
   val TRADES: MutableList<VillagerTradeCodec> = ArrayList()
   val WANDERER_TRADES: MutableList<WandererTradeCodec> = ArrayList()
 
@@ -102,6 +119,60 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   ) {
       WANDERER_TRADES.add(WandererTradeCodec(rarity, tradeCosts, tradeSells, maxUses, xpAmount, priceMultiplier))
   }
+
+  // Creative tabs
+  /*? if forge {*/
+  private val CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, modid)
+
+  fun creativeTab(
+    name: String,
+    icon: () -> ItemStack,
+    displayItems: CreativeModeTab.DisplayItemsGenerator,
+    title: String? = null
+  ) {
+    CREATIVE_TABS.register(name) {
+      CreativeModeTab.builder()
+        .title(if (title != null) Component.literal(title) else Component.translatable("itemGroup.${modid}.$name"))
+        .icon(icon)
+        .displayItems(displayItems)
+        .build()
+    }
+  }
+  /*?} elif neoforge {*/
+  /*private val CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, modId)
+
+  fun creativeTab(
+    name: String,
+    icon: () -> ItemStack,
+    displayItems: CreativeModeTab.DisplayItemsGenerator,
+    title: String? = null
+  ) {
+    CREATIVE_TABS.register(name) { _->
+      CreativeModeTab.builder()
+        .title(if (title != null) Component.literal(title) else Component.translatable("itemGroup.${modid}.$name"))
+        .icon(icon)
+        .displayItems(displayItems)
+        .build()
+    }
+  }
+  *//*?} elif fabric {*/
+  /*fun creativeTab(
+    name: String,
+    icon: () -> ItemStack,
+    displayItems: CreativeModeTab.DisplayItemsGenerator,
+    title: String? = null
+  ) {
+    Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, DeltaboxUtil.resourceLocation(modid, name), FabricItemGroup.builder()
+      .title(if (title != null) Component.literal(title) else Component.translatable("itemGroup.${modid}.$name"))
+      .icon(icon)
+      .displayItems(displayItems)
+      .build()
+    )
+  }
+  *//*?}*/
+
+
+
 
   // FABRIC SPECIFIC BLOCKS FEATURES REGISTRATION
   /*? if fabric {*/
@@ -180,10 +251,10 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
           factories.add({e, r->
             MerchantOffer(
               /^? if >1.21 {^/
-              /^net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              ^//^?} else {^/
-              ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              /^?}^/
+              net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              /^?} else {^/
+              /^ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              ^//^?}^/
               ItemStack(it.tradeSells.first().item.get(), it.tradeSells.first().amount),
               it.maxUses,
               it.xpAmount,
@@ -200,10 +271,10 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
           factories.add({e, r->
             MerchantOffer(
               /^? if >1.21 {^/
-              /^net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              ^//^?} else {^/
-              ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              /^?}^/
+              net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              /^?} else {^/
+              /^ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              ^//^?}^/
               ItemStack(it.tradeSells.first().item.get(), it.tradeSells.first().amount),
               it.maxUses,
               it.xpAmount,
@@ -233,6 +304,8 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   /*? if forge {*/
   fun register(bus: net.minecraftforge.eventbus.api.IEventBus, forgeBus: net.minecraftforge.eventbus.api.IEventBus) {
     super.registerEventListeners(bus)
+
+    CREATIVE_TABS.register(bus)
 
     // register pot plants
     onRegisterFlowerPots(bus)
@@ -295,6 +368,8 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   /*?} elif neoforge {*/
   /*fun register(bus: net.neoforged.bus.api.IEventBus, forgeBus: net.neoforged.bus.api.IEventBus) {
     super.registerEventListeners(bus)
+
+    CREATIVE_TABS.register(bus)
 
     // register pot plants
     onRegisterFlowerPots(bus)
