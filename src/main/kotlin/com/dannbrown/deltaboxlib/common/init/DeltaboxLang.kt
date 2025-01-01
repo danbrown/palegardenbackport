@@ -7,5 +7,6 @@ import com.tterrag.registrate.providers.RegistrateLangProvider
 object DeltaboxLang: IDeltaboxLang(DeltaboxLibCommon.MOD_ID) {
   override fun addLang(provider: RegistrateLangProvider) {
     addGenericTooltipLang(provider, "flint", "It's a Delta!")
+    addCreativeTabLang(provider, "deltaboxlib", "Deltabox Lib")
   }
 }

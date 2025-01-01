@@ -1,4 +1,4 @@
-// 1.20.1	2024-12-30T13:54:39.654694	Registrate Provider for deltaboxlib [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2024-12-31T19:36:49.055856	Registrate Provider for deltaboxlib [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 0f5f6649f8f7b7f0984ec71e9e71f566f3c230dd assets/deltaboxlib/blockstates/acai_leaves.json
 b47ba9037d146b0124a187e02cd01cfb1e28905f assets/deltaboxlib/blockstates/adamantium_block.json
 fb183c4055e26b067b3643734b5583555c89e144 assets/deltaboxlib/blockstates/black_beans.json
@@ -18,8 +18,8 @@ b5bf129f2a6b37aa5ce42419c267a4ede00e6e33 assets/deltaboxlib/blockstates/potted_s
 c768c54a7102d4462b9ce699f8fd2cf2e929b967 assets/deltaboxlib/blockstates/simple_grass.json
 873c6b3b6b95a43a87bcd8bb3be67875e8e35f62 assets/deltaboxlib/blockstates/sparse_dry_grass.json
 ecc93271d373e7607320af113f2333aac1f491e9 assets/deltaboxlib/blockstates/tall_sparse_dry_grass.json
-1fb144f7837d71193926df060f183aaf1d36dcab assets/deltaboxlib/lang/en_ud.json
-80d0ef143f7dc8f6829101b09d4b1cc60a4a9ce5 assets/deltaboxlib/lang/en_us.json
+ec536daf5f38afbe3fa326f395ab47d256ad7439 assets/deltaboxlib/lang/en_ud.json
+9fc5cd2baddfa56af700f958781a799c081e571c assets/deltaboxlib/lang/en_us.json
 2b4feb39488e364e71c9894ceb639ca9f1d7c70b assets/deltaboxlib/models/block/acai_leaves.json
 af4e5fdd38c7b2f93f16c67a9badac29fccb3092 assets/deltaboxlib/models/block/adamantium_block.json
 4d97c84d61c1d1dd6e67bb9dba62da826ed85322 assets/deltaboxlib/models/block/black_beans_stage0.json

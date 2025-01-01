@@ -1,10 +1,12 @@
 package com.dannbrown.deltaboxlib.platform.registrate
 
 import com.dannbrown.deltaboxlib.common.DeltaboxLibCommon
+import com.dannbrown.deltaboxlib.common.init.DeltaboxItems
 import com.dannbrown.deltaboxlib.platform.registrate.generators.trades.*
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.tterrag.registrate.AbstractRegistrate
 import com.tterrag.registrate.util.entry.BlockEntry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
@@ -51,9 +53,6 @@ import net.minecraftforge.registries.DeferredRegister
 *//*?}*/
 
 class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(modId) {
-
-
-
   // Special Blocks lists
   private val FLAMMABLE_BLOCKS: MutableList<Triple<BlockEntry<out Block>, Int, Int>> = mutableListOf()
   private val STRIPPABLE_BLOCKS: MutableList<Pair<BlockEntry<out Block>, Supplier<out Block>>> = mutableListOf()
@@ -162,7 +161,7 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
     displayItems: CreativeModeTab.DisplayItemsGenerator,
     title: String? = null
   ) {
-    Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, DeltaboxUtil.resourceLocation(modid, name), FabricItemGroup.builder()
+    Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, name, FabricItemGroup.builder()
       .title(if (title != null) Component.literal(title) else Component.translatable("itemGroup.${modid}.$name"))
       .icon(icon)
       .displayItems(displayItems)

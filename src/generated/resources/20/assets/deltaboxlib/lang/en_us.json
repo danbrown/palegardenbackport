@@ -24,5 +24,6 @@
   "item.deltaboxlib.cassavinha": "Cassavinha",
   "item.deltaboxlib.garlic_clove": "Garlic Clove",
   "item.deltaboxlib.warp_crystal": "Warp Crystal",
+  "itemGroup.deltaboxlib.deltaboxlib": "Deltabox Lib",
   "tooltip.deltaboxlib.flint": "It's a Delta!"
 }
