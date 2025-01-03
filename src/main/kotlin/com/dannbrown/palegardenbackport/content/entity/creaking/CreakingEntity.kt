@@ -224,52 +224,6 @@ class CreakingEntity(type: EntityType<out AbstractCreaking>, level: Level) : Abs
     return entityData.get(IS_ACTIVE) as Boolean
   }
 
-//  fun checkCanMove(): Boolean {
-//    val players = brain.getMemory(MemoryModuleType.NEAREST_PLAYERS).orElse(listOf()) as List<*>
-//    val currentActiveState = isActive()
-//
-//    if (players.isEmpty()) {
-//      if (currentActiveState) {
-//        deactivate()
-//      }
-//      return true
-//    } else {
-//      var canMove = false
-//      val iterator = players.iterator()
-//
-//      while (iterator.hasNext()) {
-//        val player = iterator.next() as Player
-//        // TODO: Check attack and alliance logic (unfinished)
-//        if (isLookingAtMe(player, 0.5, false, true, eyeY, y + 0.5 * scale, (eyeY + y) / 2.0)) {
-//          if (currentActiveState) {
-//            return false
-//          }
-//
-//          if (player.distanceToSqr(this) < 144.0) {
-//            activate(player)
-//            return false
-//          }
-//        }
-//      }
-//    }
-//    return true
-//  }
-
-//  fun isLookingAtMe(target: LivingEntity, angleThreshold: Double, checkDistance: Boolean, checkLineOfSight: Boolean, vararg additionalYPositions: Double): Boolean {
-//    val viewVector = target.getViewVector(1.0f).normalize()
-//    additionalYPositions.forEach { yPos ->
-//      val directionVec = Vec3(x - target.x, yPos - target.eyeY, z - target.z)
-//      val distance = directionVec.length()
-//      val normalizedVec = directionVec.normalize()
-//      val dotProduct = viewVector.dot(normalizedVec)
-//
-//      if (dotProduct > 1.0 - angleThreshold / (if (checkDistance) distance else 1.0) && target.hasLineOfSight(this)) {
-//        return true
-//      }
-//    }
-//    return false
-//  }
-
   fun isLookingAtMe(player: Player, mob: CreakingEntity): Boolean {
     val vec3 = player.getViewVector(1.0f).normalize()
     var vec31 = Vec3(mob.x - player.x, mob.eyeY - player.eyeY, mob.z - player.z)

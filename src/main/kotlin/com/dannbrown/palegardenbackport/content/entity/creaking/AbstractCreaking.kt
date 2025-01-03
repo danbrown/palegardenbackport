@@ -88,7 +88,7 @@ open class AbstractCreaking protected constructor(type: EntityType<out AbstractC
   }
 
   override fun isIgnoringBlockTriggers(): Boolean {
-    return true
+    return false
   }
 
   override fun isSteppingCarefully(): Boolean {
