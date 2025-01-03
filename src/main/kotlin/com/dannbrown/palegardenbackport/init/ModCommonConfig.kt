@@ -8,6 +8,7 @@ object ModCommonConfig {
 
   var CREAKING_HEART_CHANCE: ForgeConfigSpec.ConfigValue<Double>? = null
   var CREAKING_FREEZE_DISTANCE: ForgeConfigSpec.ConfigValue<Double>? = null
+  var CREAKING_DISTANCE_TO_HEART: ForgeConfigSpec.ConfigValue<Double>? = null
   var PLAYER_FOV_ANGLE: ForgeConfigSpec.ConfigValue<Double>? = null
 
   init {
@@ -15,6 +16,8 @@ object ModCommonConfig {
       .define("CreakingHeartChance", 0.10)
     CREAKING_FREEZE_DISTANCE = BUILDER.comment("The distance at which Creaking entities freeze when looked at")
       .define("CreakingFreezeDistance", 128.0)
+    CREAKING_DISTANCE_TO_HEART = BUILDER.comment("The distance at which Creaking entities freeze when looked at")
+      .define("CreakingDistanceToHeart", 32.0)
     PLAYER_FOV_ANGLE = BUILDER.comment("The field of view angle of the player to detect Creaking entities")
       .define("PlayerFovAngle", 45.0)
 

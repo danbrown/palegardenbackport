@@ -76,11 +76,11 @@ open class AbstractCreaking protected constructor(type: EntityType<out AbstractC
   }
 
   override fun getWaterSlowDown(): Float {
-    return 0.9f
+    return 0.4f
   }
 
   override fun getFluidJumpThreshold(): Double {
-    return 0.2
+    return 0.3
   }
 
   override fun canBeLeashed(player: Player): Boolean {

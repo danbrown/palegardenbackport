@@ -300,7 +300,7 @@ class CreakingEntity(type: EntityType<out AbstractCreaking>, level: Level) : Abs
     if(fromBrain.isEmpty()){
       val AABB = this.boundingBox.inflate(16.0)
       val entities = level().getEntities(this, AABB)
-      val players = entities.filterIsInstance<Player>()
+      val players = entities.filterIsInstance<Player>().filter { it.isAlive && !it.isSpectator && !it.isCreative }.toList()
       brain.setMemory(MemoryModuleType.NEAREST_PLAYERS, players)
       return players
     }
