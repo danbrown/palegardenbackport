@@ -1,5 +1,6 @@
 package com.dannbrown.palegardenbackport.content.entity.creaking
 
+import com.dannbrown.palegardenbackport.init.ModCommonConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.damagesource.DamageSource
@@ -107,8 +108,8 @@ open class AbstractCreaking protected constructor(type: EntityType<out AbstractC
       return Monster.createMonsterAttributes()
         .add(Attributes.MAX_HEALTH, 1.0)
         .add(Attributes.MOVEMENT_SPEED, 0.4000000059604645)
-        .add(Attributes.ATTACK_DAMAGE, 3.0)
-        .add(Attributes.FOLLOW_RANGE, 32.0)
+        .add(Attributes.ATTACK_DAMAGE,3.0)
+        .add(Attributes.FOLLOW_RANGE,32.0)
     }
   }
 }

@@ -1,15 +1,11 @@
 {
   "type": "minecraft:random_selector",
   "config": {
-    "default": "palegardenbackport:pale_oak_checked",
+    "default": "palegardenbackport:pale_oak_heart_checked",
     "features": [
       {
-        "chance": 0.15,
+        "chance": 1.0,
         "feature": "palegardenbackport:pale_oak_heart_checked"
-      },
-      {
-        "chance": 0.85,
-        "feature": "palegardenbackport:pale_oak_checked"
       }
     ]
   }

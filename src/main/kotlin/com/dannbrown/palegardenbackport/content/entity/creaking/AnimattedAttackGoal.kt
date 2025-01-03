@@ -8,13 +8,13 @@ import kotlin.math.max
 
 class AnimattedAttackGoal(pMob: PathfinderMob, pSpeedModifier: Double, pFollowingTargetEvenIfNotSeen: Boolean) : MeleeAttackGoal(pMob, pSpeedModifier, pFollowingTargetEvenIfNotSeen) {
   private val entity: CreakingEntity = pMob as CreakingEntity
-  private var attackDelay = 40
-  private var ticksUntilNextAttack = 40
+  private var attackDelay = 10
+  private var ticksUntilNextAttack = 20
   private var shouldCountTillNextAttack = false
   override fun start() {
     super.start()
-    attackDelay = 40
-    ticksUntilNextAttack = 40
+    attackDelay = 10
+    ticksUntilNextAttack = 20
   }
 
   override fun checkAndPerformAttack(pEnemy: LivingEntity, pDistToEnemySqr: Double) {
@@ -26,7 +26,7 @@ class AnimattedAttackGoal(pMob: PathfinderMob, pSpeedModifier: Double, pFollowin
       }
 
       if (isTimeToAttack) {
-        mob.lookControl.setLookAt(pEnemy.x, pEnemy.eyeY, pEnemy.z)
+        entity.lookControl.setLookAt(pEnemy.x, pEnemy.eyeY, pEnemy.z)
         performAttack(pEnemy)
       }
     }
@@ -59,8 +59,9 @@ class AnimattedAttackGoal(pMob: PathfinderMob, pSpeedModifier: Double, pFollowin
 
   protected fun performAttack(pEnemy: LivingEntity?) {
     this.resetAttackCooldown()
-    mob.swing(InteractionHand.MAIN_HAND)
-    mob.doHurtTarget(pEnemy)
+    entity.swing(InteractionHand.MAIN_HAND)
+    entity.doHurtTarget(pEnemy)
+    entity.playAttackSound()
   }
 
   override fun tick() {

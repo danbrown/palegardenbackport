@@ -26,10 +26,9 @@ import net.minecraft.world.entity.ai.sensing.SensorType
 import net.minecraft.world.entity.schedule.Activity
 
 object CreakingAi {
-
-  fun brainProvider(): Brain.Provider<CreakingEntity> {
-    return Brain.provider<CreakingEntity>(
-      listOf(
+  val SENSOR_TYPES = ImmutableList.of(SensorType.NEAREST_PLAYERS)
+  val MEMORY_TYPES: ImmutableList<out MemoryModuleType<*>> = ImmutableList.of(
+        MemoryModuleType.NEAREST_PLAYERS,
         MemoryModuleType.NEAREST_LIVING_ENTITIES,
         MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES,
         MemoryModuleType.NEAREST_VISIBLE_PLAYER,
@@ -39,16 +38,16 @@ object CreakingAi {
         MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE,
         MemoryModuleType.PATH,
         MemoryModuleType.ATTACK_TARGET,
-        MemoryModuleType.ATTACK_COOLING_DOWN
-      ), listOf(SensorType.NEAREST_PLAYERS)
-    )
+        MemoryModuleType.ATTACK_COOLING_DOWN)
+  fun brainProvider(): Brain.Provider<CreakingEntity> {
+    return Brain.provider(MEMORY_TYPES, SENSOR_TYPES)
   }
 
   fun initCoreActivity(brain: Brain<CreakingEntity>) {
     brain.addActivity(Activity.CORE, 0, ImmutableList.of<Behavior<Mob>>(
       object : Swim(0.8f) {
         override fun checkExtraStartConditions(pLevel: ServerLevel, pOwner: Mob): Boolean {
-          return (pOwner as? CreakingEntity)?.canMove() ?: false
+          return (pOwner as CreakingEntity).canMove() ?: false
         }
       },
       LookAtTargetSink(45, 90),
@@ -90,10 +89,10 @@ object CreakingAi {
   }
 
   fun updateActivity(creakingEntity: CreakingEntity) {
-    if (!creakingEntity.canMove()) {
-      creakingEntity.brain.useDefaultActivity()
-    } else {
+    if (creakingEntity.canMove()) {
       creakingEntity.brain.setActiveActivityToFirstValid(ImmutableList.of(Activity.FIGHT, Activity.IDLE))
+    } else {
+      creakingEntity.brain.setActiveActivityToFirstValid(ImmutableList.of(Activity.CORE))
     }
   }
 }

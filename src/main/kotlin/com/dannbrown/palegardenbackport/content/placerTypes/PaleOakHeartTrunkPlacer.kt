@@ -2,6 +2,7 @@ package com.dannbrown.palegardenbackport.content.placerTypes
 
 import com.dannbrown.palegardenbackport.ModContent
 import com.dannbrown.palegardenbackport.content.block.creakingHeart.CreakingHeartBlock
+import com.dannbrown.palegardenbackport.init.ModCommonConfig
 import com.google.common.collect.Lists
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
@@ -67,7 +68,8 @@ class PaleOakHeartTrunkPlacer(baseHeight: Int, heightRandA: Int, heightRandB: In
       if (TreeFeature.isAirOrLeaves(level, trunkPos)) {
         // Check if we're on the second-to-last layer
         val isSecondToLastLayer = currentHeight == height - 2
-        val randomLogIndex = random.nextInt(4)
+        val randomChanceOfHeart = ModCommonConfig.CREAKING_HEART_CHANCE?.get() ?: 0.15
+        val randomLogIndex = if(random.nextDouble() <= randomChanceOfHeart) random.nextInt(4) else -1
 
         val logBlock = if (isSecondToLastLayer && randomLogIndex == 0) CreakingHeartBlock.getNaturalState() else config.trunkProvider.getState(random, trunkPos)
         blockConsumer.accept(trunkPos, logBlock)

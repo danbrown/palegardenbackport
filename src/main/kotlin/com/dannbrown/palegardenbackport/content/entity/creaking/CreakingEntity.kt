@@ -4,6 +4,7 @@ import com.dannbrown.deltaboxlib.registry.generators.BlockFamily
 import com.dannbrown.palegardenbackport.ModContent
 import com.dannbrown.palegardenbackport.content.block.creakingHeart.CreakingHeartBlock
 import com.dannbrown.palegardenbackport.content.block.creakingHeart.CreakingHeartBlockEntity
+import com.dannbrown.palegardenbackport.init.ModCommonConfig
 import com.dannbrown.palegardenbackport.init.ModSounds
 import com.mojang.serialization.Dynamic
 import net.minecraft.core.BlockPos
@@ -23,21 +24,29 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.TamableAnimal
 import net.minecraft.world.entity.ai.Brain
+import net.minecraft.world.entity.ai.behavior.Swim
 import net.minecraft.world.entity.ai.control.JumpControl
 import net.minecraft.world.entity.ai.control.LookControl
 import net.minecraft.world.entity.ai.control.MoveControl
 import net.minecraft.world.entity.ai.goal.FloatGoal
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal
 import net.minecraft.world.entity.ai.memory.MemoryModuleType
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.entity.projectile.Projectile
+import net.minecraft.world.item.Items
+import net.minecraft.world.level.ClipContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.level.pathfinder.BlockPathTypes
+import net.minecraft.world.phys.AABB
+import net.minecraft.world.phys.HitResult
 import net.minecraft.world.phys.Vec3
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent
+import net.minecraftforge.fluids.FluidType
 import java.util.*
 
 class CreakingEntity(type: EntityType<out AbstractCreaking>, level: Level) : AbstractCreaking(type, level) {
@@ -52,7 +61,6 @@ class CreakingEntity(type: EntityType<out AbstractCreaking>, level: Level) : Abs
   val invulnerabilityAnimationState: AnimationState = AnimationState()
   private var invulnerabilityAnimationTimeout: Int = 0
   private var invulnerabilityAnimationRemainingTicks: Int = 0
-
 
   val deathAnimationState: AnimationState = AnimationState()
   private var deathAnimationTimeout: Int = 0
@@ -75,12 +83,12 @@ class CreakingEntity(type: EntityType<out AbstractCreaking>, level: Level) : Abs
     return CreakingAi.brainProvider()
   }
 
-  override fun makeBrain(dynamic: Dynamic<*>?): Brain<*> {
+  override fun makeBrain(dynamic: Dynamic<*>): Brain<*> {
     return CreakingAi.makeBrain(brainProvider().makeBrain(dynamic))
   }
 
   fun canMove(): Boolean {
-    return entityData.get(CAN_MOVE) as Boolean
+    return entityData.get(CAN_MOVE)
   }
 
   class CreakingLookControl(private val creakingEntity: CreakingEntity) : LookControl(creakingEntity) {
@@ -156,23 +164,26 @@ class CreakingEntity(type: EntityType<out AbstractCreaking>, level: Level) : Abs
     attackAnimationState.animateWhen(this.attackAnimationRemainingTicks > 0, this.tickCount)
     invulnerabilityAnimationState.animateWhen(this.invulnerabilityAnimationRemainingTicks > 0, this.tickCount)
     deathAnimationState.animateWhen(this.isTearingDown(), this.tickCount)
-
-    if (idleAnimationTimeout <= 0) {
-      idleAnimationTimeout = random.nextInt(40) + 80
-      idleAnimationState.start(tickCount)
-    } else {
-      --idleAnimationTimeout
-    }
+    idleAnimationState.animateWhen(idleAnimationTimeout > 0, this.tickCount)
 
     if (isAttacking() && attackAnimationTimeout <= 0) {
-      attackAnimationTimeout = 80 // Length in ticks of your animation
+      attackAnimationTimeout = 20 // Length in ticks of your animation
+      attackAnimationRemainingTicks = 20
       attackAnimationState.start(tickCount)
-    } else {
+    } else if(attackAnimationTimeout > 0) {
       --attackAnimationTimeout
     }
 
     if (!isAttacking()) {
       attackAnimationState.stop()
+    }
+
+
+    if (idleAnimationTimeout <= 0) {
+      idleAnimationTimeout = random.nextInt(40) + 80
+      if(!isAttacking()) idleAnimationState.start(tickCount)
+    } else {
+      --idleAnimationTimeout
     }
   }
 
@@ -213,50 +224,81 @@ class CreakingEntity(type: EntityType<out AbstractCreaking>, level: Level) : Abs
     return entityData.get(IS_ACTIVE) as Boolean
   }
 
-  fun checkCanMove(): Boolean {
-    val players = brain.getMemory(MemoryModuleType.NEAREST_PLAYERS).orElse(listOf()) as List<*>
-    val currentActiveState = isActive()
+//  fun checkCanMove(): Boolean {
+//    val players = brain.getMemory(MemoryModuleType.NEAREST_PLAYERS).orElse(listOf()) as List<*>
+//    val currentActiveState = isActive()
+//
+//    if (players.isEmpty()) {
+//      if (currentActiveState) {
+//        deactivate()
+//      }
+//      return true
+//    } else {
+//      var canMove = false
+//      val iterator = players.iterator()
+//
+//      while (iterator.hasNext()) {
+//        val player = iterator.next() as Player
+//        // TODO: Check attack and alliance logic (unfinished)
+//        if (isLookingAtMe(player, 0.5, false, true, eyeY, y + 0.5 * scale, (eyeY + y) / 2.0)) {
+//          if (currentActiveState) {
+//            return false
+//          }
+//
+//          if (player.distanceToSqr(this) < 144.0) {
+//            activate(player)
+//            return false
+//          }
+//        }
+//      }
+//    }
+//    return true
+//  }
 
-    if (players.isEmpty()) {
-      if (currentActiveState) {
-        deactivate()
-      }
-      return true
-    } else {
-      var canMove = false
-      val iterator = players.iterator()
+//  fun isLookingAtMe(target: LivingEntity, angleThreshold: Double, checkDistance: Boolean, checkLineOfSight: Boolean, vararg additionalYPositions: Double): Boolean {
+//    val viewVector = target.getViewVector(1.0f).normalize()
+//    additionalYPositions.forEach { yPos ->
+//      val directionVec = Vec3(x - target.x, yPos - target.eyeY, z - target.z)
+//      val distance = directionVec.length()
+//      val normalizedVec = directionVec.normalize()
+//      val dotProduct = viewVector.dot(normalizedVec)
+//
+//      if (dotProduct > 1.0 - angleThreshold / (if (checkDistance) distance else 1.0) && target.hasLineOfSight(this)) {
+//        return true
+//      }
+//    }
+//    return false
+//  }
 
-      while (iterator.hasNext()) {
-        val player = iterator.next() as Player
-        // TODO: Check attack and alliance logic (unfinished)
-        if (isLookingAtMe(player, 0.5, false, true, eyeY, y + 0.5 * scale, (eyeY + y) / 2.0)) {
-          if (currentActiveState) {
-            return false
-          }
+  fun isLookingAtMe(player: Player, mob: CreakingEntity): Boolean {
+    val vec3 = player.getViewVector(1.0f).normalize()
+    var vec31 = Vec3(mob.x - player.x, mob.eyeY - player.eyeY, mob.z - player.z)
+    val d0 = vec31.length()
+    vec31 = vec31.normalize()
 
-          if (player.distanceToSqr(this) < 144.0) {
-            activate(player)
-            return false
-          }
-        }
-      }
-    }
-    return true
+    val d1 = vec3.dot(vec31)
+    val fovThreshold = Math.cos(Math.toRadians(ModCommonConfig.PLAYER_FOV_ANGLE?.get() ?: 45.0)) // 45 degrees field of view
+    return if (d1 > fovThreshold / d0) {
+      hasLineOfSight(player, mob) && !player.armorSlots.any { it.`is`(Items.CARVED_PUMPKIN) }
+    } else false
   }
 
-  fun isLookingAtMe(target: LivingEntity, angleThreshold: Double, checkDistance: Boolean, checkLineOfSight: Boolean, vararg additionalYPositions: Double): Boolean {
-    val viewVector = target.getViewVector(1.0f).normalize()
-    additionalYPositions.forEach { yPos ->
-      val directionVec = Vec3(x - target.x, yPos - target.eyeY, z - target.z)
-      val distance = directionVec.length()
-      val normalizedVec = directionVec.normalize()
-      val dotProduct = viewVector.dot(normalizedVec)
-
-      if (dotProduct > 1.0 - angleThreshold / (if (checkDistance) distance else 1.0) && target.hasLineOfSight(this)) {
-        return true
+  fun hasLineOfSight(player: Player, mob: CreakingEntity): Boolean{
+    if (mob.level() !== player.level()) {
+      return false
+    }
+    else {
+      val vec3 = Vec3(player.x, player.eyeY, player.z)
+      val vec31 = Vec3(mob.x, mob.eyeY, mob.z)
+      return if (vec31.distanceTo(vec3) > (ModCommonConfig.CREAKING_FREEZE_DISTANCE?.get() ?: 128.0)) {
+        false
+      }
+      else {
+        player.level()
+          .clip(ClipContext(vec3, vec31, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player))
+          .type == HitResult.Type.MISS
       }
     }
-    return false
   }
 
   fun stopInPlace() {
@@ -264,6 +306,10 @@ class CreakingEntity(type: EntityType<out AbstractCreaking>, level: Level) : Abs
     setXxa(0.0f)
     setYya(0.0f)
     speed = 0.0f
+  }
+
+  fun setCanMove(value: Boolean) {
+    entityData.set(CAN_MOVE, value)
   }
 
   override fun aiStep() {
@@ -275,8 +321,8 @@ class CreakingEntity(type: EntityType<out AbstractCreaking>, level: Level) : Abs
       --this.attackAnimationRemainingTicks
     }
 
-
     if (!level().isClientSide) {
+      CreakingAi.updateActivity(this)
       val canMoveFlag = entityData.get(CAN_MOVE) as Boolean
       val canMoveNow = checkCanMove()
 
@@ -289,10 +335,44 @@ class CreakingEntity(type: EntityType<out AbstractCreaking>, level: Level) : Abs
         }
       }
 
-      entityData.set(CAN_MOVE, canMoveNow)
+      setCanMove(canMoveNow)
     }
 
     super.aiStep()
+  }
+
+  fun getNearestPlayers(): List<Player> {
+    val fromBrain = brain.getMemory(MemoryModuleType.NEAREST_PLAYERS).orElse(listOf())
+    if(fromBrain.isEmpty()){
+      val AABB = this.boundingBox.inflate(16.0)
+      val entities = level().getEntities(this, AABB)
+      val players = entities.filterIsInstance<Player>()
+      brain.setMemory(MemoryModuleType.NEAREST_PLAYERS, players)
+      return players
+    }
+    return fromBrain
+  }
+
+  fun checkCanMove(): Boolean{
+    val nearestPlayers: List<Player> = getNearestPlayers()
+    if (nearestPlayers.isEmpty()) {
+      return true
+    }
+    else {
+      nearestPlayers.forEach {
+        val player = it
+        if (isLookingAtMe(player, this)) {
+          if (isActive()) {
+            return false
+          }
+          if (player.distanceToSqr(this) < 144.0) {
+            activate(player)
+            return false
+          }
+        }
+      }
+    }
+    return true
   }
 
   override fun registerGoals() {

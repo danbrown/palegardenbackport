@@ -98,7 +98,6 @@ object ModConfiguredFeatures: AbstractConfiguredFeaturesGen() {
           listOf(
             PaleOakGroundDecorator(BlockStateProvider.simple(ModContent.PALE_MOSS_BLOCK.get()), BlockStateProvider.simple(ModContent.PALE_MOSS_CARPET_BLOCK.get())),
             PaleOakVineDecorator(0.14F, 1, 0, BlockStateProvider.simple(ModContent.PALE_HANGING_MOSS_PLANT.get().defaultBlockState()), 2, mutableListOf(Direction.DOWN), BlockStateProvider.simple(ModContent.PALE_HANGING_MOSS.get().defaultBlockState())),
-            ResinTreeDecorator(0.05F)
           )
         )
         .build()
@@ -110,9 +109,8 @@ object ModConfiguredFeatures: AbstractConfiguredFeaturesGen() {
 
     register(context, PALE_GARDEN_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfiguration(
       listOf(
-        WeightedPlacedFeature(placed.getOrThrow(ModPlacedFeatures.PALE_OAK_HEART_CHECKED), 0.15F),
-        WeightedPlacedFeature(placed.getOrThrow(ModPlacedFeatures.PALE_OAK_CHECKED), 0.85F),
-      ), placed.getOrThrow(ModPlacedFeatures.PALE_OAK_CHECKED))
+        WeightedPlacedFeature(placed.getOrThrow(ModPlacedFeatures.PALE_OAK_HEART_CHECKED), 1F),
+      ), placed.getOrThrow(ModPlacedFeatures.PALE_OAK_HEART_CHECKED))
     )
   }
 }

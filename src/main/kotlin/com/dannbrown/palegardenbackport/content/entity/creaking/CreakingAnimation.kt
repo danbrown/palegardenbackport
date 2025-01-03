@@ -81,8 +81,7 @@ object CreakingAnimation {
         Keyframe(0.4583f, KeyframeAnimations.posVec(0.0f, -0.3f, 1.06f), AnimationChannel.Interpolations.LINEAR),
         Keyframe(1.125f, KeyframeAnimations.posVec(0.0f, 0.9674f, -3.6578f), AnimationChannel.Interpolations.LINEAR))))
     .build()
-  val CREAKING_ATTACK: AnimationDefinition = AnimationDefinition.Builder.withLength(0.7083f)
-    .looping()
+  val CREAKING_ATTACK: AnimationDefinition = AnimationDefinition.Builder.withLength(0.6083f)
     .addAnimation("upper_body",
       AnimationChannel(AnimationChannel.Targets.ROTATION,
         *arrayOf(Keyframe(0.0f, KeyframeAnimations.degreeVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),

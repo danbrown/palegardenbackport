@@ -40,6 +40,7 @@ import com.dannbrown.palegardenbackport.content.treeDecorator.PaleOakVineDecorat
 import com.dannbrown.palegardenbackport.content.treeDecorator.ResinTreeDecorator
 import com.dannbrown.palegardenbackport.content.treeGrower.PaleOakTreeGrower
 import com.dannbrown.palegardenbackport.datagen.ModDatagen
+import com.dannbrown.palegardenbackport.init.ModCommonConfig
 import com.dannbrown.palegardenbackport.init.ModEntityTypes
 import com.dannbrown.palegardenbackport.init.ModModelLayers
 import com.dannbrown.palegardenbackport.init.ModParticles
@@ -100,7 +101,9 @@ import net.minecraftforge.event.entity.living.LivingKnockBackEvent
 import net.minecraftforge.event.village.WandererTradesEvent
 import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.IEventBus
+import net.minecraftforge.fml.ModLoadingContext
 import net.minecraftforge.fml.common.Mod
+import net.minecraftforge.fml.config.ModConfig
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
@@ -439,6 +442,7 @@ class ModContent {
     // register
     fun register(modBus: IEventBus, forgeEventBus: IEventBus) {
       LOGGER.info("$MOD_ID has started!")
+      ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ModCommonConfig.SPEC, "$MOD_ID-common.toml")
 
       ModBoatTypes.register()
 

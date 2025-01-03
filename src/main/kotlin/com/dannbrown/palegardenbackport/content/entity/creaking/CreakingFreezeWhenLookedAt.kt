@@ -1,9 +1,9 @@
 package com.dannbrown.palegardenbackport.content.entity.creaking
 
+import com.dannbrown.palegardenbackport.init.ModSounds
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.goal.Goal
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.phys.Vec3
 import java.util.*
 
 class CreakingFreezeWhenLookedAt(private val creakingEntity: CreakingEntity) : Goal() {
@@ -15,28 +15,8 @@ class CreakingFreezeWhenLookedAt(private val creakingEntity: CreakingEntity) : G
 
   override fun canUse(): Boolean {
     this.target = creakingEntity.target
-    if (target !is Player) {
-      return false
-    }
-    else {
-      val d0 = (target as Player).distanceToSqr(this.creakingEntity)
-      return if (d0 > 256.0) false else isLookingAtMe(target as Player, creakingEntity)
-    }
-  }
-
-  fun isLookingAtMe(player: Player, mob: CreakingEntity): Boolean {
-    val vec3 = player.getViewVector(1.0f).normalize()
-    var vec31 = Vec3(mob.x - player.x, mob.eyeY - player.eyeY, mob.z - player.z)
-    val d0 = vec31.length()
-    vec31 = vec31.normalize()
-
-    val d1 = vec3.dot(vec31)
-    val fovThreshold = Math.cos(Math.toRadians(45.0)) // 45 degrees field of view
-    return if (d1 > fovThreshold / d0) {
-      player.hasLineOfSight(mob)
-    } else {
-      false
-    }
+    return if (target !is Player) false
+    else creakingEntity.isLookingAtMe(target as Player, creakingEntity)
   }
 
   override fun start() {
@@ -48,5 +28,49 @@ class CreakingFreezeWhenLookedAt(private val creakingEntity: CreakingEntity) : G
   }
 
   override fun tick() {
+//    if(!creakingEntity.level().isClientSide){
+//      if(target is Player) {
+//        val looking = creakingEntity.isLookingAtMe(target as Player, creakingEntity)
+//        if(looking && creakingEntity.isActive()) {
+//          creakingEntity.deactivate()
+//        } else {
+//          creakingEntity.activate(target as Player)
+//        }
+////        val canMove = checkCanMove(target as Player)
+////        val canMoveFlag = creakingEntity.canMove()
+////        if (canMove != canMoveFlag) {
+////          if (canMove) {
+////            creakingEntity.playSound(ModSounds.CREAKING_UNFREEZE.get())
+////          } else {
+////            creakingEntity.playSound(ModSounds.CREAKING_FREEZE.get())
+////          }
+////        }
+////        creakingEntity.setCanMove(canMove)
+//      }
+//    }
   }
+
+//  fun checkCanMove(player: Player?): Boolean {
+//    val currentActiveState = creakingEntity.isActive()
+//
+//    if (player === null) {
+//      if (currentActiveState) {
+////        creakingEntity.deactivate()
+//      }
+//      return true
+//    } else {
+//      // TODO: Check attack and alliance logic (unfinished)
+//      if (creakingEntity.isLookingAtMe(player, creakingEntity)) {
+//        if (currentActiveState) {
+//          return false
+//        }
+//
+//        if (player.distanceToSqr(creakingEntity) < 144.0) {
+////          creakingEntity.activate(player)
+//          return false
+//        }
+//      }
+//    }
+//    return true
+//  }
 }
