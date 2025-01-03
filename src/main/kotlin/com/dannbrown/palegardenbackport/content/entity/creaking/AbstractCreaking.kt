@@ -27,7 +27,6 @@ open class AbstractCreaking protected constructor(type: EntityType<out AbstractC
     this.setPathfindingMalus(BlockPathTypes.UNPASSABLE_RAIL, 0.0f)
   }
 
-
   override fun aiStep() {
     super.aiStep()
     if (this.soundCooldown > 0) {
@@ -46,7 +45,6 @@ open class AbstractCreaking protected constructor(type: EntityType<out AbstractC
   override fun removeWhenFarAway(dist: Double): Boolean {
     return false
   }
-
 
   override fun onClimbable(): Boolean {
     return false
@@ -100,7 +98,7 @@ open class AbstractCreaking protected constructor(type: EntityType<out AbstractC
   }
 
   override fun isPushable(): Boolean {
-    return false
+    return true
   }
 
   companion object {

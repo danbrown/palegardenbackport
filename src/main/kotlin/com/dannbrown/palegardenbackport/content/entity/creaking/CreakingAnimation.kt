@@ -81,7 +81,8 @@ object CreakingAnimation {
         Keyframe(0.4583f, KeyframeAnimations.posVec(0.0f, -0.3f, 1.06f), AnimationChannel.Interpolations.LINEAR),
         Keyframe(1.125f, KeyframeAnimations.posVec(0.0f, 0.9674f, -3.6578f), AnimationChannel.Interpolations.LINEAR))))
     .build()
-  val CREAKING_ATTACK: AnimationDefinition = AnimationDefinition.Builder.withLength(0.6083f)
+  val CREAKING_ATTACK: AnimationDefinition = AnimationDefinition.Builder.withLength(0.7083f)
+    .looping()
     .addAnimation("upper_body",
       AnimationChannel(AnimationChannel.Targets.ROTATION,
         *arrayOf(Keyframe(0.0f, KeyframeAnimations.degreeVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
@@ -124,28 +125,22 @@ object CreakingAnimation {
       AnimationChannel.Targets.SCALE,
       *arrayOf(Keyframe(0.1667f, KeyframeAnimations.scaleVec(1.0, 1.0, 1.0), AnimationChannel.Interpolations.LINEAR),
         Keyframe(0.4167f, KeyframeAnimations.scaleVec(1.0, 1.0, 1.0), AnimationChannel.Interpolations.LINEAR),
-        Keyframe(0.5f, KeyframeAnimations.scaleVec(1.0, 1.2999999523162842, 1.0), AnimationChannel.Interpolations.LINEAR),
+        Keyframe(0.5f, KeyframeAnimations.scaleVec(1.0, 1.3, 1.0), AnimationChannel.Interpolations.LINEAR),
         Keyframe(0.625f, KeyframeAnimations.scaleVec(1.0, 1.0, 1.0), AnimationChannel.Interpolations.LINEAR))))
     .addAnimation("right_arm", AnimationChannel(
       AnimationChannel.Targets.ROTATION,
-      *arrayOf(
-        Keyframe(0.0f, KeyframeAnimations.degreeVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
+      *arrayOf(Keyframe(0.0f, KeyframeAnimations.degreeVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
         Keyframe(0.1667f, KeyframeAnimations.degreeVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
-        Keyframe(0.25f, KeyframeAnimations.degreeVec(-7.5f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
-        Keyframe(0.4583f, KeyframeAnimations.degreeVec(-55.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
+        Keyframe(0.25f, KeyframeAnimations.degreeVec(7.5f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
+        Keyframe(0.4583f, KeyframeAnimations.degreeVec(55.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
         Keyframe(0.625f, KeyframeAnimations.degreeVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
-        Keyframe(0.7083f, KeyframeAnimations.degreeVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR)
-      )
-    ))
+        Keyframe(0.7083f, KeyframeAnimations.degreeVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR))))
     .addAnimation("right_arm", AnimationChannel(
       AnimationChannel.Targets.POSITION,
-      *arrayOf(
-        Keyframe(0.0f, KeyframeAnimations.posVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
+      *arrayOf(Keyframe(0.0f, KeyframeAnimations.posVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
         Keyframe(0.1667f, KeyframeAnimations.posVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
-        Keyframe(0.625f, KeyframeAnimations.posVec(0.0f, 0.0f, 2.0f), AnimationChannel.Interpolations.LINEAR),
-        Keyframe(0.7083f, KeyframeAnimations.posVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR)
-      )
-    ))
+        Keyframe(0.625f, KeyframeAnimations.posVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
+        Keyframe(0.7083f, KeyframeAnimations.posVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR))))
     .addAnimation("left_leg", AnimationChannel(
       AnimationChannel.Targets.ROTATION,
       *arrayOf(Keyframe(0.0f, KeyframeAnimations.degreeVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
@@ -174,8 +169,8 @@ object CreakingAnimation {
       AnimationChannel.Targets.ROTATION,
       *arrayOf(Keyframe(0.0f, KeyframeAnimations.degreeVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
         Keyframe(0.1667f, KeyframeAnimations.degreeVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
-        Keyframe(0.25f, KeyframeAnimations.degreeVec(-10.3453f, 14.7669f, 2.664f), AnimationChannel.Interpolations.LINEAR),
-        Keyframe(0.4583f, KeyframeAnimations.degreeVec(-57.5f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
+        Keyframe(0.25f, KeyframeAnimations.degreeVec(10.3453f, 14.7669f, 2.664f), AnimationChannel.Interpolations.LINEAR),
+        Keyframe(0.4583f, KeyframeAnimations.degreeVec(57.5f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
         Keyframe(0.625f, KeyframeAnimations.degreeVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR),
         Keyframe(0.7083f, KeyframeAnimations.degreeVec(0.0f, 0.0f, 0.0f), AnimationChannel.Interpolations.LINEAR))))
     .addAnimation("left_arm", AnimationChannel(
@@ -231,8 +226,8 @@ object CreakingAnimation {
     .addAnimation("upper_body", AnimationChannel(
       AnimationChannel.Targets.SCALE,
       *arrayOf(Keyframe(0.0f, KeyframeAnimations.scaleVec(1.0, 1.0, 1.0), AnimationChannel.Interpolations.LINEAR),
-        Keyframe(0.0833f, KeyframeAnimations.scaleVec(1.0, 1.100000023841858, 1.0), AnimationChannel.Interpolations.LINEAR),
-        Keyframe(0.1667f, KeyframeAnimations.scaleVec(1.0, 0.8999999761581421, 1.0), AnimationChannel.Interpolations.LINEAR),
+        Keyframe(0.0833f, KeyframeAnimations.scaleVec(1.0, 1.1, 1.0), AnimationChannel.Interpolations.LINEAR),
+        Keyframe(0.1667f, KeyframeAnimations.scaleVec(1.0, 0.9, 1.0), AnimationChannel.Interpolations.LINEAR),
         Keyframe(0.2917f, KeyframeAnimations.scaleVec(1.0, 1.0, 1.0), AnimationChannel.Interpolations.LINEAR))))
     .addAnimation("right_arm", AnimationChannel(
       AnimationChannel.Targets.ROTATION,
