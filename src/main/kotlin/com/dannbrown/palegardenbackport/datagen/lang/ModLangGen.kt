@@ -59,5 +59,11 @@ object ModLangGen {
     ModContent.REGISTRATE.addSoundLang("creaking_heart_place", "Creaking Heart Place")
     ModContent.REGISTRATE.addSoundLang("creaking_heart_step", "Creaking Heart Step")
     ModContent.REGISTRATE.addSoundLang("creaking_heart_idle", "Creaking Heart Idle")
+
+    ModContent.REGISTRATE.addSoundLang("eyeblossom_idle", "Eyeblossom Idle")
+    ModContent.REGISTRATE.addSoundLang("eyeblossom_open", "Eyeblossom Open")
+    ModContent.REGISTRATE.addSoundLang("eyeblossom_close", "Eyeblossom Close")
+    ModContent.REGISTRATE.addSoundLang("eyeblossom_open_long", "Eyeblossom Open Long")
+    ModContent.REGISTRATE.addSoundLang("eyeblossom_close_long", "Eyeblossom Close Long")
   }
 }

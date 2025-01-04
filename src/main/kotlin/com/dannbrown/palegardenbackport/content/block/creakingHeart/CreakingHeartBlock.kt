@@ -172,9 +172,9 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
           currentPos.y,
           currentPos.z,
           1,
-          0.0 + level.random.nextDouble() * 0.4,
-          0.0 + level.random.nextDouble() * 0.4,
-          0.0 + level.random.nextDouble() * 0.4,
+          level.random.nextDouble() * 0.4,
+          level.random.nextDouble() * 0.4,
+          level.random.nextDouble() * 0.4,
           0.008
         )
       }

@@ -211,5 +211,42 @@
       "palegardenbackport:creaking_heart_idle3",
       "palegardenbackport:creaking_heart_idle4"
     ]
+  },
+  "eyeblossom_close": {
+    "subtitle": "sounds.palegardenbackport.eyeblossom_close",
+    "sounds": [
+      "palegardenbackport:eyeblossom_close1",
+      "palegardenbackport:eyeblossom_close2",
+      "palegardenbackport:eyeblossom_close3"
+    ]
+  },
+  "eyeblossom_open": {
+    "subtitle": "sounds.palegardenbackport.eyeblossom_open",
+    "sounds": [
+      "palegardenbackport:eyeblossom_open1",
+      "palegardenbackport:eyeblossom_open2",
+      "palegardenbackport:eyeblossom_open3",
+      "palegardenbackport:eyeblossom_open4"
+    ]
+  },
+  "eyeblossom_open_long": {
+    "subtitle": "sounds.palegardenbackport.eyeblossom_open_long",
+    "sounds": ["palegardenbackport:eyeblossom_open_long"]
+  },
+  "eyeblossom_close_long": {
+    "subtitle": "sounds.palegardenbackport.eyeblossom_close_long",
+    "sounds": ["palegardenbackport:eyeblossom_close_long"]
+  },
+  "eyeblossom_idle": {
+    "subtitle": "sounds.palegardenbackport.eyeblossom_idle",
+    "sounds": [
+      "palegardenbackport:eyeblossom_idle1",
+      "palegardenbackport:eyeblossom_idle2",
+      "palegardenbackport:eyeblossom_idle3",
+      "palegardenbackport:eyeblossom_idle4",
+      "palegardenbackport:eyeblossom_idle5",
+      "palegardenbackport:eyeblossom_idle6"
+    ]
   }
 }
+

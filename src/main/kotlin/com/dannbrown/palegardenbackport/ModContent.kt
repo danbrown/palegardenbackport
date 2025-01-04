@@ -20,7 +20,7 @@ import com.dannbrown.deltaboxlib.registry.transformers.BlockLootPresets
 import com.dannbrown.deltaboxlib.registry.transformers.BlockstatePresets
 import com.dannbrown.deltaboxlib.registry.transformers.ItemModelPresets
 import com.dannbrown.deltaboxlib.registry.transformers.RecipePresets
-import com.dannbrown.palegardenbackport.content.block.EyeBlossomBlock
+import com.dannbrown.palegardenbackport.content.block.eyeBlossom.EyeBlossomBlock
 import com.dannbrown.palegardenbackport.content.block.PaleMossBlock
 import com.dannbrown.palegardenbackport.content.block.PaleMossCarpetBlock
 import com.dannbrown.palegardenbackport.content.block.PaleOakLeavesBlock
@@ -29,6 +29,7 @@ import com.dannbrown.palegardenbackport.content.block.PaleVinePlantBlock
 import com.dannbrown.palegardenbackport.content.block.ResinClumpBlock
 import com.dannbrown.palegardenbackport.content.block.creakingHeart.CreakingHeartBlock
 import com.dannbrown.palegardenbackport.content.block.creakingHeart.CreakingHeartBlockEntity
+import com.dannbrown.palegardenbackport.content.block.eyeBlossom.EyeBlossomBlockEntity
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingEntity
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingModel
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingRenderer
@@ -64,7 +65,6 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
-import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.item.BlockItem
@@ -76,13 +76,11 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.DoublePlantBlock
 import net.minecraft.world.level.block.FlowerPotBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
 import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument
 import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType
@@ -271,7 +269,7 @@ class ModContent {
       .register()
 
     val EYE_BLOSSOM: BlockEntry<EyeBlossomBlock> = BLOCKS.create<EyeBlossomBlock>("open_eyeblossom")
-      .blockFactory { p -> EyeBlossomBlock({ CLOSED_EYE_BLOSSOM.get() }, EyeBlossomBlock.EyeBlossomState.OPEN, { MobEffects.BLINDNESS }, 7, p) }
+      .blockFactory { p -> EyeBlossomBlock(true, p) }
       .copyFrom {Blocks.POPPY}
       .color(MapColor.PLANT)
       .properties { p -> p.noCollission().instabreak().sound(SoundType.GRASS).offsetType(OffsetType.XZ).pushReaction(PushReaction.DESTROY).randomTicks() }
@@ -286,7 +284,7 @@ class ModContent {
       }
       .register()
     val CLOSED_EYE_BLOSSOM: BlockEntry<EyeBlossomBlock> = BLOCKS.create<EyeBlossomBlock>("closed_eyeblossom")
-      .blockFactory { p -> EyeBlossomBlock({ EYE_BLOSSOM.get() }, EyeBlossomBlock.EyeBlossomState.CLOSED, { MobEffects.CONFUSION }, 7, p) }
+      .blockFactory { p -> EyeBlossomBlock(false, p) }
       .copyFrom {Blocks.POPPY}
       .color(MapColor.PLANT)
       .properties { p -> p.noCollission().instabreak().sound(SoundType.GRASS).offsetType(OffsetType.XZ).pushReaction(PushReaction.DESTROY).randomTicks() }
@@ -305,10 +303,21 @@ class ModContent {
       .copyFrom { Blocks.POTTED_POPPY }
       .color(MapColor.PLANT)
       .noItem()
-      .properties { p -> p.noOcclusion() }
+      .properties { p -> p.instabreak().noOcclusion().pushReaction(PushReaction.DESTROY) }
       .transform { t ->
         t
-          .blockstate(BlockstatePresets.pottedPlantBlock("open_eyeblossom"))
+          .blockstate { c, p ->
+            p.getVariantBuilder(c.get())
+              .partialState()
+              .setModels(*ConfiguredModel.builder()
+                .modelFile(p.models()
+                  .withExistingParent(c.name, p.mcLoc("block/flower_pot_cross_emissive"))
+                  .texture("plant", p.modLoc("block/open_eyeblossom"))
+                  .texture("particle", p.modLoc("block/open_eyeblossom"))
+                  .texture("cross_emissive", p.modLoc("block/open_eyeblossom_emissive"))
+                  .renderType("cutout_mipped"))
+                .build())
+          }
           .loot(BlockLootPresets.pottedPlantLoot { EYE_BLOSSOM.get() })
       }
       .register()
@@ -317,7 +326,7 @@ class ModContent {
       .copyFrom { Blocks.POTTED_POPPY }
       .color(MapColor.PLANT)
       .noItem()
-      .properties { p -> p.noOcclusion() }
+      .properties { p -> p.instabreak().noOcclusion().pushReaction(PushReaction.DESTROY) }
       .transform { t ->
         t
           .blockstate(BlockstatePresets.pottedPlantBlock("closed_eyeblossom"))
@@ -393,6 +402,10 @@ class ModContent {
     val CREAKING_HEART_BLOCK_ENTITY: BlockEntityEntry<CreakingHeartBlockEntity> = REGISTRATE
       .blockEntity("creaking_heart", BlockEntityFactory(::CreakingHeartBlockEntity))
       .validBlocks({ CREAKING_HEART.get() })
+      .register()
+    val EYEBLOSSOM_BLOCK_ENTITY: BlockEntityEntry<EyeBlossomBlockEntity> = REGISTRATE
+      .blockEntity("eyeblossom", BlockEntityFactory(::EyeBlossomBlockEntity))
+      .validBlocks({ EYE_BLOSSOM.get() }, { CLOSED_EYE_BLOSSOM.get() })
       .register()
 
     // ----- End BlockEntities -----

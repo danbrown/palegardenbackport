@@ -6,7 +6,6 @@ import com.dannbrown.palegardenbackport.init.ModCommonConfig
 import com.dannbrown.palegardenbackport.init.ModEntityTypes
 import com.dannbrown.palegardenbackport.init.ModSounds
 import com.mojang.datafixers.util.Either
-import net.minecraft.Util
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.nbt.CompoundTag
@@ -24,19 +23,14 @@ import net.minecraft.world.level.GameRules
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.MultifaceBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.gameevent.GameEvent
-import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.Vec3
-import org.apache.commons.lang3.mutable.Mutable
-import org.apache.commons.lang3.mutable.MutableObject
 import java.util.*
-import java.util.function.Consumer
 import kotlin.math.floor
 import kotlin.math.sqrt
 

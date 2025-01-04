@@ -53,6 +53,12 @@ object ModSounds {
 
   val CREAKING_HEART_SOUNDS = ForgeSoundType(1f, 1f, CREAKING_HEART_BREAK, CREAKING_HEART_STEP, CREAKING_HEART_PLACE, CREAKING_HEART_HIT, CREAKING_HEART_FALL)
 
+  // Eyeblossom
+  val EYEBLOSSOM_IDLE = registerSoundEvents("eyeblossom_idle")
+  val EYEBLOSSOM_OPEN = registerSoundEvents("eyeblossom_open")
+  val EYEBLOSSOM_CLOSE = registerSoundEvents("eyeblossom_close")
+  val EYEBLOSSOM_OPEN_LONG = registerSoundEvents("eyeblossom_open_long")
+  val EYEBLOSSOM_CLOSE_LONG = registerSoundEvents("eyeblossom_close_long")
 
   fun register(bus: IEventBus){
     SOUND_EVENTS.register(bus)
