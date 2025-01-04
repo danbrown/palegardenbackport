@@ -3,7 +3,6 @@ package com.dannbrown.palegardenbackport.content.block.eyeBlossom
 import com.dannbrown.palegardenbackport.ModContent
 import com.dannbrown.palegardenbackport.init.ModModelLayers
 import com.mojang.blaze3d.vertex.PoseStack
-import com.mojang.blaze3d.vertex.VertexConsumer
 import net.minecraft.client.model.geom.ModelPart
 import net.minecraft.client.model.geom.PartPose
 import net.minecraft.client.model.geom.builders.CubeDeformation
@@ -40,7 +39,7 @@ class EyeBlossomRenderer(pContext: BlockEntityRendererProvider.Context) : BlockE
     pPackedOverlay: Int
   ) {
     val vertexConsumer = TEXTURE.buffer(pBuffer) { pLocation ->
-      RenderType.entityTranslucentEmissive(pLocation)
+      RenderType.eyes(pLocation)
     }
     val blockPos = pBlockEntity.blockPos
     val blockState = pBlockEntity.blockState
@@ -86,8 +85,8 @@ class EyeBlossomRenderer(pContext: BlockEntityRendererProvider.Context) : BlockE
         "plane_ns",
         CubeListBuilder.create()
           .texOffs(0, 0)
-          .addBox(-8f, 0.0f, -0f, 16f, 16.0f, 0.0f, CubeDeformation.NONE), // Flat plane
-        PartPose.offsetAndRotation(0.0f, 0.0f, 0.0f, 0.0f, Math.toRadians(45.0).toFloat(), 0.0f)
+          .addBox(-2f, 0.0f, -0f, 4f, 1.0f, 0.0f, CubeDeformation.NONE), // Flat plane
+        PartPose.offsetAndRotation(0.0f, 10.0f, 0.0f, 0.0f, Math.toRadians(45.0).toFloat(), 0.0f)
       )
 
       // Second emissive plane (east-west)
@@ -95,11 +94,11 @@ class EyeBlossomRenderer(pContext: BlockEntityRendererProvider.Context) : BlockE
         "plane_ew",
         CubeListBuilder.create()
           .texOffs(0, 0)
-          .addBox(-0f, 0.0f, -8f, 0.0f, 16.0f, 16f, CubeDeformation.NONE), // Flat plane
-        PartPose.offsetAndRotation(0.0f, 0.0f, 0.0f, 0.0f, Math.toRadians(45.0).toFloat(), 0.0f)
+          .addBox(-0f, 0.0f, -2f, 0.0f, 1.0f, 4f, CubeDeformation.NONE), // Flat plane
+        PartPose.offsetAndRotation(0.0f, 10.0f, 0.0f, 0.0f, Math.toRadians(45.0).toFloat(), 0.0f)
       )
 
-      return LayerDefinition.create(meshDefinition, 32, 32)
+      return LayerDefinition.create(meshDefinition, 16, 16)
     }
   }
 }

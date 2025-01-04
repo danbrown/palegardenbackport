@@ -10,10 +10,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Evoker.class)
-public class EvokerMixin extends MobMixin {
+public class EvokerMixin {
   @Inject(method = "registerGoals", at = @At("HEAD"))
   private void registerGoals(CallbackInfo ci) {
     PathfinderMob self = (PathfinderMob)(Object) this;
-    this.goalSelector.addGoal(1, new AvoidEntityGoal<>(self, CreakingEntity.class, 8.0F, (double)1.0F, 1.2));
+    self.goalSelector.addGoal(1, new AvoidEntityGoal<>(self, CreakingEntity.class, 8.0F, (double)1.0F, 1.2));
   }
 }

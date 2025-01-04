@@ -4,6 +4,7 @@ import com.dannbrown.deltaboxlib.content.entity.boat.BaseBoatEntity
 import com.dannbrown.deltaboxlib.content.entity.boat.BaseBoatRenderer
 import com.dannbrown.deltaboxlib.content.entity.boat.BaseChestBoatEntity
 import com.dannbrown.deltaboxlib.content.item.BoatItem
+import com.dannbrown.deltaboxlib.init.DeltaboxTags
 import com.dannbrown.deltaboxlib.lib.LibTags
 import com.dannbrown.deltaboxlib.registry.DeltaboxRegistrate
 import com.dannbrown.deltaboxlib.registry.datagen.DeltaboxBoatVariants
@@ -71,6 +72,7 @@ import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.CreativeModeTabs
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
@@ -132,7 +134,7 @@ class ModContent {
     val MOD_TAB: RegistryObject<CreativeModeTab> =
       CreativeTabGen(TABS, MOD_ID).createTab(
         CREATIVE_TAB_KEY,
-        { ItemStack(WOOD_FAMILY.blocks[BlockFamily.Type.SAPLING]!!.get()) },
+        { ItemStack(MOD_ICON.get()) },
         CreativeModeTabs.SPAWN_EGGS,
         { parameters, output ->
           CreativeTabGen.displayAll(REGISTRATE, parameters, output)
@@ -374,11 +376,13 @@ class ModContent {
       .register()
 
 
+
     // ----- End Blocks -----
 
     // ----- Items -----
     val ITEMS = ItemGen(REGISTRATE)
 
+    val MOD_ICON = ITEMS.simpleItem("mod_icon", {p -> Item(p)}, DeltaboxTags.ITEM.EXCLUDE_FROM_CREATIVE)
     val BOAT = ITEMS.simpleItem("${WOOD_NAME}_boat", { p -> BoatItem(WOOD_NAME, { MOD_BOAT.get() }, false, p.stacksTo(1)) })
     val CHEST_BOAT = ITEMS.simpleItem("${WOOD_NAME}_chest_boat", { p -> BoatItem(WOOD_NAME, { MOD_CHEST_BOAT.get() }, true, p.stacksTo(1)) })
     val RESIN_BRICK = ITEMS.simpleItem("resin_brick")

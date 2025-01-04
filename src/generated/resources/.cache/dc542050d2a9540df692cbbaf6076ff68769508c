@@ -1,4 +1,4 @@
-// 1.20.1	2025-01-03T23:21:37.081249	Registrate Provider for palegardenbackport [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2025-01-03T23:47:34.008256	Registrate Provider for palegardenbackport [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 8b7708dfb9ee94d1ca4f49e8f8584aea90019105 assets/palegardenbackport/blockstates/block_of_resin.json
 9d4f89db1275a975fb115c81c924186458a686f7 assets/palegardenbackport/blockstates/chiseled_resin_bricks.json
 b9dd2f1086e0cf04f6a3eb95b026bece10b57000 assets/palegardenbackport/blockstates/closed_eyeblossom.json
@@ -35,8 +35,8 @@ d4823457c593443646be545c04fa6cdda08f92d7 assets/palegardenbackport/blockstates/r
 d500b8b080f8cc5a1de9d66021b4d45f9474ef1e assets/palegardenbackport/blockstates/resin_clump.json
 56d7abd0cc1438eb8721681566c931d8f7746a55 assets/palegardenbackport/blockstates/stripped_pale_oak_log.json
 728ee1987e96d5727667279824173c7e801a4d82 assets/palegardenbackport/blockstates/stripped_pale_oak_wood.json
-42c3d9d7af368f486e37bce86f3c899d2c05f2fd assets/palegardenbackport/lang/en_ud.json
-1fce257bfe37b15dd51bf2b972c58d0c59e7b0ee assets/palegardenbackport/lang/en_us.json
+34dc5187d04ee386860ef7c51afb84ce05288432 assets/palegardenbackport/lang/en_ud.json
+306684d78b6d2a90310af1fba2b3c24f33e3b013 assets/palegardenbackport/lang/en_us.json
 6195d0185167005138deeafd87060e5b88aaf77f assets/palegardenbackport/models/block/block_of_resin.json
 eb72c1339bbf9150798dad979d12410d3c5f39ca assets/palegardenbackport/models/block/chiseled_resin_bricks.json
 8ca050b70f4f4c61eac77d37af7191f02bd5e149 assets/palegardenbackport/models/block/closed_eyeblossom.json
@@ -110,6 +110,7 @@ aab20a0e3a5560da83e6eade2f05d403aea410af assets/palegardenbackport/models/block/
 560d91a66fff90ed64464db8d85d24fbd48aff2c assets/palegardenbackport/models/item/closed_eyeblossom.json
 f44f3c775961f8688ea1a34538ca8f61cf1c0aaa assets/palegardenbackport/models/item/creaking_heart.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/palegardenbackport/models/item/creaking_spawn_egg.json
+f24c65fba77c656a85c9375f107a1d51d08e1150 assets/palegardenbackport/models/item/mod_icon.json
 d33d22f8e34f416027489ffc8a0f8b9f4bfb3f71 assets/palegardenbackport/models/item/open_eyeblossom.json
 0c77d270276b634d08d20ab5b1ef99db96551d48 assets/palegardenbackport/models/item/pale_hanging_moss.json
 1cff8b68b39e16b3076425dd2162790092f5190c assets/palegardenbackport/models/item/pale_moss_block.json
@@ -139,6 +140,7 @@ fd6b0439517eba8222c5cad44fba260687b35368 assets/palegardenbackport/models/item/r
 97b844f7e2a895540d0154c0c5d450b37947af76 assets/palegardenbackport/models/item/resin_clump.json
 e08361466426ae3a1dd0de4f066c5bd2a55cb400 assets/palegardenbackport/models/item/stripped_pale_oak_log.json
 b5df7aef26f42da07a11a993155079cba69da483 assets/palegardenbackport/models/item/stripped_pale_oak_wood.json
+1b5ba71c7a303d6a34ee9b91a6c2085695bc83b6 data/deltaboxlib/tags/items/exclude_from_creative.json
 8dea5a06e3c7a2bc8624e1ef0786101579d2d0db data/forge/tags/blocks/leaves.json
 f0cb6ff4c706799dacb8b32ba514a23805080a9d data/forge/tags/blocks/storage_blocks.json
 f0cb6ff4c706799dacb8b32ba514a23805080a9d data/forge/tags/blocks/storage_blocks/block_of_resin.json
