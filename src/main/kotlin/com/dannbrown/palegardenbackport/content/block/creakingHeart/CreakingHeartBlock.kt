@@ -16,6 +16,7 @@ import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.LightLayer
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.RenderShape
@@ -125,7 +126,7 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
   }
 
   override fun animateTick(state: BlockState, level: Level, blockPos: BlockPos, randomSource: RandomSource) {
-    if (isNaturalNight(level)) {
+    if (isNaturalNight(level, blockPos)) {
       if (state.getValue(ACTIVE) as Boolean) {
         if (randomSource.nextInt(16) == 0 && isSurroundedByLogs(level, blockPos)) {
           level.playLocalSound(blockPos.x.toDouble(), blockPos.y.toDouble(), blockPos.z.toDouble(), ModSounds.CREAKING_HEART_IDLE.get(), SoundSource.BLOCKS, 1.0f, 1.0f, false)
@@ -180,8 +181,8 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
       }
     }
 
-    fun isNaturalNight(level: Level): Boolean {
-      return level.dimensionType().natural() && level.isNight
+    fun isNaturalNight(level: Level, pPos: BlockPos): Boolean {
+      return (level.dimensionType().natural() || level.getBrightness(LightLayer.SKY, pPos) > 5) && (level.isNight || level.isThundering)
     }
 
     fun isPaleOakLog(blockState: BlockState): Boolean {

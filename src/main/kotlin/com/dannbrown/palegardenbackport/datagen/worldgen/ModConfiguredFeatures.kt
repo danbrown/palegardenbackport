@@ -8,12 +8,11 @@ import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakHeartTrunkPla
 import com.dannbrown.palegardenbackport.content.placerTypes.PaleOakTrunkPlacer
 import com.dannbrown.palegardenbackport.content.treeDecorator.PaleOakGroundDecorator
 import com.dannbrown.palegardenbackport.content.treeDecorator.PaleOakVineDecorator
-import com.dannbrown.palegardenbackport.content.treeDecorator.ResinTreeDecorator
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstapContext
 import net.minecraft.data.worldgen.features.FeatureUtils
+import net.minecraft.data.worldgen.features.VegetationFeatures
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.BlockTags
@@ -103,9 +102,7 @@ object ModConfiguredFeatures: AbstractConfiguredFeaturesGen() {
         .build()
     )
 
-    register<SimpleRandomFeatureConfiguration, Feature<SimpleRandomFeatureConfiguration>>(context, PALE_GARDEN_PATCH, Feature.SIMPLE_RANDOM_SELECTOR, SimpleRandomFeatureConfiguration(HolderSet.direct(
-      PlacementUtils.inlinePlaced<RandomPatchConfiguration, Feature<RandomPatchConfiguration>>(Feature.NO_BONEMEAL_FLOWER, FeatureUtils.simplePatchConfiguration<SimpleBlockConfiguration, Feature<SimpleBlockConfiguration>>(Feature.SIMPLE_BLOCK, SimpleBlockConfiguration(BlockStateProvider.simple(ModContent.CLOSED_EYE_BLOSSOM.get()))))))
-    )
+    register(context, PALE_GARDEN_PATCH, Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration<SimpleBlockConfiguration, Feature<SimpleBlockConfiguration>>(Feature.SIMPLE_BLOCK, SimpleBlockConfiguration(BlockStateProvider.simple(ModContent.CLOSED_EYE_BLOSSOM.get()))))
 
     register(context, PALE_GARDEN_VEGETATION, Feature.RANDOM_SELECTOR, RandomFeatureConfiguration(
       listOf(

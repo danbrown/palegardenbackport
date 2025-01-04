@@ -24,7 +24,7 @@ class ModBiomeTags(
     tag(BiomeTags.IS_OVERWORLD)
       .add(PaleGardenBiome.BIOME_KEY)
 
-    tag(LibTags.modBiomeTag(ModContent.MOD_ID, "has_pale_oak"))
-      .add(Biomes.DARK_FOREST)
+    tag(ModContent.HAS_PALE_OAK)
+      .add(PaleGardenBiome.BIOME_KEY)
   }
 }

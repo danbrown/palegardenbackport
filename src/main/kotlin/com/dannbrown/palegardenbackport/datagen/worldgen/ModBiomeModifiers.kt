@@ -14,9 +14,13 @@ import net.minecraftforge.common.world.BiomeModifier
 object ModBiomeModifiers: AbstractBiomeModifiersGen() {
   override val modId: String = ModContent.MOD_ID
 
+  val ADD_PALE_OAK_TREE = registerKey("add_pale_oak_tree")
+
   override fun bootstrap(context: BootstapContext<BiomeModifier>) {
     val biomeLookup: HolderGetter<Biome> = context.lookup(Registries.BIOME)
     val featureLookup: HolderGetter<PlacedFeature> = context.lookup(Registries.PLACED_FEATURE)
 
+    val paleTreePlaced: Holder<PlacedFeature> = featureLookup.getOrThrow(ModPlacedFeatures.PALE_OAK_HEART_PLACED)
+    context.register(ADD_PALE_OAK_TREE, addVegetation(biomeLookup.getOrThrow(ModContent.HAS_PALE_OAK), paleTreePlaced))
   }
 }

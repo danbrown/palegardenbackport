@@ -144,6 +144,7 @@ class ModContent {
     // ----- End Creative Tabs -----
 
     // ----- Tags -----
+    val HAS_PALE_OAK = LibTags.modBiomeTag(MOD_ID, "has_pale_oak")
 
     // ----- End Tags -----
 

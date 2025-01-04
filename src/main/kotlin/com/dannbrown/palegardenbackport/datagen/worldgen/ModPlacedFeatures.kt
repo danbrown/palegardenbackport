@@ -3,6 +3,7 @@ package com.dannbrown.palegardenbackport.datagen.worldgen
 import com.dannbrown.deltaboxlib.registry.generators.BlockFamily
 import com.dannbrown.deltaboxlib.registry.worldgen.AbstractPlacedFeaturesGen
 import com.dannbrown.palegardenbackport.ModContent
+import com.dannbrown.palegardenbackport.datagen.worldgen.biome.PaleGardenBiome
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstapContext
@@ -67,6 +68,6 @@ object ModPlacedFeatures : AbstractPlacedFeaturesGen() {
 
     register(context, PALE_GARDEN_VEGETATION, configuredFeatures.getOrThrow(ModConfiguredFeatures.PALE_GARDEN_VEGETATION), listOf(CountPlacement.of(14), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_OCEAN_FLOOR, BiomeFilter.biome()))
 
-    register(context, PALE_GARDEN_FLOWERS, configuredFeatures.getOrThrow(ModConfiguredFeatures.PALE_GARDEN_PATCH), listOf(RarityFilter.onAverageOnceEvery(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, CountPlacement.of(ClampedInt.of(UniformInt.of(-1, 3), 0, 3)), BiomeFilter.biome()))
+    register(context, PALE_GARDEN_FLOWERS, configuredFeatures.getOrThrow(ModConfiguredFeatures.PALE_GARDEN_PATCH), listOf(RarityFilter.onAverageOnceEvery(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()))
   }
 }

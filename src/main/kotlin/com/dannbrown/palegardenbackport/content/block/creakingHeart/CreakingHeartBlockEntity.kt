@@ -290,7 +290,7 @@ class CreakingHeartBlockEntity(type: BlockEntityType<CreakingHeartBlockEntity>, 
               level.setBlock(blockPos, blockState.setValue(CreakingHeartBlock.ACTIVE, false), 3)
             }
             else if (blockState.getValue(CreakingHeartBlock.ACTIVE) as Boolean) {
-              if (CreakingHeartBlock.isNaturalNight(level)) {
+              if (CreakingHeartBlock.isNaturalNight(level, blockPos)) {
                 if (level.getDifficulty() != Difficulty.PEACEFUL) {
                   if (level.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING)) {
                     val player = level.getNearestPlayer(blockPos.x.toDouble(), blockPos.y.toDouble(), blockPos.z.toDouble(), 32.0, false)
@@ -310,7 +310,7 @@ class CreakingHeartBlockEntity(type: BlockEntityType<CreakingHeartBlockEntity>, 
           else {
             val entityOptional: Optional<CreakingEntity> = blockEntity.getCreakingProtector()
             if (entityOptional.isPresent) {
-              if ((!CreakingHeartBlock.isNaturalNight(level) && !blockEntity.getCreakingProtector().get().hasCustomName()) || blockEntity.distanceToCreaking() > (ModCommonConfig.CREAKING_DISTANCE_TO_HEART?.get() ?: 32.0) || entityOptional.get().playerIsStuckInYou()) {
+              if ((!CreakingHeartBlock.isNaturalNight(level, blockPos) && !blockEntity.getCreakingProtector().get().hasCustomName()) || blockEntity.distanceToCreaking() > (ModCommonConfig.CREAKING_DISTANCE_TO_HEART?.get() ?: 32.0) || entityOptional.get().playerIsStuckInYou()) {
                 blockEntity.removeProtector(null)
                 return
               }
