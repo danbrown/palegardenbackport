@@ -1,8 +1,7 @@
 {
-  "parent": "minecraft:block/flower_pot_cross_emissive",
+  "parent": "minecraft:block/flower_pot_cross",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "cross_emissive": "palegardenbackport:block/open_eyeblossom_emissive",
     "particle": "palegardenbackport:block/open_eyeblossom",
     "plant": "palegardenbackport:block/open_eyeblossom"
   }

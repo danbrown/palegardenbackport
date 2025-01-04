@@ -30,6 +30,7 @@ import com.dannbrown.palegardenbackport.content.block.ResinClumpBlock
 import com.dannbrown.palegardenbackport.content.block.creakingHeart.CreakingHeartBlock
 import com.dannbrown.palegardenbackport.content.block.creakingHeart.CreakingHeartBlockEntity
 import com.dannbrown.palegardenbackport.content.block.eyeBlossom.EyeBlossomBlockEntity
+import com.dannbrown.palegardenbackport.content.block.eyeBlossom.EyeBlossomRenderer
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingEntity
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingModel
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingRenderer
@@ -273,13 +274,13 @@ class ModContent {
       .copyFrom {Blocks.POPPY}
       .color(MapColor.PLANT)
       .properties { p -> p.noCollission().instabreak().sound(SoundType.GRASS).offsetType(OffsetType.XZ).pushReaction(PushReaction.DESTROY).randomTicks() }
-      .blockstate(BlockstatePresets.emissiveCrossBlock("open_eyeblossom"))
+      .blockstate(BlockstatePresets.simpleCrossBlock("open_eyeblossom"))
       .blockTags(listOf(BlockTags.FLOWERS))
       .itemTags(listOf(ItemTags.FLOWERS))
       .transform { t ->
         t
           .item()
-          .model(ItemModelPresets.simpleLayerItem("open_eyeblossom"))
+          .model(ItemModelPresets.simpleLayerItem("open_eyeblossom_item"))
           .build()
       }
       .register()
@@ -306,18 +307,7 @@ class ModContent {
       .properties { p -> p.instabreak().noOcclusion().pushReaction(PushReaction.DESTROY) }
       .transform { t ->
         t
-          .blockstate { c, p ->
-            p.getVariantBuilder(c.get())
-              .partialState()
-              .setModels(*ConfiguredModel.builder()
-                .modelFile(p.models()
-                  .withExistingParent(c.name, p.mcLoc("block/flower_pot_cross_emissive"))
-                  .texture("plant", p.modLoc("block/open_eyeblossom"))
-                  .texture("particle", p.modLoc("block/open_eyeblossom"))
-                  .texture("cross_emissive", p.modLoc("block/open_eyeblossom_emissive"))
-                  .renderType("cutout_mipped"))
-                .build())
-          }
+          .blockstate(BlockstatePresets.pottedPlantBlock("open_eyeblossom"))
           .loot(BlockLootPresets.pottedPlantLoot { EYE_BLOSSOM.get() })
       }
       .register()
@@ -482,13 +472,12 @@ class ModContent {
 
     fun registerClient(modBus: IEventBus, forgeEventBus: IEventBus) {
       modBus.addListener(::clientSetup)
-
       modBus.addListener { event: EntityRenderersEvent.RegisterLayerDefinitions ->
-        event.registerLayerDefinition(ModModelLayers.BOAT_LAYER, BoatModel::createBodyModel)
-        event.registerLayerDefinition(ModModelLayers.CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel)
-        event.registerLayerDefinition(ModModelLayers.CREAKING) { CreakingModel.create() }
+        ModModelLayers.register(event)
       }
-
+      modBus.addListener { event: EntityRenderersEvent.RegisterRenderers ->
+        event.registerBlockEntityRenderer(EYEBLOSSOM_BLOCK_ENTITY.get(), ::EyeBlossomRenderer)
+      }
       modBus.addListener(ModParticles::registerParticleFactories)
     }
 

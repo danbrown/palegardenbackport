@@ -19,6 +19,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.FlowerBlock
+import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.gameevent.GameEvent
@@ -128,5 +129,9 @@ class EyeBlossomBlock(open: Boolean, properties: Properties) : FlowerBlock(Type.
 
   override fun newBlockEntity(p0: BlockPos, p1: BlockState): BlockEntity? {
     return ModContent.EYEBLOSSOM_BLOCK_ENTITY.get().create(p0, p1)
+  }
+
+  override fun getRenderShape(pState: BlockState): RenderShape {
+    return RenderShape.MODEL
   }
 }
