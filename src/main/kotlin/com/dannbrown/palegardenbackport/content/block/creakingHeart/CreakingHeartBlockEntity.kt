@@ -219,7 +219,11 @@ class CreakingHeartBlockEntity(type: BlockEntityType<CreakingHeartBlockEntity>, 
     val NO_CREAKING: Optional<CreakingEntity> = Optional.empty<CreakingEntity>()
     val ON_TOP_OF_COLLIDER_NO_LEAVES: SpawnUtil.Strategy =
       SpawnUtil.Strategy { serverLevel: ServerLevel, blockPos: BlockPos, blockState: BlockState, blockPos2: BlockPos, blockState2: BlockState ->
-        blockState2.getCollisionShape(serverLevel, blockPos2).isEmpty && !blockState.`is`(BlockTags.LEAVES) && Block.isFaceFull(blockState.getCollisionShape(serverLevel, blockPos), Direction.UP)
+        val aboveState = serverLevel.getBlockState(blockPos2.above())
+        val middleBlockEmpty = blockState2.getCollisionShape(serverLevel, blockPos2).isEmpty || blockState2.canBeReplaced()
+        val standingBlockSolid =!blockState.`is`(BlockTags.LEAVES) && Block.isFaceFull(blockState.getCollisionShape(serverLevel, blockPos), Direction.UP)
+        val aboveBlockEmpty = aboveState.getCollisionShape(serverLevel, blockPos2.above()).isEmpty || aboveState.canBeReplaced()
+        aboveBlockEmpty && middleBlockEmpty && standingBlockSolid
       }
 
 
