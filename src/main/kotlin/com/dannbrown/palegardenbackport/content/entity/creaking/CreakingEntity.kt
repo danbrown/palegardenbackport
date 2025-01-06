@@ -24,12 +24,10 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.TamableAnimal
 import net.minecraft.world.entity.ai.Brain
-import net.minecraft.world.entity.ai.behavior.Swim
 import net.minecraft.world.entity.ai.control.JumpControl
 import net.minecraft.world.entity.ai.control.LookControl
 import net.minecraft.world.entity.ai.control.MoveControl
 import net.minecraft.world.entity.ai.goal.FloatGoal
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal
 import net.minecraft.world.entity.ai.memory.MemoryModuleType
@@ -40,13 +38,10 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.ClipContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.level.pathfinder.BlockPathTypes
-import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.HitResult
 import net.minecraft.world.phys.Vec3
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent
-import net.minecraftforge.fluids.FluidType
 import java.util.*
 
 class CreakingEntity(type: EntityType<out AbstractCreaking>, level: Level) : AbstractCreaking(type, level) {
@@ -500,10 +495,9 @@ class CreakingEntity(type: EntityType<out AbstractCreaking>, level: Level) : Abs
               if (player != null) {
                 blockEntity.creakingHurt()
               }
-              this.playHurtSound(source)
             }
           }
-
+          this.playHurtSound(source)
           return true
         }
       }
@@ -515,8 +509,6 @@ class CreakingEntity(type: EntityType<out AbstractCreaking>, level: Level) : Abs
       return super.hurt(source, amount)
     }
   }
-
-
 
   companion object {
     val ATTACKING: EntityDataAccessor<Boolean> = SynchedEntityData.defineId(CreakingEntity::class.java, EntityDataSerializers.BOOLEAN)
