@@ -3,6 +3,7 @@ package com.dannbrown.palegardenbackport.content.block.creakingHeart
 import com.dannbrown.deltaboxlib.registry.generators.BlockFamily
 import com.dannbrown.palegardenbackport.ModContent
 import com.dannbrown.palegardenbackport.content.particle.TrailParticleOption
+import com.dannbrown.palegardenbackport.init.ModCommonConfig
 import com.dannbrown.palegardenbackport.init.ModSounds
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -182,7 +183,11 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
     }
 
     fun isNaturalNight(level: Level, pPos: BlockPos): Boolean {
-      return (level.dimensionType().natural() || level.getBrightness(LightLayer.SKY, pPos) > 5) && (level.isNight || level.isThundering)
+      val type = level.dimensionType()
+      val natural = type.natural()
+      val requiresNatural = ModCommonConfig.REQUIRE_NATURAL?.get() == true
+      val isNight = !level.isDay
+      return ((natural && requiresNatural) || !requiresNatural) && (isNight || level.isThundering)
     }
 
     fun isPaleOakLog(blockState: BlockState): Boolean {
