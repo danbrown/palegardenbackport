@@ -8,6 +8,7 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.tags.BlockTags
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.LevelSimulatedReader
 import net.minecraft.world.level.block.state.BlockState
@@ -17,6 +18,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer
 import net.minecraft.world.level.levelgen.feature.trunkplacers.DarkOakTrunkPlacer
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType
 import java.util.function.BiConsumer
+import java.util.function.Predicate
 
 class PaleOakHeartTrunkPlacer(baseHeight: Int, heightRandA: Int, heightRandB: Int) : DarkOakTrunkPlacer(baseHeight, heightRandA, heightRandB) {
   companion object {
@@ -65,7 +67,7 @@ class PaleOakHeartTrunkPlacer(baseHeight: Int, heightRandA: Int, heightRandB: In
 
       val trunkPos = BlockPos(currentX, startY + currentHeight, currentZ)
 
-      if (TreeFeature.isAirOrLeaves(level, trunkPos)) {
+      if (level.isStateAtPosition(trunkPos,{ state: BlockState -> state.isAir || state.canBeReplaced() || state.`is`(BlockTags.LEAVES) })) {
         // Check if we're on the second-to-last layer
         val isSecondToLastLayer = currentHeight == height - 2
         val randomChanceOfHeart = ModCommonConfig.CREAKING_HEART_CHANCE?.get() ?: 0.15
