@@ -27,7 +27,7 @@ import net.minecraft.world.phys.Vec3
 import java.util.function.Consumer
 import kotlin.math.sqrt
 
-class EyeBlossomBlock(open: Boolean, properties: Properties) : FlowerBlock(Type.fromBoolean(open).effect, Type.fromBoolean(open).effectDuration.toInt(), properties), EntityBlock {
+class EyeBlossomBlock(open: Boolean, properties: Properties) : FlowerBlock({ Type.fromBoolean(open).effect }, Type.fromBoolean(open).effectDuration.toInt(), properties), EntityBlock {
   private val type: Type = Type.fromBoolean(open)
 
   override fun animateTick(blockState: BlockState, level: Level, blockPos: BlockPos, randomSource: RandomSource) {
