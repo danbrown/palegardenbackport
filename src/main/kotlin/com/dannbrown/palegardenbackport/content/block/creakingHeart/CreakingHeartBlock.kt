@@ -186,7 +186,7 @@ class CreakingHeartBlock(props: Properties): BaseEntityBlock(props) {
       val type = level.dimensionType()
       val natural = type.natural()
       val requiresNatural = ModCommonConfig.REQUIRE_NATURAL?.get() == true
-      val isNight = !level.isDay
+      val isNight = level.skyDarken >= 4
       return ((natural && requiresNatural) || !requiresNatural) && (isNight || level.isThundering)
     }
 
