@@ -18,7 +18,7 @@ import net.minecraft.data.recipes.FinishedRecipe
 import java.util.function.Consumer
 /*?}*/
 
-class RecipeBuilder(
+class RecipePresets(
   val registrate: DeltaboxRegistrate,
   /*? if >=1.21 {*/
   /*val p: RecipeOutput

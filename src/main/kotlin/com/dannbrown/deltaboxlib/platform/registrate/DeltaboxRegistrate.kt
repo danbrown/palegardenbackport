@@ -1,15 +1,9 @@
 package com.dannbrown.deltaboxlib.platform.registrate
 
-import com.dannbrown.deltaboxlib.common.DeltaboxLibCommon
-import com.dannbrown.deltaboxlib.common.init.DeltaboxItems
-import com.dannbrown.deltaboxlib.platform.registrate.generators.trades.*
-import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.tterrag.registrate.AbstractRegistrate
 import com.tterrag.registrate.util.entry.BlockEntry
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.resources.PreparableReloadListener
 import net.minecraft.world.entity.npc.VillagerProfession
@@ -20,6 +14,9 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.FlowerPotBlock
 import java.util.function.BiConsumer
+import com.dannbrown.deltaboxlib.platform.registrate.generators.trades.*
+import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
+import com.dannbrown.deltaboxlib.platform.registrate.generators.recipe.DeltaboxRecipeSlice
 import java.util.function.Supplier
 
 /*? if fabric {*/
@@ -45,6 +42,7 @@ import java.util.concurrent.Executor
 *//*?}*/
 
 /*? if forge {*/
+
 import net.minecraftforge.registries.DeferredRegister
 /*?}*/
 
@@ -58,6 +56,13 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   private val STRIPPABLE_BLOCKS: MutableList<Pair<BlockEntry<out Block>, Supplier<out Block>>> = mutableListOf()
   private val POTTED_BLOCKS: MutableList<Pair<BlockEntry<out Block>, BlockEntry<out Block>>> = mutableListOf()
   private val CUTOUT_RENDERS: MutableList<BlockEntry<out Block>> = mutableListOf()
+
+  // Recipe slices list
+  val RECIPES: MutableList<Supplier<out DeltaboxRecipeSlice>> = mutableListOf()
+
+  fun <T : DeltaboxRecipeSlice> recipe(factory: Supplier<out T>) {
+    RECIPES.add(factory)
+  }
 
 
   // flammable
@@ -169,8 +174,6 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
     )
   }
   *//*?}*/
-
-
 
 
   // FABRIC SPECIFIC BLOCKS FEATURES REGISTRATION

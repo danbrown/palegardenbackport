@@ -224,7 +224,8 @@ object DeltaboxUtil {
             return mutableListOf(
                 optionalTag(registry, resourceLocation("c", path)), // tag for fabric
                 optionalTag(registry, resourceLocation("forge", path)), // tag for forge
-                optionalTag(registry, resourceLocation("neoforge", path)) // tag for neoforged
+                optionalTag(registry, resourceLocation("neoforge", path)), // tag for neoforged
+                optionalTag(registry, resourceLocation("deltaboxlib", path)) // tag for deltaboxlib (generic for global iteration)
             )
         }
 

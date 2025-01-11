@@ -1,4 +1,4 @@
-// 1.20.1	2024-12-31T19:36:49.055856	Registrate Provider for deltaboxlib [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2025-01-11T13:47:50.880276	Registrate Provider for deltaboxlib [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 0f5f6649f8f7b7f0984ec71e9e71f566f3c230dd assets/deltaboxlib/blockstates/acai_leaves.json
 b47ba9037d146b0124a187e02cd01cfb1e28905f assets/deltaboxlib/blockstates/adamantium_block.json
 fb183c4055e26b067b3643734b5583555c89e144 assets/deltaboxlib/blockstates/black_beans.json
@@ -118,6 +118,12 @@ f2503c67486f8632ceb28dd911aa76a05cea3928 data/deltaboxlib/loot_tables/blocks/pot
 149072b25c61938383120f1692ab4db119ec61cb data/deltaboxlib/recipes/adamantium_block_from_materials.json
 b3a1de5aac32d1c1aa661b6d51489b1c36814bac data/deltaboxlib/recipes/adamantium_block_to_materials.json
 96ee32332b60ee047ff9a7f3cd46d0eaaca0030e data/deltaboxlib/recipes/warp_crystal.json
+97790f7dc7e2ed2250b8dbfc2585cc39ec2cf009 data/deltaboxlib/tags/blocks/leaves.json
+5f48848c6593826630528a5e345adc35a7d95baa data/deltaboxlib/tags/blocks/storage_blocks.json
+5f48848c6593826630528a5e345adc35a7d95baa data/deltaboxlib/tags/blocks/storage_blocks/adamantium.json
+270a02b90a867589ccd81c101703d0e178376319 data/deltaboxlib/tags/items/leaves.json
+5f48848c6593826630528a5e345adc35a7d95baa data/deltaboxlib/tags/items/storage_blocks.json
+5f48848c6593826630528a5e345adc35a7d95baa data/deltaboxlib/tags/items/storage_blocks/adamantium.json
 97790f7dc7e2ed2250b8dbfc2585cc39ec2cf009 data/forge/tags/blocks/leaves.json
 5f48848c6593826630528a5e345adc35a7d95baa data/forge/tags/blocks/storage_blocks.json
 5f48848c6593826630528a5e345adc35a7d95baa data/forge/tags/blocks/storage_blocks/adamantium.json

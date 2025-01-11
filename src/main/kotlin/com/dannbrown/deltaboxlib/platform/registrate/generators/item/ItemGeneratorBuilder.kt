@@ -1,8 +1,7 @@
 package com.dannbrown.deltaboxlib.platform.registrate.generators.item
 
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
-import com.dannbrown.deltaboxlib.platform.registrate.generators.block.BlockGeneratorBuilder
-import com.dannbrown.deltaboxlib.platform.registrate.generators.recipe.RecipeBuilder
+import com.dannbrown.deltaboxlib.platform.registrate.generators.recipe.RecipePresets
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.tterrag.registrate.builders.ItemBuilder
 import com.tterrag.registrate.providers.DataGenContext
@@ -14,7 +13,6 @@ import com.tterrag.registrate.util.nullness.NonNullUnaryOperator
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Item.Properties
-import net.minecraft.world.level.block.Block
 
 class ItemGeneratorBuilder<T : Item>(name: String, private val registrate: DeltaboxRegistrate) {
   private var _itemFactory: (Properties) -> T = { p: Properties -> Item(p) as T }
@@ -69,10 +67,10 @@ class ItemGeneratorBuilder<T : Item>(name: String, private val registrate: Delta
     return this
   }
 
-  fun recipe(r: (DataGenContext<Item, T>, RegistrateRecipeProvider, RecipeBuilder) -> Unit): ItemGeneratorBuilder<T> {
+  fun recipe(r: (DataGenContext<Item, T>, RegistrateRecipeProvider, RecipePresets) -> Unit): ItemGeneratorBuilder<T> {
     this.checkCurrentBuilder()
     addBuilder { b ->
-      b.recipe { c, p -> r(c, p, RecipeBuilder(registrate, p))}
+      b.recipe { c, p -> r(c, p, RecipePresets(registrate, p))}
     }
     return this
   }

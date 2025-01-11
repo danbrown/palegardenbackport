@@ -15,32 +15,32 @@ import java.nio.file.Path
 import java.util.concurrent.CompletableFuture
 
 /*? if forge || neoforge {*/
-class VillagerTradeProvider(
-    private val registrate: DeltaboxRegistrate,
-    private val generator: DataGenerator
+class WandererTradeProvider(
+  private val registrate: DeltaboxRegistrate,
+  private val generator: DataGenerator
 ) : DataProvider {
-    private val pathProvider = generator.packOutput.createPathProvider(PackOutput.Target.DATA_PACK, VillagerTradeDeserializer.PATH)
-    override fun getName(): String = "Villager Trades Datagen for: ${registrate.modid}"
+    private val pathProvider = generator.packOutput.createPathProvider(PackOutput.Target.DATA_PACK, WandererTradeDeserializer.PATH)
+    override fun getName(): String = "Wanderer Trades Datagen for: ${registrate.modid}"
 
     override fun run(cachedOutput: CachedOutput): CompletableFuture<*> {
         val futures: MutableList<CompletableFuture<*>> = ArrayList()
-        for (trade in registrate.TRADES) {
-            val tradeName = trade.profession.name + "_" + trade.level.toName() + "_" + DeltaboxUtil.itemId({trade.tradeCosts.first().item.get()}) + "_for_" + DeltaboxUtil.itemId({trade.tradeSells.first().item.get()})
+        for (trade in registrate.WANDERER_TRADES) {
+            val tradeName = trade.rarity.toString() + "_" + DeltaboxUtil.itemId({trade.tradeCosts.first().item.get()}) + "_for_" + DeltaboxUtil.itemId({trade.tradeSells.first().item.get()})
             val tradePath = pathProvider.json(DeltaboxUtil.resourceLocation(registrate.modid, tradeName))
             futures.add(saveTradeData(cachedOutput, tradePath, trade))
         }
         return CompletableFuture.allOf(*futures.toTypedArray())
     }
 
-    private fun saveTradeData(cachedOutput: CachedOutput, path: Path, trade: VillagerTradeCodec): CompletableFuture<*> {
+    private fun saveTradeData(cachedOutput: CachedOutput, path: Path, trade: WandererTradeCodec): CompletableFuture<*> {
         return try {
-            val jsonObject = VillagerTradeCodec.CODEC
-                .encodeStart(JsonOps.INSTANCE, trade)
-                .getAnyway()
-                .asJsonObject
+            val jsonObject = WandererTradeCodec.CODEC
+              .encodeStart(JsonOps.INSTANCE, trade)
+              .getAnyway()
+              .asJsonObject
             DataProvider.saveStable(cachedOutput, jsonObject, path)
         } catch (ioException: IOException) {
-            DeltaboxLibCommon.LOGGER.error("Couldn't save villager trade at {}", path, ioException)
+            DeltaboxLibCommon.LOGGER.error("Couldn't save wanderer trade at {}", path, ioException)
             throw ioException
         }
     }

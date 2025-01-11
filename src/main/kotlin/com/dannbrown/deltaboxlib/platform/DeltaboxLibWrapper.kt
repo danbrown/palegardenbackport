@@ -46,6 +46,7 @@ class DeltaboxLibWrapper {
                 DeltaboxLibCommon.gatherData(event.generator)
                 event.generator.addProvider(event.includeServer(), com.dannbrown.deltaboxlib.platform.registrate.generators.trades.VillagerTradeProvider(DeltaboxLibCommon.REGISTRATE, event.generator))
                 event.generator.addProvider(event.includeServer(), com.dannbrown.deltaboxlib.platform.registrate.generators.trades.WandererTradeProvider(DeltaboxLibCommon.REGISTRATE, event.generator))
+                event.generator.addProvider(event.includeServer(), com.dannbrown.deltaboxlib.platform.registrate.generators.recipe.DeltaboxRecipeProvider(DeltaboxLibCommon.REGISTRATE, event.generator, event.lookupProvider))
             }
             DeltaboxLibCommon.REGISTRATE.register(modBus, forgeEventBus) // forge exclusive registrate
         }
@@ -71,6 +72,7 @@ class DeltaboxLibWrapper(eventBus: IEventBus, modContainer: ModContainer) {
             DeltaboxLibCommon.gatherData(event.generator)
             event.generator.addProvider(event.includeServer(), com.dannbrown.deltaboxlib.platform.registrate.generators.trades.VillagerTradeProvider(DeltaboxLibCommon.REGISTRATE, event.generator))
             event.generator.addProvider(event.includeServer(), com.dannbrown.deltaboxlib.platform.registrate.generators.trades.WandererTradeProvider(DeltaboxLibCommon.REGISTRATE, event.generator))
+            event.generator.addProvider(event.includeServer(), com.dannbrown.deltaboxlib.platform.registrate.generators.recipe.DeltaboxRecipeProvider(DeltaboxLibCommon.REGISTRATE, event.generator, event.lookupProvider))
         }
         DeltaboxLibCommon.REGISTRATE.register(modBus, forgeEventBus) // neoforged exclusive registrate
     }

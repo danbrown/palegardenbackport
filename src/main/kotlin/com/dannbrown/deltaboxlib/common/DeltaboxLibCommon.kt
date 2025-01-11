@@ -17,6 +17,7 @@ object DeltaboxLibCommon {
         DeltaboxItems.register()
         DeltaboxTrades.register()
         DeltaboxCreativeTabs.register()
+        DeltaboxRecipes.register()
     }
 
     fun gatherData(gen: DataGenerator) {
