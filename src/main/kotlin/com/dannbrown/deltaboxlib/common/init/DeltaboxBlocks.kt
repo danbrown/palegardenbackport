@@ -10,13 +10,10 @@ import com.dannbrown.deltaboxlib.common.content.block.GenericTallGrassBlock
 import com.dannbrown.deltaboxlib.common.content.block.StrippableFlammablePillarBlock
 import com.dannbrown.deltaboxlib.common.content.tree.DeltaboxTreeGrower
 import com.dannbrown.deltaboxlib.platform.registrate.generators.block.BlockGenerator
-import com.dannbrown.deltaboxlib.platform.registrate.generators.trades.VillagerLevel
-import com.dannbrown.deltaboxlib.platform.registrate.generators.trades.VillagerTradeItem
 import com.dannbrown.deltaboxlib.platform.registrate.transformers.BlockLootPresets
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.tterrag.registrate.util.entry.BlockEntry
 import net.minecraft.tags.BlockTags
-import net.minecraft.world.entity.npc.VillagerProfession
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block

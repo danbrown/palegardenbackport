@@ -17,6 +17,8 @@ import java.util.function.BiConsumer
 import com.dannbrown.deltaboxlib.platform.registrate.generators.trades.*
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.dannbrown.deltaboxlib.platform.registrate.generators.recipe.DeltaboxRecipeSlice
+import com.tterrag.registrate.builders.NoConfigBuilder
+import net.minecraft.resources.ResourceKey
 import java.util.function.Supplier
 
 /*? if fabric {*/
@@ -125,6 +127,10 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   }
 
   // Creative tabs
+  init {
+    this.defaultCreativeTab(null as ResourceKey<CreativeModeTab>?) // remove the default creative tab to avoid duplicate entries
+  }
+
   /*? if forge {*/
   private val CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, modid)
 
