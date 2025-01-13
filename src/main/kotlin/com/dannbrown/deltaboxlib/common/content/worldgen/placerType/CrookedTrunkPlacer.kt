@@ -38,8 +38,14 @@ class CrookedTrunkPlacer(pBaseHeight: Int, pHeightRandA: Int, pHeightRandB: Int)
   }
 
   companion object {
-    val CODEC: Codec<CrookedTrunkPlacer> = RecordCodecBuilder.create { placer ->
+    /*? if >=1.21 {*/
+    /*val CODEC: com.mojang.serialization.MapCodec<CrookedTrunkPlacer> = RecordCodecBuilder.mapCodec { placer ->
       trunkPlacerParts(placer).apply(placer) { pBaseHeight: Int, pHeightRandA: Int, pHeightRandB: Int -> CrookedTrunkPlacer(pBaseHeight, pHeightRandA, pHeightRandB) }
     }
+    *//*?} else {*/
+    val CODEC: com.mojang.serialization.Codec<CrookedTrunkPlacer> = RecordCodecBuilder.create { placer ->
+      trunkPlacerParts(placer).apply(placer) { pBaseHeight: Int, pHeightRandA: Int, pHeightRandB: Int -> CrookedTrunkPlacer(pBaseHeight, pHeightRandA, pHeightRandB) }
+    }
+    /*?}*/
   }
 }

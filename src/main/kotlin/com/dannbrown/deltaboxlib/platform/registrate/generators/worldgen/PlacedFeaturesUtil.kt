@@ -3,7 +3,11 @@ package com.dannbrown.deltaboxlib.platform.registrate.generators.worldgen
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
-import net.minecraft.data.worldgen.BootstapContext
+/*? if >=1.21 {*/
+/*import net.minecraft.data.worldgen.BootstrapContext
+*//*?} else {*/
+import net.minecraft.data.worldgen.BootstapContext as BootstrapContext
+/*?}*/
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
@@ -19,7 +23,7 @@ object PlacedFeaturesUtil {
     return ResourceKey.create(Registries.PLACED_FEATURE, DeltaboxUtil.resourceLocation(modId, name))
   }
   fun register(
-    context: BootstapContext<PlacedFeature>,
+    context: BootstrapContext<PlacedFeature>,
     key: ResourceKey<PlacedFeature>,
     configuration: Holder<ConfiguredFeature<*, *>>,
     modifiers: List<PlacementModifier>
@@ -28,7 +32,7 @@ object PlacedFeaturesUtil {
   }
 
   // Lookup Functions
-  fun lookup(context: BootstapContext<PlacedFeature>, configuredFeature: ResourceKey<ConfiguredFeature<*, *>>): Holder<ConfiguredFeature<*, *>> {
+  fun lookup(context: BootstrapContext<PlacedFeature>, configuredFeature: ResourceKey<ConfiguredFeature<*, *>>): Holder<ConfiguredFeature<*, *>> {
     return context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(configuredFeature)
   }
 

@@ -1,7 +1,6 @@
 package com.dannbrown.deltaboxlib.common.content.worldgen.placerType
 
 import com.dannbrown.deltaboxlib.common.init.DeltaboxPlacerTypes
-import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -37,9 +36,15 @@ class PalmFoliagePlacer(pRadius: IntProvider, pOffset: IntProvider) : FoliagePla
   }
 
   companion object {
-    val CODEC: Codec<PalmFoliagePlacer> = RecordCodecBuilder.create { placer ->
+    /*? if >=1.21 {*/
+    /*val CODEC: com.mojang.serialization.MapCodec<PalmFoliagePlacer> = RecordCodecBuilder.mapCodec { placer ->
       foliagePlacerParts(placer).apply(placer) { pRadius: IntProvider, pOffset: IntProvider -> PalmFoliagePlacer(pRadius, pOffset) }
     }
+    *//*?} else {*/
+    val CODEC: com.mojang.serialization.Codec<PalmFoliagePlacer> = RecordCodecBuilder.create { placer ->
+      foliagePlacerParts(placer).apply(placer) { pRadius: IntProvider, pOffset: IntProvider -> PalmFoliagePlacer(pRadius, pOffset) }
+    }
+    /*?}*/
 
     private fun createQuadrant(direction: Direction, startingPos: BlockPos, pLevel: LevelSimulatedReader, foliageSetter: FoliageSetter, pRandom: RandomSource, pConfig: TreeConfiguration) {
       val pos = startingPos.mutable()

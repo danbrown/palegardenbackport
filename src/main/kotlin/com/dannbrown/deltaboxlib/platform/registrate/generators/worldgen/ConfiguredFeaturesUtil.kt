@@ -8,7 +8,11 @@ import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
-import net.minecraft.data.worldgen.BootstapContext
+/*? if >=1.21 {*/
+/*import net.minecraft.data.worldgen.BootstrapContext
+*//*?} else {*/
+import net.minecraft.data.worldgen.BootstapContext as BootstrapContext
+/*?}*/
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.BlockTags
@@ -45,7 +49,7 @@ object ConfiguredFeaturesUtil {
   }
 
   fun <FC : FeatureConfiguration?, F : Feature<FC>?> register(
-    context: BootstapContext<ConfiguredFeature<*, *>>,
+    context: BootstrapContext<ConfiguredFeature<*, *>>,
     key: ResourceKey<ConfiguredFeature<*, *>>, feature: F, configuration: FC
   ) {
     context.register(key, ConfiguredFeature(feature, configuration))

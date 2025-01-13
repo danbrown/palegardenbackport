@@ -19,11 +19,12 @@ import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.dannbrown.deltaboxlib.platform.registrate.generators.recipe.DeltaboxRecipeSlice
 import com.dannbrown.deltaboxlib.platform.registrate.generators.worldgen.ConfiguredFeaturesUtil
 import com.dannbrown.deltaboxlib.platform.registrate.generators.worldgen.PlacedFeaturesUtil
-import com.mojang.serialization.Codec
-import com.tterrag.registrate.util.nullness.NonNullBiConsumer
-import com.tterrag.registrate.util.nullness.NonNullBiFunction
 import net.minecraft.core.RegistrySetBuilder
-import net.minecraft.data.worldgen.BootstapContext
+/*? if >=1.21 {*/
+/*import net.minecraft.data.worldgen.BootstrapContext
+*//*?} else {*/
+import net.minecraft.data.worldgen.BootstapContext as BootstrapContext
+/*?}*/
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer
@@ -58,12 +59,13 @@ import java.util.concurrent.Executor
 /*? if forge {*/
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider
-import net.minecraftforge.registries.RegistryObject
-
 /*?}*/
 
 /*? if neoforge {*/
 /*import net.neoforged.neoforge.registries.DeferredRegister
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
+import net.neoforged.neoforge.registries.DeferredHolder
+
 *//*?}*/
 
 class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(modId) {
@@ -316,52 +318,61 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   val FOLIAGE_PLACER_TYPES = DeferredRegister.create(Registries.FOLIAGE_PLACER_TYPE, modId)
   val TRUNK_PLACER_TYPES = DeferredRegister.create(Registries.TRUNK_PLACER_TYPE, modId)
 
-  fun trunkPlacer(name: String, codec: Supplier<Codec<out TrunkPlacer>>): RegistryObject<TrunkPlacerType<*>> {
+
+
+  /*? if >1.21 {*/
+  /*fun trunkPlacer(name: String, codec: Supplier<com.mojang.serialization.MapCodec<out TrunkPlacer>>): DeferredHolder<TrunkPlacerType<*>, TrunkPlacerType<out TrunkPlacer>> {
+    return TRUNK_PLACER_TYPES.register(name) { r ->  TrunkPlacerType(codec.get()) }
+  }
+
+  fun foliagePlacer(name: String, codec: Supplier<com.mojang.serialization.MapCodec<out FoliagePlacer>>): DeferredHolder<FoliagePlacerType<*>, FoliagePlacerType<out FoliagePlacer>> {
+    return FOLIAGE_PLACER_TYPES.register(name) { r ->  FoliagePlacerType(codec.get()) }
+  }
+  *//*?} else {*/
+  fun trunkPlacer(name: String, codec: Supplier<com.mojang.serialization.Codec<out TrunkPlacer>>): net.minecraftforge.registries.RegistryObject<TrunkPlacerType<*>> {
     return TRUNK_PLACER_TYPES.register(name) { TrunkPlacerType(codec.get()) }
   }
 
-  fun foliagePlacer(name: String, codec: Supplier<Codec<out FoliagePlacer>>): RegistryObject<FoliagePlacerType<*>>{
+  fun foliagePlacer(name: String, codec: Supplier<com.mojang.serialization.Codec<out FoliagePlacer>>): net.minecraftforge.registries.RegistryObject<FoliagePlacerType<*>>{
     return FOLIAGE_PLACER_TYPES.register(name) { FoliagePlacerType(codec.get()) }
   }
+  /*?}*/
 
   // @ Configured Features
-  private val CONFIGURED_FEATURES: MutableMap<ResourceKey<ConfiguredFeature<*, *>>, (ResourceKey<ConfiguredFeature<*, *>>, BootstapContext<ConfiguredFeature<*, *>>, ConfiguredFeaturesUtil) -> Unit> = mutableMapOf()
+  private val CONFIGURED_FEATURES: MutableMap<ResourceKey<ConfiguredFeature<*, *>>, (ResourceKey<ConfiguredFeature<*, *>>, BootstrapContext<ConfiguredFeature<*, *>>, ConfiguredFeaturesUtil) -> Unit> = mutableMapOf()
 
   fun configuredFeature(
       name: String,
-      consumer: (ResourceKey<ConfiguredFeature<*, *>>, BootstapContext<ConfiguredFeature<*, *>>, ConfiguredFeaturesUtil) -> Unit
+      consumer: (ResourceKey<ConfiguredFeature<*, *>>, BootstrapContext<ConfiguredFeature<*, *>>, ConfiguredFeaturesUtil) -> Unit
   ): ResourceKey<ConfiguredFeature<*, *>> {
       val key = ConfiguredFeaturesUtil.registerKey(name, this.modid)
       CONFIGURED_FEATURES[key] = consumer
       return key
   }
 
-  private fun bootstrapConfiguredfeatures(context: BootstapContext<ConfiguredFeature<*, *>>) {
+  private fun bootstrapConfiguredfeatures(context: BootstrapContext<ConfiguredFeature<*, *>>) {
     CONFIGURED_FEATURES.forEach { key, consumer ->
       consumer(key, context, ConfiguredFeaturesUtil)
     }
   }
 
   // @ Placed Features
-  private val PLACED_FEATURES: MutableMap<ResourceKey<PlacedFeature>, (ResourceKey<PlacedFeature>, BootstapContext<PlacedFeature>, PlacedFeaturesUtil) -> Unit> = mutableMapOf()
+  private val PLACED_FEATURES: MutableMap<ResourceKey<PlacedFeature>, (ResourceKey<PlacedFeature>, BootstrapContext<PlacedFeature>, PlacedFeaturesUtil) -> Unit> = mutableMapOf()
 
   fun placedFeature(
     name: String,
-    consumer: (ResourceKey<PlacedFeature>, BootstapContext<PlacedFeature>, PlacedFeaturesUtil) -> Unit
+    consumer: (ResourceKey<PlacedFeature>, BootstrapContext<PlacedFeature>, PlacedFeaturesUtil) -> Unit
   ): ResourceKey<PlacedFeature> {
     val key = PlacedFeaturesUtil.registerKey(name, this.modid)
     PLACED_FEATURES[key] = consumer
     return key
   }
 
-  private fun bootstrapPlacedFeatures(context: BootstapContext<PlacedFeature>){
+  private fun bootstrapPlacedFeatures(context: BootstrapContext<PlacedFeature>){
     PLACED_FEATURES.forEach { key, consumer ->
       consumer(key, context, PlacedFeaturesUtil)
     }
   }
-
-
-
 
   // FABRIC SPECIFIC BLOCKS FEATURES REGISTRATION
   /*? if fabric {*/
@@ -632,7 +643,18 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
       }
     }
   }
+
+  // @ NeoForge Datagen
+  fun gatherData(event: net.neoforged.neoforge.data.event.GatherDataEvent) {
+    event.generator.addProvider(event.includeServer(), com.dannbrown.deltaboxlib.platform.registrate.generators.trades.VillagerTradeProvider(this, event.generator))
+    event.generator.addProvider(event.includeServer(), com.dannbrown.deltaboxlib.platform.registrate.generators.trades.WandererTradeProvider(this, event.generator))
+    event.generator.addProvider(event.includeServer(), com.dannbrown.deltaboxlib.platform.registrate.generators.recipe.DeltaboxRecipeProvider(this, event.generator, event.lookupProvider))
+
+    // Other Data Generators
+    val registrySetBuilder = RegistrySetBuilder()
+      .add(Registries.CONFIGURED_FEATURE, ::bootstrapConfiguredfeatures)
+      .add(Registries.PLACED_FEATURE, ::bootstrapPlacedFeatures)
+    event.generator.addProvider(event.includeServer(), object : DatapackBuiltinEntriesProvider(event.generator.packOutput, event.lookupProvider, registrySetBuilder, mutableSetOf(this.modid)) {})
+  }
   *//*?}*/
-
-
 }
