@@ -1,7 +1,7 @@
 package com.dannbrown.deltaboxlib.platform.registrate.generators.block
 
 import com.dannbrown.deltaboxlib.common.content.block.*
-import com.dannbrown.deltaboxlib.common.content.tree.DeltaboxTreeGrower
+import com.dannbrown.deltaboxlib.common.content.worldgen.tree.DeltaboxTreeGrower
 import com.dannbrown.deltaboxlib.platform.registrate.DeltaboxRegistrate
 import com.dannbrown.deltaboxlib.platform.registrate.generators.family.BlockFamilyGeneratorBuilder
 import com.tterrag.registrate.util.entry.BlockEntry
@@ -10,7 +10,6 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.FaceAttachedHorizontalDirectionalBlock
 import net.minecraft.world.level.block.FlowerPotBlock
 import net.minecraft.world.level.block.state.BlockState
 import java.util.function.Supplier

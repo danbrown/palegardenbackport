@@ -1,6 +1,6 @@
 package com.dannbrown.deltaboxlib.common.content.block
 
-import com.dannbrown.deltaboxlib.common.content.tree.DeltaboxTreeGrower
+import com.dannbrown.deltaboxlib.common.content.worldgen.tree.DeltaboxTreeGrower
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.LevelReader

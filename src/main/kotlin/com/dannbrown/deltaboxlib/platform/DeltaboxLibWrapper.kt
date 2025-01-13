@@ -2,6 +2,7 @@ package com.dannbrown.deltaboxlib.platform
 
 import com.dannbrown.deltaboxlib.common.*
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
+import net.minecraft.core.RegistrySetBuilder
 
 /*? if fabric {*/
 /*import net.fabricmc.api.ModInitializer;
@@ -27,6 +28,7 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.eventbus.api.IEventBus
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider
 import net.minecraftforge.data.event.GatherDataEvent
 import net.minecraftforge.eventbus.api.EventPriority
 
@@ -44,9 +46,7 @@ class DeltaboxLibWrapper {
             DeltaboxLibCommon.init()
             modBus.addListener(EventPriority.LOWEST) { event: GatherDataEvent ->
                 DeltaboxLibCommon.gatherData(event.generator)
-                event.generator.addProvider(event.includeServer(), com.dannbrown.deltaboxlib.platform.registrate.generators.trades.VillagerTradeProvider(DeltaboxLibCommon.REGISTRATE, event.generator))
-                event.generator.addProvider(event.includeServer(), com.dannbrown.deltaboxlib.platform.registrate.generators.trades.WandererTradeProvider(DeltaboxLibCommon.REGISTRATE, event.generator))
-                event.generator.addProvider(event.includeServer(), com.dannbrown.deltaboxlib.platform.registrate.generators.recipe.DeltaboxRecipeProvider(DeltaboxLibCommon.REGISTRATE, event.generator, event.lookupProvider))
+                DeltaboxLibCommon.REGISTRATE.gatherData(event)
             }
             DeltaboxLibCommon.REGISTRATE.register(modBus, forgeEventBus) // forge exclusive registrate
         }

@@ -18,9 +18,12 @@ object DeltaboxLibCommon {
         DeltaboxTrades.register()
         DeltaboxCreativeTabs.register()
         DeltaboxRecipes.register()
+        DeltaboxLang.register()
+        DeltaboxPlacerTypes.register()
+        DeltaboxConfiguredFeatures.register()
+        DeltaboxPlacedFeatures.register()
     }
 
     fun gatherData(gen: DataGenerator) {
-        REGISTRATE.addDataGenerator(ProviderType.LANG, DeltaboxLang::addLang)
     }
 }

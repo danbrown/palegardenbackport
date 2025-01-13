@@ -1,4 +1,5 @@
-package com.dannbrown.deltaboxlib.common.content.tree
+package com.dannbrown.deltaboxlib.common.content.worldgen.tree
+
 import net.minecraft.data.worldgen.features.TreeFeatures
 import net.minecraft.resources.ResourceKey
 import net.minecraft.util.RandomSource

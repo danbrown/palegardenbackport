@@ -17,8 +17,20 @@ import java.util.function.BiConsumer
 import com.dannbrown.deltaboxlib.platform.registrate.generators.trades.*
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.dannbrown.deltaboxlib.platform.registrate.generators.recipe.DeltaboxRecipeSlice
-import com.tterrag.registrate.builders.NoConfigBuilder
+import com.dannbrown.deltaboxlib.platform.registrate.generators.worldgen.ConfiguredFeaturesUtil
+import com.dannbrown.deltaboxlib.platform.registrate.generators.worldgen.PlacedFeaturesUtil
+import com.mojang.serialization.Codec
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer
+import com.tterrag.registrate.util.nullness.NonNullBiFunction
+import net.minecraft.core.RegistrySetBuilder
+import net.minecraft.data.worldgen.BootstapContext
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType
+import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer
+import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType
+import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import java.util.function.Supplier
 
 /*? if fabric {*/
@@ -44,8 +56,10 @@ import java.util.concurrent.Executor
 *//*?}*/
 
 /*? if forge {*/
-
 import net.minecraftforge.registries.DeferredRegister
+import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider
+import net.minecraftforge.registries.RegistryObject
+
 /*?}*/
 
 /*? if neoforge {*/
@@ -65,7 +79,6 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   fun <T : DeltaboxRecipeSlice> recipe(factory: Supplier<out T>) {
     RECIPES.add(factory)
   }
-
 
   // flammable
   fun addFlammableBlock(block: BlockEntry<out Block>, burnChance: Int, spreadChance: Int) {
@@ -180,6 +193,174 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
     )
   }
   *//*?}*/
+
+  // @ Lang
+  fun addFormulaLang(
+    formula: String,
+    name: String,
+    mId: String = modid,
+  ) {
+    addRawLang("formula.${mId}.$formula", name)
+  }
+
+  fun addEntityLang(
+    name: String,
+    phrase: String,
+    mId: String = modid,
+  ) {
+    addRawLang("entity.${mId}.$name", phrase)
+  }
+
+  fun addItemTooltipLang(
+    itemId: String,
+    phrase: String,
+    mId: String = modid,
+  ) {
+    addRawLang(DeltaboxUtil.LANG.getTooltipKey(mId, itemId), phrase)
+  }
+
+  fun addGenericTooltipLang(
+    itemId: String,
+    phrase: String,
+  ) {
+    addRawLang(DeltaboxUtil.LANG.getTooltipKey(null, itemId), phrase)
+  }
+
+  fun addCreativeTabLang(
+    tab: String,
+    name: String,
+    mId: String = modid,
+  ) {
+    addRawLang("itemGroup.${mId}.$tab", name)
+  }
+
+  fun addPotionLang(
+    name: String,
+    phrase: String,
+  ) {
+    addRawLang("item.${"minecraft"}.potion.effect.$name", "Potion of $phrase")
+    addRawLang("item.${"minecraft"}.splash_potion.effect.$name", "Splash Potion of $phrase")
+    addRawLang("item.${"minecraft"}.lingering_potion.effect.$name", "Lingering Potion of $phrase")
+    addRawLang("item.${"minecraft"}.tipped_arrow.effect.$name", "Arrow of $phrase")
+  }
+
+  fun addAdvancementLang(
+    name: String,
+    title: String,
+    description: String,
+    mId: String = modid,
+  ) {
+    addRawLang("advancements.${mId}.$name.title", title)
+    addRawLang("advancements.${mId}.$name.description", description)
+  }
+
+  fun addEffectLang(
+    name: String,
+    phrase: String,
+    mId: String = modid,
+  ) {
+    addRawLang("effect.${mId}.$name", phrase)
+  }
+
+  fun addDeathMessageLang(
+    name: String,
+    phrase: String,
+    mId: String = modid,
+  ) {
+    addRawLang("death.attack.$name", phrase)
+  }
+
+  fun addBiomeLang(
+    name: String,
+    phrase: String,
+    mId: String = modid,
+  ) {
+    addRawLang("biome.${mId}.$name", phrase)
+  }
+
+  fun addSoundLang(
+    name: String,
+    phrase: String,
+    mId: String = modid,
+  ) {
+    addRawLang("sound.${mId}.$name", phrase)
+  }
+
+  fun addDimensionLang(
+    name: String,
+    phrase: String,
+    mId: String = modid,
+  ) {
+    addRawLang("dimension.${mId}.$name", phrase)
+  }
+
+  fun addWorldPresetLang(
+    name: String,
+    phrase: String,
+    mId: String = modid,
+  ) {
+    addRawLang("generator.${mId}.$name", phrase)
+  }
+
+  fun addPaintingVariantLang(
+    name: String,
+    phrase: String,
+    author: String,
+    mId: String = modid,
+  ) {
+    addRawLang("painting.${mId}.$name.title", phrase)
+    addRawLang("painting.${mId}.$name.author", author)
+  }
+
+  // @ Placer Types
+  val FOLIAGE_PLACER_TYPES = DeferredRegister.create(Registries.FOLIAGE_PLACER_TYPE, modId)
+  val TRUNK_PLACER_TYPES = DeferredRegister.create(Registries.TRUNK_PLACER_TYPE, modId)
+
+  fun trunkPlacer(name: String, codec: Supplier<Codec<out TrunkPlacer>>): RegistryObject<TrunkPlacerType<*>> {
+    return TRUNK_PLACER_TYPES.register(name) { TrunkPlacerType(codec.get()) }
+  }
+
+  fun foliagePlacer(name: String, codec: Supplier<Codec<out FoliagePlacer>>): RegistryObject<FoliagePlacerType<*>>{
+    return FOLIAGE_PLACER_TYPES.register(name) { FoliagePlacerType(codec.get()) }
+  }
+
+  // @ Configured Features
+  private val CONFIGURED_FEATURES: MutableMap<ResourceKey<ConfiguredFeature<*, *>>, (ResourceKey<ConfiguredFeature<*, *>>, BootstapContext<ConfiguredFeature<*, *>>, ConfiguredFeaturesUtil) -> Unit> = mutableMapOf()
+
+  fun configuredFeature(
+      name: String,
+      consumer: (ResourceKey<ConfiguredFeature<*, *>>, BootstapContext<ConfiguredFeature<*, *>>, ConfiguredFeaturesUtil) -> Unit
+  ): ResourceKey<ConfiguredFeature<*, *>> {
+      val key = ConfiguredFeaturesUtil.registerKey(name, this.modid)
+      CONFIGURED_FEATURES[key] = consumer
+      return key
+  }
+
+  private fun bootstrapConfiguredfeatures(context: BootstapContext<ConfiguredFeature<*, *>>) {
+    CONFIGURED_FEATURES.forEach { key, consumer ->
+      consumer(key, context, ConfiguredFeaturesUtil)
+    }
+  }
+
+  // @ Placed Features
+  private val PLACED_FEATURES: MutableMap<ResourceKey<PlacedFeature>, (ResourceKey<PlacedFeature>, BootstapContext<PlacedFeature>, PlacedFeaturesUtil) -> Unit> = mutableMapOf()
+
+  fun placedFeature(
+    name: String,
+    consumer: (ResourceKey<PlacedFeature>, BootstapContext<PlacedFeature>, PlacedFeaturesUtil) -> Unit
+  ): ResourceKey<PlacedFeature> {
+    val key = PlacedFeaturesUtil.registerKey(name, this.modid)
+    PLACED_FEATURES[key] = consumer
+    return key
+  }
+
+  private fun bootstrapPlacedFeatures(context: BootstapContext<PlacedFeature>){
+    PLACED_FEATURES.forEach { key, consumer ->
+      consumer(key, context, PlacedFeaturesUtil)
+    }
+  }
+
+
 
 
   // FABRIC SPECIFIC BLOCKS FEATURES REGISTRATION
@@ -314,6 +495,8 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
     super.registerEventListeners(bus)
 
     CREATIVE_TABS.register(bus)
+    TRUNK_PLACER_TYPES.register(bus)
+    FOLIAGE_PLACER_TYPES.register(bus)
 
     // register pot plants
     onRegisterFlowerPots(bus)
@@ -371,6 +554,19 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
         }
       }
     }
+  }
+
+  // @ Forge Datagen
+  fun gatherData(event: net.minecraftforge.data.event.GatherDataEvent) {
+    event.generator.addProvider(event.includeServer(), com.dannbrown.deltaboxlib.platform.registrate.generators.trades.VillagerTradeProvider(this, event.generator))
+    event.generator.addProvider(event.includeServer(), com.dannbrown.deltaboxlib.platform.registrate.generators.trades.WandererTradeProvider(this, event.generator))
+    event.generator.addProvider(event.includeServer(), com.dannbrown.deltaboxlib.platform.registrate.generators.recipe.DeltaboxRecipeProvider(this, event.generator, event.lookupProvider))
+
+    // Other Data Generators
+    val registrySetBuilder = RegistrySetBuilder()
+      .add(Registries.CONFIGURED_FEATURE, ::bootstrapConfiguredfeatures)
+      .add(Registries.PLACED_FEATURE, ::bootstrapPlacedFeatures)
+    event.generator.addProvider(event.includeServer(), object : DatapackBuiltinEntriesProvider(event.generator.packOutput, event.lookupProvider, registrySetBuilder, mutableSetOf(this.modid)) {})
   }
 
   /*?} elif neoforge {*/

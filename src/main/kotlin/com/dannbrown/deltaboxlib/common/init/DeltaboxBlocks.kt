@@ -8,7 +8,7 @@ import com.dannbrown.deltaboxlib.common.content.block.GenericGrassBlock
 import com.dannbrown.deltaboxlib.common.content.block.GenericSaplingBlock
 import com.dannbrown.deltaboxlib.common.content.block.GenericTallGrassBlock
 import com.dannbrown.deltaboxlib.common.content.block.StrippableFlammablePillarBlock
-import com.dannbrown.deltaboxlib.common.content.tree.DeltaboxTreeGrower
+import com.dannbrown.deltaboxlib.common.content.worldgen.tree.DeltaboxTreeGrower
 import com.dannbrown.deltaboxlib.platform.registrate.generators.block.BlockGenerator
 import com.dannbrown.deltaboxlib.platform.registrate.transformers.BlockLootPresets
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
@@ -74,11 +74,11 @@ object DeltaboxBlocks {
     .color(MapColor.COLOR_LIGHT_GREEN)
     .register()
 
-  val BUDDING_LEMON_LEAVES = BLOCKS.createCropLeavesBlock("budding_lemon", { LEMON_SAPLING.get() }, { Blocks.MANGROVE_PROPAGULE })
+  val CROP_LEAVES = BLOCKS.createCropLeavesBlock("budding_lemon", { LEMON_SAPLING.get() }, { Items.EMERALD })
     .color(MapColor.COLOR_LIGHT_GREEN)
     .register()
 
-  val CROP_LEAVES = BLOCKS.createBuddingLeavesBlock("coconut", { LEMON_SAPLING.get() }, { Blocks.MANGROVE_PROPAGULE })
+  val BUDDING_LEMON_LEAVES = BLOCKS.createBuddingLeavesBlock("coconut", { LEMON_SAPLING.get() }, { Blocks.MANGROVE_PROPAGULE })
     .color(MapColor.COLOR_LIGHT_GREEN)
     .register()
 
