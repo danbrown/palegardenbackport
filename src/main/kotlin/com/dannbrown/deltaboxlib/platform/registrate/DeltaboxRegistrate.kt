@@ -315,10 +315,10 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   }
 
   // @ Placer Types
+
+  /*? if forge || neoforge {*/
   val FOLIAGE_PLACER_TYPES = DeferredRegister.create(Registries.FOLIAGE_PLACER_TYPE, modId)
   val TRUNK_PLACER_TYPES = DeferredRegister.create(Registries.TRUNK_PLACER_TYPE, modId)
-
-
 
   /*? if >1.21 {*/
   /*fun trunkPlacer(name: String, codec: Supplier<com.mojang.serialization.MapCodec<out TrunkPlacer>>): DeferredHolder<TrunkPlacerType<*>, TrunkPlacerType<out TrunkPlacer>> {
@@ -337,6 +337,26 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
     return FOLIAGE_PLACER_TYPES.register(name) { FoliagePlacerType(codec.get()) }
   }
   /*?}*/
+  /*?} elif fabric {*/
+  /*/^? if >=1.21 {^/
+  fun trunkPlacer(name: String, codec: Supplier<com.mojang.serialization.MapCodec<out TrunkPlacer>>): Supplier<TrunkPlacerType<*>> {
+    return Supplier { Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE, name, TrunkPlacerType(codec.get())) }
+  }
+
+  fun foliagePlacer(name: String, codec: Supplier<com.mojang.serialization.MapCodec<out FoliagePlacer>>): Supplier<FoliagePlacerType<*>> {
+    return Supplier { Registry.register(BuiltInRegistries.FOLIAGE_PLACER_TYPE, name, FoliagePlacerType(codec.get())) }
+  }
+  /^?} else {^/
+  /^fun trunkPlacer(name: String, codec: Supplier<com.mojang.serialization.Codec<out TrunkPlacer>>): Supplier<TrunkPlacerType<*>> {
+    return Supplier { Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE, name, TrunkPlacerType(codec.get())) }
+  }
+
+  fun foliagePlacer(name: String, codec: Supplier<com.mojang.serialization.Codec<out FoliagePlacer>>): Supplier<FoliagePlacerType<*>> {
+    return Supplier { Registry.register(BuiltInRegistries.FOLIAGE_PLACER_TYPE, name, FoliagePlacerType(codec.get())) }
+  }
+  ^//^?}^/
+
+  *//*?}*/
 
   // @ Configured Features
   private val CONFIGURED_FEATURES: MutableMap<ResourceKey<ConfiguredFeature<*, *>>, (ResourceKey<ConfiguredFeature<*, *>>, BootstrapContext<ConfiguredFeature<*, *>>, ConfiguredFeaturesUtil) -> Unit> = mutableMapOf()
