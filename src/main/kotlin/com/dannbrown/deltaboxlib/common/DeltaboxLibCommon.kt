@@ -22,6 +22,7 @@ object DeltaboxLibCommon {
         DeltaboxPlacerTypes.register()
         DeltaboxConfiguredFeatures.register()
         DeltaboxPlacedFeatures.register()
+        DeltaboxBiomeModifiers.register()
     }
 
     fun gatherData(gen: DataGenerator) {

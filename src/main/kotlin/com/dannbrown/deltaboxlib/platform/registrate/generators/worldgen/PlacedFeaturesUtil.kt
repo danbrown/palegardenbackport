@@ -18,7 +18,7 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import net.minecraft.world.level.levelgen.placement.PlacementModifier
 import net.minecraft.world.level.levelgen.placement.RarityFilter
 
-object PlacedFeaturesUtil {
+object PlacedFeaturesUtil: AbstractWorldgenUtil() {
   fun registerKey(name: String, modId: String): ResourceKey<PlacedFeature> {
     return ResourceKey.create(Registries.PLACED_FEATURE, DeltaboxUtil.resourceLocation(modId, name))
   }
@@ -30,12 +30,6 @@ object PlacedFeaturesUtil {
   ) {
     context.register(key, PlacedFeature(configuration, modifiers))
   }
-
-  // Lookup Functions
-  fun lookup(context: BootstrapContext<PlacedFeature>, configuredFeature: ResourceKey<ConfiguredFeature<*, *>>): Holder<ConfiguredFeature<*, *>> {
-    return context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(configuredFeature)
-  }
-
 
   // Utility Functions
   fun orePlacement(placementModifier: PlacementModifier, modifier: PlacementModifier): List<PlacementModifier> {

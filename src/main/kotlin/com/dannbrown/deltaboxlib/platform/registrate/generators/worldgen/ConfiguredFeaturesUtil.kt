@@ -40,7 +40,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
 import net.minecraft.world.level.material.Fluids
 
-object ConfiguredFeaturesUtil {
+object ConfiguredFeaturesUtil: AbstractWorldgenUtil() {
   fun registerKey(name: String, modId: String): ResourceKey<ConfiguredFeature<*, *>> {
     return ResourceKey.create(
       Registries.CONFIGURED_FEATURE,

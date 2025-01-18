@@ -1,5 +1,6 @@
 package com.dannbrown.deltaboxlib.common.content.worldgen.tree
 
+import com.dannbrown.deltaboxlib.common.init.DeltaboxConfiguredFeatures
 import net.minecraft.data.worldgen.features.TreeFeatures
 import net.minecraft.resources.ResourceKey
 import net.minecraft.util.RandomSource
@@ -67,6 +68,6 @@ class DeltaboxTreeGrower(
   /*?}*/
 
   companion object {
-    val SAMPLE: DeltaboxTreeGrower = DeltaboxTreeGrower("sample", Optional.of(TreeFeatures.MEGA_SPRUCE), Optional.of(TreeFeatures.ACACIA), Optional.of(TreeFeatures.CHERRY))
+    val SAMPLE: DeltaboxTreeGrower = DeltaboxTreeGrower("sample", Optional.of(DeltaboxConfiguredFeatures.TEST_FEATURE), Optional.of(DeltaboxConfiguredFeatures.TEST_FEATURE), Optional.of(DeltaboxConfiguredFeatures.TEST_FEATURE))
   }
 }

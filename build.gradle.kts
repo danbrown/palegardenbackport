@@ -61,7 +61,7 @@ dependencies {
     @Suppress("UnstableApiUsage")
     mappings(loom.officialMojangMappings())
     if (isFabric) {
-        modules("content-registries-v0", "registry-sync-v0", "resource-loader-v0", "entity-events-v1", "screen-api-v1", "key-binding-api-v1", "lifecycle-events-v1", "blockrenderlayer-v1", "object-builder-api-v1")
+        modules("content-registries-v0", "registry-sync-v0", "resource-loader-v0", "entity-events-v1", "screen-api-v1", "key-binding-api-v1", "lifecycle-events-v1", "blockrenderlayer-v1", "object-builder-api-v1", "biome-api-v1")
         modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
         modImplementation("net.fabricmc:fabric-language-kotlin:${property("deps.flk")}+kotlin.2.0.0")
         ifStable("com.terraformersmc:modmenu:${property("deps.modmenu")}")

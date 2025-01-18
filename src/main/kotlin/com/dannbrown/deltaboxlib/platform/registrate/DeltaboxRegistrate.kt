@@ -17,15 +17,26 @@ import java.util.function.BiConsumer
 import com.dannbrown.deltaboxlib.platform.registrate.generators.trades.*
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.dannbrown.deltaboxlib.platform.registrate.generators.recipe.DeltaboxRecipeSlice
+import com.dannbrown.deltaboxlib.platform.registrate.generators.worldgen.BiomeModifiersUtil
 import com.dannbrown.deltaboxlib.platform.registrate.generators.worldgen.ConfiguredFeaturesUtil
 import com.dannbrown.deltaboxlib.platform.registrate.generators.worldgen.PlacedFeaturesUtil
+import net.minecraft.core.Holder
+import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistrySetBuilder
+import net.minecraft.tags.TagKey
+import net.minecraft.util.profiling.ProfilerFiller
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.Executor
+import java.util.function.Predicate
 /*? if >=1.21 {*/
 /*import net.minecraft.data.worldgen.BootstrapContext
 *//*?} else {*/
 import net.minecraft.data.worldgen.BootstapContext as BootstrapContext
 /*?}*/
 import net.minecraft.resources.ResourceKey
+import net.minecraft.tags.BiomeTags
+import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.levelgen.GenerationStep
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType
@@ -33,12 +44,14 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import java.util.function.Supplier
-
 /*? if fabric {*/
 /*import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener
@@ -51,21 +64,19 @@ import net.minecraft.server.packs.PackType
 import net.minecraft.server.packs.resources.CloseableResourceManager
 import net.minecraft.server.packs.resources.PreparableReloadListener.PreparationBarrier
 import net.minecraft.server.packs.resources.ResourceManager
-import net.minecraft.util.profiling.ProfilerFiller
-import java.util.concurrent.CompletableFuture
-import java.util.concurrent.Executor
 *//*?}*/
 
 /*? if forge {*/
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider
+import net.minecraftforge.registries.ForgeRegistries
 /*?}*/
 
 /*? if neoforge {*/
 /*import net.neoforged.neoforge.registries.DeferredRegister
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
 import net.neoforged.neoforge.registries.DeferredHolder
-
+import net.neoforged.neoforge.registries.NeoForgeRegistries
 *//*?}*/
 
 class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(modId) {
@@ -394,6 +405,69 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
     }
   }
 
+  // @ Biome Modifiers
+
+  /*? if forge {*/
+  val BIOME_MODIFIERS: MutableMap<ResourceKey<net.minecraftforge.common.world.BiomeModifier>, Triple<TagKey<Biome>, ResourceKey<PlacedFeature>, GenerationStep.Decoration>> = mutableMapOf()
+
+  fun biomeModifier(
+    name: String,
+    biome: TagKey<Biome>,
+    placedFeature: ResourceKey<PlacedFeature>,
+    step: GenerationStep.Decoration
+  ): ResourceKey<net.minecraftforge.common.world.BiomeModifier> {
+    val key = BiomeModifiersUtil.registerKey(name, this.modid)
+    BIOME_MODIFIERS[key] = Triple(biome, placedFeature, step)
+    return key
+  }
+
+  private fun bootstrapBiomeModifiers(context: BootstrapContext<net.minecraftforge.common.world.BiomeModifier>){
+    BIOME_MODIFIERS.forEach { key, props ->
+      val biomes = BiomeModifiersUtil.lookupBiomeNamed(context, props.first)
+      val feature = BiomeModifiersUtil.lookupPlacedFeatureDirect(context, props.second)
+      val step = props.third
+      context.register(key, net.minecraftforge.common.world.ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+        biomes, feature, step
+      ))
+    }
+  }
+  /*?} elif neoforge {*/
+  /*val BIOME_MODIFIERS: MutableMap<ResourceKey<net.neoforged.neoforge.common.world.BiomeModifier>, Triple<TagKey<Biome>, ResourceKey<PlacedFeature>, GenerationStep.Decoration>> = mutableMapOf()
+
+  fun biomeModifier(
+    name: String,
+    biome: TagKey<Biome>,
+    placedFeature: ResourceKey<PlacedFeature>,
+    step: GenerationStep.Decoration
+  ): ResourceKey<net.neoforged.neoforge.common.world.BiomeModifier> {
+    val key = BiomeModifiersUtil.registerKey(name, this.modid)
+    BIOME_MODIFIERS[key] = Triple(biome, placedFeature, step)
+    return key
+  }
+
+  private fun bootstrapBiomeModifiers(context: BootstrapContext<net.neoforged.neoforge.common.world.BiomeModifier>){
+    BIOME_MODIFIERS.forEach { key, props ->
+      val biomes = BiomeModifiersUtil.lookupBiomeNamed(context, props.first)
+      val feature = BiomeModifiersUtil.lookupPlacedFeatureDirect(context, props.second)
+      val step = props.third
+      context.register(key, net.neoforged.neoforge.common.world.BiomeModifiers.AddFeaturesBiomeModifier(
+        biomes, feature, step
+      ))
+    }
+  }
+
+  *//*?} elif fabric {*/
+  /*fun biomeModifier(
+    name: String,
+    biome: TagKey<Biome>,
+    placedFeature: ResourceKey<PlacedFeature>,
+    step: GenerationStep.Decoration
+  ) {
+    BiomeModifications.addFeature(BiomeSelectors.tag(biome), step, placedFeature)
+  }
+  *//*?}*/
+
+
   // FABRIC SPECIFIC BLOCKS FEATURES REGISTRATION
   /*? if fabric {*/
   /*override fun register() {
@@ -597,6 +671,7 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
     val registrySetBuilder = RegistrySetBuilder()
       .add(Registries.CONFIGURED_FEATURE, ::bootstrapConfiguredfeatures)
       .add(Registries.PLACED_FEATURE, ::bootstrapPlacedFeatures)
+      .add(ForgeRegistries.Keys.BIOME_MODIFIERS, ::bootstrapBiomeModifiers)
     event.generator.addProvider(event.includeServer(), object : DatapackBuiltinEntriesProvider(event.generator.packOutput, event.lookupProvider, registrySetBuilder, mutableSetOf(this.modid)) {})
   }
 
@@ -674,6 +749,7 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
     val registrySetBuilder = RegistrySetBuilder()
       .add(Registries.CONFIGURED_FEATURE, ::bootstrapConfiguredfeatures)
       .add(Registries.PLACED_FEATURE, ::bootstrapPlacedFeatures)
+      .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, ::bootstrapBiomeModifiers)
     event.generator.addProvider(event.includeServer(), object : DatapackBuiltinEntriesProvider(event.generator.packOutput, event.lookupProvider, registrySetBuilder, mutableSetOf(this.modid)) {})
   }
   *//*?}*/
