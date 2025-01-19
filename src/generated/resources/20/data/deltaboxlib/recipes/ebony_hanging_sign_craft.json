@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "C": {
+      "item": "minecraft:chain"
+    },
+    "I": {
+      "item": "deltaboxlib:stripped_ebony_log"
+    }
+  },
+  "pattern": [
+    "C C",
+    "III",
+    "III"
+  ],
+  "result": {
+    "count": 6,
+    "item": "deltaboxlib:ebony_hanging_sign"
+  },
+  "show_notification": true
+}

@@ -114,6 +114,14 @@ class RecipePresets(
     simpleShapedRecipe(result,arrayOf("SIS", "SIS"),mapOf('I' to ingredient, 'S' to Supplier { Ingredient.of(Items.STICK) }),1,"_craft")
   }
 
+  fun signCraftingRecipe(result: Supplier<ItemLike>, ingredient: Supplier<Ingredient>){
+    simpleShapedRecipe(result,arrayOf("III", "III", " S "),mapOf('I' to ingredient, 'S' to Supplier { Ingredient.of(Items.STICK) }),3,"_craft")
+  }
+
+  fun hangingSignCraftingRecipe(result: Supplier<ItemLike>, ingredient: Supplier<Ingredient>){
+    simpleShapedRecipe(result,arrayOf("C C", "III", "III"),mapOf('I' to ingredient, 'C' to Supplier { Ingredient.of(Items.CHAIN) }),6,"_craft")
+  }
+
   fun pressurePlateCraftingRecipe(result: Supplier<ItemLike>, ingredient: Supplier<Ingredient>){
     simpleShapedRecipe(result,arrayOf("II"),mapOf('I' to ingredient),1,"_craft")
   }

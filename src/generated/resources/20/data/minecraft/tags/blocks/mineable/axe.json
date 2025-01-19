@@ -23,6 +23,10 @@
     "deltaboxlib:ebony_pressure_plate",
     "deltaboxlib:ebony_button",
     "deltaboxlib:ebony_door",
-    "deltaboxlib:ebony_trapdoor"
+    "deltaboxlib:ebony_trapdoor",
+    "deltaboxlib:ebony_wall_sign",
+    "deltaboxlib:ebony_sign",
+    "deltaboxlib:ebony_hanging_wall_sign",
+    "deltaboxlib:ebony_hanging_sign"
   ]
 }

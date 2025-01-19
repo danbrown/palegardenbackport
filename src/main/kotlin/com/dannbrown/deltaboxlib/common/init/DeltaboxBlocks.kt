@@ -212,7 +212,7 @@ object DeltaboxBlocks {
     .longBlockFamily()
 
   val WOOD_TEST = BLOCKS.createFamily("ebony")
-    .woodFamily(WoodType.ACACIA, DeltaboxTreeGrower.SAMPLE, { blockState, _, _ -> blockState.`is`(BlockTags.DIRT) })
+    .woodFamily(DeltaboxWoodTypes.EBONY, DeltaboxWoodTypes.EBONY_SET, DeltaboxTreeGrower.SAMPLE, { blockState, _, _ -> blockState.`is`(BlockTags.DIRT) })
 
   fun register() {
     DeltaboxUtil.logInfo("Registering blocks...")
