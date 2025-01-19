@@ -15,6 +15,7 @@ object DeltaboxLibCommon {
     fun init() {
         DeltaboxBlocks.register()
         DeltaboxItems.register()
+        DeltaboxTags.register()
         DeltaboxTrades.register()
         DeltaboxCreativeTabs.register()
         DeltaboxRecipes.register()

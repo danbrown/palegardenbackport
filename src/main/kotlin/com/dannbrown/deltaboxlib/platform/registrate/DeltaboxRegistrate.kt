@@ -21,8 +21,18 @@ import com.dannbrown.deltaboxlib.platform.registrate.generators.worldgen.BiomeMo
 import com.dannbrown.deltaboxlib.platform.registrate.generators.worldgen.ConfiguredFeaturesUtil
 import com.dannbrown.deltaboxlib.platform.registrate.generators.worldgen.PlacedFeaturesUtil
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistrySetBuilder
+import net.minecraft.data.tags.BiomeTagsProvider
+import net.minecraft.data.tags.EntityTypeTagsProvider
+import net.minecraft.data.tags.FluidTagsProvider
+import net.minecraft.data.tags.IntrinsicHolderTagsProvider.IntrinsicTagAppender
+import net.minecraft.data.tags.ItemTagsProvider
+import net.minecraft.data.tags.PaintingVariantTagsProvider
+import net.minecraft.data.tags.TagsProvider
+import net.minecraft.data.tags.TagsProvider.TagAppender
+import net.minecraft.data.tags.WorldPresetTagsProvider
 import net.minecraft.tags.TagKey
 import net.minecraft.util.profiling.ProfilerFiller
 import java.util.concurrent.CompletableFuture
@@ -35,6 +45,10 @@ import net.minecraft.data.worldgen.BootstapContext as BootstrapContext
 /*?}*/
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.BiomeTags
+import net.minecraft.util.Tuple
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.decoration.PaintingVariant
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.levelgen.GenerationStep
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
@@ -43,6 +57,8 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerTy
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
+import net.minecraft.world.level.levelgen.presets.WorldPreset
+import net.minecraft.world.level.material.Fluid
 import java.util.function.Supplier
 /*? if fabric {*/
 /*import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
@@ -70,6 +86,7 @@ import net.minecraft.server.packs.resources.ResourceManager
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider
 import net.minecraftforge.registries.ForgeRegistries
+import net.minecraftforge.common.data.BlockTagsProvider
 /*?}*/
 
 /*? if neoforge {*/
@@ -77,6 +94,7 @@ import net.minecraftforge.registries.ForgeRegistries
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.NeoForgeRegistries
+import net.neoforged.neoforge.common.data.BlockTagsProvider
 *//*?}*/
 
 class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(modId) {
@@ -408,7 +426,7 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   // @ Biome Modifiers
 
   /*? if forge {*/
-  val BIOME_MODIFIERS: MutableMap<ResourceKey<net.minecraftforge.common.world.BiomeModifier>, Triple<TagKey<Biome>, ResourceKey<PlacedFeature>, GenerationStep.Decoration>> = mutableMapOf()
+  private val BIOME_MODIFIERS: MutableMap<ResourceKey<net.minecraftforge.common.world.BiomeModifier>, Triple<TagKey<Biome>, ResourceKey<PlacedFeature>, GenerationStep.Decoration>> = mutableMapOf()
 
   fun biomeModifier(
     name: String,
@@ -432,7 +450,7 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
     }
   }
   /*?} elif neoforge {*/
-  /*val BIOME_MODIFIERS: MutableMap<ResourceKey<net.neoforged.neoforge.common.world.BiomeModifier>, Triple<TagKey<Biome>, ResourceKey<PlacedFeature>, GenerationStep.Decoration>> = mutableMapOf()
+  /*private val BIOME_MODIFIERS: MutableMap<ResourceKey<net.neoforged.neoforge.common.world.BiomeModifier>, Triple<TagKey<Biome>, ResourceKey<PlacedFeature>, GenerationStep.Decoration>> = mutableMapOf()
 
   fun biomeModifier(
     name: String,
@@ -467,6 +485,71 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   }
   *//*?}*/
 
+  // @ Tags
+  private val BIOME_TAGS_CONSUMERS: MutableMap<TagKey<Biome>, Tuple<MutableList<TagKey<Biome>>, MutableList<Supplier<ResourceKey<Biome>>>>> = mutableMapOf()
+  private val BLOCK_TAGS_CONSUMERS: MutableMap<TagKey<Block>, Tuple<MutableList<TagKey<Block>>, MutableList<Supplier<Block>>>> = mutableMapOf()
+  private val ITEM_TAGS_CONSUMERS: MutableMap<TagKey<Item>, Tuple<MutableList<TagKey<Item>>, MutableList<Supplier<Item>>>> = mutableMapOf()
+  private val FLUID_TAGS_CONSUMERS: MutableMap<TagKey<Fluid>, Tuple<MutableList<TagKey<Fluid>>, MutableList<Supplier<Fluid>>>> = mutableMapOf()
+  private val ENTITY_TAGS_CONSUMERS: MutableMap<TagKey<EntityType<*>>, Tuple<MutableList<TagKey<EntityType<*>>>, MutableList<Supplier<EntityType<*>>>>> = mutableMapOf()
+  private val PAINTING_TAGS_CONSUMERS: MutableMap<TagKey<PaintingVariant>, Tuple<MutableList<TagKey<PaintingVariant>>, MutableList<Supplier<ResourceKey<PaintingVariant>>>>> = mutableMapOf()
+  private val WORLD_PRESETS_TAGS_CONSUMERS: MutableMap<TagKey<WorldPreset>, Tuple<MutableList<TagKey<WorldPreset>>, MutableList<Supplier<ResourceKey<WorldPreset>>>>> = mutableMapOf()
+
+  fun biomeTags(tag: TagKey<Biome>, vararg tags: TagKey<Biome>) {
+    if(BIOME_TAGS_CONSUMERS[tag] == null) BIOME_TAGS_CONSUMERS[tag] = Tuple(mutableListOf(), mutableListOf())
+    BIOME_TAGS_CONSUMERS[tag]?.a?.addAll(tags)
+  }
+  fun biomeTags(tag: TagKey<Biome>, vararg items: Supplier<ResourceKey<Biome>>) {
+    if(BIOME_TAGS_CONSUMERS[tag] == null) BIOME_TAGS_CONSUMERS[tag] = Tuple(mutableListOf(), mutableListOf())
+    BIOME_TAGS_CONSUMERS[tag]?.b?.addAll(items)
+  }
+  fun blockTags(tag: TagKey<Block>, vararg tags: TagKey<Block>) {
+    if(BLOCK_TAGS_CONSUMERS[tag] == null) BLOCK_TAGS_CONSUMERS[tag] = Tuple(mutableListOf(), mutableListOf())
+    BLOCK_TAGS_CONSUMERS[tag]?.a?.addAll(tags)
+  }
+  fun blockTags(tag: TagKey<Block>, vararg items: Supplier<Block>) {
+    if(BLOCK_TAGS_CONSUMERS[tag] == null) BLOCK_TAGS_CONSUMERS[tag] = Tuple(mutableListOf(), mutableListOf())
+    BLOCK_TAGS_CONSUMERS[tag]?.b?.addAll(items)
+  }
+  fun itemTags(tag: TagKey<Item>, vararg tags: TagKey<Item>) {
+    if(ITEM_TAGS_CONSUMERS[tag] == null) ITEM_TAGS_CONSUMERS[tag] = Tuple(mutableListOf(), mutableListOf())
+    ITEM_TAGS_CONSUMERS[tag]?.a?.addAll(tags)
+  }
+  fun itemTags(tag: TagKey<Item>, vararg items: Supplier<Item>) {
+    if(ITEM_TAGS_CONSUMERS[tag] == null) ITEM_TAGS_CONSUMERS[tag] = Tuple(mutableListOf(), mutableListOf())
+    ITEM_TAGS_CONSUMERS[tag]?.b?.addAll(items)
+  }
+  fun fluidTags(tag: TagKey<Fluid>, vararg tags: TagKey<Fluid>) {
+    if(FLUID_TAGS_CONSUMERS[tag] == null) FLUID_TAGS_CONSUMERS[tag] = Tuple(mutableListOf(), mutableListOf())
+    FLUID_TAGS_CONSUMERS[tag]?.a?.addAll(tags)
+  }
+  fun fluidTags(tag: TagKey<Fluid>, vararg items: Supplier<Fluid>) {
+    if(FLUID_TAGS_CONSUMERS[tag] == null) FLUID_TAGS_CONSUMERS[tag] = Tuple(mutableListOf(), mutableListOf())
+    FLUID_TAGS_CONSUMERS[tag]?.b?.addAll(items)
+  }
+  fun entityTags(tag: TagKey<EntityType<*>>, vararg tags: TagKey<EntityType<*>>) {
+    if(ENTITY_TAGS_CONSUMERS[tag] == null) ENTITY_TAGS_CONSUMERS[tag] = Tuple(mutableListOf(), mutableListOf())
+    ENTITY_TAGS_CONSUMERS[tag]?.a?.addAll(tags)
+  }
+  fun entityTags(tag: TagKey<EntityType<*>>, vararg items: Supplier<EntityType<*>>) {
+    if(ENTITY_TAGS_CONSUMERS[tag] == null) ENTITY_TAGS_CONSUMERS[tag] = Tuple(mutableListOf(), mutableListOf())
+    ENTITY_TAGS_CONSUMERS[tag]?.b?.addAll(items)
+  }
+  fun paintingTags(tag: TagKey<PaintingVariant>, vararg tags: TagKey<PaintingVariant>) {
+    if(PAINTING_TAGS_CONSUMERS[tag] == null) PAINTING_TAGS_CONSUMERS[tag] = Tuple(mutableListOf(), mutableListOf())
+    PAINTING_TAGS_CONSUMERS[tag]?.a?.addAll(tags)
+  }
+  fun paintingTags(tag: TagKey<PaintingVariant>, vararg items: Supplier<ResourceKey<PaintingVariant>>) {
+    if(PAINTING_TAGS_CONSUMERS[tag] == null) PAINTING_TAGS_CONSUMERS[tag] = Tuple(mutableListOf(), mutableListOf())
+    PAINTING_TAGS_CONSUMERS[tag]?.b?.addAll(items)
+  }
+  fun worldPresetTags(tag: TagKey<WorldPreset>, vararg tags: TagKey<WorldPreset>) {
+    if(WORLD_PRESETS_TAGS_CONSUMERS[tag] == null) WORLD_PRESETS_TAGS_CONSUMERS[tag] = Tuple(mutableListOf(), mutableListOf())
+    WORLD_PRESETS_TAGS_CONSUMERS[tag]?.a?.addAll(tags)
+  }
+  fun worldPresetTags(tag: TagKey<WorldPreset>, vararg items: Supplier<ResourceKey<WorldPreset>>) {
+    if(WORLD_PRESETS_TAGS_CONSUMERS[tag] == null) WORLD_PRESETS_TAGS_CONSUMERS[tag] = Tuple(mutableListOf(), mutableListOf())
+    WORLD_PRESETS_TAGS_CONSUMERS[tag]?.b?.addAll(items)
+  }
 
   // FABRIC SPECIFIC BLOCKS FEATURES REGISTRATION
   /*? if fabric {*/
@@ -673,6 +756,61 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
       .add(Registries.PLACED_FEATURE, ::bootstrapPlacedFeatures)
       .add(ForgeRegistries.Keys.BIOME_MODIFIERS, ::bootstrapBiomeModifiers)
     event.generator.addProvider(event.includeServer(), object : DatapackBuiltinEntriesProvider(event.generator.packOutput, event.lookupProvider, registrySetBuilder, mutableSetOf(this.modid)) {})
+
+    // Biome Tags
+    event.generator.addProvider(
+      event.includeServer(),
+      object : BiomeTagsProvider(event.generator.packOutput, event.lookupProvider, this.modid, event.existingFileHelper) {
+        override fun getName(): String {return "${this.modId} Biome Tags"}
+        override fun addTags(arg: HolderLookup.Provider) { BIOME_TAGS_CONSUMERS.forEach { tag(it.key).addTags(*it.value.a.toTypedArray()).add(*it.value.b.map { b -> b.get() }.toTypedArray()) } }
+      }
+    )
+    // Block Tags
+    val blockTags = object : BlockTagsProvider(event.generator.packOutput, event.lookupProvider, this.modid, event.existingFileHelper) {
+      override fun getName(): String {return "${this.modId} Block Tags"}
+      override fun addTags(arg: HolderLookup.Provider) { BLOCK_TAGS_CONSUMERS.forEach { tag(it.key).addTags(*it.value.a.toTypedArray()).add(*it.value.b.map { b -> b.get() }.toTypedArray()) } }
+    }
+    event.generator.addProvider(event.includeServer(), blockTags)
+    // Item Tags
+    event.generator.addProvider(
+      event.includeServer(),
+      object : ItemTagsProvider(event.generator.packOutput, event.lookupProvider, blockTags.contentsGetter(), this.modid, event.existingFileHelper) {
+        override fun getName(): String {return "${this.modId} Item Tags"}
+        override fun addTags(arg: HolderLookup.Provider) { ITEM_TAGS_CONSUMERS.forEach { tag(it.key).addTags(*it.value.a.toTypedArray()).add(*it.value.b.map { b -> b.get() }.toTypedArray()) } }
+      }
+    )
+    // Fluid Tags
+    event.generator.addProvider(
+      event.includeServer(),
+      object : FluidTagsProvider(event.generator.packOutput, event.lookupProvider, this.modid, event.existingFileHelper) {
+        override fun getName(): String {return "${this.modId} Fluid Tags"}
+        override fun addTags(arg: HolderLookup.Provider) { FLUID_TAGS_CONSUMERS.forEach { tag(it.key).addTags(*it.value.a.toTypedArray()).add(*it.value.b.map { b -> b.get() }.toTypedArray()) } }
+      }
+    )
+    // Entity Tags
+    event.generator.addProvider(
+      event.includeServer(),
+      object : EntityTypeTagsProvider(event.generator.packOutput, event.lookupProvider, this.modid, event.existingFileHelper) {
+        override fun getName(): String {return "${this.modId} Entity Types Tags"}
+        override fun addTags(arg: HolderLookup.Provider) { ENTITY_TAGS_CONSUMERS.forEach { tag(it.key).addTags(*it.value.a.toTypedArray()).add(*it.value.b.map { b -> b.get() }.toTypedArray()) } }
+      }
+    )
+    // Painting Tags
+    event.generator.addProvider(
+      event.includeServer(),
+      object : PaintingVariantTagsProvider(event.generator.packOutput, event.lookupProvider, this.modid, event.existingFileHelper) {
+        override fun getName(): String {return "${this.modId} Painting Variants Tags"}
+        override fun addTags(arg: HolderLookup.Provider) { PAINTING_TAGS_CONSUMERS.forEach { tag(it.key).addTags(*it.value.a.toTypedArray()).add(*it.value.b.map { b -> b.get() }.toTypedArray()) } }
+      }
+    )
+    // World Preset Tags
+    event.generator.addProvider(
+      event.includeServer(),
+      object : WorldPresetTagsProvider(event.generator.packOutput, event.lookupProvider, this.modid, event.existingFileHelper) {
+        override fun getName(): String {return "${this.modId} World Presets Tags"}
+        override fun addTags(arg: HolderLookup.Provider) { WORLD_PRESETS_TAGS_CONSUMERS.forEach { tag(it.key).addTags(*it.value.a.toTypedArray()).add(*it.value.b.map { b -> b.get() }.toTypedArray()) } }
+      }
+    )
   }
 
   /*?} elif neoforge {*/
@@ -751,6 +889,61 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
       .add(Registries.PLACED_FEATURE, ::bootstrapPlacedFeatures)
       .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, ::bootstrapBiomeModifiers)
     event.generator.addProvider(event.includeServer(), object : DatapackBuiltinEntriesProvider(event.generator.packOutput, event.lookupProvider, registrySetBuilder, mutableSetOf(this.modid)) {})
+
+    // Biome Tags
+    event.generator.addProvider(
+      event.includeServer(),
+      object : BiomeTagsProvider(event.generator.packOutput, event.lookupProvider, this.modid, event.existingFileHelper) {
+        override fun getName(): String {return "${this.modId} Biome Tags"}
+        override fun addTags(arg: HolderLookup.Provider) { BIOME_TAGS_CONSUMERS.forEach { tag(it.key).addTags(*it.value.a.toTypedArray()).add(*it.value.b.map { b -> b.get() }.toTypedArray()) } }
+      }
+    )
+    // Block Tags
+    val blockTags = object : BlockTagsProvider(event.generator.packOutput, event.lookupProvider, this.modid, event.existingFileHelper) {
+      override fun getName(): String {return "${this.modId} Block Tags"}
+      override fun addTags(arg: HolderLookup.Provider) { BLOCK_TAGS_CONSUMERS.forEach { tag(it.key).addTags(*it.value.a.toTypedArray()).add(*it.value.b.map { b -> b.get() }.toTypedArray()) } }
+    }
+    event.generator.addProvider(event.includeServer(), blockTags)
+    // Item Tags
+    event.generator.addProvider(
+      event.includeServer(),
+      object : ItemTagsProvider(event.generator.packOutput, event.lookupProvider, blockTags.contentsGetter(), this.modid, event.existingFileHelper) {
+        override fun getName(): String {return "${this.modId} Item Tags"}
+        override fun addTags(arg: HolderLookup.Provider) { ITEM_TAGS_CONSUMERS.forEach { tag(it.key).addTags(*it.value.a.toTypedArray()).add(*it.value.b.map { b -> b.get() }.toTypedArray()) } }
+      }
+    )
+    // Fluid Tags
+    event.generator.addProvider(
+      event.includeServer(),
+      object : FluidTagsProvider(event.generator.packOutput, event.lookupProvider, this.modid, event.existingFileHelper) {
+        override fun getName(): String {return "${this.modId} Fluid Tags"}
+        override fun addTags(arg: HolderLookup.Provider) { FLUID_TAGS_CONSUMERS.forEach { tag(it.key).addTags(*it.value.a.toTypedArray()).add(*it.value.b.map { b -> b.get() }.toTypedArray()) } }
+      }
+    )
+    // Entity Tags
+    event.generator.addProvider(
+      event.includeServer(),
+      object : EntityTypeTagsProvider(event.generator.packOutput, event.lookupProvider, this.modid, event.existingFileHelper) {
+        override fun getName(): String {return "${this.modId} Entity Types Tags"}
+        override fun addTags(arg: HolderLookup.Provider) { ENTITY_TAGS_CONSUMERS.forEach { tag(it.key).addTags(*it.value.a.toTypedArray()).add(*it.value.b.map { b -> b.get() }.toTypedArray()) } }
+      }
+    )
+    // Painting Tags
+    event.generator.addProvider(
+      event.includeServer(),
+      object : PaintingVariantTagsProvider(event.generator.packOutput, event.lookupProvider, this.modid, event.existingFileHelper) {
+        override fun getName(): String {return "${this.modId} Painting Variants Tags"}
+        override fun addTags(arg: HolderLookup.Provider) { PAINTING_TAGS_CONSUMERS.forEach { tag(it.key).addTags(*it.value.a.toTypedArray()).add(*it.value.b.map { b -> b.get() }.toTypedArray()) } }
+      }
+    )
+    // World Preset Tags
+    event.generator.addProvider(
+      event.includeServer(),
+      object : WorldPresetTagsProvider(event.generator.packOutput, event.lookupProvider, this.modid, event.existingFileHelper) {
+        override fun getName(): String {return "${this.modId} World Presets Tags"}
+        override fun addTags(arg: HolderLookup.Provider) { WORLD_PRESETS_TAGS_CONSUMERS.forEach { tag(it.key).addTags(*it.value.a.toTypedArray()).add(*it.value.b.map { b -> b.get() }.toTypedArray()) } }
+      }
+    )
   }
   *//*?}*/
 }
