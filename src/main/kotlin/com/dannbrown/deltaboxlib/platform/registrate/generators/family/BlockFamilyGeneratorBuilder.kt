@@ -20,6 +20,21 @@ class BlockFamilyGeneratorBuilder(name: String, private val generator: BlockGene
   private val _blockFamily: BlockFamily = BlockFamily()
 
   // @ Family Presets
+  fun longBlockFamily(mainBlock: Supplier<out Block>? = null, isRotatedBlock: Boolean = false): BlockFamily {
+    return LongBlockFamilySet(
+      generator,
+      _name,
+      _sharedProps,
+      _toolType,
+      _toolTier,
+      _color,
+      _accentColor,
+      _copyFrom,
+      _denyList,
+      mainBlock,
+      isRotatedBlock
+    ).getFamily()
+  }
 
 
   // @ Builder Chaining Methods

@@ -2,6 +2,9 @@
   "values": [
     "deltaboxlib:pale_oak_wall",
     "deltaboxlib:roseate_sandstone_wall",
-    "deltaboxlib:pale_oak_stem"
+    "deltaboxlib:pale_oak_stem",
+    "deltaboxlib:pyrite_wall",
+    "deltaboxlib:polished_pyrite_wall",
+    "deltaboxlib:pyrite_brick_wall"
   ]
 }

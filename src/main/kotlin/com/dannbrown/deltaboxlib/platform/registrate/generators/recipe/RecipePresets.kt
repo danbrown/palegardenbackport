@@ -67,7 +67,6 @@ class RecipePresets(
       1,
       "_from_materials"
     )
-
     simpleShapelessRecipe(ingotItem, listOf( Supplier { Ingredient.of(result.get()) } ), 9, DeltaboxUtil.itemId(result), "_to_materials")
   }
 
@@ -78,16 +77,35 @@ class RecipePresets(
       1,
       "_from_materials"
     )
-
     simpleShapelessRecipe(ingotItem, listOf( Supplier { Ingredient.of(result.get()) } ), 4, DeltaboxUtil.itemId(result), "_to_materials")
   }
   // End Storage Blocks
 
   // Stonecutting
-  fun simpleStonecuttingRecipe(result: Supplier<ItemLike>, ingredient: Supplier<Ingredient>, amount: Int = 1) {
-    SingleItemRecipeBuilder.stonecutting(ingredient.get(), RecipeCategory.BUILDING_BLOCKS, result.get(), amount)
-      .unlockedBy("has_ingredients", InventoryChangeTrigger.TriggerInstance.hasItems(ingredient.get().items[0].item))
-      .save(p, DeltaboxUtil.resourceLocation(registrate.modid, DeltaboxUtil.itemId(result) + "_stonecutting"))
+  fun simpleStonecuttingRecipe(result: Supplier<ItemLike>, ingredient: Supplier<ItemLike>, amount: Int = 1) {
+    SingleItemRecipeBuilder.stonecutting(Ingredient.of(ingredient.get()), RecipeCategory.BUILDING_BLOCKS, result.get(), amount)
+      .unlockedBy("has_ingredients", InventoryChangeTrigger.TriggerInstance.hasItems(ingredient.get()))
+      .save(p, DeltaboxUtil.resourceLocation(registrate.modid, DeltaboxUtil.itemId(ingredient) + "_to_" + DeltaboxUtil.itemId(result) + "_stonecutting"))
   }
   // End Stonecutting
+
+  fun stairsCraftingRecipe(result: Supplier<ItemLike>, ingredient: Supplier<Ingredient>){
+    simpleShapedRecipe(result,arrayOf("I  ", "II ", "III"),mapOf('I' to ingredient),4,"_craft")
+  }
+
+  fun slabCraftingRecipe(result: Supplier<ItemLike>, ingredient: Supplier<Ingredient>){
+    simpleShapedRecipe(result,arrayOf("III"),mapOf('I' to ingredient),6,"_craft")
+  }
+
+  fun wallCraftingRecipe(result: Supplier<ItemLike>, ingredient: Supplier<Ingredient>){
+    simpleShapedRecipe(result,arrayOf("III", "III"),mapOf('I' to ingredient),6,"_craft")
+  }
+
+  fun polishedCraftingRecipe(result: Supplier<ItemLike>, ingredient: Supplier<Ingredient>){
+    simpleShapedRecipe(result,arrayOf("II", "II"),mapOf('I' to ingredient),4,"_craft")
+  }
+
+  fun slabToChiseledRecipe(result: Supplier<ItemLike>, ingredient: Supplier<Ingredient>){
+    simpleShapedRecipe(result,arrayOf("I", "I"),mapOf('I' to ingredient),1,"_craft")
+  }
 }

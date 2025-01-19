@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "deltaboxlib:pyrite_bricks"
+    }
+  },
+  "pattern": [
+    "III"
+  ],
+  "result": {
+    "count": 6,
+    "item": "deltaboxlib:pyrite_brick_slab"
+  },
+  "show_notification": true
+}

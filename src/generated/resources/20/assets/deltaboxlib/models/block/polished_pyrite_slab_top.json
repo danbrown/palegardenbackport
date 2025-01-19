@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "deltaboxlib:block/polished_pyrite",
+    "side": "deltaboxlib:block/polished_pyrite",
+    "top": "deltaboxlib:block/polished_pyrite"
+  }
+}

@@ -4,6 +4,19 @@
     "deltaboxlib:roseate_sandstone",
     "deltaboxlib:roseate_sandstone_stairs",
     "deltaboxlib:roseate_sandstone_slab",
-    "deltaboxlib:roseate_sandstone_wall"
+    "deltaboxlib:roseate_sandstone_wall",
+    "deltaboxlib:pyrite",
+    "deltaboxlib:pyrite_stairs",
+    "deltaboxlib:pyrite_slab",
+    "deltaboxlib:pyrite_wall",
+    "deltaboxlib:polished_pyrite",
+    "deltaboxlib:polished_pyrite_stairs",
+    "deltaboxlib:polished_pyrite_slab",
+    "deltaboxlib:polished_pyrite_wall",
+    "deltaboxlib:pyrite_bricks",
+    "deltaboxlib:pyrite_brick_stairs",
+    "deltaboxlib:pyrite_brick_slab",
+    "deltaboxlib:pyrite_brick_wall",
+    "deltaboxlib:chiseled_pyrite"
   ]
 }

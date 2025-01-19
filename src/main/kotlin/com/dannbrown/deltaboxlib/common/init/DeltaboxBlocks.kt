@@ -10,6 +10,7 @@ import com.dannbrown.deltaboxlib.common.content.block.GenericTallGrassBlock
 import com.dannbrown.deltaboxlib.common.content.block.StrippableFlammablePillarBlock
 import com.dannbrown.deltaboxlib.common.content.worldgen.tree.DeltaboxTreeGrower
 import com.dannbrown.deltaboxlib.platform.registrate.generators.block.BlockGenerator
+import com.dannbrown.deltaboxlib.platform.registrate.generators.family.BlockFamily
 import com.dannbrown.deltaboxlib.platform.registrate.transformers.BlockLootPresets
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.tterrag.registrate.util.entry.BlockEntry
@@ -202,6 +203,12 @@ object DeltaboxBlocks {
   val WOODEN_DOOR = BLOCKS.createDoor("pale_oak", BlockSetType.OAK, true)
     .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null, false)
     .register()
+
+  // Family blocks test
+  val LONG_FAMILY_TEST = BLOCKS.createFamily("pyrite")
+    .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, true)
+    .denyList(BlockFamily.Type.PILLAR)
+    .longBlockFamily()
 
   fun register() {
     DeltaboxUtil.logInfo("Registering blocks...")

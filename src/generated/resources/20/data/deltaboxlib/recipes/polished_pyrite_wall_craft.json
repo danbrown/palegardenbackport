@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "deltaboxlib:polished_pyrite"
+    }
+  },
+  "pattern": [
+    "III",
+    "III"
+  ],
+  "result": {
+    "count": 6,
+    "item": "deltaboxlib:polished_pyrite_wall"
+  },
+  "show_notification": true
+}

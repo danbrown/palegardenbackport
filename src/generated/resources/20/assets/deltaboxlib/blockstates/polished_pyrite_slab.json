@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "deltaboxlib:block/polished_pyrite_slab"
+    },
+    "type=double": {
+      "model": "deltaboxlib:block/polished_pyrite_slab_double"
+    },
+    "type=top": {
+      "model": "deltaboxlib:block/polished_pyrite_slab_top"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "deltaboxlib:block/polished_pyrite",
+    "side": "deltaboxlib:block/polished_pyrite"
+  }
+}
