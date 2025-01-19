@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "deltaboxlib:block/pale_oak_planks",
+    "side": "deltaboxlib:block/pale_oak_planks"
+  }
+}

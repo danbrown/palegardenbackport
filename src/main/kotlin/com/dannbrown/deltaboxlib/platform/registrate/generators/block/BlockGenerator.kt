@@ -292,27 +292,29 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
   }
 
   fun createStairs(
-    _name: String, referenceBlockState: Supplier<BlockState>,
+    _name: String,
+    textureName: String,
+    referenceBlockState: Supplier<BlockState>,
     bottomTop: Boolean = false,
     isWooden: Boolean = false,
     addSuffix: Boolean = true
   ): BlockGeneratorBuilder<StairBlock> {
-    return CommonBlockPreset(_name).createStairs(this, referenceBlockState, bottomTop, isWooden, addSuffix)
+    return CommonBlockPreset(_name).createStairs(this, textureName, referenceBlockState, bottomTop, isWooden, addSuffix)
   }
 
 
   fun createSlab(
-    _name: String, bottomTop: Boolean = false,
+    _name: String, textureName: String, bottomTop: Boolean = false,
     isWooden: Boolean = false, addSuffix: Boolean = true
   ): BlockGeneratorBuilder<SlabBlock> {
-    return CommonBlockPreset(_name).createSlab(this, bottomTop, isWooden, addSuffix)
+    return CommonBlockPreset(_name).createSlab(this, textureName, bottomTop, isWooden, addSuffix)
   }
 
   fun createWall(
-    _name: String, bottomTop: Boolean = false,
+    _name: String, textureName: String, bottomTop: Boolean = false,
     addSuffix: Boolean = true
   ): BlockGeneratorBuilder<WallBlock> {
-    return CommonBlockPreset(_name).createWall(this, bottomTop, addSuffix)
+    return CommonBlockPreset(_name).createWall(this, textureName, bottomTop, addSuffix)
   }
 
   fun createRotatedPillar(

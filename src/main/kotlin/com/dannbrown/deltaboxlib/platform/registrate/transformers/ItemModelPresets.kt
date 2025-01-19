@@ -51,7 +51,7 @@ object ItemModelPresets {
 
   fun <B : Item> bottomTopWallItem(name: String): NonNullBiConsumer<DataGenContext<Item, B>, RegistrateItemModelProvider> {
     return NonNullBiConsumer { c, p ->
-      p.withExistingParent(c.name, p.modLoc("block/wall_inventory_special_top"))
+      p.withExistingParent(c.name, p.mcLoc("block/wall_inventory_special_top"))
         .texture("wall", p.modLoc("block/$name"))
         .texture("down", p.modLoc("block/$name" + "_top"))
         .texture("top", p.modLoc("block/$name" + "_top"))

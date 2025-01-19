@@ -21,8 +21,10 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CropBlock
 import net.minecraft.world.level.block.DoublePlantBlock
+import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf
 import net.minecraft.world.level.block.state.properties.Property
+import net.minecraft.world.level.block.state.properties.SlabType
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.LootItem
@@ -74,7 +76,13 @@ object BlockLootPresets {
    */
   fun <B : Block> dropSlab(): NonNullBiConsumer<RegistrateBlockLootTables, B> {
     return NonNullBiConsumer { lt, b ->
-      lt.createSlabItemTable(b)
+      lt.add(b, LootTable.lootTable().withPool(LootPool.lootPool()
+        .setRolls(ConstantValue.exactly(1f))
+        .add(lt.applyExplosionDecay(b, LootItem.lootTableItem(b)
+          .apply(SetItemCountFunction.setCount(ConstantValue.exactly(2f))
+            .`when`(LootItemBlockStatePropertyCondition.hasBlockStateProperties(b)
+              .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))))
+        )))
     }
   }
 

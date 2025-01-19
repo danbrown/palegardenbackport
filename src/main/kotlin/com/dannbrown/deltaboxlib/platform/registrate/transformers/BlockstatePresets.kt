@@ -492,7 +492,7 @@ object BlockstatePresets {
   fun <B : Block> bottomTopWallBlock(name: String): NonNullBiConsumer<DataGenContext<Block, B>, RegistrateBlockstateProvider> {
     return NonNullBiConsumer { c, p ->
       val postModel = p.models()
-        .withExistingParent(c.name, p.modLoc("block/wall_special_post"))
+        .withExistingParent(c.name, p.mcLoc("block/wall_special_post"))
         .texture("wall", p.modLoc("block/$name"))
         .texture("bottom", p.modLoc("block/$name" + "_top"))
         .texture("top", p.modLoc("block/$name" + "_top"))

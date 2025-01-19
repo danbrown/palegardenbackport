@@ -41,7 +41,12 @@ class CommonBlockPreset(
   //    return this
   //  }
 
-  fun <T: Block> createBottomTop(generator: BlockGenerator, bottomName: String = "", topName: String = "", sideName: String = ""): BlockGeneratorBuilder<T> {
+  fun <T : Block> createBottomTop(
+    generator: BlockGenerator,
+    bottomName: String = "",
+    topName: String = "",
+    sideName: String = ""
+  ): BlockGeneratorBuilder<T> {
     val bottomTextureName = bottomName.ifEmpty { "${_name}_bottom" }
     val topTextureName = topName.ifEmpty { "${_name}_top" }
     val sideTextureName = sideName.ifEmpty { _name }
@@ -67,7 +72,11 @@ class CommonBlockPreset(
   //    return this
   //  }
 
-  fun createRotatedPillar(generator: BlockGenerator, _topTexture: String = "", _sideTexture: String = ""): BlockGeneratorBuilder<RotatedPillarBlock> {
+  fun createRotatedPillar(
+    generator: BlockGenerator,
+    _topTexture: String = "",
+    _sideTexture: String = ""
+  ): BlockGeneratorBuilder<RotatedPillarBlock> {
     val topTextureName = _topTexture.ifEmpty { "${_name}_top" }
     val sideTextureName = _sideTexture.ifEmpty { _name }
     return generator
@@ -120,6 +129,7 @@ class CommonBlockPreset(
 
   fun createStairs(
     generator: BlockGenerator,
+    textureName: String,
     referenceBlockState: Supplier<BlockState>,
     bottomTop: Boolean = false,
     isWooden: Boolean = false,
@@ -127,12 +137,12 @@ class CommonBlockPreset(
   ): BlockGeneratorBuilder<StairBlock> {
     val nameWithSuffix = if (addSuffix) this._name + "_stairs" else _name
     return generator
-      .create<StairBlock>(_name)
+      .create<StairBlock>(nameWithSuffix)
       .blockFactory { p -> StairBlock(referenceBlockState, p) }
       .copyFrom { if (isWooden) Blocks.OAK_STAIRS else Blocks.COBBLESTONE_STAIRS }
       .blockstate(
-        if (bottomTop) BlockstatePresets.bottomTopStairsBlock(nameWithSuffix) else BlockstatePresets.stairsBlock(
-          nameWithSuffix
+        if (bottomTop) BlockstatePresets.bottomTopStairsBlock(textureName) else BlockstatePresets.stairsBlock(
+          textureName
         )
       )
       .loot(BlockLootPresets.dropItselfLoot())
@@ -168,18 +178,19 @@ class CommonBlockPreset(
 
   fun createSlab(
     generator: BlockGenerator,
+    textureName: String,
     bottomTop: Boolean = false,
     isWooden: Boolean = false,
     addSuffix: Boolean = true
   ): BlockGeneratorBuilder<SlabBlock> {
     val nameWithSuffix = if (addSuffix) this._name + "_slab" else _name
     return generator
-      .create<SlabBlock>(_name)
+      .create<SlabBlock>(nameWithSuffix)
       .blockFactory { p -> SlabBlock(p) }
       .copyFrom { if (isWooden) Blocks.OAK_SLAB else Blocks.COBBLESTONE_SLAB }
       .blockstate(
-        if (bottomTop) BlockstatePresets.bottomTopSlabBlock(nameWithSuffix) else BlockstatePresets.slabBlock(
-          nameWithSuffix
+        if (bottomTop) BlockstatePresets.bottomTopSlabBlock(textureName) else BlockstatePresets.slabBlock(
+          textureName
         )
       )
       .loot(BlockLootPresets.dropSlab())
@@ -195,16 +206,17 @@ class CommonBlockPreset(
 
   fun createWall(
     generator: BlockGenerator,
+    textureName: String,
     bottomTop: Boolean = false,
     addSuffix: Boolean = true
   ): BlockGeneratorBuilder<WallBlock> {
     val nameWithSuffix = if (addSuffix) this._name + "_wall" else _name
     return generator
-      .create<WallBlock>(_name)
+      .create<WallBlock>(nameWithSuffix)
       .blockFactory { p -> WallBlock(p) }
       .blockstate(
-        if (bottomTop) BlockstatePresets.bottomTopWallBlock(nameWithSuffix) else BlockstatePresets.wallBlock(
-          nameWithSuffix
+        if (bottomTop) BlockstatePresets.bottomTopWallBlock(textureName) else BlockstatePresets.wallBlock(
+          textureName
         )
       )
       .loot(BlockLootPresets.dropItselfLoot())
@@ -213,8 +225,8 @@ class CommonBlockPreset(
           .tag(*BlockTagPresets.wallTags().first.toTypedArray())
           .item()
           .model(
-            if (bottomTop) ItemModelPresets.bottomTopWallItem(nameWithSuffix) else ItemModelPresets.wallItem(
-              nameWithSuffix
+            if (bottomTop) ItemModelPresets.bottomTopWallItem(textureName) else ItemModelPresets.wallItem(
+              textureName
             )
           )
           .tag(*BlockTagPresets.wallTags().second.toTypedArray())
@@ -222,23 +234,27 @@ class CommonBlockPreset(
       }
   }
 
-  fun createFence(generator: BlockGenerator, isWooden: Boolean = false, addSuffix: Boolean = true): BlockGeneratorBuilder<FenceBlock> {
+  fun createFence(
+    generator: BlockGenerator,
+    isWooden: Boolean = false,
+    addSuffix: Boolean = true
+  ): BlockGeneratorBuilder<FenceBlock> {
     val nameWithSuffix = if (addSuffix) this._name + "_fence" else _name
     return generator
-        .create<FenceBlock>(_name)
-        .blockFactory { p -> FenceBlock(p) }
-        .copyFrom { if (isWooden) Blocks.OAK_FENCE else Blocks.NETHER_BRICK_FENCE }
-        .blockstate(BlockstatePresets.fenceBlock(nameWithSuffix))
-        .loot(BlockLootPresets.dropItselfLoot())
-        .transform { t ->
-            t
-                .tag(*BlockTagPresets.fenceTags(isWooden).first.toTypedArray())
-                .item()
-                .model(ItemModelPresets.fenceItem(nameWithSuffix))
-                .tag(*BlockTagPresets.fenceTags(isWooden).second.toTypedArray())
-                .build()
-        }
-}
+      .create<FenceBlock>(_name)
+      .blockFactory { p -> FenceBlock(p) }
+      .copyFrom { if (isWooden) Blocks.OAK_FENCE else Blocks.NETHER_BRICK_FENCE }
+      .blockstate(BlockstatePresets.fenceBlock(nameWithSuffix))
+      .loot(BlockLootPresets.dropItselfLoot())
+      .transform { t ->
+        t
+          .tag(*BlockTagPresets.fenceTags(isWooden).first.toTypedArray())
+          .item()
+          .model(ItemModelPresets.fenceItem(nameWithSuffix))
+          .tag(*BlockTagPresets.fenceTags(isWooden).second.toTypedArray())
+          .build()
+      }
+  }
 
   // @ FENCE
   /**
@@ -262,18 +278,22 @@ class CommonBlockPreset(
 //    return this
 //  } // @ FENCE GATE
 
-  fun createFenceGate(generator: BlockGenerator, woodType: WoodType, addSuffix: Boolean = true): BlockGeneratorBuilder<FenceGateBlock> {
+  fun createFenceGate(
+    generator: BlockGenerator,
+    woodType: WoodType,
+    addSuffix: Boolean = true
+  ): BlockGeneratorBuilder<FenceGateBlock> {
     val nameWithSuffix = if (addSuffix) this._name + "_fence_gate" else _name
     return generator
-        .create<FenceGateBlock>(_name)
-        .blockFactory { p -> FenceGateBlock(p, woodType) }
-        .copyFrom { Blocks.OAK_FENCE_GATE }
-        .blockstate(BlockstatePresets.fenceGateBlock(nameWithSuffix))
-        .loot(BlockLootPresets.dropItselfLoot())
-        .transform { t ->
-            t.tag(BlockTags.FENCE_GATES)
-        }
-}
+      .create<FenceGateBlock>(_name)
+      .blockFactory { p -> FenceGateBlock(p, woodType) }
+      .copyFrom { Blocks.OAK_FENCE_GATE }
+      .blockstate(BlockstatePresets.fenceGateBlock(nameWithSuffix))
+      .loot(BlockLootPresets.dropItselfLoot())
+      .transform { t ->
+        t.tag(BlockTags.FENCE_GATES)
+      }
+  }
 
 //  /**
 //   * Changes the blockstate and model to be a fence gate block
@@ -305,7 +325,7 @@ class CommonBlockPreset(
       .copyFrom { if (isWooden) Blocks.OAK_PRESSURE_PLATE else Blocks.STONE_PRESSURE_PLATE }
       .blockstate(BlockstatePresets.pressurePlateBlock(nameWithSuffix))
       .loot(BlockLootPresets.dropItselfLoot())
-      .properties { p -> p.noCollission().strength(0.5F)}
+      .properties { p -> p.noCollission().strength(0.5F) }
       .transform { t ->
         t
           .tag(*BlockTagPresets.pressurePlateTags(isWooden).first.toTypedArray())
@@ -389,7 +409,6 @@ class CommonBlockPreset(
 //  }
 
 
-
 //  // Trapdoors
 //  fun woodenTrapdoorBlock(ingredient: Supplier<DataIngredient>, blockSetType: BlockSetType, orientable: Boolean = true, addSuffix: Boolean = true): BlockGen<T> {
 //    this.checkCurrentBuilder()
@@ -418,7 +437,12 @@ class CommonBlockPreset(
 //  }
 //
 
-  fun createWoodenTrapdoor(generator: BlockGenerator, blockSetType: BlockSetType, orientable: Boolean = true, addSuffix: Boolean = true): BlockGeneratorBuilder<TrapDoorBlock> {
+  fun createWoodenTrapdoor(
+    generator: BlockGenerator,
+    blockSetType: BlockSetType,
+    orientable: Boolean = true,
+    addSuffix: Boolean = true
+  ): BlockGeneratorBuilder<TrapDoorBlock> {
     val nameWithSuffix = if (addSuffix) "${_name}_trapdoor" else _name
     return generator
       .create<TrapDoorBlock>(_name)
@@ -439,7 +463,7 @@ class CommonBlockPreset(
       }
   }
 
-//  // DOOR
+  //  // DOOR
 //  /**
 //   * Changes the blockstate and model to be a door block
 //   */
@@ -464,12 +488,17 @@ class CommonBlockPreset(
 //    }
 //    return this
 //  }
-  fun createDoor(generator: BlockGenerator, blockSetType: BlockSetType, isWooden: Boolean = true, addSuffix: Boolean = true): BlockGeneratorBuilder<DoorBlock> {
+  fun createDoor(
+    generator: BlockGenerator,
+    blockSetType: BlockSetType,
+    isWooden: Boolean = true,
+    addSuffix: Boolean = true
+  ): BlockGeneratorBuilder<DoorBlock> {
     val nameWithSuffix = if (addSuffix) "${_name}_door" else _name
     return generator
       .create<DoorBlock>(_name)
       .blockFactory { p -> DoorBlock(p, blockSetType) }
-      .copyFrom { if(isWooden) Blocks.OAK_DOOR else Blocks.IRON_DOOR }
+      .copyFrom { if (isWooden) Blocks.OAK_DOOR else Blocks.IRON_DOOR }
       .blockstate(BlockstatePresets.doorTransparentBlock())
       .properties { p ->
         p.noOcclusion()

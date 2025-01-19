@@ -1,5 +1,8 @@
 {
   "values": [
-    "deltaboxlib:adamantium_block"
+    "deltaboxlib:adamantium_block",
+    "deltaboxlib:roseate_sandstone_stairs",
+    "deltaboxlib:roseate_sandstone_slab",
+    "deltaboxlib:roseate_sandstone"
   ]
 }
