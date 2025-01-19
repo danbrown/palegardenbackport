@@ -546,7 +546,12 @@ object BlockstatePresets {
 
   fun <B : Block> trapdoorBlock(name: String, orientable: Boolean = true): NonNullBiConsumer<DataGenContext<Block, B>, RegistrateBlockstateProvider> {
     return NonNullBiConsumer { c, p ->
-      p.trapdoorBlockWithRenderType(c.entry as TrapDoorBlock, name, p.modLoc("block/$name" + "_trapdoor"), orientable, "cutout_mipped")
+      val texture = p.modLoc("block/$name")
+      val renderType = "cutout_mipped"
+      val bottom = if(orientable) p.models().trapdoorOrientableBottom(name + "_bottom", texture).renderType(renderType) else p.models().trapdoorBottom(name + "_bottom", texture).renderType(renderType)
+      val top = if(orientable) p.models().trapdoorOrientableTop(name + "_top", texture).renderType(renderType) else p.models().trapdoorTop(name + "_top", texture).renderType(renderType)
+      val open = if(orientable) p.models().trapdoorOrientableOpen(name + "_open", texture).renderType(renderType) else p.models().trapdoorOpen(name + "_open", texture).renderType(renderType)
+      p.trapdoorBlock(c.entry as TrapDoorBlock, bottom, top, open, orientable)
     }
   }
 

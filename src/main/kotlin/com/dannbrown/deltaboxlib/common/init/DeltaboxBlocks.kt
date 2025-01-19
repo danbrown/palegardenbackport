@@ -19,6 +19,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.FlowerPotBlock
+import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.material.MapColor
 
@@ -187,6 +188,18 @@ object DeltaboxBlocks {
     .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null, false)
     .register()
   val WOODEN_FENCE_GATE = BLOCKS.createFenceGate("pale_oak", "pale_oak_planks", WoodType.BIRCH)
+    .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null, false)
+    .register()
+  val WOODEN_PRESSURE_PLATE = BLOCKS.createPressurePlate("pale_oak", "pale_oak_planks", BlockSetType.OAK, true)
+    .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null, false)
+    .register()
+  val WOODEN_BUTTON = BLOCKS.createButton("pale_oak", "pale_oak_planks", BlockSetType.OAK, true)
+    .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null, false)
+    .register()
+  val WOODEN_TRAPDOOR = BLOCKS.createWoodenTrapdoor("pale_oak", BlockSetType.OAK)
+    .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null, false)
+    .register()
+  val WOODEN_DOOR = BLOCKS.createDoor("pale_oak", BlockSetType.OAK, true)
     .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null, false)
     .register()
 

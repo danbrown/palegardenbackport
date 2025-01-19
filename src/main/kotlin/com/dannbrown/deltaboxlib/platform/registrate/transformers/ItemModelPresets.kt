@@ -69,8 +69,8 @@ object ItemModelPresets {
 
   fun <B : Item> trapdoorItem(name: String): NonNullBiConsumer<DataGenContext<Item, B>, RegistrateItemModelProvider> {
     return NonNullBiConsumer { c, p ->
-      val texture = p.modLoc("block/$name" + "_trapdoor")
-      p.withExistingParent(c.name, p.modLoc("block/$name" + "_trapdoor_bottom"))
+      val texture = p.modLoc("block/$name")
+      p.withExistingParent(c.name, p.modLoc("block/$name" + "_bottom"))
         .texture("texture", texture)
         .texture("particle", texture)
         .renderType("cutout_mipped")

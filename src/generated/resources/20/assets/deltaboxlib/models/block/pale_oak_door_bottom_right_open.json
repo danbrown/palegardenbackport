@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/door_bottom_right_open",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "bottom": "deltaboxlib:block/pale_oak_door_bottom",
+    "top": "deltaboxlib:block/pale_oak_door_top"
+  }
+}

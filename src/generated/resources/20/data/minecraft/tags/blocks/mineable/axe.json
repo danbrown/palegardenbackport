@@ -6,6 +6,10 @@
     "deltaboxlib:pale_oak_wall",
     "deltaboxlib:pale_oak_stem",
     "deltaboxlib:pale_oak_fence",
-    "deltaboxlib:pale_oak_fence_gate"
+    "deltaboxlib:pale_oak_fence_gate",
+    "deltaboxlib:pale_oak_pressure_plate",
+    "deltaboxlib:pale_oak_button",
+    "deltaboxlib:pale_oak_trapdoor",
+    "deltaboxlib:pale_oak_door"
   ]
 }

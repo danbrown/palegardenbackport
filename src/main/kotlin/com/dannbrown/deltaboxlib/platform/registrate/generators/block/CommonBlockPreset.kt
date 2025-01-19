@@ -316,23 +316,24 @@ class CommonBlockPreset(
 
   fun createPressurePlate(
     generator: BlockGenerator,
+    textureName: String,
     blockSetType: BlockSetType,
     isWooden: Boolean = true,
     addSuffix: Boolean = true
   ): BlockGeneratorBuilder<PressurePlateBlock> {
     val nameWithSuffix = if (addSuffix) this._name + "_pressure_plate" else _name
     return generator
-      .create<PressurePlateBlock>(_name)
+      .create<PressurePlateBlock>(nameWithSuffix)
       .blockFactory { p -> PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, p, blockSetType) }
       .copyFrom { if (isWooden) Blocks.OAK_PRESSURE_PLATE else Blocks.STONE_PRESSURE_PLATE }
-      .blockstate(BlockstatePresets.pressurePlateBlock(nameWithSuffix))
+      .blockstate(BlockstatePresets.pressurePlateBlock(textureName))
       .loot(BlockLootPresets.dropItselfLoot())
       .properties { p -> p.noCollission().strength(0.5F) }
       .transform { t ->
         t
           .tag(*BlockTagPresets.pressurePlateTags(isWooden).first.toTypedArray())
           .item()
-          .model(ItemModelPresets.pressurePlateItem(nameWithSuffix))
+          .model(ItemModelPresets.pressurePlateItem(textureName))
           .tag(*BlockTagPresets.pressurePlateTags(isWooden).second.toTypedArray())
           .build()
       }
@@ -363,23 +364,24 @@ class CommonBlockPreset(
 
   fun createButton(
     generator: BlockGenerator,
+    textureName: String,
     blockSetType: BlockSetType,
     isWooden: Boolean = true,
     addSuffix: Boolean = true
   ): BlockGeneratorBuilder<ButtonBlock> {
     val nameWithSuffix = if (addSuffix) this._name + "_button" else _name
     return generator
-      .create<ButtonBlock>(_name)
+      .create<ButtonBlock>(nameWithSuffix)
       .blockFactory { p -> ButtonBlock(p, blockSetType, 30, isWooden) }
       .copyFrom { if (isWooden) Blocks.OAK_BUTTON else Blocks.STONE_BUTTON }
       .properties { p -> p.noCollission().strength(0.5F) }
-      .blockstate(BlockstatePresets.buttonBlock(nameWithSuffix))
+      .blockstate(BlockstatePresets.buttonBlock(textureName))
       .loot(BlockLootPresets.dropItselfLoot())
       .transform { t ->
         t
           .tag(*BlockTagPresets.buttonTags(isWooden).first.toTypedArray())
           .item()
-          .model(ItemModelPresets.buttonItem(nameWithSuffix))
+          .model(ItemModelPresets.buttonItem(textureName))
           .tag(*BlockTagPresets.buttonTags(isWooden).second.toTypedArray())
           .build()
       }
@@ -447,7 +449,7 @@ class CommonBlockPreset(
   ): BlockGeneratorBuilder<TrapDoorBlock> {
     val nameWithSuffix = if (addSuffix) "${_name}_trapdoor" else _name
     return generator
-      .create<TrapDoorBlock>(_name)
+      .create<TrapDoorBlock>(nameWithSuffix)
       .blockFactory { p -> TrapDoorBlock(p, blockSetType) }
       .copyFrom { Blocks.OAK_TRAPDOOR }
       .blockstate(BlockstatePresets.trapdoorBlock(nameWithSuffix, orientable))
@@ -463,6 +465,7 @@ class CommonBlockPreset(
           .model(ItemModelPresets.trapdoorItem(nameWithSuffix))
           .build()
       }
+      .cutoutRender()
   }
 
   //  // DOOR
@@ -498,7 +501,7 @@ class CommonBlockPreset(
   ): BlockGeneratorBuilder<DoorBlock> {
     val nameWithSuffix = if (addSuffix) "${_name}_door" else _name
     return generator
-      .create<DoorBlock>(_name)
+      .create<DoorBlock>(nameWithSuffix)
       .blockFactory { p -> DoorBlock(p, blockSetType) }
       .copyFrom { if (isWooden) Blocks.OAK_DOOR else Blocks.IRON_DOOR }
       .blockstate(BlockstatePresets.doorTransparentBlock())
@@ -514,5 +517,6 @@ class CommonBlockPreset(
           .model(ItemModelPresets.doorItem(nameWithSuffix))
           .build()
       }
+      .cutoutRender()
   }
 }

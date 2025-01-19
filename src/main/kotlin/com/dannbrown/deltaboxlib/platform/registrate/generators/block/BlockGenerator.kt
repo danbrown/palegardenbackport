@@ -10,10 +10,12 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.ButtonBlock
 import net.minecraft.world.level.block.DoorBlock
 import net.minecraft.world.level.block.FenceBlock
 import net.minecraft.world.level.block.FenceGateBlock
 import net.minecraft.world.level.block.FlowerPotBlock
+import net.minecraft.world.level.block.PressurePlateBlock
 import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
@@ -348,6 +350,19 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     return CommonBlockPreset(_name).createFenceGate(this, textureName, woodType, addSuffix)
   }
 
+  fun createPressurePlate(
+    _name: String, textureName: String, blockSetType: BlockSetType, isWooden: Boolean = false,
+    addSuffix: Boolean = true
+  ): BlockGeneratorBuilder<PressurePlateBlock> {
+    return CommonBlockPreset(_name).createPressurePlate(this, textureName, blockSetType, isWooden, addSuffix)
+  }
+
+  fun createButton(
+    _name: String, textureName: String, blockSetType: BlockSetType, isWooden: Boolean = false,
+    addSuffix: Boolean = true
+  ): BlockGeneratorBuilder<ButtonBlock> {
+    return CommonBlockPreset(_name).createButton(this, textureName, blockSetType, isWooden, addSuffix)
+  }
 
   fun createWoodenTrapdoor(
     _name: String, blockSetType: BlockSetType,
