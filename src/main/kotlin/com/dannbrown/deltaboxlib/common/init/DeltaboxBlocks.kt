@@ -19,6 +19,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.FlowerPotBlock
+import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.material.MapColor
 
 object DeltaboxBlocks {
@@ -176,10 +177,16 @@ object DeltaboxBlocks {
   val WOODEN_WALL = BLOCKS.createWall("pale_oak", "pale_oak_planks", false, true)
     .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null, false)
     .register()
-  val BOTTOM_TOP_WALL = BLOCKS.createWall("roseate_sandstone", "roseate_sandstone",true, false)
+  val BOTTOM_TOP_WALL = BLOCKS.createWall("roseate_sandstone", "roseate_sandstone",true, true)
     .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, true)
     .register()
   val BOTTOM_TOP_WALL2 = BLOCKS.createWall("pale_oak_stem", "pale_oak_log",true, false)
+    .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null, false)
+    .register()
+  val WOODEN_FENCE = BLOCKS.createFence("pale_oak", "pale_oak_planks", true)
+    .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null, false)
+    .register()
+  val WOODEN_FENCE_GATE = BLOCKS.createFenceGate("pale_oak", "pale_oak_planks", WoodType.BIRCH)
     .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null, false)
     .register()
 

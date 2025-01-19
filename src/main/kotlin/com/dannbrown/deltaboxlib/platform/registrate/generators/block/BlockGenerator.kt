@@ -11,6 +11,8 @@ import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.DoorBlock
+import net.minecraft.world.level.block.FenceBlock
+import net.minecraft.world.level.block.FenceGateBlock
 import net.minecraft.world.level.block.FlowerPotBlock
 import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.SlabBlock
@@ -19,6 +21,7 @@ import net.minecraft.world.level.block.TrapDoorBlock
 import net.minecraft.world.level.block.WallBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockSetType
+import net.minecraft.world.level.block.state.properties.WoodType
 import java.util.function.Supplier
 
 class BlockGenerator(val registrate: DeltaboxRegistrate) {
@@ -291,6 +294,20 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     ).createDouble(this)
   }
 
+  fun createRotatedPillar(
+    _name: String, topTexture: String = "",
+    sideTexture: String = ""
+  ): BlockGeneratorBuilder<RotatedPillarBlock> {
+    return CommonBlockPreset(_name).createRotatedPillar(this, topTexture, sideTexture)
+  }
+
+  fun <T : Block> createBottomTop(
+    _name: String, bottomName: String = "",
+    topName: String = "", sideName: String = ""
+  ): BlockGeneratorBuilder<T> {
+    return CommonBlockPreset(_name).createBottomTop(this, bottomName, topName, sideName)
+  }
+
   fun createStairs(
     _name: String,
     textureName: String,
@@ -301,7 +318,6 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
   ): BlockGeneratorBuilder<StairBlock> {
     return CommonBlockPreset(_name).createStairs(this, textureName, referenceBlockState, bottomTop, isWooden, addSuffix)
   }
-
 
   fun createSlab(
     _name: String, textureName: String, bottomTop: Boolean = false,
@@ -317,19 +333,21 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     return CommonBlockPreset(_name).createWall(this, textureName, bottomTop, addSuffix)
   }
 
-  fun createRotatedPillar(
-    _name: String, topTexture: String = "",
-    sideTexture: String = ""
-  ): BlockGeneratorBuilder<RotatedPillarBlock> {
-    return CommonBlockPreset(_name).createRotatedPillar(this, topTexture, sideTexture)
+
+  fun createFence(
+    _name: String, textureName: String, isWooden: Boolean = false,
+    addSuffix: Boolean = true
+  ): BlockGeneratorBuilder<FenceBlock> {
+    return CommonBlockPreset(_name).createFence(this, textureName, isWooden, addSuffix)
   }
 
-  fun <T : Block> createBottomTop(
-    _name: String, bottomName: String = "",
-    topName: String = "", sideName: String = ""
-  ): BlockGeneratorBuilder<T> {
-    return CommonBlockPreset(_name).createBottomTop(this, bottomName, topName, sideName)
+  fun createFenceGate(
+    _name: String, textureName: String, woodType: WoodType,
+    addSuffix: Boolean = true
+  ): BlockGeneratorBuilder<FenceGateBlock> {
+    return CommonBlockPreset(_name).createFenceGate(this, textureName, woodType, addSuffix)
   }
+
 
   fun createWoodenTrapdoor(
     _name: String, blockSetType: BlockSetType,

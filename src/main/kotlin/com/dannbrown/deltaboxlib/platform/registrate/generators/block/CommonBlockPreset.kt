@@ -236,21 +236,22 @@ class CommonBlockPreset(
 
   fun createFence(
     generator: BlockGenerator,
+    textureName: String,
     isWooden: Boolean = false,
     addSuffix: Boolean = true
   ): BlockGeneratorBuilder<FenceBlock> {
     val nameWithSuffix = if (addSuffix) this._name + "_fence" else _name
     return generator
-      .create<FenceBlock>(_name)
+      .create<FenceBlock>(nameWithSuffix)
       .blockFactory { p -> FenceBlock(p) }
       .copyFrom { if (isWooden) Blocks.OAK_FENCE else Blocks.NETHER_BRICK_FENCE }
-      .blockstate(BlockstatePresets.fenceBlock(nameWithSuffix))
+      .blockstate(BlockstatePresets.fenceBlock(textureName))
       .loot(BlockLootPresets.dropItselfLoot())
       .transform { t ->
         t
           .tag(*BlockTagPresets.fenceTags(isWooden).first.toTypedArray())
           .item()
-          .model(ItemModelPresets.fenceItem(nameWithSuffix))
+          .model(ItemModelPresets.fenceItem(textureName))
           .tag(*BlockTagPresets.fenceTags(isWooden).second.toTypedArray())
           .build()
       }
@@ -280,15 +281,16 @@ class CommonBlockPreset(
 
   fun createFenceGate(
     generator: BlockGenerator,
+    textureName: String,
     woodType: WoodType,
     addSuffix: Boolean = true
   ): BlockGeneratorBuilder<FenceGateBlock> {
     val nameWithSuffix = if (addSuffix) this._name + "_fence_gate" else _name
     return generator
-      .create<FenceGateBlock>(_name)
+      .create<FenceGateBlock>(nameWithSuffix)
       .blockFactory { p -> FenceGateBlock(p, woodType) }
       .copyFrom { Blocks.OAK_FENCE_GATE }
-      .blockstate(BlockstatePresets.fenceGateBlock(nameWithSuffix))
+      .blockstate(BlockstatePresets.fenceGateBlock(textureName))
       .loot(BlockLootPresets.dropItselfLoot())
       .transform { t ->
         t.tag(BlockTags.FENCE_GATES)

@@ -4,6 +4,8 @@
     "deltaboxlib:pale_oak_stairs",
     "deltaboxlib:pale_oak_slab",
     "deltaboxlib:pale_oak_wall",
-    "deltaboxlib:pale_oak_stem"
+    "deltaboxlib:pale_oak_stem",
+    "deltaboxlib:pale_oak_fence",
+    "deltaboxlib:pale_oak_fence_gate"
   ]
 }
