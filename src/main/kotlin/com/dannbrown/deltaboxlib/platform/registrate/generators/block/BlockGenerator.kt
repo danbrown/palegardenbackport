@@ -313,12 +313,11 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
   fun createStairs(
     _name: String,
     textureName: String,
-    referenceBlockState: Supplier<BlockState>,
     bottomTop: Boolean = false,
     isWooden: Boolean = false,
     addSuffix: Boolean = true
   ): BlockGeneratorBuilder<StairBlock> {
-    return CommonBlockPreset(_name).createStairs(this, textureName, referenceBlockState, bottomTop, isWooden, addSuffix)
+    return CommonBlockPreset(_name).createStairs(this, textureName, bottomTop, isWooden, addSuffix)
   }
 
   fun createSlab(

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "deltaboxlib:block/roseate_sandstone_bottom",
+    "side": "deltaboxlib:block/roseate_sandstone",
+    "top": "deltaboxlib:block/roseate_sandstone_top"
+  }
+}

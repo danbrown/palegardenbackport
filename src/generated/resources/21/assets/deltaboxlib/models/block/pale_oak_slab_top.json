@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "deltaboxlib:block/pale_oak_planks",
+    "side": "deltaboxlib:block/pale_oak_planks",
+    "top": "deltaboxlib:block/pale_oak_planks"
+  }
+}
