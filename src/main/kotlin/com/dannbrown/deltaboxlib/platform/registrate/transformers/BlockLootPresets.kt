@@ -59,13 +59,22 @@ object BlockLootPresets {
     return NonNullBiConsumer { lt, b -> lt.dropSelf(b) }
   }
 
-  /**z
+  /**
    * Drops the other loot instead
    * @param other the item to drop
    */
   fun <B : Block> dropOtherLoot(other: Supplier<ItemLike>): NonNullBiConsumer<RegistrateBlockLootTables, B> {
     return NonNullBiConsumer { lt, b ->
       lt.dropOther(b, other.get().asItem())
+    }
+  }
+
+  /**
+   * Drops the slab item table
+   */
+  fun <B : Block> dropSlab(): NonNullBiConsumer<RegistrateBlockLootTables, B> {
+    return NonNullBiConsumer { lt, b ->
+      lt.createSlabItemTable(b)
     }
   }
 

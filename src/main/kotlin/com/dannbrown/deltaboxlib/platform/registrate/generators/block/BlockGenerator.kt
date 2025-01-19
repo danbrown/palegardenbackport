@@ -10,12 +10,19 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.DoorBlock
 import net.minecraft.world.level.block.FlowerPotBlock
+import net.minecraft.world.level.block.RotatedPillarBlock
+import net.minecraft.world.level.block.SlabBlock
+import net.minecraft.world.level.block.StairBlock
+import net.minecraft.world.level.block.TrapDoorBlock
+import net.minecraft.world.level.block.WallBlock
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.BlockSetType
 import java.util.function.Supplier
 
 class BlockGenerator(val registrate: DeltaboxRegistrate) {
-  fun  <T: Block> create(name: String): BlockGeneratorBuilder<T> {
+  fun <T : Block> create(name: String): BlockGeneratorBuilder<T> {
     return BlockGeneratorBuilder(name, registrate)
   }
 
@@ -32,7 +39,12 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
    * @param ingredient The ingredient to use in the items-block recipe
    * @param addSuffix Whether to add the "_block" suffix to the block name
    */
-  fun <T: Block> storageBlock(_name: String, ingotItem: Supplier<ItemLike>, ingredient: Supplier<Ingredient>, addSuffix: Boolean = true): BlockGeneratorBuilder<T> {
+  fun <T : Block> storageBlock(
+    _name: String,
+    ingotItem: Supplier<ItemLike>,
+    ingredient: Supplier<Ingredient>,
+    addSuffix: Boolean = true
+  ): BlockGeneratorBuilder<T> {
     return StorageBlockPreset<T>(_name, ingotItem, ingredient, addSuffix).create(this)
   }
 
@@ -42,7 +54,12 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
    * @param ingredient The ingredient to use in the items-block recipe
    * @param addSuffix Whether to add the "_block" suffix to the block name
    */
-  fun <T: Block> smallStorageBlock(_name: String, ingotItem: Supplier<ItemLike>, ingredient: Supplier<Ingredient>, addSuffix: Boolean = true): BlockGeneratorBuilder<T> {
+  fun <T : Block> smallStorageBlock(
+    _name: String,
+    ingotItem: Supplier<ItemLike>,
+    ingredient: Supplier<Ingredient>,
+    addSuffix: Boolean = true
+  ): BlockGeneratorBuilder<T> {
     return StorageBlockPreset<T>(_name, ingotItem, ingredient, addSuffix).createSmall(this)
   }
 
@@ -64,7 +81,11 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
    * @param block The block to put in the flower pot
    * @param suffix The suffix to add to the block name
    */
-  fun pottedBlock(_name: String, block: BlockEntry<out Block>, suffix: String = ""): BlockGeneratorBuilder<FlowerPotBlock> {
+  fun pottedBlock(
+    _name: String,
+    block: BlockEntry<out Block>,
+    suffix: String = ""
+  ): BlockGeneratorBuilder<FlowerPotBlock> {
     return PottedBlockPreset(_name, block, suffix).create(this)
   }
 
@@ -88,7 +109,9 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     multiplier: Int = 2,
     placeOn: ((blockState: BlockState, blockGetter: BlockGetter, blockPos: BlockPos) -> Boolean)? = null
   ): BlockGeneratorBuilder<GenericGrassBlock> {
-    return GrassBlockPreset(_name, dropItem, isSticky, isHarmful, isBonemealable, chance, multiplier, placeOn).create(this)
+    return GrassBlockPreset(_name, dropItem, isSticky, isHarmful, isBonemealable, chance, multiplier, placeOn).create(
+      this
+    )
   }
 
   /**
@@ -126,7 +149,16 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     chance: Float = 0.25f,
     multiplier: Int = 2,
   ): BlockGeneratorBuilder<GenericTallGrassBlock> {
-    return GrassBlockPreset(_name, dropItem, false, false, false, chance, multiplier, placeOn).createSmallTallGrassBlock(this, doubleBlock, needBonemeal)
+    return GrassBlockPreset(
+      _name,
+      dropItem,
+      false,
+      false,
+      false,
+      chance,
+      multiplier,
+      placeOn
+    ).createSmallTallGrassBlock(this, doubleBlock, needBonemeal)
   }
 
   /**
@@ -147,7 +179,16 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     chance: Float = 0.25f,
     multiplier: Int = 2,
   ): BlockGeneratorBuilder<GenericDoublePlantBlock> {
-    return GrassBlockPreset(_name, dropItem, false, false, false, chance, multiplier, placeOn).createDoubleTallGrassBlock(this, seedItem, prefix)
+    return GrassBlockPreset(
+      _name,
+      dropItem,
+      false,
+      false,
+      false,
+      chance,
+      multiplier,
+      placeOn
+    ).createDoubleTallGrassBlock(this, seedItem, prefix)
   }
 
   /**
@@ -212,8 +253,18 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     includeSeedOnDrop: Boolean = true,
     chance: Float = 1f,
     multiplier: Int = 1,
-  ): BlockGeneratorBuilder<GenericCropBlock>{
-    return CropBlockPreset(_name, seedName, cropLang, seedLang, dropItem, isBush, includeSeedOnDrop, chance, multiplier).create(this)
+  ): BlockGeneratorBuilder<GenericCropBlock> {
+    return CropBlockPreset(
+      _name,
+      seedName,
+      cropLang,
+      seedLang,
+      dropItem,
+      isBush,
+      includeSeedOnDrop,
+      chance,
+      multiplier
+    ).create(this)
   }
 
   fun createDoubleCropBlock(
@@ -226,8 +277,69 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     includeSeedOnDrop: Boolean = true,
     chance: Float = 1f,
     multiplier: Int = 1,
-  ): BlockGeneratorBuilder<DoubleCropBlock>{
-    return CropBlockPreset(_name, seedName, cropLang, seedLang, dropItem, isBush, includeSeedOnDrop, chance, multiplier).createDouble(this)
+  ): BlockGeneratorBuilder<DoubleCropBlock> {
+    return CropBlockPreset(
+      _name,
+      seedName,
+      cropLang,
+      seedLang,
+      dropItem,
+      isBush,
+      includeSeedOnDrop,
+      chance,
+      multiplier
+    ).createDouble(this)
   }
 
+  fun createStairs(
+    _name: String, referenceBlockState: Supplier<BlockState>,
+    bottomTop: Boolean = false,
+    isWooden: Boolean = false,
+    addSuffix: Boolean = true
+  ): BlockGeneratorBuilder<StairBlock> {
+    return CommonBlockPreset(_name).createStairs(this, referenceBlockState, bottomTop, isWooden, addSuffix)
+  }
+
+
+  fun createSlab(
+    _name: String, bottomTop: Boolean = false,
+    isWooden: Boolean = false, addSuffix: Boolean = true
+  ): BlockGeneratorBuilder<SlabBlock> {
+    return CommonBlockPreset(_name).createSlab(this, bottomTop, isWooden, addSuffix)
+  }
+
+  fun createWall(
+    _name: String, bottomTop: Boolean = false,
+    addSuffix: Boolean = true
+  ): BlockGeneratorBuilder<WallBlock> {
+    return CommonBlockPreset(_name).createWall(this, bottomTop, addSuffix)
+  }
+
+  fun createRotatedPillar(
+    _name: String, topTexture: String = "",
+    sideTexture: String = ""
+  ): BlockGeneratorBuilder<RotatedPillarBlock> {
+    return CommonBlockPreset(_name).createRotatedPillar(this, topTexture, sideTexture)
+  }
+
+  fun <T : Block> createBottomTop(
+    _name: String, bottomName: String = "",
+    topName: String = "", sideName: String = ""
+  ): BlockGeneratorBuilder<T> {
+    return CommonBlockPreset(_name).createBottomTop(this, bottomName, topName, sideName)
+  }
+
+  fun createWoodenTrapdoor(
+    _name: String, blockSetType: BlockSetType,
+    orientable: Boolean = true, addSuffix: Boolean = true
+  ): BlockGeneratorBuilder<TrapDoorBlock> {
+    return CommonBlockPreset(_name).createWoodenTrapdoor(this, blockSetType, orientable, addSuffix)
+  }
+
+  fun createDoor(
+    _name: String, blockSetType: BlockSetType, isWooden: Boolean,
+    addSuffix: Boolean = true
+  ): BlockGeneratorBuilder<DoorBlock> {
+    return CommonBlockPreset(_name).createDoor(this, blockSetType, isWooden, addSuffix)
+  }
 }

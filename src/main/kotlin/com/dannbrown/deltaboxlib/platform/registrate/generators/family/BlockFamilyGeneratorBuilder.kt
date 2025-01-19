@@ -23,7 +23,6 @@ class BlockFamilyGeneratorBuilder(name: String, private val generator: BlockGene
 
 
   // @ Builder Chaining Methods
-
   fun sharedProps(props: (BlockBehaviour.Properties) -> BlockBehaviour.Properties = { p: BlockBehaviour.Properties -> p }): BlockFamilyGeneratorBuilder {
     _sharedProps = { p -> props(p) }
     return this
@@ -99,7 +98,6 @@ class BlockFamilyGeneratorBuilder(name: String, private val generator: BlockGene
   fun getGenerator(): BlockGenerator {
     return generator
   }
-
 
   /**
    * Allow for custom block family generation

@@ -103,10 +103,10 @@ object ItemModelPresets {
     }
   }
 
-  fun <B : Item> doorItem(): NonNullBiConsumer<DataGenContext<Item, B>, RegistrateItemModelProvider> {
+  fun <B : Item> doorItem(name: String): NonNullBiConsumer<DataGenContext<Item, B>, RegistrateItemModelProvider> {
     return NonNullBiConsumer { c, p ->
       p.withExistingParent(c.name, p.mcLoc("item/generated"))
-        .texture("layer0", p.modLoc("item/${c.name}"))
+        .texture("layer0", p.modLoc("item/${name}"))
     }
   }
 }
