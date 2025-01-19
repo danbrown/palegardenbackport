@@ -47,7 +47,7 @@ class BlockFamilyGeneratorBuilder(name: String, private val generator: BlockGene
     setType: BlockSetType,
     grower: DeltaboxTreeGrower,
     placeOn: ((blockState: BlockState, blockGetter: BlockGetter, blockPos: BlockPos) -> Boolean)? = null
-  ): BlockFamily {
+  ): WoodBlockFamilySet.WoodFamilyComponents {
     return WoodBlockFamilySet(
       generator,
       _name,
@@ -62,7 +62,7 @@ class BlockFamilyGeneratorBuilder(name: String, private val generator: BlockGene
       setType,
       grower,
       placeOn
-    ).getFamily()
+    ).getContent()
   }
 
 

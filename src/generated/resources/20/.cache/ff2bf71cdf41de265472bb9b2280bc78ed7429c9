@@ -1,4 +1,4 @@
-// 1.20.1	2025-01-19T16:36:21.033405	Registrate Provider for deltaboxlib [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2025-01-19T17:18:07.157635	Registrate Provider for deltaboxlib [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 0f5f6649f8f7b7f0984ec71e9e71f566f3c230dd assets/deltaboxlib/blockstates/acai_leaves.json
 b47ba9037d146b0124a187e02cd01cfb1e28905f assets/deltaboxlib/blockstates/adamantium_block.json
 fb183c4055e26b067b3643734b5583555c89e144 assets/deltaboxlib/blockstates/black_beans.json
@@ -66,8 +66,8 @@ c768c54a7102d4462b9ce699f8fd2cf2e929b967 assets/deltaboxlib/blockstates/simple_g
 15fc9ebec712a53e39e5371a6b1b59313e599da9 assets/deltaboxlib/blockstates/stripped_ebony_log.json
 07e14da2b3ff7f7926293b49bd5db954d5618cb1 assets/deltaboxlib/blockstates/stripped_ebony_wood.json
 ecc93271d373e7607320af113f2333aac1f491e9 assets/deltaboxlib/blockstates/tall_sparse_dry_grass.json
-d0669d913f095f6d5563149fe8a40705576ac27e assets/deltaboxlib/lang/en_ud.json
-b21ad53a8e0c1efab58f9012adf11a0fbca66686 assets/deltaboxlib/lang/en_us.json
+eb1ac992d9506477eadf31d1c99461c5a6c15f68 assets/deltaboxlib/lang/en_ud.json
+1adf585aec8b61911f6caee34a8063cbd4cd0167 assets/deltaboxlib/lang/en_us.json
 2b4feb39488e364e71c9894ceb639ca9f1d7c70b assets/deltaboxlib/models/block/acai_leaves.json
 af4e5fdd38c7b2f93f16c67a9badac29fccb3092 assets/deltaboxlib/models/block/adamantium_block.json
 4d97c84d61c1d1dd6e67bb9dba62da826ed85322 assets/deltaboxlib/models/block/black_beans_stage0.json
@@ -243,7 +243,9 @@ da496f8c1c5585a49ba8afb2db4e2453c8bf0c1b assets/deltaboxlib/models/item/black_be
 bf3f9ed4be787c664816331713338630a6b64c2e assets/deltaboxlib/models/item/carioca_beans.json
 d1284197a83bad9a7488a99502636f317aac0ab3 assets/deltaboxlib/models/item/cassavinha.json
 e851541d3755423000af43628d0d608990549790 assets/deltaboxlib/models/item/chiseled_pyrite.json
+5ff5ecd7c538697e0cbf196f1185933a6b74820e assets/deltaboxlib/models/item/ebony_boat.json
 3ac6d6bbc9703f48f411ff7a0d9bdec6500786fe assets/deltaboxlib/models/item/ebony_button.json
+afe1aa7de1d01d3cced2ae930b03d765eb9f91e6 assets/deltaboxlib/models/item/ebony_chest_boat.json
 02592b92b4045a7ab34319a86bf6039488bdb790 assets/deltaboxlib/models/item/ebony_door.json
 6dc06375cfedc23a7d55eef579a207be78ac756a assets/deltaboxlib/models/item/ebony_fence.json
 7e780ab127f4e7cfea73bf6f69dd6ef448b33085 assets/deltaboxlib/models/item/ebony_fence_gate.json
