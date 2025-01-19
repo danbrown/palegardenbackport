@@ -20,6 +20,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.FlowerPotBlock
+import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.material.MapColor
@@ -158,7 +159,7 @@ object DeltaboxBlocks {
 
 
   // Common Blocks for testing
-  val ROTATED_PILLAR = BLOCKS.createRotatedPillar("pale_oak_log")
+  val ROTATED_PILLAR = BLOCKS.createRotatedPillar<RotatedPillarBlock>("pale_oak_log")
     .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null, false)
     .register()
   val BOTTOM_TOP = BLOCKS.createBottomTop<Block>("roseate_sandstone")
@@ -209,6 +210,9 @@ object DeltaboxBlocks {
     .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, true)
     .denyList(BlockFamily.Type.PILLAR)
     .longBlockFamily()
+
+  val WOOD_TEST = BLOCKS.createFamily("ebony")
+    .woodFamily(WoodType.ACACIA, DeltaboxTreeGrower.SAMPLE, { blockState, _, _ -> blockState.`is`(BlockTags.DIRT) })
 
   fun register() {
     DeltaboxUtil.logInfo("Registering blocks...")

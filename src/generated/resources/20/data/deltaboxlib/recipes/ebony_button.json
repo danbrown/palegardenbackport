@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "deltaboxlib:ebony_planks"
+    }
+  ],
+  "result": {
+    "item": "deltaboxlib:ebony_button"
+  }
+}

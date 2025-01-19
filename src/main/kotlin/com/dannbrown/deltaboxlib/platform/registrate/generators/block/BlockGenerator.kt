@@ -296,10 +296,10 @@ class BlockGenerator(val registrate: DeltaboxRegistrate) {
     ).createDouble(this)
   }
 
-  fun createRotatedPillar(
+  fun <T : RotatedPillarBlock> createRotatedPillar(
     _name: String, topTexture: String = "",
     sideTexture: String = ""
-  ): BlockGeneratorBuilder<RotatedPillarBlock> {
+  ): BlockGeneratorBuilder<T> {
     return CommonBlockPreset(_name).createRotatedPillar(this, topTexture, sideTexture)
   }
 

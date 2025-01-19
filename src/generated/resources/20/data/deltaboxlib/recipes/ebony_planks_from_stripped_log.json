@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "deltaboxlib:stripped_ebony_log"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "deltaboxlib:ebony_planks"
+  }
+}

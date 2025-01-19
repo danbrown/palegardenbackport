@@ -1,0 +1,8 @@
+{
+  "parent": "deltaboxlib:block/ebony_trapdoor_bottom",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "particle": "deltaboxlib:block/ebony_trapdoor",
+    "texture": "deltaboxlib:block/ebony_trapdoor"
+  }
+}

@@ -8,6 +8,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
 import java.util.function.Supplier
@@ -112,9 +113,9 @@ class LongBlockFamilySet(
               { mainBlock!!.get().asItem() },
               1
             )
-            RecipePresets(generator.registrate, p).polishedCraftingRecipe({ c.get() }) {
+            RecipePresets(generator.registrate, p).polishedCraftingRecipe({ c.get() }, {
               Ingredient.of(mainBlock!!.get().asItem())
-            }
+            })
           }
           .register()
       }
@@ -208,9 +209,9 @@ class LongBlockFamilySet(
               { mainBlock!!.get().asItem() },
               1
             )
-            RecipePresets(generator.registrate, p).polishedCraftingRecipe({ c.get() }) {
+            RecipePresets(generator.registrate, p).polishedCraftingRecipe({ c.get() }, {
               Ingredient.of(_blockFamily.blocks[BlockFamily.Type.POLISHED]!!.get().asItem())
-            }
+            })
           }
           .register()
       }
@@ -330,7 +331,7 @@ class LongBlockFamilySet(
     // PILLAR
     if (!_denyList.contains(BlockFamily.Type.PILLAR)) {
       _blockFamily.setVariant(BlockFamily.Type.PILLAR) {
-        generator.createRotatedPillar("${_name}_pillar")
+        generator.createRotatedPillar<RotatedPillarBlock>("${_name}_pillar")
           .fromFamily(_copyFrom, _sharedProps, _color, _toolType, _toolTier)
           .itemTags(listOf(MATERIAL_TAG))
           .recipe { c, p ->

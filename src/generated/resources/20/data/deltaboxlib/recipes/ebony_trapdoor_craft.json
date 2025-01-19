@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "deltaboxlib:ebony_planks"
+    }
+  },
+  "pattern": [
+    "III",
+    "III"
+  ],
+  "result": {
+    "count": 2,
+    "item": "deltaboxlib:ebony_trapdoor"
+  },
+  "show_notification": true
+}

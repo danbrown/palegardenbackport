@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "deltaboxlib:ebony_planks"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "SIS",
+    "SIS"
+  ],
+  "result": {
+    "item": "deltaboxlib:ebony_fence_gate"
+  },
+  "show_notification": true
+}

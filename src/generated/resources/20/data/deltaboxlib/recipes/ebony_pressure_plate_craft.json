@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "deltaboxlib:ebony_planks"
+    }
+  },
+  "pattern": [
+    "II"
+  ],
+  "result": {
+    "item": "deltaboxlib:ebony_pressure_plate"
+  },
+  "show_notification": true
+}

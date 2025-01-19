@@ -41,16 +41,16 @@ class CommonBlockPreset(
       .blockstate(BlockstatePresets.cubeBottomTopBlock(sideTextureName, bottomTextureName, topTextureName))
   }
 
-  fun createRotatedPillar(
+  fun <T : RotatedPillarBlock> createRotatedPillar(
     generator: BlockGenerator,
     _topTexture: String = "",
     _sideTexture: String = ""
-  ): BlockGeneratorBuilder<RotatedPillarBlock> {
+  ): BlockGeneratorBuilder<T> {
     val topTextureName = _topTexture.ifEmpty { "${_name}_top" }
     val sideTextureName = _sideTexture.ifEmpty { _name }
     return generator
-      .create<RotatedPillarBlock>(_name)
-      .blockFactory { p -> RotatedPillarBlock(p) }
+      .create<T>(_name)
+      .blockFactory { p -> RotatedPillarBlock(p) as T }
       .blockstate { c, p ->
         val topTexture = p.modLoc("block/$topTextureName")
         val sideTexture = p.modLoc("block/$sideTextureName")

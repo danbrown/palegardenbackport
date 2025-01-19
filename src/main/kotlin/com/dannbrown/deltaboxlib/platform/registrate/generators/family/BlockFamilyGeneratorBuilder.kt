@@ -1,10 +1,15 @@
 package com.dannbrown.deltaboxlib.platform.registrate.generators.family
 
+import com.dannbrown.deltaboxlib.common.content.worldgen.tree.DeltaboxTreeGrower
 import com.dannbrown.deltaboxlib.platform.registrate.generators.block.BlockGenerator
+import net.minecraft.core.BlockPos
 import net.minecraft.tags.TagKey
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.material.MapColor
 import java.util.function.Supplier
 
@@ -33,6 +38,27 @@ class BlockFamilyGeneratorBuilder(name: String, private val generator: BlockGene
       _denyList,
       mainBlock,
       isRotatedBlock
+    ).getFamily()
+  }
+
+  fun woodFamily(
+    woodType: WoodType,
+    grower: DeltaboxTreeGrower,
+    placeOn: ((blockState: BlockState, blockGetter: BlockGetter, blockPos: BlockPos) -> Boolean)? = null
+  ): BlockFamily {
+    return WoodBlockFamilySet(
+      generator,
+      _name,
+      _sharedProps,
+      _toolType,
+      _toolTier,
+      _color,
+      _accentColor,
+      _copyFrom,
+      _denyList,
+      woodType,
+      grower,
+      placeOn
     ).getFamily()
   }
 
