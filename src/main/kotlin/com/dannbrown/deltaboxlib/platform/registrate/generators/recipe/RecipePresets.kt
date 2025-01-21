@@ -10,12 +10,13 @@ import net.minecraft.data.recipes.SingleItemRecipeBuilder
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import java.util.function.Supplier
+import net.minecraft.world.item.Items
+
 
 /*? if >=1.21 {*/
 /*import net.minecraft.data.recipes.RecipeOutput
 *//*?} else {*/
 import net.minecraft.data.recipes.FinishedRecipe
-import net.minecraft.world.item.Items
 import java.util.function.Consumer
 /*?}*/
 

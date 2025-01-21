@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "deltaboxlib:block/stripped_ebony_log",
+    "side": "deltaboxlib:block/stripped_ebony_log"
+  }
+}

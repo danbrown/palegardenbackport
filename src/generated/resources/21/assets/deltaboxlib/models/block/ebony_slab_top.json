@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "deltaboxlib:block/ebony_planks",
+    "side": "deltaboxlib:block/ebony_planks",
+    "top": "deltaboxlib:block/ebony_planks"
+  }
+}

@@ -2,6 +2,7 @@ package com.dannbrown.deltaboxlib.platform
 
 import com.dannbrown.deltaboxlib.common.*
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
+import com.dannbrown.deltaboxlib.platform.util.ModStatus
 import net.minecraft.core.RegistrySetBuilder
 
 /*? if fabric {*/
@@ -74,6 +75,11 @@ class DeltaboxLibWrapper(eventBus: IEventBus, modContainer: ModContainer) {
         DeltaboxUtil.logInfo("mod has started!")
         val forgeEventBus = NeoForge.EVENT_BUS
         register(eventBus, forgeEventBus)
+        // client
+        if (ModStatus.isClient) {
+          // register main mod client content
+          registerClient(eventBus, forgeEventBus)
+        }
     }
     fun register(modBus: IEventBus, forgeEventBus: IEventBus) {
         DeltaboxLibCommon.init()
@@ -82,6 +88,10 @@ class DeltaboxLibWrapper(eventBus: IEventBus, modContainer: ModContainer) {
             DeltaboxLibCommon.REGISTRATE.gatherData(event)
         }
         DeltaboxLibCommon.REGISTRATE.register(modBus, forgeEventBus) // neoforged exclusive registrate
+    }
+
+    fun registerClient(modBus: IEventBus, forgeEventBus: IEventBus) {
+        DeltaboxLibCommon.REGISTRATE.registerClient(modBus, forgeEventBus) // neoforged exclusive registrate
     }
 }
 *//*?}*/

@@ -41,7 +41,6 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.material.MapColor
-import net.minecraftforge.client.model.generators.ModelFile
 import java.util.function.Supplier
 
 /**
@@ -354,7 +353,11 @@ class WoodBlockFamilySet(
     _blockFamily.setVariant(BlockFamily.Type.WALL_SIGN) {
       generator.create<WallSignBlock>(_name + "_wall_sign")
         .copyFrom { Blocks.OAK_WALL_SIGN }
+        /*? if >1.21 {*/
+        /*.blockFactory { p -> WallSignBlock(woodType, p) }
+        *//*?} else {*/
         .blockFactory { p -> WallSignBlock(p, woodType) }
+        /*?}*/
         .properties { p -> p.strength(1.0F).sound(SoundType.WOOD).noOcclusion() }
         .cutoutRender()
         .color(_accentColor ?: MapColor.WOOD)
@@ -374,7 +377,11 @@ class WoodBlockFamilySet(
     _blockFamily.setVariant(BlockFamily.Type.SIGN) {
       generator.create<StandingSignBlock>(_name + "_sign")
         .copyFrom { Blocks.OAK_SIGN }
+        /*? if >1.21 {*/
+        /*.blockFactory { p -> StandingSignBlock(woodType, p) }
+        *//*?} else {*/
         .blockFactory { p -> StandingSignBlock(p, woodType) }
+        /*?}*/
         .properties { p -> p.strength(1.0F).sound(SoundType.WOOD).noOcclusion() }
         .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null, false)
         .color(_accentColor ?: MapColor.WOOD)
@@ -386,7 +393,7 @@ class WoodBlockFamilySet(
           }
         }
         .blockstate { c, p ->
-          val signModel: ModelFile = p.models().sign(c.name, p.modLoc("block/${_name + "_planks"}"))
+          val signModel= p.models().sign(c.name, p.modLoc("block/${_name + "_planks"}"))
           p.simpleBlock(c.get() as StandingSignBlock, signModel)
           p.simpleBlock(_blockFamily.blocks[BlockFamily.Type.WALL_SIGN]!!.get() as WallSignBlock, signModel)
         }
@@ -412,7 +419,11 @@ class WoodBlockFamilySet(
     _blockFamily.setVariant(BlockFamily.Type.WALL_HANGING_SIGN) {
       generator.create<WallHangingSignBlock>(_name + "_hanging_wall_sign")
         .copyFrom { Blocks.OAK_WALL_HANGING_SIGN }
+        /*? if >1.21 {*/
+        /*.blockFactory { p -> WallHangingSignBlock(woodType, p) }
+        *//*?} else {*/
         .blockFactory { p -> WallHangingSignBlock(p, woodType) }
+        /*?}*/
         .properties { p -> p.strength(1.0F).sound(SoundType.WOOD).noOcclusion() }
         .color(_accentColor ?: MapColor.WOOD)
         .blockTags(listOf(BlockTags.ALL_HANGING_SIGNS, BlockTags.WALL_HANGING_SIGNS))
@@ -431,7 +442,11 @@ class WoodBlockFamilySet(
     _blockFamily.setVariant(BlockFamily.Type.HANGING_SIGN) {
       generator.create<CeilingHangingSignBlock>(_name + "_hanging_sign")
         .copyFrom { Blocks.OAK_HANGING_SIGN }
+        /*? if >1.21 {*/
+        /*.blockFactory { p -> CeilingHangingSignBlock(woodType, p) }
+        *//*?} else {*/
         .blockFactory { p -> CeilingHangingSignBlock(p, woodType) }
+        /*?}*/
         .properties { p -> p.strength(1.0F).sound(SoundType.WOOD).noOcclusion() }
         .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null, false)
         .color(_accentColor ?: MapColor.WOOD)
@@ -443,7 +458,7 @@ class WoodBlockFamilySet(
           }
         }
         .blockstate { c, p ->
-          val signModel: ModelFile = p.models().sign(c.name, p.modLoc("block/${_name + "_planks"}"))
+          val signModel = p.models().sign(c.name, p.modLoc("block/${_name + "_planks"}"))
           p.simpleBlock(c.get() as CeilingHangingSignBlock, signModel)
           p.simpleBlock(
             _blockFamily.blocks[BlockFamily.Type.WALL_HANGING_SIGN]!!.get() as WallHangingSignBlock,
@@ -483,7 +498,7 @@ class WoodBlockFamilySet(
       .register()
 
     CHEST_BOAT_ENTITY = generator.registrate.entity<BaseChestBoatEntity>("${_name}_chest_boat", { e, l ->
-      BaseChestBoatEntity({ CHEST_BOAT_ITEM!!.get() }, { e }, l)
+      BaseChestBoatEntity({ getContent().chestBoatItem.get() }, { e }, l)
     }, MobCategory.MISC)
       .renderer {
         NonNullFunction<EntityRendererProvider.Context, EntityRenderer<in BaseChestBoatEntity>> { c ->
@@ -502,7 +517,7 @@ class WoodBlockFamilySet(
     CHEST_BOAT_ITEM =
       generator.registrate.item<BoatItem>(
         "${_name}_chest_boat",
-        { p -> BoatItem(_name, { CHEST_BOAT_ENTITY!!.get() }, true, p.stacksTo(1)) }
+        { p -> BoatItem(_name, { getContent().chestBoatEntity.get() }, true, p.stacksTo(1)) }
       ).register()
   }
 

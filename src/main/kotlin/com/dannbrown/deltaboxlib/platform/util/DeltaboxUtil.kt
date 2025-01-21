@@ -50,6 +50,15 @@ object DeltaboxUtil {
         return names[names.size - 1]
     }
     
+    fun stringToInt(value: String): Int {
+        return value.encodeToByteArray().joinToString("") { it.toString() }.toInt()
+    }
+
+    fun intToString(value: Int): String {
+        val byteArray = value.toString().chunked(3).map { it.toByte() }.toByteArray()
+        return byteArray.decodeToString()
+    }
+
     object PATH {
         fun getConfigPath(modID: String, configFileName: String, configExtension: String): Path {
             /*? if fabric {*/

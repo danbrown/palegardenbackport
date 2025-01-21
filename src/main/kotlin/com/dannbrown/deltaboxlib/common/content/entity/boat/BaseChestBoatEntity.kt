@@ -31,10 +31,19 @@ class BaseChestBoatEntity(private val boatItem: Supplier<Item>, pEntityType: Sup
        }
   }
 
-  override fun defineSynchedData() {
+    /*? if >1.21 {*/
+    /*override fun defineSynchedData(arg: SynchedEntityData.Builder) {
+      super.defineSynchedData(arg)
+      arg.define(DATA_ID_TYPE, "oak") // Default variant
+    }
+    *//*?} else {*/
+    override fun defineSynchedData() {
     super.defineSynchedData()
     entityData.define(DATA_ID_TYPE, "oak") // Default variant
   }
+    /*?}*/
+
+
 
   override fun addAdditionalSaveData(pCompound: CompoundTag) {
     pCompound.putString("Type", this.modVariant)

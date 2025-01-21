@@ -21,20 +21,26 @@ import net.minecraft.world.phys.Vec3;
 import java.util.function.Predicate;
 import java.util.function.Supplier
 
-class BoatItem(private val _name: String, private val entityType: Supplier<EntityType<out Boat>>, private val hasChest: Boolean, pProperties: Properties) : Item(pProperties) {
+class BoatItem(
+  private val _name: String,
+  private val entityType: Supplier<EntityType<out Boat>>,
+  private val hasChest: Boolean,
+  pProperties: Properties
+) : Item(pProperties) {
   override fun use(pLevel: Level, pPlayer: Player, pHand: InteractionHand): InteractionResultHolder<ItemStack> {
     val itemstack: ItemStack = pPlayer.getItemInHand(pHand)
     val hitresult: HitResult = getPlayerPOVHitResult(pLevel, pPlayer, ClipContext.Fluid.ANY)
     if (hitresult.type == HitResult.Type.MISS) {
       return InteractionResultHolder.pass(itemstack)
-    }
-    else {
+    } else {
       val vec3: Vec3 = pPlayer.getViewVector(1.0f)
-      val list: MutableList<Entity> = pLevel.getEntities(pPlayer,
+      val list: MutableList<Entity> = pLevel.getEntities(
+        pPlayer,
         pPlayer.getBoundingBox()
           .expandTowards(vec3.scale(5.0))
           .inflate(1.0),
-        ENTITY_PREDICATE)
+        ENTITY_PREDICATE
+      )
       if (!list.isEmpty()) {
         val vec31: Vec3 = pPlayer.getEyePosition()
 
@@ -51,15 +57,13 @@ class BoatItem(private val _name: String, private val entityType: Supplier<Entit
         val boat = this.getBoat(pLevel, hitresult)
         if (boat is BaseChestBoatEntity) {
           boat.setVariant(_name)
-        }
-        else if (boat is BaseBoatEntity) {
+        } else if (boat is BaseBoatEntity) {
           boat.setVariant(_name)
         }
         boat.yRot = pPlayer.getYRot()
         if (!pLevel.noCollision(boat, boat.boundingBox)) {
           return InteractionResultHolder.fail(itemstack)
-        }
-        else {
+        } else {
           if (!pLevel.isClientSide) {
             pLevel.addFreshEntity(boat)
             pLevel.gameEvent(pPlayer, GameEvent.ENTITY_PLACE, hitresult.location)
@@ -71,15 +75,28 @@ class BoatItem(private val _name: String, private val entityType: Supplier<Entit
           pPlayer.awardStat(Stats.ITEM_USED.get(this))
           return InteractionResultHolder.sidedSuccess(itemstack, pLevel.isClientSide())
         }
-      }
-      else {
+      } else {
         return InteractionResultHolder.pass(itemstack)
       }
     }
   }
 
   private fun getBoat(level: Level, hitResult: HitResult): Boat {
-    return (if (this.hasChest) BaseChestBoatEntity({ this }, entityType, level, hitResult.location.x, hitResult.location.y, hitResult.location.z) else BaseBoatEntity({ this }, entityType, level, hitResult.location.x, hitResult.location.y, hitResult.location.z))
+    return (if (this.hasChest) BaseChestBoatEntity(
+      { this },
+      entityType,
+      level,
+      hitResult.location.x,
+      hitResult.location.y,
+      hitResult.location.z
+    ) else BaseBoatEntity(
+      { this },
+      entityType,
+      level,
+      hitResult.location.x,
+      hitResult.location.y,
+      hitResult.location.z
+    ))
   }
 
   companion object {

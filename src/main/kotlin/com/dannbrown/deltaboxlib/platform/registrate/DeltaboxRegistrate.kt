@@ -857,6 +857,15 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
     onLoadWandererTrades(forgeBus)
   }
 
+  fun registerClient(bus: net.neoforged.bus.api.IEventBus, forgeBus: net.neoforged.bus.api.IEventBus) {
+    bus.addListener { event: net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions ->
+      BOAT_VARIANTS.forEach { t, u ->
+        event.registerLayerDefinition(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "boat/${t}"), "main"), BoatModel::createBodyModel);
+        event.registerLayerDefinition(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "chest_boat/${t}"), "main"), ChestBoatModel::createBodyModel);
+      }
+    }
+  }
+
   private fun onRegisterFlowerPots(bus: net.neoforged.bus.api.IEventBus) {
     bus.addListener { e: net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent ->
       POTTED_BLOCKS.forEach { (plant, pot) ->
