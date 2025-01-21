@@ -8,13 +8,21 @@ import com.dannbrown.deltaboxlib.common.content.block.GenericGrassBlock
 import com.dannbrown.deltaboxlib.common.content.block.GenericSaplingBlock
 import com.dannbrown.deltaboxlib.common.content.block.GenericTallGrassBlock
 import com.dannbrown.deltaboxlib.common.content.block.StrippableFlammablePillarBlock
+import com.dannbrown.deltaboxlib.common.content.entity.boat.BaseBoatEntity
+import com.dannbrown.deltaboxlib.common.content.entity.boat.BaseBoatRenderer
+import com.dannbrown.deltaboxlib.common.content.item.BoatItem
 import com.dannbrown.deltaboxlib.common.content.worldgen.tree.DeltaboxTreeGrower
 import com.dannbrown.deltaboxlib.platform.registrate.generators.block.BlockGenerator
 import com.dannbrown.deltaboxlib.platform.registrate.generators.family.BlockFamily
 import com.dannbrown.deltaboxlib.platform.registrate.transformers.BlockLootPresets
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.tterrag.registrate.util.entry.BlockEntry
+import com.tterrag.registrate.util.entry.EntityEntry
+import com.tterrag.registrate.util.nullness.NonNullFunction
+import net.minecraft.client.renderer.entity.EntityRenderer
+import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.tags.BlockTags
+import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
@@ -24,6 +32,7 @@ import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.material.MapColor
+import java.util.function.Supplier
 
 object DeltaboxBlocks {
   val BLOCKS = BlockGenerator(DeltaboxLibCommon.REGISTRATE)
@@ -165,7 +174,7 @@ object DeltaboxBlocks {
   val BOTTOM_TOP = BLOCKS.createBottomTop<Block>("roseate_sandstone")
     .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, true)
     .register()
-  val WOODEN_STAIRS = BLOCKS.createStairs("pale_oak", "pale_oak_planks",false, true)
+  val WOODEN_STAIRS = BLOCKS.createStairs("pale_oak", "pale_oak_planks", false, true)
     .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null, false)
     .register()
   val BOTTOM_TOP_STAIRS = BLOCKS.createStairs("roseate_sandstone", "roseate_sandstone", true, false)
@@ -180,10 +189,10 @@ object DeltaboxBlocks {
   val WOODEN_WALL = BLOCKS.createWall("pale_oak", "pale_oak_planks", false, true)
     .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null, false)
     .register()
-  val BOTTOM_TOP_WALL = BLOCKS.createWall("roseate_sandstone", "roseate_sandstone",true, true)
+  val BOTTOM_TOP_WALL = BLOCKS.createWall("roseate_sandstone", "roseate_sandstone", true, true)
     .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, true)
     .register()
-  val BOTTOM_TOP_WALL2 = BLOCKS.createWall("pale_oak_stem", "pale_oak_log",true, false)
+  val BOTTOM_TOP_WALL2 = BLOCKS.createWall("pale_oak_stem", "pale_oak_log", true, false)
     .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null, false)
     .register()
   val WOODEN_FENCE = BLOCKS.createFence("pale_oak", "pale_oak_planks", true)
@@ -212,7 +221,11 @@ object DeltaboxBlocks {
     .longBlockFamily()
 
   val WOOD_TEST = BLOCKS.createFamily("ebony")
-    .woodFamily(DeltaboxWoodTypes.EBONY, DeltaboxWoodTypes.EBONY_SET, DeltaboxTreeGrower.SAMPLE, { blockState, _, _ -> blockState.`is`(BlockTags.DIRT) })
+    .woodFamily(
+      DeltaboxWoodTypes.EBONY,
+      DeltaboxWoodTypes.EBONY_SET,
+      DeltaboxTreeGrower.SAMPLE,
+      { blockState, _, _ -> blockState.`is`(BlockTags.DIRT) })
 
   fun register() {
     DeltaboxUtil.logInfo("Registering blocks...")

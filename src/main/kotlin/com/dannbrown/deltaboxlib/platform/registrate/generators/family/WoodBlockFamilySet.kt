@@ -7,6 +7,7 @@ import com.dannbrown.deltaboxlib.common.content.block.StrippableFlammablePillarB
 import com.dannbrown.deltaboxlib.common.content.entity.boat.BaseBoatEntity
 import com.dannbrown.deltaboxlib.common.content.entity.boat.BaseChestBoatEntity
 import com.dannbrown.deltaboxlib.common.content.item.BoatItem
+import com.dannbrown.deltaboxlib.common.content.entity.boat.BaseBoatRenderer
 import com.dannbrown.deltaboxlib.common.content.worldgen.tree.DeltaboxTreeGrower
 import com.dannbrown.deltaboxlib.platform.registrate.generators.block.BlockGenerator
 import com.dannbrown.deltaboxlib.platform.registrate.generators.recipe.RecipePresets
@@ -15,18 +16,19 @@ import com.dannbrown.deltaboxlib.platform.registrate.transformers.BlockstatePres
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.tterrag.registrate.util.entry.EntityEntry
 import com.tterrag.registrate.util.entry.ItemEntry
-import com.tterrag.registrate.util.entry.RegistryEntry
+import com.tterrag.registrate.util.nullness.NonNullFunction
+import net.minecraft.client.renderer.entity.EntityRenderer
+import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.core.BlockPos
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
-import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.item.HangingSignItem
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.SignItem
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.BlockGetter
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.CeilingHangingSignBlock
@@ -466,29 +468,51 @@ class WoodBlockFamilySet(
         .register()
     }
 
-    BOAT_ENTITY = generator.registrate.entity<BaseBoatEntity>("${_name}_boat", { pEntityType, level ->
-      BaseBoatEntity({ CHEST_BOAT_ITEM!!.get() }, { pEntityType }, level)
-    }, MobCategory.MISC)
-      .properties { p -> p.sized(1.375f, 0.5625f).build("${_name}_boat") }.register()
 
-    CHEST_BOAT_ENTITY = generator.registrate.entity<BaseChestBoatEntity>("${_name}_chest_boat", { pEntityType, level ->
-      BaseChestBoatEntity({ CHEST_BOAT_ITEM!!.get() }, { pEntityType }, level)
+    generator.registrate.boatVariant(_name, { _blockFamily.blocks[BlockFamily.Type.MAIN]!!.get() })
+
+    BOAT_ENTITY = generator.registrate.entity<BaseBoatEntity>("${_name}_boat", { e, l ->
+      BaseBoatEntity({ BOAT_ITEM!!.get() }, { e }, l)
     }, MobCategory.MISC)
-      .properties { p -> p.sized(1.375f, 0.5625f).build("${_name}_chest_boat") }.register()
+      .renderer {
+        NonNullFunction<EntityRendererProvider.Context, EntityRenderer<in BaseBoatEntity>> { c ->
+          BaseBoatRenderer(generator.registrate.modid, c, false)
+        }
+      }
+      .properties { p -> p.sized(1.375f, 0.5625f) }
+      .register()
+
+    CHEST_BOAT_ENTITY = generator.registrate.entity<BaseChestBoatEntity>("${_name}_chest_boat", { e, l ->
+      BaseChestBoatEntity({ CHEST_BOAT_ITEM!!.get() }, { e }, l)
+    }, MobCategory.MISC)
+      .renderer {
+        NonNullFunction<EntityRendererProvider.Context, EntityRenderer<in BaseChestBoatEntity>> { c ->
+          BaseBoatRenderer(generator.registrate.modid, c, true)
+        }
+      }
+      .properties { p -> p.sized(1.375f, 0.5625f) }
+      .register()
 
     BOAT_ITEM =
       generator.registrate.item<BoatItem>(
         "${_name}_boat",
         { p -> BoatItem(_name, { BOAT_ENTITY!!.get() }, false, p.stacksTo(1)) }
       ).register()
+
     CHEST_BOAT_ITEM =
       generator.registrate.item<BoatItem>(
         "${_name}_chest_boat",
-        { p -> BoatItem(_name, { CHEST_BOAT_ENTITY!!.get() }, false, p.stacksTo(1)) }
+        { p -> BoatItem(_name, { CHEST_BOAT_ENTITY!!.get() }, true, p.stacksTo(1)) }
       ).register()
   }
 
   fun getContent(): WoodFamilyComponents {
-    return WoodFamilyComponents(this._blockFamily, this.BOAT_ENTITY!!, this.CHEST_BOAT_ENTITY!!, this.BOAT_ITEM!!, this.CHEST_BOAT_ITEM!!)
+    return WoodFamilyComponents(
+      this._blockFamily,
+      this.BOAT_ENTITY!!,
+      this.CHEST_BOAT_ENTITY!!,
+      this.BOAT_ITEM!!,
+      this.CHEST_BOAT_ITEM!!
+    )
   }
 }

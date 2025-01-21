@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.vehicle.Boat
 
 class BaseBoatRenderer(private val modId: String, private val context: EntityRendererProvider.Context, private val isChestBoat: Boolean) : BoatRenderer(context, isChestBoat) {
-  override fun getModelWithLocation(boat: Boat): Pair<ResourceLocation, ListModel<Boat>>? {
+  override fun getModelWithLocation(boat: Boat): Pair<ResourceLocation, ListModel<Boat>> {
     if (boat is BaseBoatEntity) {
       val variant: String = boat.modVariant // Retrieve the variant (hashed string name)
       return createModelWithLocation(variant, this.context, this.isChestBoat)
@@ -21,9 +21,7 @@ class BaseBoatRenderer(private val modId: String, private val context: EntityRen
       val variant: String = boat.modVariant // Retrieve the variant (hashed string name)
       return createModelWithLocation(variant, this.context, true)
     }
-    else {
-      return null
-    }
+    return super.getModelWithLocation(boat)
   }
 
   // Dynamically create the model and texture location using the variant string

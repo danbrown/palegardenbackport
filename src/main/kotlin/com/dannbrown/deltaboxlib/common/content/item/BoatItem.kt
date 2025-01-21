@@ -21,7 +21,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.function.Predicate;
 import java.util.function.Supplier
 
-class BoatItem(private val _name: String, private val entityType: Supplier<EntityType<out Boat>>, private val hasChest: Boolean, pProperties: Item.Properties?) : Item(pProperties) {
+class BoatItem(private val _name: String, private val entityType: Supplier<EntityType<out Boat>>, private val hasChest: Boolean, pProperties: Properties) : Item(pProperties) {
   override fun use(pLevel: Level, pPlayer: Player, pHand: InteractionHand): InteractionResultHolder<ItemStack> {
     val itemstack: ItemStack = pPlayer.getItemInHand(pHand)
     val hitresult: HitResult = getPlayerPOVHitResult(pLevel, pPlayer, ClipContext.Fluid.ANY)

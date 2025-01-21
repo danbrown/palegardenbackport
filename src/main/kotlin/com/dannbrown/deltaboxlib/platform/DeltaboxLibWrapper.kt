@@ -28,9 +28,9 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.eventbus.api.IEventBus
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import net.minecraftforge.common.MinecraftForge
-import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider
 import net.minecraftforge.data.event.GatherDataEvent
 import net.minecraftforge.eventbus.api.EventPriority
+import thedarkcolour.kotlinforforge.forge.DIST
 
 @Mod(DeltaboxLibCommon.MOD_ID)
 class DeltaboxLibWrapper {
@@ -40,6 +40,11 @@ class DeltaboxLibWrapper {
             val eventBus = FMLJavaModLoadingContext.get().modEventBus
             val forgeEventBus = MinecraftForge.EVENT_BUS
             register(eventBus, forgeEventBus)
+            // client
+            if (DIST.isClient) {
+              // register main mod client content
+              registerClient(eventBus, forgeEventBus)
+            }
         }
 
         fun register(modBus: IEventBus, forgeEventBus: IEventBus) {
@@ -49,6 +54,10 @@ class DeltaboxLibWrapper {
                 DeltaboxLibCommon.REGISTRATE.gatherData(event)
             }
             DeltaboxLibCommon.REGISTRATE.register(modBus, forgeEventBus) // forge exclusive registrate
+        }
+
+        fun registerClient(modBus: IEventBus, forgeEventBus: IEventBus) {
+            DeltaboxLibCommon.REGISTRATE.registerClient(modBus, forgeEventBus) // forge exclusive registrate
         }
     }
 }

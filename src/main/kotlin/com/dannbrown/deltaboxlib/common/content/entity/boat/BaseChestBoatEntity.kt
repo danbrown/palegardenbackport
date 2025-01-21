@@ -1,6 +1,5 @@
 package com.dannbrown.deltaboxlib.common.content.entity.boat
 
-import com.dannbrown.deltaboxlib.common.init.DeltaboxBoatVariants
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.network.syncher.EntityDataSerializers
@@ -21,22 +20,20 @@ class BaseChestBoatEntity(private val boatItem: Supplier<Item>, pEntityType: Sup
   }
 
   override fun getDropItem(): Item {
-    val variantName = modVariant
     return boatItem.get()
   }
 
   fun setVariant(name: String) {
-    if (DeltaboxBoatVariants.VARIANT_MAP.containsKey(name)) {
-      entityData.set(DATA_ID_TYPE, name)
-    }
-    else {
-      throw IllegalArgumentException("Invalid chest boat variant: $name")
-    }
+       try{
+         entityData.set(DATA_ID_TYPE, name)
+       } catch (err: IllegalArgumentException) {
+         throw IllegalArgumentException("Invalid chest boat variant: $name")
+       }
   }
 
   override fun defineSynchedData() {
     super.defineSynchedData()
-    entityData.define(DATA_ID_TYPE, "pine") // Default variant
+    entityData.define(DATA_ID_TYPE, "oak") // Default variant
   }
 
   override fun addAdditionalSaveData(pCompound: CompoundTag) {

@@ -1,7 +1,5 @@
 package com.dannbrown.deltaboxlib.common.content.entity.boat
 
-
-import com.dannbrown.deltaboxlib.common.init.DeltaboxBoatVariants
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.network.syncher.EntityDataSerializers
@@ -25,10 +23,9 @@ class BaseBoatEntity(private val boatItem: Supplier<Item>, pEntityType: Supplier
   }
 
   fun setVariant(name: String) {
-    if (DeltaboxBoatVariants.VARIANT_MAP.containsKey(name)) {
+    try{
       entityData.set(DATA_ID_TYPE, name)
-    }
-    else {
+    } catch (err: IllegalArgumentException) {
       throw IllegalArgumentException("Invalid boat variant: $name")
     }
   }

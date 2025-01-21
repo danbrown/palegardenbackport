@@ -1,5 +1,6 @@
 package com.dannbrown.deltaboxlib.platform.registrate
 
+import com.dannbrown.deltaboxlib.common.DeltaboxLibCommon
 import com.tterrag.registrate.AbstractRegistrate
 import com.tterrag.registrate.util.entry.BlockEntry
 import net.minecraft.core.registries.Registries
@@ -20,6 +21,9 @@ import com.dannbrown.deltaboxlib.platform.registrate.generators.recipe.DeltaboxR
 import com.dannbrown.deltaboxlib.platform.registrate.generators.worldgen.BiomeModifiersUtil
 import com.dannbrown.deltaboxlib.platform.registrate.generators.worldgen.ConfiguredFeaturesUtil
 import com.dannbrown.deltaboxlib.platform.registrate.generators.worldgen.PlacedFeaturesUtil
+import net.minecraft.client.model.BoatModel
+import net.minecraft.client.model.ChestBoatModel
+import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
@@ -551,6 +555,19 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
     WORLD_PRESETS_TAGS_CONSUMERS[tag]?.b?.addAll(items)
   }
 
+  // @ Boat Variants
+  val BOAT_VARIANTS: MutableMap<String, Supplier<Block>> = mutableMapOf(
+    "oak" to Supplier { Blocks.OAK_PLANKS }
+  )
+
+  fun boatVariant(name: String, block: Supplier<Block>) {
+    BOAT_VARIANTS[name] = block
+  }
+
+  fun getBoatVariants(name: String): Supplier<Block> {
+    return BOAT_VARIANTS[name]!!
+  }
+
   // FABRIC SPECIFIC BLOCKS FEATURES REGISTRATION
   /*? if fabric {*/
   /*override fun register() {
@@ -696,6 +713,15 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
     onLoadVillagerTrades(forgeBus)
     // load wanderer trades
     onLoadWandererTrades(forgeBus)
+  }
+
+  fun registerClient(bus: net.minecraftforge.eventbus.api.IEventBus, forgeBus: net.minecraftforge.eventbus.api.IEventBus) {
+    bus.addListener { event: net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions ->
+      BOAT_VARIANTS.forEach { t, u ->
+        event.registerLayerDefinition(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "boat/${t}"), "main"), BoatModel::createBodyModel);
+        event.registerLayerDefinition(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "chest_boat/${t}"), "main"), ChestBoatModel::createBodyModel);
+      }
+    }
   }
 
   private fun onDatapackReload(forgeBus: net.minecraftforge.eventbus.api.IEventBus) {
