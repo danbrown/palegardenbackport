@@ -10,12 +10,30 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.Level
 import java.util.function.Supplier
 
-class BaseBoatEntity(private val boatItem: Supplier<Item>, pEntityType: Supplier<EntityType<out Boat>>, pLevel: Level) : Boat(pEntityType.get(), pLevel) {
-  constructor(boatItem: Supplier<Item>, pEntityType: Supplier<EntityType<out Boat>>, level: Level, pX: Double, pY: Double, pZ: Double) : this(boatItem, pEntityType, level) {
+class BaseBoatEntity(
+  private val boatItem: Supplier<Item>,
+  private val variant: String,
+  private val pEntityType: Supplier<EntityType<out Boat>>,
+  pLevel: Level
+) : Boat(pEntityType.get(), pLevel) {
+  constructor(
+    boatItem: Supplier<Item>,
+    variant: String,
+    pEntityType: Supplier<EntityType<out Boat>>,
+    level: Level,
+    pX: Double,
+    pY: Double,
+    pZ: Double
+  ) : this(boatItem, variant, pEntityType, level) {
     this.setPos(pX, pY, pZ)
     this.xo = pX
     this.yo = pY
     this.zo = pZ
+    setVariant(variant)
+  }
+
+  init {
+    setVariant(variant)
   }
 
   override fun getDropItem(): Item {
@@ -23,7 +41,7 @@ class BaseBoatEntity(private val boatItem: Supplier<Item>, pEntityType: Supplier
   }
 
   fun setVariant(name: String) {
-    try{
+    try {
       entityData.set(DATA_ID_TYPE, name)
     } catch (err: IllegalArgumentException) {
       throw IllegalArgumentException("Invalid boat variant: $name")
@@ -35,8 +53,8 @@ class BaseBoatEntity(private val boatItem: Supplier<Item>, pEntityType: Supplier
 
   /*? if >1.21 {*/
   /*override fun defineSynchedData(arg: SynchedEntityData.Builder) {
-    arg.define(DATA_ID_TYPE, "oak") // Default variant
     super.defineSynchedData(arg)
+    arg.define(DATA_ID_TYPE, "oak") // Default variant
   }
   *//*?} else {*/
   override fun defineSynchedData() {
@@ -56,6 +74,7 @@ class BaseBoatEntity(private val boatItem: Supplier<Item>, pEntityType: Supplier
   }
 
   companion object {
-    private val DATA_ID_TYPE: EntityDataAccessor<String> = SynchedEntityData.defineId(Boat::class.java, EntityDataSerializers.STRING)
+    private val DATA_ID_TYPE: EntityDataAccessor<String> =
+      SynchedEntityData.defineId(Boat::class.java, EntityDataSerializers.STRING)
   }
 }

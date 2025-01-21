@@ -60,14 +60,14 @@ class BoatItem(
         } else if (boat is BaseBoatEntity) {
           boat.setVariant(_name)
         }
-        boat.yRot = pPlayer.getYRot()
+        boat.yRot = pPlayer.yRot
         if (!pLevel.noCollision(boat, boat.boundingBox)) {
           return InteractionResultHolder.fail(itemstack)
         } else {
           if (!pLevel.isClientSide) {
             pLevel.addFreshEntity(boat)
             pLevel.gameEvent(pPlayer, GameEvent.ENTITY_PLACE, hitresult.location)
-            if (!pPlayer.getAbilities().instabuild) {
+            if (!pPlayer.abilities.instabuild) {
               itemstack.shrink(1)
             }
           }
@@ -84,6 +84,7 @@ class BoatItem(
   private fun getBoat(level: Level, hitResult: HitResult): Boat {
     return (if (this.hasChest) BaseChestBoatEntity(
       { this },
+      _name,
       entityType,
       level,
       hitResult.location.x,
@@ -91,6 +92,7 @@ class BoatItem(
       hitResult.location.z
     ) else BaseBoatEntity(
       { this },
+      _name,
       entityType,
       level,
       hitResult.location.x,

@@ -73,6 +73,7 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModifications
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
@@ -372,22 +373,22 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   /*?}*/
   /*?} elif fabric {*/
   /*/^? if >=1.21 {^/
-  /^fun trunkPlacer(name: String, codec: Supplier<com.mojang.serialization.MapCodec<out TrunkPlacer>>): Supplier<TrunkPlacerType<*>> {
+  fun trunkPlacer(name: String, codec: Supplier<com.mojang.serialization.MapCodec<out TrunkPlacer>>): Supplier<TrunkPlacerType<*>> {
     return Supplier { Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE, name, TrunkPlacerType(codec.get())) }
   }
 
   fun foliagePlacer(name: String, codec: Supplier<com.mojang.serialization.MapCodec<out FoliagePlacer>>): Supplier<FoliagePlacerType<*>> {
     return Supplier { Registry.register(BuiltInRegistries.FOLIAGE_PLACER_TYPE, name, FoliagePlacerType(codec.get())) }
   }
-  ^//^?} else {^/
-  fun trunkPlacer(name: String, codec: Supplier<com.mojang.serialization.Codec<out TrunkPlacer>>): Supplier<TrunkPlacerType<*>> {
+  /^?} else {^/
+  /^fun trunkPlacer(name: String, codec: Supplier<com.mojang.serialization.Codec<out TrunkPlacer>>): Supplier<TrunkPlacerType<*>> {
     return Supplier { Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE, name, TrunkPlacerType(codec.get())) }
   }
 
   fun foliagePlacer(name: String, codec: Supplier<com.mojang.serialization.Codec<out FoliagePlacer>>): Supplier<FoliagePlacerType<*>> {
     return Supplier { Registry.register(BuiltInRegistries.FOLIAGE_PLACER_TYPE, name, FoliagePlacerType(codec.get())) }
   }
-  /^?}^/
+  ^//^?}^/
 
   *//*?}*/
 
@@ -556,16 +557,10 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   }
 
   // @ Boat Variants
-  val BOAT_VARIANTS: MutableMap<String, Supplier<Block>> = mutableMapOf(
-    "oak" to Supplier { Blocks.OAK_PLANKS }
-  )
+  val BOAT_VARIANTS: MutableList<String> = mutableListOf()
 
-  fun boatVariant(name: String, block: Supplier<Block>) {
-    BOAT_VARIANTS[name] = block
-  }
-
-  fun getBoatVariants(name: String): Supplier<Block> {
-    return BOAT_VARIANTS[name]!!
+  fun boatVariant(name: String) {
+    BOAT_VARIANTS.add(name)
   }
 
   // FABRIC SPECIFIC BLOCKS FEATURES REGISTRATION
@@ -585,6 +580,10 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   @Environment(EnvType.CLIENT)
   fun registerClient(){
     BlockRenderLayerMap.INSTANCE.putBlocks(net.minecraft.client.renderer.RenderType.cutout(), *CUTOUT_RENDERS.map { it.get() }.toTypedArray())
+    BOAT_VARIANTS.forEach { t ->
+      EntityModelLayerRegistry.registerModelLayer(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "boat/${t}"), "main"), BoatModel::createBodyModel);
+      EntityModelLayerRegistry.registerModelLayer(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "chest_boat/${t}"), "main"), ChestBoatModel::createBodyModel);
+    }
   }
 
   private fun onDatapackReload() {
@@ -645,10 +644,10 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
           factories.add({e, r->
             MerchantOffer(
               /^? if >1.21 {^/
-              /^net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              ^//^?} else {^/
-              ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              /^?}^/
+              net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              /^?} else {^/
+              /^ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              ^//^?}^/
               ItemStack(it.tradeSells.first().item.get(), it.tradeSells.first().amount),
               it.maxUses,
               it.xpAmount,
@@ -665,10 +664,10 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
           factories.add({e, r->
             MerchantOffer(
               /^? if >1.21 {^/
-              /^net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              ^//^?} else {^/
-              ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              /^?}^/
+              net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              /^?} else {^/
+              /^ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              ^//^?}^/
               ItemStack(it.tradeSells.first().item.get(), it.tradeSells.first().amount),
               it.maxUses,
               it.xpAmount,
@@ -717,7 +716,7 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
 
   fun registerClient(bus: net.minecraftforge.eventbus.api.IEventBus, forgeBus: net.minecraftforge.eventbus.api.IEventBus) {
     bus.addListener { event: net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions ->
-      BOAT_VARIANTS.forEach { t, u ->
+      BOAT_VARIANTS.forEach { t ->
         event.registerLayerDefinition(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "boat/${t}"), "main"), BoatModel::createBodyModel);
         event.registerLayerDefinition(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "chest_boat/${t}"), "main"), ChestBoatModel::createBodyModel);
       }
@@ -859,7 +858,7 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
 
   fun registerClient(bus: net.neoforged.bus.api.IEventBus, forgeBus: net.neoforged.bus.api.IEventBus) {
     bus.addListener { event: net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions ->
-      BOAT_VARIANTS.forEach { t, u ->
+      BOAT_VARIANTS.forEach { t ->
         event.registerLayerDefinition(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "boat/${t}"), "main"), BoatModel::createBodyModel);
         event.registerLayerDefinition(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "chest_boat/${t}"), "main"), ChestBoatModel::createBodyModel);
       }

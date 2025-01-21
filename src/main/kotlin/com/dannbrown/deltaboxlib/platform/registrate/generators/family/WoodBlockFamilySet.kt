@@ -23,9 +23,9 @@ import net.minecraft.core.BlockPos
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
+import net.minecraft.world.entity.EntityDimensions
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.item.HangingSignItem
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.SignItem
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.BlockGetter
@@ -483,29 +483,36 @@ class WoodBlockFamilySet(
         .register()
     }
 
-
-    generator.registrate.boatVariant(_name, { _blockFamily.blocks[BlockFamily.Type.MAIN]!!.get() })
+    generator.registrate.boatVariant(_name)
 
     BOAT_ENTITY = generator.registrate.entity<BaseBoatEntity>("${_name}_boat", { e, l ->
-      BaseBoatEntity({ BOAT_ITEM!!.get() }, { e }, l)
+      BaseBoatEntity({ BOAT_ITEM!!.get() }, _name, { e }, l)
     }, MobCategory.MISC)
       .renderer {
         NonNullFunction<EntityRendererProvider.Context, EntityRenderer<in BaseBoatEntity>> { c ->
-          BaseBoatRenderer(generator.registrate.modid, c, false)
+          BaseBoatRenderer(generator.registrate.modid, _name, c, false)
         }
       }
+      /*? if fabric {*/
+      /*.properties { p -> p.dimensions(EntityDimensions.fixed(1.375f, 0.5625f)) }
+      *//*?} else {*/
       .properties { p -> p.sized(1.375f, 0.5625f) }
+      /*?}*/
       .register()
 
     CHEST_BOAT_ENTITY = generator.registrate.entity<BaseChestBoatEntity>("${_name}_chest_boat", { e, l ->
-      BaseChestBoatEntity({ getContent().chestBoatItem.get() }, { e }, l)
+      BaseChestBoatEntity({ getContent().chestBoatItem.get() }, _name, { e }, l)
     }, MobCategory.MISC)
       .renderer {
         NonNullFunction<EntityRendererProvider.Context, EntityRenderer<in BaseChestBoatEntity>> { c ->
-          BaseBoatRenderer(generator.registrate.modid, c, true)
+          BaseBoatRenderer(generator.registrate.modid, _name, c, true)
         }
       }
+      /*? if fabric {*/
+      /*.properties { p -> p.dimensions(EntityDimensions.fixed(1.375f, 0.5625f)) }
+      *//*?} else {*/
       .properties { p -> p.sized(1.375f, 0.5625f) }
+      /*?}*/
       .register()
 
     BOAT_ITEM =
@@ -519,6 +526,7 @@ class WoodBlockFamilySet(
         "${_name}_chest_boat",
         { p -> BoatItem(_name, { getContent().chestBoatEntity.get() }, true, p.stacksTo(1)) }
       ).register()
+
   }
 
   fun getContent(): WoodFamilyComponents {
