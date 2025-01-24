@@ -1,13 +1,7 @@
 package com.dannbrown.deltaboxlib.common.init
 
 import com.dannbrown.deltaboxlib.common.DeltaboxLibCommon
-import com.dannbrown.deltaboxlib.common.content.block.FlammablePillarBlock
-import com.dannbrown.deltaboxlib.common.content.block.FlammableSandBlock
-import com.dannbrown.deltaboxlib.common.content.block.GenericDoublePlantBlock
-import com.dannbrown.deltaboxlib.common.content.block.GenericGrassBlock
-import com.dannbrown.deltaboxlib.common.content.block.GenericSaplingBlock
-import com.dannbrown.deltaboxlib.common.content.block.GenericTallGrassBlock
-import com.dannbrown.deltaboxlib.common.content.block.StrippableFlammablePillarBlock
+import com.dannbrown.deltaboxlib.common.content.block.*
 import com.dannbrown.deltaboxlib.common.content.entity.boat.BaseBoatEntity
 import com.dannbrown.deltaboxlib.common.content.entity.boat.BaseBoatRenderer
 import com.dannbrown.deltaboxlib.common.content.item.BoatItem
@@ -15,6 +9,8 @@ import com.dannbrown.deltaboxlib.common.content.worldgen.tree.DeltaboxTreeGrower
 import com.dannbrown.deltaboxlib.platform.registrate.generators.block.BlockGenerator
 import com.dannbrown.deltaboxlib.platform.registrate.generators.family.BlockFamily
 import com.dannbrown.deltaboxlib.platform.registrate.transformers.BlockLootPresets
+import com.dannbrown.deltaboxlib.platform.registrate.transformers.BlockstatePresets
+import com.dannbrown.deltaboxlib.platform.registrate.transformers.ItemModelPresets
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
 import com.tterrag.registrate.util.entry.BlockEntry
 import com.tterrag.registrate.util.entry.EntityEntry
@@ -25,10 +21,7 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.FlowerPotBlock
-import net.minecraft.world.level.block.RotatedPillarBlock
+import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.material.MapColor
@@ -76,8 +69,27 @@ object DeltaboxBlocks {
 
   val SIMPLE_GRASS: BlockEntry<GenericGrassBlock> = BLOCKS.grassBlock("simple_grass", { Items.WHEAT_SEEDS })
     .register()
-  val SIMPLE_FLOWER: BlockEntry<GenericGrassBlock> =
-    BLOCKS.flowerBlock("simple_flower", true, true, true, { blockState, _, _ -> blockState.`is`(BlockTags.SAND) })
+  val SIMPLE_FLOWER: BlockEntry<TrailFlowerBlock> =
+    BLOCKS.create<TrailFlowerBlock>("simple_flower")
+//      .flowerBlock("simple_flower", true, true, true, { blockState, _, _ -> blockState.`is`(BlockTags.SAND) })
+      .blockFactory { p -> TrailFlowerBlock(p) }
+      .copyFrom { Blocks.POPPY }
+      .properties { p ->
+        p.sound(SoundType.GRASS)
+          .strength(0.0f)
+          .noCollission()
+          .noOcclusion()
+          .randomTicks()
+      }
+      .blockstate(BlockstatePresets.simpleCrossBlock("simple_flower"))
+      .loot(BlockLootPresets.dropItselfLoot())
+      .transform { t ->
+        t
+          .item()
+          .model(ItemModelPresets.simpleLayerItem("simple_flower"))
+          .build()
+      }
+      .cutoutRender()
       .register()
 
   val POTTED_SIMPLE_GRASS: BlockEntry<FlowerPotBlock> = BLOCKS.pottedBlock("simple_grass", SIMPLE_GRASS)

@@ -17,6 +17,7 @@ object DeltaboxLibCommon {
         DeltaboxItems.register()
         DeltaboxTags.register()
         DeltaboxWoodTypes.register()
+        DeltaboxParticles.register()
         DeltaboxTrades.register()
         DeltaboxCreativeTabs.register()
         DeltaboxRecipes.register()

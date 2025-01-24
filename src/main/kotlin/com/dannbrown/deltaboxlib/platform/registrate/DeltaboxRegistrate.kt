@@ -24,10 +24,18 @@ import com.dannbrown.deltaboxlib.platform.registrate.generators.worldgen.PlacedF
 import net.minecraft.client.model.BoatModel
 import net.minecraft.client.model.ChestBoatModel
 import net.minecraft.client.model.geom.ModelLayerLocation
+import net.minecraft.client.model.geom.builders.LayerDefinition
+import net.minecraft.client.particle.ParticleEngine
+import net.minecraft.client.particle.ParticleEngine.SpriteParticleRegistration
+import net.minecraft.client.particle.ParticleProvider
+import net.minecraft.client.particle.SpriteSet
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.core.RegistrySetBuilder
+import net.minecraft.core.particles.ParticleOptions
+import net.minecraft.core.particles.ParticleType
+import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.data.tags.BiomeTagsProvider
 import net.minecraft.data.tags.EntityTypeTagsProvider
 import net.minecraft.data.tags.FluidTagsProvider
@@ -92,6 +100,10 @@ import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider
 import net.minecraftforge.registries.ForgeRegistries
 import net.minecraftforge.common.data.BlockTagsProvider
+import net.minecraftforge.common.util.NonNullFunction
+import net.minecraftforge.registries.RegistryObject
+import kotlin.reflect.jvm.internal.impl.resolve.calls.inference.CapturedType
+
 /*?}*/
 
 /*? if neoforge {*/
@@ -177,7 +189,7 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
 
   // Creative tabs
   init {
-    this.defaultCreativeTab(null as ResourceKey<CreativeModeTab>?) // remove the default creative tab to avoid duplicate entries
+    this.defaultCreativeTab(null as ResourceKey<CreativeModeTab>?) // IMPORTANT: remove the default creative tab to avoid duplicate entries
   }
 
   /*? if forge {*/
@@ -557,11 +569,39 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   }
 
   // @ Boat Variants
-  val BOAT_VARIANTS: MutableList<String> = mutableListOf()
-
+  private val BOAT_VARIANTS: MutableList<String> = mutableListOf()
   fun boatVariant(name: String) {
     BOAT_VARIANTS.add(name)
   }
+
+  // @ Model Layers
+  private val MODEL_LAYERS: MutableMap<String, Pair<Supplier<LayerDefinition>, String>> = mutableMapOf()
+  fun modelLayer(path: String, model: Supplier<LayerDefinition>, folder: String = "main"){
+    MODEL_LAYERS[path] = Pair(model, folder)
+  }
+
+  // @ Particles
+
+  /*? if forge {*/
+  private val PARTICLE_TYPES = DeferredRegister.create(Registries.PARTICLE_TYPE, modId)
+  private val PARTICLE_REGISTRATIONS = mutableListOf<ParticleRegistration<out ParticleOptions>>()
+  private class ParticleRegistration<T : ParticleOptions>(
+    val type: Supplier<ParticleType<T>>,
+    val provider: SpriteParticleRegistration<T>
+  )
+  fun <T : ParticleOptions> particleType(
+    name: String, supplier: Supplier<ParticleType<T>>,
+    provider: SpriteParticleRegistration<T>
+  ): Supplier<ParticleType<T>> {
+    val type = PARTICLE_TYPES.register(name, supplier)
+    PARTICLE_REGISTRATIONS.add(ParticleRegistration({ type.get() }, provider))
+    return Supplier { type.get() }
+  }
+  /*?} elif neoforge {*/
+
+  /*?} elif fabric {*/
+
+  /*?}*/
 
   // FABRIC SPECIFIC BLOCKS FEATURES REGISTRATION
   /*? if fabric {*/
@@ -583,6 +623,9 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
     BOAT_VARIANTS.forEach { t ->
       EntityModelLayerRegistry.registerModelLayer(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "boat/${t}"), "main"), BoatModel::createBodyModel);
       EntityModelLayerRegistry.registerModelLayer(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "chest_boat/${t}"), "main"), ChestBoatModel::createBodyModel);
+    }
+    MODEL_LAYERS.forEach { path, (model, folder) ->
+      EntityModelLayerRegistry.registerModelLayer(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, path), folder), model);
     }
   }
 
@@ -690,8 +733,6 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
       FlammableBlockRegistry.getDefaultInstance().add(it.first.get(), it.second.toInt(), it.third.toInt())
     }
   }
-
-
   *//*?}*/
 
   /*? if forge {*/
@@ -701,6 +742,7 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
     CREATIVE_TABS.register(bus)
     TRUNK_PLACER_TYPES.register(bus)
     FOLIAGE_PLACER_TYPES.register(bus)
+    PARTICLE_TYPES.register(bus)
 
     // register pot plants
     onRegisterFlowerPots(bus)
@@ -720,7 +762,22 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
         event.registerLayerDefinition(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "boat/${t}"), "main"), BoatModel::createBodyModel);
         event.registerLayerDefinition(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "chest_boat/${t}"), "main"), ChestBoatModel::createBodyModel);
       }
+      MODEL_LAYERS.forEach { path, (model, folder) ->
+        event.registerLayerDefinition(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, path), folder), model);
+      }
     }
+    bus.addListener { event: net.minecraftforge.client.event.RegisterParticleProvidersEvent ->
+      PARTICLE_REGISTRATIONS.forEach { registration ->
+        handleParticleRegistration(event, registration)
+      }
+    }
+  }
+
+  private fun <T : ParticleOptions> handleParticleRegistration(
+    event: net.minecraftforge.client.event.RegisterParticleProvidersEvent,
+    registration: ParticleRegistration<T>
+  ) {
+    event.registerSpriteSet(registration.type.get(), registration.provider)
   }
 
   private fun onDatapackReload(forgeBus: net.minecraftforge.eventbus.api.IEventBus) {
@@ -861,6 +918,9 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
       BOAT_VARIANTS.forEach { t ->
         event.registerLayerDefinition(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "boat/${t}"), "main"), BoatModel::createBodyModel);
         event.registerLayerDefinition(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "chest_boat/${t}"), "main"), ChestBoatModel::createBodyModel);
+      }
+      MODEL_LAYERS.forEach { path, (model, folder) ->
+        event.registerLayerDefinition(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, path), folder), model);
       }
     }
   }
