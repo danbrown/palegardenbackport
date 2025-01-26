@@ -14,7 +14,7 @@ class TrailParticleObject(pOverrideLimiter: Boolean) : ParticleType<TrailParticl
 /*import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 
- class TrailParticleObject(pOverrideLimiter: Boolean) : ParticleType<TrailParticleOption>(pOverrideLimiter), ParticleOptions {
+class TrailParticleObject(pOverrideLimiter: Boolean) : ParticleType<TrailParticleOption>(pOverrideLimiter), ParticleOptions {
   *//*?}*/
   override fun getType(): TrailParticleObject {
     return this
