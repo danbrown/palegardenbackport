@@ -3,6 +3,7 @@ package com.dannbrown.deltaboxlib.common.content.particle.trail
 import com.dannbrown.deltaboxlib.common.init.DeltaboxParticles
 import com.mojang.brigadier.StringReader
 import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.core.particles.ParticleOptions
 import net.minecraft.core.particles.ParticleType
@@ -18,6 +19,7 @@ data class TrailParticleOption(val _target: Vec3, val _color: Int, val _duration
     return DeltaboxParticles.TRAIL.get()
   }
 
+  /*? if <1.21 {*/
   override fun writeToNetwork(p0: FriendlyByteBuf) {
     p0.writeDouble(this._target.x())
     p0.writeDouble(this._target.y())
@@ -29,12 +31,28 @@ data class TrailParticleOption(val _target: Vec3, val _color: Int, val _duration
   override fun writeToString(): String {
     return "${BuiltInRegistries.PARTICLE_TYPE.getKey(DeltaboxParticles.TRAIL.get())}(${_target.x()}, ${_target.y()}, ${_target.z()}, $_color, $_duration)"
   }
+  /*?} else {*/
+  /*constructor(buffer: FriendlyByteBuf) : this(
+    Vec3(buffer.readDouble(),buffer.readDouble(),buffer.readDouble()),
+    buffer.readInt(),
+    buffer.readInt()
+  )
+
+  fun encode(buffer: FriendlyByteBuf) {
+    buffer.writeDouble(this._target.x())
+    buffer.writeDouble(this._target.y())
+    buffer.writeDouble(this._target.z())
+    buffer.writeInt(this._color)
+    buffer.writeInt(this._duration)
+  }
+  *//*?}*/
 
   fun target(): Vec3 = this._target
   fun color(): Int = this._color
   fun duration(): Int = this._duration
 
   companion object {
+    /*? if <1.21 {*/
     val DESERIALIZER: ParticleOptions.Deserializer<TrailParticleOption> = object : ParticleOptions.Deserializer<TrailParticleOption> {
       override fun fromCommand(particleType: ParticleType<TrailParticleOption>, stringReader: StringReader): TrailParticleOption {
         val target = Vec3(stringReader.readDouble(), stringReader.readDouble(), stringReader.readDouble())
@@ -50,7 +68,9 @@ data class TrailParticleOption(val _target: Vec3, val _color: Int, val _duration
         return TrailParticleOption(target, color, duration)
       }
     }
+    /*?}*/
 
+    /*? if <1.21 {*/
     val CODEC: Codec<TrailParticleOption> = RecordCodecBuilder.create { optionInstance: RecordCodecBuilder.Instance<TrailParticleOption> ->
       optionInstance.group(Vec3.CODEC.fieldOf("target")
         .forGetter { obj: TrailParticleOption -> obj.target() },
@@ -60,5 +80,16 @@ data class TrailParticleOption(val _target: Vec3, val _color: Int, val _duration
           .forGetter { obj: TrailParticleOption -> obj.duration() })
         .apply(optionInstance) { target, color, duration -> TrailParticleOption(target, color, duration) }
     }
+    /*?} else {*/
+    /*val CODEC: MapCodec<TrailParticleOption> = RecordCodecBuilder.mapCodec { optionInstance: RecordCodecBuilder.Instance<TrailParticleOption> ->
+      optionInstance.group(Vec3.CODEC.fieldOf("target")
+        .forGetter { obj: TrailParticleOption -> obj.target() },
+        Codec.INT.fieldOf("color")
+          .forGetter { obj: TrailParticleOption -> obj.color() },
+        ExtraCodecs.POSITIVE_INT.fieldOf("duration")
+          .forGetter { obj: TrailParticleOption -> obj.duration() })
+        .apply(optionInstance) { target, color, duration -> TrailParticleOption(target, color, duration) }
+    }
+    *//*?}*/
   }
 }

@@ -2,6 +2,7 @@ package com.dannbrown.deltaboxlib.platform
 
 import com.dannbrown.deltaboxlib.common.*
 import com.dannbrown.deltaboxlib.platform.util.DeltaboxUtil
+import com.dannbrown.deltaboxlib.platform.util.ModStatus
 
 /*? if fabric {*/
 /*import net.fabricmc.api.ModInitializer;
