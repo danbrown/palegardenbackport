@@ -31,10 +31,10 @@ import net.minecraft.world.level.block.state.properties.WallSide
 /*import io.github.fabricators_of_create.porting_lib.models.generators.ConfiguredModel
 
 /^? if <1.21 {^/
-/^import io.github.fabricators_of_create.porting_lib.models.generators.block.BlockStateProvider
-^//^?} else {^/
-import io.github.fabricators_of_create.porting_lib.models.generators.BlockStateProvider
-/^?}^/
+import io.github.fabricators_of_create.porting_lib.models.generators.block.BlockStateProvider
+/^?} else {^/
+/^import io.github.fabricators_of_create.porting_lib.models.generators.BlockStateProvider
+^//^?}^/
 
 *//*?} elif forge {*/
 import net.minecraftforge.client.model.generators.ConfiguredModel

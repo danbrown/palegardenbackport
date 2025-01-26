@@ -5,15 +5,10 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.particles.ParticleOptions
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.RandomSource
-import net.minecraft.world.level.block.FlowerBlock
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.phys.Vec3
-import java.util.function.Supplier
 
-class TrailFlowerBlock(properties: Properties) :
-    FlowerBlock(Supplier { MobEffects.REGENERATION }, 10, properties) {
-
+class TrailFlowerBlock(properties: Properties) : GenericGrassBlock(properties) {
     override fun randomTick(blockState: BlockState, serverLevel: ServerLevel, blockPos: BlockPos, randomSource: RandomSource) {
         for (i in 1..10){
             spawnTransformParticle(serverLevel, blockPos, randomSource)

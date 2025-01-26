@@ -26,7 +26,6 @@ import net.minecraft.client.model.ChestBoatModel
 import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.model.geom.builders.LayerDefinition
 import net.minecraft.client.particle.ParticleEngine
-import net.minecraft.client.particle.ParticleEngine.SpriteParticleRegistration
 import net.minecraft.client.particle.ParticleProvider
 import net.minecraft.client.particle.SpriteSet
 import net.minecraft.core.Holder
@@ -81,11 +80,14 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModifications
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.TexturedModelDataProvider
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.fabricmc.fabric.api.`object`.builder.v1.trade.TradeOfferHelper
+import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.server.MinecraftServer
@@ -385,22 +387,22 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   /*?}*/
   /*?} elif fabric {*/
   /*/^? if >=1.21 {^/
-  fun trunkPlacer(name: String, codec: Supplier<com.mojang.serialization.MapCodec<out TrunkPlacer>>): Supplier<TrunkPlacerType<*>> {
+  /^fun trunkPlacer(name: String, codec: Supplier<com.mojang.serialization.MapCodec<out TrunkPlacer>>): Supplier<TrunkPlacerType<*>> {
     return Supplier { Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE, name, TrunkPlacerType(codec.get())) }
   }
 
   fun foliagePlacer(name: String, codec: Supplier<com.mojang.serialization.MapCodec<out FoliagePlacer>>): Supplier<FoliagePlacerType<*>> {
     return Supplier { Registry.register(BuiltInRegistries.FOLIAGE_PLACER_TYPE, name, FoliagePlacerType(codec.get())) }
   }
-  /^?} else {^/
-  /^fun trunkPlacer(name: String, codec: Supplier<com.mojang.serialization.Codec<out TrunkPlacer>>): Supplier<TrunkPlacerType<*>> {
+  ^//^?} else {^/
+  fun trunkPlacer(name: String, codec: Supplier<com.mojang.serialization.Codec<out TrunkPlacer>>): Supplier<TrunkPlacerType<*>> {
     return Supplier { Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE, name, TrunkPlacerType(codec.get())) }
   }
 
   fun foliagePlacer(name: String, codec: Supplier<com.mojang.serialization.Codec<out FoliagePlacer>>): Supplier<FoliagePlacerType<*>> {
     return Supplier { Registry.register(BuiltInRegistries.FOLIAGE_PLACER_TYPE, name, FoliagePlacerType(codec.get())) }
   }
-  ^//^?}^/
+  /^?}^/
 
   *//*?}*/
 
@@ -587,11 +589,11 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   private val PARTICLE_REGISTRATIONS = mutableListOf<ParticleRegistration<out ParticleOptions>>()
   private class ParticleRegistration<T : ParticleOptions>(
     val type: Supplier<ParticleType<T>>,
-    val provider: SpriteParticleRegistration<T>
+    val provider: (sprite: SpriteSet) -> ParticleProvider<T>
   )
   fun <T : ParticleOptions> particleType(
     name: String, supplier: Supplier<ParticleType<T>>,
-    provider: SpriteParticleRegistration<T>
+    provider: (sprite: SpriteSet) -> ParticleProvider<T>
   ): Supplier<ParticleType<T>> {
     val type = PARTICLE_TYPES.register(name, supplier)
     PARTICLE_REGISTRATIONS.add(ParticleRegistration({ type.get() }, provider))
@@ -600,8 +602,20 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   /*?} elif neoforge {*/
 
   /*?} elif fabric {*/
-
-  /*?}*/
+  /*private val PARTICLE_REGISTRATIONS = mutableListOf<ParticleRegistration<out ParticleOptions>>()
+  private class ParticleRegistration<T : ParticleOptions>(
+    val type: Supplier<ParticleType<T>>,
+    val provider: (sprite: SpriteSet) -> ParticleProvider<T>
+  )
+  fun <T : ParticleOptions> particleType(
+    name: String, supplier: Supplier<ParticleType<T>>,
+    provider: (sprite: SpriteSet) -> ParticleProvider<T>
+  ): Supplier<ParticleType<T>> {
+    val type = Registry.register(BuiltInRegistries.PARTICLE_TYPE, DeltaboxUtil.resourceLocation(modid, name), FabricParticleTypes.complex(supplier.get().deserializer))
+    PARTICLE_REGISTRATIONS.add(ParticleRegistration({ type }, provider))
+    return Supplier { type }
+  }
+  *//*?}*/
 
   // FABRIC SPECIFIC BLOCKS FEATURES REGISTRATION
   /*? if fabric {*/
@@ -621,12 +635,21 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   fun registerClient(){
     BlockRenderLayerMap.INSTANCE.putBlocks(net.minecraft.client.renderer.RenderType.cutout(), *CUTOUT_RENDERS.map { it.get() }.toTypedArray())
     BOAT_VARIANTS.forEach { t ->
-      EntityModelLayerRegistry.registerModelLayer(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "boat/${t}"), "main"), BoatModel::createBodyModel);
-      EntityModelLayerRegistry.registerModelLayer(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "chest_boat/${t}"), "main"), ChestBoatModel::createBodyModel);
+      EntityModelLayerRegistry.registerModelLayer(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "boat/${t}"), "main"), BoatModel::createBodyModel)
+      EntityModelLayerRegistry.registerModelLayer(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, "chest_boat/${t}"), "main"), ChestBoatModel::createBodyModel)
     }
     MODEL_LAYERS.forEach { path, (model, folder) ->
-      EntityModelLayerRegistry.registerModelLayer(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, path), folder), model);
+      EntityModelLayerRegistry.registerModelLayer(ModelLayerLocation(DeltaboxUtil.resourceLocation(modid, path), folder), model as TexturedModelDataProvider)
     }
+    PARTICLE_REGISTRATIONS.forEach { particle ->
+      handleParticleRegistration(particle)
+    }
+  }
+
+  private fun <T : ParticleOptions> handleParticleRegistration(
+    registration: ParticleRegistration<T>
+  ) {
+    ParticleFactoryRegistry.getInstance().register(registration.type.get(), registration.provider)
   }
 
   private fun onDatapackReload() {
@@ -687,10 +710,10 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
           factories.add({e, r->
             MerchantOffer(
               /^? if >1.21 {^/
-              net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              /^?} else {^/
-              /^ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              ^//^?}^/
+              /^net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              ^//^?} else {^/
+              ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              /^?}^/
               ItemStack(it.tradeSells.first().item.get(), it.tradeSells.first().amount),
               it.maxUses,
               it.xpAmount,
@@ -707,10 +730,10 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
           factories.add({e, r->
             MerchantOffer(
               /^? if >1.21 {^/
-              net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              /^?} else {^/
-              /^ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              ^//^?}^/
+              /^net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              ^//^?} else {^/
+              ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              /^?}^/
               ItemStack(it.tradeSells.first().item.get(), it.tradeSells.first().amount),
               it.maxUses,
               it.xpAmount,
