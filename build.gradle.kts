@@ -207,6 +207,8 @@ tasks.processResources {
         "target_minecraft" to mcDep,
         "target_loader" to stonecutter.project.property("deps.target_loader").toString(),
         "target_forge" to stonecutter.project.property("deps.target_forge").toString(),
+        "target_flk" to stonecutter.project.property("deps.flk").toString(),
+        "target_kff" to stonecutter.project.property("deps.kff").toString(),
     )
 
     if(isFabric) {
