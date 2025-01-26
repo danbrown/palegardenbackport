@@ -12,7 +12,7 @@ import java.util.function.Supplier
 
 class BaseBoatEntity(
   private val boatItem: Supplier<Item>,
-  private val variant: String,
+  val variant: String,
   private val pEntityType: Supplier<EntityType<out Boat>>,
   pLevel: Level
 ) : Boat(pEntityType.get(), pLevel) {
@@ -48,9 +48,6 @@ class BaseBoatEntity(
     }
   }
 
-  val modVariant: String
-    get() = entityData.get(DATA_ID_TYPE)
-
   /*? if >1.21 {*/
   /*override fun defineSynchedData(arg: SynchedEntityData.Builder) {
     super.defineSynchedData(arg)
@@ -58,13 +55,13 @@ class BaseBoatEntity(
   }
   *//*?} else {*/
   override fun defineSynchedData() {
-  entityData.define(DATA_ID_TYPE, "oak") // Default variant
-  super.defineSynchedData()
-}
+    super.defineSynchedData()
+    entityData.define(DATA_ID_TYPE, "oak") // Default variant
+  }
   /*?}*/
 
   override fun addAdditionalSaveData(pCompound: CompoundTag) {
-    pCompound.putString("Type", this.modVariant)
+    pCompound.putString("Type", this.entityData.get(DATA_ID_TYPE))
   }
 
   override fun readAdditionalSaveData(pCompound: CompoundTag) {
@@ -74,7 +71,6 @@ class BaseBoatEntity(
   }
 
   companion object {
-    private val DATA_ID_TYPE: EntityDataAccessor<String> =
-      SynchedEntityData.defineId(Boat::class.java, EntityDataSerializers.STRING)
+    val DATA_ID_TYPE: EntityDataAccessor<String> =  SynchedEntityData.defineId(Boat::class.java, EntityDataSerializers.STRING)
   }
 }

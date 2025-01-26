@@ -13,19 +13,19 @@ import java.util.function.Supplier
 
 class BaseChestBoatEntity(
   private val boatItem: Supplier<Item>,
-  private val variant: String,
-  pEntityType: Supplier<EntityType<out Boat>>,
+  val variant: String,
+  private val pEntityType: Supplier<EntityType<out Boat>>,
   pLevel: Level
 ) : ChestBoat(pEntityType.get(), pLevel) {
   constructor(
     boatItem: Supplier<Item>,
     variant: String,
     pEntityType: Supplier<EntityType<out Boat>>,
-    pLevel: Level,
+    level: Level,
     pX: Double,
     pY: Double,
     pZ: Double
-  ) : this(boatItem, variant, pEntityType, pLevel) {
+  ) : this(boatItem, variant, pEntityType, level) {
     this.setPos(pX, pY, pZ)
     this.xo = pX
     this.yo = pY
@@ -43,40 +43,43 @@ class BaseChestBoatEntity(
 
   fun setVariant(name: String) {
     try {
-      entityData.set(DATA_ID_TYPE, name)
+      entityData.set(BaseBoatEntity.DATA_ID_TYPE, name)
     } catch (err: IllegalArgumentException) {
-      throw IllegalArgumentException("Invalid chest boat variant: $name")
+      throw IllegalArgumentException("Invalid boat variant: $name")
     }
   }
 
   /*? if >1.21 {*/
   /*override fun defineSynchedData(arg: SynchedEntityData.Builder) {
     super.defineSynchedData(arg)
-    arg.define(DATA_ID_TYPE, "oak") // Default variant
+    arg.define(BaseBoatEntity.DATA_ID_TYPE, "oak") // Default variant
   }
   *//*?} else {*/
   override fun defineSynchedData() {
   super.defineSynchedData()
-  entityData.define(DATA_ID_TYPE, "oak") // Default variant
+  entityData.define(BaseBoatEntity.DATA_ID_TYPE, "oak") // Default variant
 }
   /*?}*/
 
-
   override fun addAdditionalSaveData(pCompound: CompoundTag) {
-    pCompound.putString("Type", this.modVariant)
+    /*? if >1.21 {*/
+    /*this.writeLeashData(pCompound, this.leashData)
+    this.addChestVehicleSaveData(pCompound, this.registryAccess())
+    *//*?} else {*/
+    this.addChestVehicleSaveData(pCompound)
+    /*?}*/
+    pCompound.putString("Type", this.entityData.get(BaseBoatEntity.DATA_ID_TYPE))
   }
 
   override fun readAdditionalSaveData(pCompound: CompoundTag) {
+    /*? if >1.21 {*/
+    /*this.leashData = this.readLeashData(pCompound)
+    this.readChestVehicleSaveData(pCompound, this.registryAccess())
+    *//*?} else {*/
+    this.readChestVehicleSaveData(pCompound)
+    /*?}*/
     if (pCompound.contains("Type", 8)) {
       this.setVariant(pCompound.getString("Type"))
     }
-  }
-
-  val modVariant: String
-    get() = entityData.get(DATA_ID_TYPE)
-
-  companion object {
-    private val DATA_ID_TYPE: EntityDataAccessor<String> =
-      SynchedEntityData.defineId(ChestBoat::class.java, EntityDataSerializers.STRING)
   }
 }

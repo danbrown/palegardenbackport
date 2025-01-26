@@ -27,10 +27,10 @@ class BaseBoatRenderer(
 ) : EntityRenderer<Boat>(context) {
   override fun getTextureLocation(boat: Boat): ResourceLocation {
     if (boat is BaseBoatEntity) {
-      val variant: String = boat.modVariant
+      val variant: String = boat.variant
       return DeltaboxUtil.resourceLocation(modId, "textures/entity/boat/$variant.png")
     } else if (boat is BaseChestBoatEntity) {
-      val variant: String = boat.modVariant
+      val variant: String = boat.variant
       return DeltaboxUtil.resourceLocation(modId, "textures/entity/chest_boat/$variant.png")
     }
     return DeltaboxUtil.resourceLocation(
@@ -48,10 +48,10 @@ class BaseBoatRenderer(
 
   fun getModelWithLocation(boat: Boat): Pair<ResourceLocation, ListModel<Boat>>? {
     if (boat is BaseBoatEntity) {
-      val variant: String = boat.modVariant // Retrieve the variant (hashed string name)
+      val variant: String = boat.variant // Retrieve the variant (hashed string name)
       return createModelWithLocation(variant, this.context, this.isChestBoat)
     } else if (boat is BaseChestBoatEntity) {
-      val variant: String = boat.modVariant // Retrieve the variant (hashed string name)
+      val variant: String = boat.variant // Retrieve the variant (hashed string name)
       return createModelWithLocation(variant, this.context, true)
     }
     return null

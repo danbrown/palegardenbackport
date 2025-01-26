@@ -6,13 +6,15 @@ import net.minecraft.core.particles.ParticleOptions
 import net.minecraft.core.particles.ParticleType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.FriendlyByteBuf
-import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.codec.StreamCodec
+
 
 /*? if <1.21 {*/
 class TrailParticleObject(pOverrideLimiter: Boolean) : ParticleType<TrailParticleOption>(pOverrideLimiter, TrailParticleOption.DESERIALIZER), ParticleOptions {
   /*?} elif {*/
-/*class TrailParticleObject(pOverrideLimiter: Boolean) : ParticleType<TrailParticleOption>(pOverrideLimiter), ParticleOptions {
+/*import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.codec.StreamCodec
+
+ class TrailParticleObject(pOverrideLimiter: Boolean) : ParticleType<TrailParticleOption>(pOverrideLimiter), ParticleOptions {
   *//*?}*/
   override fun getType(): TrailParticleObject {
     return this

@@ -387,22 +387,22 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
   /*?}*/
   /*?} elif fabric {*/
   /*/^? if >=1.21 {^/
-  fun trunkPlacer(name: String, codec: Supplier<com.mojang.serialization.MapCodec<out TrunkPlacer>>): Supplier<TrunkPlacerType<*>> {
+  /^fun trunkPlacer(name: String, codec: Supplier<com.mojang.serialization.MapCodec<out TrunkPlacer>>): Supplier<TrunkPlacerType<*>> {
     return Supplier { Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE, name, TrunkPlacerType(codec.get())) }
   }
 
   fun foliagePlacer(name: String, codec: Supplier<com.mojang.serialization.MapCodec<out FoliagePlacer>>): Supplier<FoliagePlacerType<*>> {
     return Supplier { Registry.register(BuiltInRegistries.FOLIAGE_PLACER_TYPE, name, FoliagePlacerType(codec.get())) }
   }
-  /^?} else {^/
-  /^fun trunkPlacer(name: String, codec: Supplier<com.mojang.serialization.Codec<out TrunkPlacer>>): Supplier<TrunkPlacerType<*>> {
+  ^//^?} else {^/
+  fun trunkPlacer(name: String, codec: Supplier<com.mojang.serialization.Codec<out TrunkPlacer>>): Supplier<TrunkPlacerType<*>> {
     return Supplier { Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE, name, TrunkPlacerType(codec.get())) }
   }
 
   fun foliagePlacer(name: String, codec: Supplier<com.mojang.serialization.Codec<out FoliagePlacer>>): Supplier<FoliagePlacerType<*>> {
     return Supplier { Registry.register(BuiltInRegistries.FOLIAGE_PLACER_TYPE, name, FoliagePlacerType(codec.get())) }
   }
-  ^//^?}^/
+  /^?}^/
 
   *//*?}*/
 
@@ -625,10 +625,10 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
     provider: (sprite: SpriteSet) -> ParticleProvider<T>
   ): Supplier<ParticleType<T>> {
     /^? if <1.21 {^/
-    /^val type = Registry.register(BuiltInRegistries.PARTICLE_TYPE, DeltaboxUtil.resourceLocation(modid, name), FabricParticleTypes.complex(supplier.get().deserializer))
-    ^//^?} else {^/
-    val type = Registry.register(BuiltInRegistries.PARTICLE_TYPE, DeltaboxUtil.resourceLocation(modid, name), FabricParticleTypes.complex(supplier.get().codec(), supplier.get().streamCodec()))
-    /^?}^/
+    val type = Registry.register(BuiltInRegistries.PARTICLE_TYPE, DeltaboxUtil.resourceLocation(modid, name), FabricParticleTypes.complex(supplier.get().deserializer))
+    /^?} else {^/
+    /^val type = Registry.register(BuiltInRegistries.PARTICLE_TYPE, DeltaboxUtil.resourceLocation(modid, name), FabricParticleTypes.complex(supplier.get().codec(), supplier.get().streamCodec()))
+    ^//^?}^/
     PARTICLE_REGISTRATIONS.add(ParticleRegistration({ type }, provider))
     return Supplier { type }
   }
@@ -727,10 +727,10 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
           factories.add({e, r->
             MerchantOffer(
               /^? if >1.21 {^/
-              net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              /^?} else {^/
-              /^ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              ^//^?}^/
+              /^net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              ^//^?} else {^/
+              ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              /^?}^/
               ItemStack(it.tradeSells.first().item.get(), it.tradeSells.first().amount),
               it.maxUses,
               it.xpAmount,
@@ -747,10 +747,10 @@ class DeltaboxRegistrate(modId: String): AbstractRegistrate<DeltaboxRegistrate>(
           factories.add({e, r->
             MerchantOffer(
               /^? if >1.21 {^/
-              net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              /^?} else {^/
-              /^ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
-              ^//^?}^/
+              /^net.minecraft.world.item.trading.ItemCost(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              ^//^?} else {^/
+              ItemStack(it.tradeCosts.first().item.get(), it.tradeCosts.first().amount),
+              /^?}^/
               ItemStack(it.tradeSells.first().item.get(), it.tradeSells.first().amount),
               it.maxUses,
               it.xpAmount,
