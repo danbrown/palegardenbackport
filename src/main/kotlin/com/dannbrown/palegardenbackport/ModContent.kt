@@ -225,7 +225,7 @@ class ModContent {
       .blockTags(listOf(BlockTags.DIRT, BlockTags.MOSS_REPLACEABLE, BlockTags.SNIFFER_DIGGABLE_BLOCK, BlockTags.SMALL_DRIPLEAF_PLACEABLE, BlockTags.SNIFFER_EGG_HATCH_BOOST))
       .itemTags(listOf(ItemTags.DIRT))
       .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null, false)
-      .properties { p -> p.strength(0.1F).sound(SoundType.MOSS).pushReaction(PushReaction.DESTROY).instabreak() }
+      .properties { p -> p.strength(0.1F).sound(SoundType.MOSS).pushReaction(PushReaction.DESTROY) }
       .blockstate(BlockstatePresets.simpleBlock())
       .register()
 
