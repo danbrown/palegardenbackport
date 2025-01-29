@@ -72,10 +72,10 @@
   "sounds.palegardenbackport.eyeblossom_idle": "毛骨悚然的聲響",
   "sounds.palegardenbackport.eyeblossom_open": "擬目花張開",
   "sounds.palegardenbackport.eyeblossom_open_long": "擬目花張開",
-  "sounds.palegardenbackport.resin_brick_break": "方塊破壞聲",
-  "sounds.palegardenbackport.resin_brick_fall": "某物掉落在方塊上",
-  "sounds.palegardenbackport.resin_brick_hit": "正在破壞方塊",
-  "sounds.palegardenbackport.resin_brick_place": "方塊放置聲",
-  "sounds.palegardenbackport.resin_brick_step": "腳步聲",
+  "sounds.palegardenbackport.resin_bricks_break": "方塊破壞聲",
+  "sounds.palegardenbackport.resin_bricks_fall": "某物掉落在方塊上",
+  "sounds.palegardenbackport.resin_bricks_hit": "正在破壞方塊",
+  "sounds.palegardenbackport.resin_bricks_place": "方塊放置聲",
+  "sounds.palegardenbackport.resin_bricks_step": "腳步聲",
   "trim_material.palegardenbackport.resin_clump": "樹脂材質"
 }

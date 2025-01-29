@@ -73,10 +73,10 @@
   "sounds.palegardenbackport.eyeblossom_idle": "ǝןpI ɯossoןqǝʎƎ",
   "sounds.palegardenbackport.eyeblossom_open": "uǝdO ɯossoןqǝʎƎ",
   "sounds.palegardenbackport.eyeblossom_open_long": "buoꞀ uǝdO ɯossoןqǝʎƎ",
-  "sounds.palegardenbackport.resin_brick_break": "ʞɐǝɹᗺ ʞɔıɹᗺ uısǝᴚ",
-  "sounds.palegardenbackport.resin_brick_fall": "ןןɐℲ ʞɔıɹᗺ uısǝᴚ",
-  "sounds.palegardenbackport.resin_brick_hit": "ʇıH ʞɔıɹᗺ uısǝᴚ",
-  "sounds.palegardenbackport.resin_brick_place": "ǝɔɐןԀ ʞɔıɹᗺ uısǝᴚ",
-  "sounds.palegardenbackport.resin_brick_step": "dǝʇS ʞɔıɹᗺ uısǝᴚ",
+  "sounds.palegardenbackport.resin_bricks_break": "ʞɐǝɹᗺ sʞɔıɹᗺ uısǝᴚ",
+  "sounds.palegardenbackport.resin_bricks_fall": "ןןɐℲ sʞɔıɹᗺ uısǝᴚ",
+  "sounds.palegardenbackport.resin_bricks_hit": "ʇıH ʞɔıɹᗺ uısǝᴚ",
+  "sounds.palegardenbackport.resin_bricks_place": "ǝɔɐןԀ sʞɔıɹᗺ uısǝᴚ",
+  "sounds.palegardenbackport.resin_bricks_step": "dǝʇS sʞɔıɹᗺ uısǝᴚ",
   "trim_material.palegardenbackport.resin_clump": "ןɐıɹǝʇɐW dɯnןƆ uısǝᴚ"
 }

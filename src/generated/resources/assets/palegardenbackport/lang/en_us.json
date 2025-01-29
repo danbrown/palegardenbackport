@@ -73,10 +73,10 @@
   "sounds.palegardenbackport.eyeblossom_idle": "Eyeblossom Idle",
   "sounds.palegardenbackport.eyeblossom_open": "Eyeblossom Open",
   "sounds.palegardenbackport.eyeblossom_open_long": "Eyeblossom Open Long",
-  "sounds.palegardenbackport.resin_brick_break": "Resin Brick Break",
-  "sounds.palegardenbackport.resin_brick_fall": "Resin Brick Fall",
-  "sounds.palegardenbackport.resin_brick_hit": "Resin Brick Hit",
-  "sounds.palegardenbackport.resin_brick_place": "Resin Brick Place",
-  "sounds.palegardenbackport.resin_brick_step": "Resin Brick Step",
+  "sounds.palegardenbackport.resin_bricks_break": "Resin Bricks Break",
+  "sounds.palegardenbackport.resin_bricks_fall": "Resin Bricks Fall",
+  "sounds.palegardenbackport.resin_bricks_hit": "Resin Brick Hit",
+  "sounds.palegardenbackport.resin_bricks_place": "Resin Bricks Place",
+  "sounds.palegardenbackport.resin_bricks_step": "Resin Bricks Step",
   "trim_material.palegardenbackport.resin_clump": "Resin Clump Material"
 }

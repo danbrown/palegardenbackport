@@ -29,11 +29,11 @@ object ModLangGen {
     ModContent.REGISTRATE.addRawLang("trim_material.${ModContent.MOD_ID}.resin_clump", "Resin Clump Material")
 
     // Sounds
-    ModContent.REGISTRATE.addRawLang("sounds.${ModContent.MOD_ID}.resin_brick_break", "Resin Brick Break")
-    ModContent.REGISTRATE.addRawLang("sounds.${ModContent.MOD_ID}.resin_brick_step", "Resin Brick Step")
-    ModContent.REGISTRATE.addRawLang("sounds.${ModContent.MOD_ID}.resin_brick_fall", "Resin Brick Fall")
-    ModContent.REGISTRATE.addRawLang("sounds.${ModContent.MOD_ID}.resin_brick_place", "Resin Brick Place")
-    ModContent.REGISTRATE.addRawLang("sounds.${ModContent.MOD_ID}.resin_brick_hit", "Resin Brick Hit")
+    ModContent.REGISTRATE.addRawLang("sounds.${ModContent.MOD_ID}.resin_bricks_break", "Resin Bricks Break")
+    ModContent.REGISTRATE.addRawLang("sounds.${ModContent.MOD_ID}.resin_bricks_step", "Resin Bricks Step")
+    ModContent.REGISTRATE.addRawLang("sounds.${ModContent.MOD_ID}.resin_bricks_fall", "Resin Bricks Fall")
+    ModContent.REGISTRATE.addRawLang("sounds.${ModContent.MOD_ID}.resin_bricks_place", "Resin Bricks Place")
+    ModContent.REGISTRATE.addRawLang("sounds.${ModContent.MOD_ID}.resin_bricks_hit", "Resin Brick Hit")
     ModContent.REGISTRATE.addRawLang("sounds.${ModContent.MOD_ID}.block_of_resin_break", "Resin Break")
     ModContent.REGISTRATE.addRawLang("sounds.${ModContent.MOD_ID}.block_of_resin_step", "Resin Step")
     ModContent.REGISTRATE.addRawLang("sounds.${ModContent.MOD_ID}.block_of_resin_fall", "Resin Fall")

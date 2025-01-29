@@ -73,10 +73,10 @@
   "sounds.palegardenbackport.eyeblossom_idle": "Inactivité de Fleur-Œil",
   "sounds.palegardenbackport.eyeblossom_open": "Ouverture de Fleur-Œil",
   "sounds.palegardenbackport.eyeblossom_open_long": "Ouverture Longue de Fleur-Œil",
-  "sounds.palegardenbackport.resin_brick_break": "Casse de Brique de Résine",
-  "sounds.palegardenbackport.resin_brick_fall": "Chute de Brique de Résine",
-  "sounds.palegardenbackport.resin_brick_hit": "Impact de Brique de Résine",
-  "sounds.palegardenbackport.resin_brick_place": "Placement de Brique de Résine",
-  "sounds.palegardenbackport.resin_brick_step": "Pas sur Brique de Résine",
+  "sounds.palegardenbackport.resin_bricks_break": "Casse de Brique de Résine",
+  "sounds.palegardenbackport.resin_bricks_fall": "Chute de Brique de Résine",
+  "sounds.palegardenbackport.resin_bricks_hit": "Impact de Brique de Résine",
+  "sounds.palegardenbackport.resin_bricks_place": "Placement de Brique de Résine",
+  "sounds.palegardenbackport.resin_bricks_step": "Pas sur Brique de Résine",
   "trim_material.palegardenbackport.resin_clump": "Matériau en Amas de Résine"
 }
