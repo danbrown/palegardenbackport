@@ -38,7 +38,7 @@
   },
   "block_of_resin_break": {
     "subtitle": "sounds.palegardenbackport.block_of_resin_break",
-    "sounds": ["palegardenbackport:block_of_resin_break_1"]
+    "sounds": ["palegardenbackport:block_of_resin_break_1", "palegardenbackport:block_of_resin_break_2", "palegardenbackport:block_of_resin_break_3", "palegardenbackport:block_of_resin_break_4", "palegardenbackport:block_of_resin_break_5"]
   },
   "block_of_resin_step": {
     "subtitle": "sounds.palegardenbackport.block_of_resin_step",
