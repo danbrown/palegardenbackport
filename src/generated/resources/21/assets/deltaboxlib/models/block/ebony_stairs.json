@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "deltaboxlib:block/ebony_planks",
-    "side": "deltaboxlib:block/ebony_planks",
-    "top": "deltaboxlib:block/ebony_planks"
-  }
-}

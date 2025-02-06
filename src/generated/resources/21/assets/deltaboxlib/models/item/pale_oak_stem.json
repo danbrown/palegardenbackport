@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/wall_inventory_special_top",
-  "textures": {
-    "down": "deltaboxlib:block/pale_oak_log_top",
-    "top": "deltaboxlib:block/pale_oak_log_top",
-    "wall": "deltaboxlib:block/pale_oak_log"
-  }
-}

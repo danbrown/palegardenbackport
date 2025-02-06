@@ -1,4 +1,3 @@
-// 1.20.1	2025-01-18T19:47:57.389326	Registries
-3a3e72593abf59860d9403ee69ec282380115636 data/deltaboxlib/forge/biome_modifier/add_test_to_plains.json
-15ff765ad52d0c382f0ff7ad76956fe0b9cd5872 data/deltaboxlib/worldgen/configured_feature/test_feature.json
-9110b6286485916f16c7b4c2d7f21322438029cb data/deltaboxlib/worldgen/placed_feature/test_placed.json
+// 1.20.1	2025-01-31T16:31:53.505324	Registries
+5d663391599ed7b3df031d95dbb7b10701e5fb69 data/palegardenbackport/worldgen/configured_feature/pale_moss_patch_bonemeal.json
+34cc53676399ebcbae2a3d2546f4ecdce9be879c data/palegardenbackport/worldgen/configured_feature/pale_moss_vegetation.json

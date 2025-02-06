@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/wall_special_post",
-  "textures": {
-    "bottom": "deltaboxlib:block/roseate_sandstone_top",
-    "top": "deltaboxlib:block/roseate_sandstone_top",
-    "wall": "deltaboxlib:block/roseate_sandstone"
-  }
-}

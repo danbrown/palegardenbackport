@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cross",
-  "render_type": "minecraft:cutout_mipped",
-  "textures": {
-    "cross": "deltaboxlib:block/sparse_dry_grass",
-    "particle": "deltaboxlib:block/sparse_dry_grass"
-  }
-}

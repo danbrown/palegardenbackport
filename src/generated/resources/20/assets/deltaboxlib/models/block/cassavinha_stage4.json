@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cross",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "cross": "deltaboxlib:block/cassavinha/cassavinha_stage4",
-    "particle": "deltaboxlib:block/cassavinha/cassavinha_stage4"
-  }
-}

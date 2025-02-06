@@ -1,10 +1,5 @@
 {
   "values": [
-    "deltaboxlib:pale_oak_slab",
-    "deltaboxlib:roseate_sandstone_slab",
-    "deltaboxlib:pyrite_slab",
-    "deltaboxlib:polished_pyrite_slab",
-    "deltaboxlib:pyrite_brick_slab",
-    "deltaboxlib:ebony_slab"
+    "palegardenbackport:pale_oak_slab"
   ]
 }

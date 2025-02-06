@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "deltaboxlib:adamantium_block"
+          "name": "palegardenbackport:adamantium_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "deltaboxlib:blocks/adamantium_block"
+  "random_sequence": "palegardenbackport:blocks/adamantium_block"
 }

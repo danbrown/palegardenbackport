@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cross",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "cross": "deltaboxlib:block/bean/bean_stage3",
-    "particle": "deltaboxlib:block/bean/bean_stage3"
-  }
-}

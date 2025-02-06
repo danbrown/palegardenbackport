@@ -60,24 +60,24 @@ dependencies {
     minecraft("com.mojang:minecraft:${mcVersion}")
     @Suppress("UnstableApiUsage")
     mappings(loom.officialMojangMappings())
+    // Load DeltaboxLib from jar
+    modImplementation(files("../../libs/deltaboxlib-${loader}-${property("deltabox.version")}+${mcVersion}.jar"))
+    // Load modloader dependencies
     if (isFabric) {
         modules("content-registries-v0", "registry-sync-v0", "resource-loader-v0", "entity-events-v1", "screen-api-v1", "key-binding-api-v1", "lifecycle-events-v1", "blockrenderlayer-v1", "object-builder-api-v1", "biome-api-v1", "rendering-v1", "particles-v1")
         modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
         modImplementation("net.fabricmc:fabric-language-kotlin:${property("deps.flk")}+kotlin.2.0.0")
         ifStable("com.terraformersmc:modmenu:${property("deps.modmenu")}")
         modApi("com.tterrag.registrate_fabric:Registrate:${property("deps.registrate")}")
-        include("com.tterrag.registrate_fabric:Registrate:${property("deps.registrate")}")
     } else {
         if (loader == "forge") {
             "forge"("net.minecraftforge:forge:${mcVersion}-${property("fml.version")}")
             implementation("thedarkcolour:kotlinforforge:${property("deps.kff")}")
             modImplementation("com.tterrag.registrate:Registrate:${property("deps.registrate")}")
-            include("com.tterrag.registrate:Registrate:${property("deps.registrate")}")
         } else{
             "neoForge"("net.neoforged:neoforge:${property("fml.version")}")
             runtimeOnly(modrinth("kotlin-for-forge", property("deps.kff")))
             modImplementation("com.tterrag.registrate:Registrate:${property("deps.registrate")}")
-            include("com.tterrag.registrate:Registrate:${property("deps.registrate")}")
         }
     }
 }
@@ -209,6 +209,7 @@ tasks.processResources {
         "target_forge" to stonecutter.project.property("deps.target_forge").toString(),
         "target_flk" to stonecutter.project.property("deps.flk").toString(),
         "target_kff" to stonecutter.project.property("deps.kff").toString(),
+        "target_deltabox" to stonecutter.project.property("deltabox.range").toString(),
     )
 
     if(isFabric) {

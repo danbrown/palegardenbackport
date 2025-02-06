@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column_horizontal",
-  "textures": {
-    "end": "deltaboxlib:block/ebony_log",
-    "side": "deltaboxlib:block/ebony_log"
-  }
-}

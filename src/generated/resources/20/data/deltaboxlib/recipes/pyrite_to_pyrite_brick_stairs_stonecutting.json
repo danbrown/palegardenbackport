@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "deltaboxlib:pyrite"
-  },
-  "result": "deltaboxlib:pyrite_brick_stairs"
-}

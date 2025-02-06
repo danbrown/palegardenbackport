@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "deltaboxlib:block/pyrite_bricks",
-    "side": "deltaboxlib:block/pyrite_bricks",
-    "top": "deltaboxlib:block/pyrite_bricks"
-  }
-}
