@@ -5,7 +5,7 @@ architectury {
 }
 
 loom {
-    accessWidenerPath.set(file("src/main/resources/palegardenbackport.accesswidener"))
+    accessWidenerPath.set(file("src/main/resources/${rootProject.property("mod_id")}.accesswidener"))
 }
 
 sourceSets.main.get().resources.srcDir("src/generated/resources")
