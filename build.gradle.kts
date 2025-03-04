@@ -88,7 +88,8 @@ tasks.register<Copy>("collectJars") {
 
     val modId = rootProject.property("mod_id")
     val modVersion = rootProject.property("mod_version")
-    val jarPattern = Regex("$modId-(common|fabric|forge)-$modVersion\\.jar")
+    val minecraftVersion = rootProject.property("minecraft_version")
+    val jarPattern = Regex("$modId-${minecraftVersion}-(common|fabric|forge)-$modVersion\\.jar")
 
     from(deps.map { "${project(it.project.path).buildDir}/libs" }) {
         include { it.file.name.matches(jarPattern) }

@@ -51,11 +51,11 @@ dependencies {
     implementation("thedarkcolour:kotlinforforge:${rootProject.property("kff_version")}")
 
     // DeltaboxLib
-    modImplementation(files("${rootProject.projectDir.parent}/libs/deltaboxlib-common-${rootProject.property("deltaboxlib_version")}.jar"))
-    modImplementation(files("${rootProject.projectDir.parent}/libs/deltaboxlib-forge-${rootProject.property("deltaboxlib_version")}.jar"))
+    modImplementation(files("${rootProject.projectDir.parent}/libs/deltaboxlib-${rootProject.property("minecraft_version")}-common-${rootProject.property("deltaboxlib_version")}.jar"))
+    modImplementation(files("${rootProject.projectDir.parent}/libs/deltaboxlib-${rootProject.property("minecraft_version")}-forge-${rootProject.property("deltaboxlib_version")}.jar"))
 }
 
-archivesName.set("${rootProject.property("mod_id")}-${project.name}")
+archivesName.set("${rootProject.property("mod_id")}-${rootProject.property("minecraft_version")}-${project.name}")
 
 tasks.processResources {
     inputs.property("group", rootProject.property("mod_group"))

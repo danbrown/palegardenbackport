@@ -9,7 +9,7 @@ loom {
 }
 
 sourceSets.main.get().resources.srcDir("src/generated/resources")
-archivesName.set("${rootProject.property("mod_id")}-${project.name}")
+archivesName.set("${rootProject.property("mod_id")}-${rootProject.property("minecraft_version")}-${project.name}")
 
 dependencies {
     // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
@@ -19,5 +19,5 @@ dependencies {
     modApi("dev.architectury:architectury:${rootProject.property("architectury_version")}")
 
     // DeltaboxLib
-    modImplementation(files("${rootProject.projectDir.parent}/libs/deltaboxlib-common-${rootProject.property("deltaboxlib_version")}.jar"))
+    modImplementation(files("${rootProject.projectDir.parent}/libs/deltaboxlib-${rootProject.property("minecraft_version")}-common-${rootProject.property("deltaboxlib_version")}.jar"))
 }
