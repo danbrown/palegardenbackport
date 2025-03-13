@@ -17,11 +17,17 @@
     "main": [
       {
         "adapter": "kotlin",
-        "value": "com.dannbrown.${mod_id}.fabric.init.DeltaboxLibModFabric"
+        "value": "com.dannbrown.${mod_id}.fabric.init.ModContentFabric"
+      }
+    ],
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "com.dannbrown.${mod_id}.fabric.init.ModContentFabric"
       }
     ],
     "fabric-datagen": [
-      "com.dannbrown.${mod_id}.fabric.init.DeltaboxLibDatagenFabric"
+      "com.dannbrown.${mod_id}.fabric.init.ModContentDatagenFabric"
     ]
   },
   "mixins": [

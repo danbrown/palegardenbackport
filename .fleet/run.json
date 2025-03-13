@@ -1,0 +1,36 @@
+{
+  "configurations": [
+    {
+      "type": "gradle",
+      "name": "FABRIC - Run Client",
+      "tasks": [
+        ":fabric:runClient"
+      ],
+    },
+    {
+      "type": "gradle",
+      "name": "FORGE - Run Client",
+      "tasks": [
+        ":forge:runClient"
+      ],
+    },
+    {
+      "type": "gradle",
+      "name": "Run Data",
+      "args": [],
+      "tasks": [
+        ":fabric:runDatagen"
+      ],
+    },
+    {
+      "type": "gradle",
+      "name": "Build All",
+      "args": [],
+      "tasks": [
+        ":common:build",
+        ":fabric:build",
+        ":forge:build"
+      ],
+    },
+  ]
+}
