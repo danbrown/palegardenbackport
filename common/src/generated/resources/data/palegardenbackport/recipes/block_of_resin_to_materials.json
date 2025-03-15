@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "palegardenbackport:block_of_resin"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "palegardenbackport:resin_clump"
+  }
+}

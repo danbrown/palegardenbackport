@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "palegardenbackport:block/pale_oak_planks",
+    "side": "palegardenbackport:block/pale_oak_planks",
+    "top": "palegardenbackport:block/pale_oak_planks"
+  }
+}

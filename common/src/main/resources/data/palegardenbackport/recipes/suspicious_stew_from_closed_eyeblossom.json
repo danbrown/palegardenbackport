@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:brown_mushroom"
+    },
+    {
+      "item": "minecraft:red_mushroom"
+    },
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "palegardenbackport:open_eyeblossom"
+    }
+  ],
+  "result": {
+    "item": "minecraft:suspicious_stew",
+    "nbt": "{Effects:[{EffectId:15,EffectDuration:220}]}",
+    "count": 1
+  }
+}
+

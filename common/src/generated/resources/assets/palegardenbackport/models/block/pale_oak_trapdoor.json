@@ -1,0 +1,6 @@
+{
+  "parent": "deltaboxlib:block/template_trapdoor_bottom",
+  "textures": {
+    "texture": "palegardenbackport:block/pale_oak_trapdoor"
+  }
+}

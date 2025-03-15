@@ -1,0 +1,6 @@
+{
+  "parent": "deltaboxlib:block/template_leaves",
+  "textures": {
+    "all": "palegardenbackport:block/pale_oak_leaves"
+  }
+}
