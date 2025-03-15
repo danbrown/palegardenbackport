@@ -29,7 +29,19 @@
       "tasks": [
         ":common:build",
         ":fabric:build",
-        ":forge:build"
+        ":forge:build",
+        "collectJars"
+      ],
+    },
+    {
+      "type": "gradle",
+      "name": "Sync DeltaboxLib",
+      "args": [],
+      "tasks": [
+        ":deltaboxlib_multi:common:build",
+        ":deltaboxlib_multi:fabric:build",
+        ":deltaboxlib_multi:forge:build",
+        ":deltaboxlib_multi:collectJars",
       ],
     },
   ]

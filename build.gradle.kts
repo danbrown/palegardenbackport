@@ -97,7 +97,6 @@ tasks.register<Copy>("collectJars") {
   into(rootProject.projectDir.parentFile.resolve("libs"))
 }
 
-
 tasks.named("assemble").configure {
   dependsOn("collectJars")
 }
