@@ -1,6 +1,5 @@
 package com.dannbrown.palegardenbackport.content.blocks.creakingHeart
 
-
 import com.dannbrown.deltaboxlib.content.particle.trail.TrailParticleOption
 import com.dannbrown.deltaboxlib.registrate.presets.family.BlockFamily
 import com.dannbrown.palegardenbackport.init.ModBlockEntities
@@ -100,20 +99,20 @@ class CreakingHeartBlock(props: Properties) : BaseEntityBlock(props) {
       blockPos
     )
   }
-//
-//  override fun onRemove(
-//    pState: BlockState,
-//    pLevel: Level,
-//    pPos: BlockPos,
-//    pNewState: BlockState,
-//    pMovedByPiston: Boolean
-//  ) {
-//    super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston)
-//    val blockEntity = pLevel.getBlockEntity(pPos)
-//    if (blockEntity is CreakingHeartBlockEntity) {
-//      blockEntity.removeProtector(null)
-//    }
-//  }
+
+  override fun onRemove(
+    pState: BlockState,
+    pLevel: Level,
+    pPos: BlockPos,
+    pNewState: BlockState,
+    pMovedByPiston: Boolean
+  ) {
+    super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston)
+    val blockEntity = pLevel.getBlockEntity(pPos)
+    if (blockEntity is CreakingHeartBlockEntity) {
+      blockEntity.removeProtector(null)
+    }
+  }
 
   private fun tryAwardExperience(player: Player?, blockState: BlockState, level: Level, blockPos: BlockPos) {
     if (blockState.getValue(NATURAL) as Boolean && level is ServerLevel) {
@@ -122,32 +121,32 @@ class CreakingHeartBlock(props: Properties) : BaseEntityBlock(props) {
     }
   }
 
-//  override fun playerWillDestroy(level: Level, blockPos: BlockPos, blockState: BlockState, player: Player) {
-//    val blockEntity = level.getBlockEntity(blockPos)
-//    if (blockEntity is CreakingHeartBlockEntity) {
-//      blockEntity.removeProtector(level.damageSources().playerAttack(player))
-//      this.tryAwardExperience(player, blockState, level, blockPos)
-//    }
-//
-//    return super.playerWillDestroy(level, blockPos, blockState, player)
-//  }
+  override fun playerWillDestroy(level: Level, blockPos: BlockPos, blockState: BlockState, player: Player) {
+    val blockEntity = level.getBlockEntity(blockPos)
+    if (blockEntity is CreakingHeartBlockEntity) {
+      blockEntity.removeProtector(level.damageSources().playerAttack(player))
+      this.tryAwardExperience(player, blockState, level, blockPos)
+    }
+
+    return super.playerWillDestroy(level, blockPos, blockState, player)
+  }
 
   override fun hasAnalogOutputSignal(blockState: BlockState): Boolean {
     return true
   }
 
-//  override fun getAnalogOutputSignal(blockState: BlockState, level: Level, blockPos: BlockPos): Int {
-//    if (!blockState.getValue(ACTIVE)) {
-//      return 0
-//    } else {
-//      val blockEntity = level.getBlockEntity(blockPos)
-//      return if (blockEntity is CreakingHeartBlockEntity) {
-//        blockEntity.getAnalogOutputSignal()
-//      } else {
-//        0
-//      }
-//    }
-//  }
+  override fun getAnalogOutputSignal(blockState: BlockState, level: Level, blockPos: BlockPos): Int {
+    if (!blockState.getValue(ACTIVE)) {
+      return 0
+    } else {
+      val blockEntity = level.getBlockEntity(blockPos)
+      return if (blockEntity is CreakingHeartBlockEntity) {
+        blockEntity.getAnalogOutputSignal()
+      } else {
+        0
+      }
+    }
+  }
 
   override fun animateTick(state: BlockState, level: Level, blockPos: BlockPos, randomSource: RandomSource) {
     if (isNaturalNight(level, blockPos)) {
@@ -168,22 +167,22 @@ class CreakingHeartBlock(props: Properties) : BaseEntityBlock(props) {
     }
   }
 
-//  override fun <T : BlockEntity?> getTicker(
-//    level: Level,
-//    blockState: BlockState,
-//    pBlockEntityType: BlockEntityType<T>
-//  ): BlockEntityTicker<T>? {
-//    if (level.isClientSide) return null
-//    return if (blockState.getValue(ACTIVE) as Boolean) {
-//      createTickerHelper(
-//        pBlockEntityType,
-//        ModContent.CREAKING_HEART_BLOCK_ENTITY.get(),
-//        CreakingHeartBlockEntity::serverTick
-//      )
-//    } else {
-//      null
-//    }
-//  }
+  override fun <T : BlockEntity?> getTicker(
+    level: Level,
+    blockState: BlockState,
+    pBlockEntityType: BlockEntityType<T>
+  ): BlockEntityTicker<T>? {
+    if (level.isClientSide) return null
+    return if (blockState.getValue(ACTIVE) as Boolean) {
+      createTickerHelper(
+        pBlockEntityType,
+        ModBlockEntities.CREAKING_HEART_BLOCK_ENTITY.get(),
+        CreakingHeartBlockEntity::serverTick
+      )
+    } else {
+      null
+    }
+  }
 
   companion object {
     val NATURAL = BooleanProperty.create("natural")

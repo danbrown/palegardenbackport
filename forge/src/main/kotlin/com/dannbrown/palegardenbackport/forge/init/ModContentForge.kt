@@ -41,6 +41,7 @@ object ModContentForge {
     registrateInit.init()
 
     MOD_BUS.addListener(::commonSetup)
+    modBus.addListener(registrateInit::onRegisterEntityAttributes)
   }
 
   private fun registerClient(modBus: IEventBus, forgeEventBus: IEventBus) {
