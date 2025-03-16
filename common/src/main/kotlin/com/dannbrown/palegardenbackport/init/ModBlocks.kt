@@ -259,6 +259,26 @@ object ModBlocks {
     .loot { lt, b -> lt.dropItself(b.get()) }
     .register()
 
+  val RESIN_BRICKS = REGISTRATE.blockfamily("resin")
+    .color(MapColor.COLOR_ORANGE, MapColor.COLOR_ORANGE)
+    .sharedProps { c, p -> p.sound(ModSounds.RESIN_BRICK_SOUNDS.get()) }
+    .copyFrom { Blocks.BRICKS }
+    .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, false)
+    .bricksFamily { ModItems.RESIN_BRICK.get() }
+
+  val CHISELED_RESIN_BRICKS = REGISTRATE.block<Block>("chiseled_resin_bricks")
+    .itemTags(DeltaboxUtil.TAGS.modItemTag(MOD_ID, "resin_blocks"))
+    .properties { c, p -> p.sound(ModSounds.RESIN_BRICK_SOUNDS.get()) }
+    .copyFrom { Blocks.BRICKS }
+    .color(MapColor.COLOR_ORANGE)
+    .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, false)
+    .recipe { c, p ->
+      c.slabToChiseledRecipe({ p.get() }, { Ingredient.of(RESIN_BRICKS.blocks[BlockFamily.Type.BRICK_SLAB]!!.get()) })
+      c.simpleStonecuttingRecipe({ p.get() }, { RESIN_BRICKS.blocks[BlockFamily.Type.BRICKS]!!.get() }, 1)
+    }
+    .loot { lt, b -> lt.dropSelf(b.get()) }
+    .register()
+
   fun register() {
     // init
   }

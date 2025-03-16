@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "palegardenbackport:pale_oak_stairs"
+    "palegardenbackport:pale_oak_stairs",
+    "palegardenbackport:resin_brick_stairs"
   ]
 }

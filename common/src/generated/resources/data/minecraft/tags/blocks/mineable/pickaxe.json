@@ -2,6 +2,11 @@
   "replace": false,
   "values": [
     "palegardenbackport:resin_clump",
-    "palegardenbackport:block_of_resin"
+    "palegardenbackport:block_of_resin",
+    "palegardenbackport:resin_bricks",
+    "palegardenbackport:resin_brick_stairs",
+    "palegardenbackport:resin_brick_slab",
+    "palegardenbackport:resin_brick_wall",
+    "palegardenbackport:chiseled_resin_bricks"
   ]
 }

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "palegardenbackport:block/resin_bricks",
+    "side": "palegardenbackport:block/resin_bricks",
+    "top": "palegardenbackport:block/resin_bricks"
+  }
+}

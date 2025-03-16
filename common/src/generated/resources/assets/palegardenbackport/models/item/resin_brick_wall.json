@@ -1,0 +1,7 @@
+{
+  "parent": "deltaboxlib:block/template_wall_inventory_top",
+  "textures": {
+    "top": "palegardenbackport:block/resin_bricks",
+    "wall": "palegardenbackport:block/resin_bricks"
+  }
+}
