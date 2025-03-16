@@ -20,8 +20,10 @@ object ModContent {
     ModItems.register()
     ModParticles.register()
     ModConfiguredFeatures.register()
+    ModPlacedFeatures.register()
     ModModelLayers.register()
     ModBlockEntities.register()
+    ModPlacerTypes.register()
     REGISTRATE.buildRegistries()
   }
 }

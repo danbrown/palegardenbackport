@@ -1,0 +1,6 @@
+{
+  "parent": "deltaboxlib:block/template_cross",
+  "textures": {
+    "cross": "palegardenbackport:block/pale_hanging_moss"
+  }
+}

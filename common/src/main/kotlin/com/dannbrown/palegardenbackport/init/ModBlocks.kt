@@ -5,9 +5,8 @@ import com.dannbrown.deltaboxlib.registrate.presets.family.BlockFamily
 import com.dannbrown.deltaboxlib.content.block.FallingLeavesBlock
 import com.dannbrown.deltaboxlib.registrate.registry.BlockEntry
 import com.dannbrown.deltaboxlib.registrate.util.DeltaboxUtil
-import com.dannbrown.palegardenbackport.content.blocks.PaleMossBlock
-import com.dannbrown.palegardenbackport.content.blocks.PaleMossCarpetBlock
-import com.dannbrown.palegardenbackport.content.blocks.ResinClumpBlock
+import com.dannbrown.palegardenbackport.content.blocks.*
+import com.dannbrown.palegardenbackport.content.blocks.creakingHeart.CreakingHeartBlock
 import com.dannbrown.palegardenbackport.content.blocks.eyeblossom.EyeBlossomBlock
 import com.dannbrown.palegardenbackport.content.particle.PaleOakParticleOption
 import com.dannbrown.palegardenbackport.init.ModContent.MOD_ID
@@ -20,11 +19,67 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.FlowerPotBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
+import java.util.Optional
 import java.util.function.Supplier
 
 object ModBlocks {
+  val CREAKING_HEART = REGISTRATE.block<CreakingHeartBlock>("creaking_heart")
+    .copyFrom { Blocks.OAK_LOG }
+    .color(MapColor.COLOR_ORANGE)
+    .factory { c, p -> CreakingHeartBlock(p) }
+    .properties { c, p ->
+      p
+        .sound(ModSounds.CREAKING_HEART_SOUNDS.get())
+        .instrument(NoteBlockInstrument.BASEDRUM)
+        .strength(10.0F)
+        .randomTicks()
+    }
+    .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null)
+//      .loot { lt, b ->
+//        lt.add(b, BlockLootHelpers.createSelfDropDispatchTable(b, HAS_SILK_TOUCH))
+//      }
+    .recipe { c, p ->
+      c.simpleShapedRecipe(
+        { p.get() },
+        arrayOf("Y", "X", "Y"),
+        mapOf(
+          'X' to Supplier { Ingredient.of(BLOCK_OF_RESIN.get()) },
+          'Y' to Supplier { Ingredient.of(PALE_OAK.blockFamily.blocks[BlockFamily.Type.LOG]!!.get()) }),
+        3, "from_resin_block"
+      )
+    }
+//      .blockstate { c, p ->
+//        p.getVariantBuilder(c.get())
+//          .forAllStatesExcept( { state ->
+//            val active = state.getValue(CreakingHeartBlock.ACTIVE)
+//            val axis = state.getValue(CreakingHeartBlock.AXIS)
+//            val activeSuffix = if (active) "_active" else ""
+//            val axisSuffix = if(axis == Direction.Axis.Y) "" else "_horizontal"
+//
+//            ConfiguredModel.builder()
+//              .modelFile(p.models()
+//                .withExistingParent(c.name + activeSuffix + axisSuffix, p.mcLoc(if(axis == Direction.Axis.Y) "block/cube_column" else "block/cube_column_horizontal"))
+//                .texture("side", p.modLoc("block/creaking_heart$activeSuffix"))
+//                .texture("end", p.modLoc("block/creaking_heart_top$activeSuffix"))
+//                .renderType("cutout_mipped")
+//              )
+//              .rotationX(if(axis == Direction.Axis.Y) 0 else 90)
+//              .rotationY(if(axis == Direction.Axis.X) 90 else 0)
+//              .build()
+//          }, CreakingHeartBlock.NATURAL)
+//      }
+    .register()
+
+
+  val PALE_OAK_GROWER: DeltaboxTreeGrower = DeltaboxTreeGrower(
+    "pale_oak",
+    Optional.of(ModConfiguredFeatures.PALE_OAK_TREE),
+    Optional.empty(),
+    Optional.empty(),
+  )
   val PALE_OAK_SET = REGISTRATE.blockSet("pale_oak")
   val PALE_OAK_WOOD_TYPE = REGISTRATE.woodType("pale_oak", PALE_OAK_SET)
   val PALE_OAK = REGISTRATE.blockfamily("pale_oak")
@@ -32,7 +87,7 @@ object ModBlocks {
     .copyFrom { Blocks.OAK_LOG }
     .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null)
     .denyList(BlockFamily.Type.LEAVES)
-    .woodFamily(PALE_OAK_WOOD_TYPE, PALE_OAK_SET, DeltaboxTreeGrower.SAMPLE)
+    .woodFamily(PALE_OAK_WOOD_TYPE, PALE_OAK_SET, PALE_OAK_GROWER)
 
   val PALE_OAK_LEAVES = REGISTRATE.blockPreset<FallingLeavesBlock>("pale_oak")
     .leaves({ PALE_OAK.blockFamily.blocks[BlockFamily.Type.SAPLING]!!.get() })
@@ -89,6 +144,38 @@ object ModBlocks {
       )
     }
     .register()
+
+  val PALE_HANGING_MOSS_PLANT: BlockEntry<PaleVinePlantBlock> =
+    REGISTRATE.block<PaleVinePlantBlock>("pale_hanging_moss_plant")
+      .copyFrom { Blocks.WEEPING_VINES_PLANT }
+      .factory { c, p -> PaleVinePlantBlock({ PALE_HANGING_MOSS.get() }, p) }
+      .color(MapColor.SNOW)
+      .properties { c, p ->
+        p.randomTicks().noCollission().instabreak().sound(SoundType.WEEPING_VINES).pushReaction(PushReaction.DESTROY)
+      }
+      .blockstate { g, b -> g.crossBlock(b.get(), "pale_hanging_moss") }
+      .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null, false)
+      .cutoutRender()
+//      .loot(BlockLootPresets.dropOtherSilkShearsLoot({ PALE_HANGING_MOSS.get() }))
+      .noItem()
+      .register()
+
+  val PALE_HANGING_MOSS: BlockEntry<PaleVineBlock> = REGISTRATE.block<PaleVineBlock>("pale_hanging_moss")
+    .copyFrom { Blocks.WEEPING_VINES }
+    .factory { c, p -> PaleVineBlock({ PALE_HANGING_MOSS_PLANT.get() }, p) }
+    .color(MapColor.SNOW)
+    .blockTags(BlockTags.SWORD_EFFICIENT)
+    .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null, false)
+    .properties { c, p ->
+      p.randomTicks().noCollission().instabreak().sound(SoundType.WEEPING_VINES).pushReaction(PushReaction.DESTROY)
+    }
+    .blockstate { g, b -> g.crossBlock(b.get(), "pale_hanging_moss_tip") }
+    .cutoutRender()
+//    .loot(BlockLootPresets.dropSelfSilkShearsLoot())
+    .item()
+    .model { g, i -> g.flatItemBlock(i.get(), "pale_hanging_moss_tip") }
+    .build()
+    .register() as BlockEntry<PaleVineBlock>
 
   // Eye blossom
   val EYE_BLOSSOM: BlockEntry<EyeBlossomBlock> = REGISTRATE.block<EyeBlossomBlock>("open_eyeblossom")
