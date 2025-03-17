@@ -26,6 +26,6 @@ object ModEntityTypes {
     .register()
 
   fun register() {
-    // init
+    REGISTRATE.buildEntityTypes()
   }
 }

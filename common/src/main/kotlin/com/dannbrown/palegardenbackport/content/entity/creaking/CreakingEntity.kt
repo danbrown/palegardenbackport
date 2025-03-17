@@ -5,8 +5,10 @@ import com.dannbrown.palegardenbackport.content.blocks.creakingHeart.CreakingHea
 import com.dannbrown.palegardenbackport.content.blocks.creakingHeart.CreakingHeartBlockEntity
 import com.dannbrown.palegardenbackport.init.ModBlocks
 import com.dannbrown.palegardenbackport.init.ModCommonConfig
+import com.dannbrown.palegardenbackport.init.ModItems
 import com.dannbrown.palegardenbackport.init.ModSounds
 import com.mojang.serialization.Dynamic
+import net.fabricmc.fabric.api.attachment.v1.AttachmentType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.particles.BlockParticleOption
 import net.minecraft.core.particles.ParticleTypes
@@ -34,6 +36,7 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.entity.projectile.Projectile
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ClipContext
 import net.minecraft.world.level.Level
@@ -510,6 +513,14 @@ class CreakingEntity(type: EntityType<out AbstractCreaking>, level: Level) : Abs
     } else {
       return super.hurt(source, amount)
     }
+  }
+
+  override fun shouldDropExperience(): Boolean {
+    return false
+  }
+
+  override fun getPickResult(): ItemStack {
+    return ItemStack(ModItems.CREAKING_SPAWN_EGG.get())
   }
 
   companion object {

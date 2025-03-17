@@ -51,6 +51,7 @@ object ModContentForge {
     modBus.addListener(registrateInit::onRegisterParticleRenders)
     modBus.addListener(registrateInit::onRegisterLayerDefinitions)
     modBus.addListener(registrateInit::onRegisterEntityRenderers)
+    modBus.addListener(registrateInit::onRegisterSpawnEggColors)
   }
 
   private fun clientSetup(event: FMLClientSetupEvent) {

@@ -17,12 +17,12 @@ object ModContent {
   fun init() {
     ModSounds.register()
     ModBlocks.register()
+    ModEntityTypes.register()
     ModItems.register()
     ModParticles.register()
     ModConfiguredFeatures.register()
     ModPlacedFeatures.register()
     ModBlockEntities.register()
-    ModEntityTypes.register()
     ModModelLayers.register()
     ModPlacerTypes.register()
     ModBiomes.register()
