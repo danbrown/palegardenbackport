@@ -1,10 +1,10 @@
 package com.dannbrown.palegardenbackport.init
 
+import com.dannbrown.deltaboxlib.registrate.util.AttributesUtil
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingEntity
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingRenderer
 import com.dannbrown.palegardenbackport.init.ModContent.REGISTRATE
 import net.minecraft.world.entity.ai.attributes.Attributes
-import net.minecraft.world.entity.monster.Monster
 
 object ModEntityTypes {
   val CREAKING = REGISTRATE.entityType<CreakingEntity>("creaking")
@@ -17,7 +17,7 @@ object ModEntityTypes {
     }
     .renderer(::CreakingRenderer)
     .attributes(
-      Monster.createMonsterAttributes()
+      AttributesUtil.createMonsterAttributes()
         .add(Attributes.MAX_HEALTH, 1.0)
         .add(Attributes.MOVEMENT_SPEED, 0.4000000059604645)
         .add(Attributes.ATTACK_DAMAGE, 3.0)

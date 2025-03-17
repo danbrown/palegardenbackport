@@ -497,7 +497,7 @@ class CreakingEntity(type: EntityType<out AbstractCreaking>, level: Level) : Abs
           if (blockEntity is CreakingHeartBlockEntity) {
             if (blockEntity.isProtector(this)) {
               if (player != null) {
-                blockEntity.creakingHurt()
+                blockEntity.creakingHurt(player)
               }
             }
           }

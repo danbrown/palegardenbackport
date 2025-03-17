@@ -17,6 +17,7 @@ import net.minecraft.world.Difficulty
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.MobSpawnType
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.GameRules
@@ -75,7 +76,7 @@ class CreakingHeartBlockEntity(
     }
   }
 
-  fun creakingHurt() {
+  fun creakingHurt(player: Player?) {
     val mob = getCreakingProtector().orElse(null)
     if (mob is CreakingEntity) {
       val level = this.level
@@ -91,10 +92,10 @@ class CreakingHeartBlockEntity(
           val chance = this.level!!.getRandom().nextIntBetweenInclusive(2, 3)
 
           for (i in 0 until chance) {
-            this.spreadResin()
+            this.spreadResin(player)
               .ifPresent { blockPos: BlockPos ->
                 level.playSound(
-                  null,
+                  player,
                   blockPos,
                   ModSounds.BLOCK_OF_RESIN_PLACE.get(),
                   SoundSource.BLOCKS,
@@ -117,7 +118,7 @@ class CreakingHeartBlockEntity(
       .orElse(false)
   }
 
-  private fun spreadResin(): Optional<BlockPos> {
+  private fun spreadResin(player: Player?): Optional<BlockPos> {
     val level = level ?: return Optional.empty()
     if (level.isClientSide) return Optional.empty()
     var currentPos = this.worldPosition
@@ -138,7 +139,7 @@ class CreakingHeartBlockEntity(
         var resinState = ModBlocks.RESIN_CLUMP.get().getStateForPlacement(
           BlockPlaceContext(
             level,
-            null,
+            player,
             InteractionHand.MAIN_HAND,
             ItemStack(ModBlocks.RESIN_CLUMP.get()),
             BlockHitResult(Vec3.atCenterOf(relativePos), randomDir, relativePos, false)
