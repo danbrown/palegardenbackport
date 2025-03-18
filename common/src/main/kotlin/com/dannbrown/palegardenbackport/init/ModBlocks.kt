@@ -12,6 +12,7 @@ import com.dannbrown.palegardenbackport.content.particle.PaleOakParticleOption
 import com.dannbrown.palegardenbackport.content.presets.BlockstatePresets
 import com.dannbrown.palegardenbackport.init.ModContent.MOD_ID
 import com.dannbrown.palegardenbackport.init.ModContent.REGISTRATE
+import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.crafting.Ingredient
@@ -20,9 +21,11 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.FlowerPotBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
 import java.util.Optional
 import java.util.function.Supplier
 
@@ -118,6 +121,14 @@ object ModBlocks {
 //        )
 //      )
 //    } // TODO: loot condition to drop if its bottom
+    .loot { g, b ->
+      g.add(
+        b.get(), g.createSecondaryDispatchTable(
+          b.get(), null, LootItemBlockStatePropertyCondition.hasBlockStateProperties(b.get())
+            .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BlockStateProperties.BOTTOM, true))
+        )
+      )
+    }
     .recipe { c, p ->
       c.simpleShapedRecipe(
         { p.get() },
@@ -141,6 +152,7 @@ object ModBlocks {
       .cutoutRender()
 //      .loot(BlockLootPresets.dropOtherSilkShearsLoot({ PALE_HANGING_MOSS.get() }))
       .noItem()
+      .loot { g, b -> g.dropSilkOtherLoot(b.get(), { PALE_HANGING_MOSS.get() }) }
       .register()
 
   val PALE_HANGING_MOSS: BlockEntry<PaleVineBlock> = REGISTRATE.block<PaleVineBlock>("pale_hanging_moss")
@@ -158,6 +170,7 @@ object ModBlocks {
     .item()
     .model { g, i -> g.flatItemBlock(i.get(), "pale_hanging_moss_tip") }
     .build()
+    .loot { g, b -> g.dropSelfSilkOtherLoot(b.get()) }
     .register() as BlockEntry<PaleVineBlock>
 
   // Eye blossom
