@@ -42,9 +42,7 @@ object ModBlocks {
         .randomTicks()
     }
     .toolAndTier(BlockTags.MINEABLE_WITH_AXE, null)
-//      .loot { lt, b ->
-//        lt.add(b, BlockLootHelpers.createSelfDropDispatchTable(b, HAS_SILK_TOUCH))
-//      }
+    .loot { g, b -> g.dropSelfSilkOtherLoot(b.get()) }
     .recipe { c, p ->
       c.simpleShapedRecipe(
         { p.get() },

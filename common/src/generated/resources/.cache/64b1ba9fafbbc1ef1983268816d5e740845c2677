@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-18T10:30:51.587918	Pale Garden Backport/Tags for minecraft:block
+// 1.20.1	2025-03-18T10:38:43.882668	Pale Garden Backport/Tags for minecraft:block
 86e0d6085f2909b7a9892f23fdd7569d772f2268 data/minecraft/tags/blocks/wooden_buttons.json
 22565b50e812035684f0f6ed12ef702f49b92407 data/minecraft/tags/blocks/wooden_trapdoors.json
 38cf8cb4e9d267a0af78b3da2c3dfacbfdcd57f6 data/minecraft/tags/blocks/pressure_plates.json
@@ -25,8 +25,8 @@ b5291d780c1d8bc478cc7b9b23b50f0527e1f179 data/minecraft/tags/blocks/mineable/hoe
 f6fe4ad816f67e7b34f04d411daa4718f57e3dc1 data/minecraft/tags/blocks/logs.json
 db6553e920cfcaa885b2e2deb6fc0e49a638b45a data/minecraft/tags/blocks/mangrove_roots_can_grow_through.json
 9b805b0fc24b3ad7170ee7f8404b73766fb98631 data/minecraft/tags/blocks/walls.json
-5194ab1de6e32d1a9b0d21a3a6dedfb2c89a8a0b data/neoforge/tags/blocks/stripped_logs.json
 62cf0f1d77adab718d0da893bb1ed4aa1fd3a954 data/minecraft/tags/blocks/sniffer_egg_hatch_boost.json
+5194ab1de6e32d1a9b0d21a3a6dedfb2c89a8a0b data/neoforge/tags/blocks/stripped_logs.json
 a0e697e83bfb64cfa57bc268be8fd7adb6db2b74 data/deltaboxlib/tags/blocks/storage_blocks.json
 5be5fa70b12a92069b245e68de52dd2fb8196c00 data/minecraft/tags/blocks/leaves.json
 62cf0f1d77adab718d0da893bb1ed4aa1fd3a954 data/minecraft/tags/blocks/small_dripleaf_placeable.json
@@ -47,8 +47,8 @@ f6fe4ad816f67e7b34f04d411daa4718f57e3dc1 data/palegardenbackport/tags/blocks/pal
 86e0d6085f2909b7a9892f23fdd7569d772f2268 data/minecraft/tags/blocks/buttons.json
 a0e697e83bfb64cfa57bc268be8fd7adb6db2b74 data/forge/tags/blocks/storage_blocks/block_of_resin.json
 5194ab1de6e32d1a9b0d21a3a6dedfb2c89a8a0b data/c/tags/blocks/stripped_logs.json
-62cf0f1d77adab718d0da893bb1ed4aa1fd3a954 data/minecraft/tags/blocks/sniffer_diggable_block.json
 a0e697e83bfb64cfa57bc268be8fd7adb6db2b74 data/neoforge/tags/blocks/storage_blocks.json
+62cf0f1d77adab718d0da893bb1ed4aa1fd3a954 data/minecraft/tags/blocks/sniffer_diggable_block.json
 9d1bd9ecdca1d60d7a4fee8157b057c288bfe910 data/minecraft/tags/blocks/wall_hanging_signs.json
 5113c77ee56fad7cad72461bc18f5299e2340848 data/minecraft/tags/blocks/all_hanging_signs.json
 5be5fa70b12a92069b245e68de52dd2fb8196c00 data/neoforge/tags/blocks/leaves.json
