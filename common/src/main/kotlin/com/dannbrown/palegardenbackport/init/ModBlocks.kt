@@ -109,16 +109,6 @@ object ModBlocks {
     }
     .blockstate(BlockstatePresets.paleMossCarpetBlock())
     .cutoutRender()
-//    .loot { lt, b ->
-//      lt.add(
-//        b,
-//        BlockLootHelpers.createSelfDropDispatchTable(
-//          b,
-//          LootItemBlockStatePropertyCondition.hasBlockStateProperties(b)
-//            .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BlockStateProperties.BOTTOM, true))
-//        )
-//      )
-//    } // TODO: loot condition to drop if its bottom
     .loot { g, b ->
       g.add(
         b.get(), g.createSecondaryDispatchTable(
@@ -148,7 +138,6 @@ object ModBlocks {
       .blockstate { g, b -> g.crossBlock(b.get(), "pale_hanging_moss") }
       .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null, false)
       .cutoutRender()
-//      .loot(BlockLootPresets.dropOtherSilkShearsLoot({ PALE_HANGING_MOSS.get() }))
       .noItem()
       .loot { g, b -> g.dropSilkOtherLoot(b.get(), { PALE_HANGING_MOSS.get() }) }
       .register()
@@ -164,7 +153,6 @@ object ModBlocks {
     }
     .blockstate { g, b -> g.crossBlock(b.get(), "pale_hanging_moss_tip") }
     .cutoutRender()
-//    .loot(BlockLootPresets.dropSelfSilkShearsLoot())
     .item()
     .model { g, i -> g.flatItemBlock(i.get(), "pale_hanging_moss_tip") }
     .build()
@@ -212,7 +200,6 @@ object ModBlocks {
     REGISTRATE.blockPreset<FlowerPotBlock>("closed_eyeblossom")
       .pottedBlock({ CLOSED_EYE_BLOSSOM.get() })
       .register()
-
 
   val RESIN_CLUMP = REGISTRATE.block<ResinClumpBlock>("resin_clump")
     .factory { c, p -> ResinClumpBlock(p) }
