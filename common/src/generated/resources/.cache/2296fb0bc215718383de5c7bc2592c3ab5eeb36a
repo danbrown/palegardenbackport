@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-17T20:21:03.118288	Pale Garden Backport/Block Loot Tables
+// 1.20.1	2025-03-17T21:08:55.122036	Pale Garden Backport/Block Loot Tables
 efb77e5c654db164e0a9984ee88f0875ee2e4047 data/palegardenbackport/loot_tables/blocks/pale_oak_wood.json
 453f3253be493d4bc08e0bbfea65739944b2be4c data/palegardenbackport/loot_tables/blocks/potted_pale_oak_sapling.json
 a761c53c8aeae844fec64654422ade3a876b5313 data/palegardenbackport/loot_tables/blocks/open_eyeblossom.json
@@ -31,7 +31,7 @@ edb5de952006b52605ba584a0ddfffd8154c3c80 data/palegardenbackport/loot_tables/blo
 814ad064dedd413fcea2d0185f6f208c6785b4a9 data/palegardenbackport/loot_tables/blocks/pale_oak_leaves.json
 18157b9927970f25654c1d0817c6d3921958a1bd data/palegardenbackport/loot_tables/blocks/resin_brick_slab.json
 316f39687668b91168ee8746aee1fa83a54a364c data/palegardenbackport/loot_tables/blocks/closed_eyeblossom.json
-a873031d7bd398d3ee070ba8bdb68a3f588b4428 data/palegardenbackport/loot_tables/blocks/pale_oak_log.json
 5b342c834d53fa2724fb28dbae33fba3b595a47f data/palegardenbackport/loot_tables/blocks/resin_brick_wall.json
+a873031d7bd398d3ee070ba8bdb68a3f588b4428 data/palegardenbackport/loot_tables/blocks/pale_oak_log.json
 1d4929d7d6176f60e5ea991a577527ed251ef375 data/palegardenbackport/loot_tables/blocks/pale_hanging_moss_plant.json
 05955163e876dc843a1c2a42984b21643e8ae15a data/palegardenbackport/loot_tables/blocks/pale_oak_slab.json
