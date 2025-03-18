@@ -9,6 +9,7 @@ import com.dannbrown.palegardenbackport.content.blocks.*
 import com.dannbrown.palegardenbackport.content.blocks.creakingHeart.CreakingHeartBlock
 import com.dannbrown.palegardenbackport.content.blocks.eyeblossom.EyeBlossomBlock
 import com.dannbrown.palegardenbackport.content.particle.PaleOakParticleOption
+import com.dannbrown.palegardenbackport.content.presets.BlockstatePresets
 import com.dannbrown.palegardenbackport.init.ModContent.MOD_ID
 import com.dannbrown.palegardenbackport.init.ModContent.REGISTRATE
 import net.minecraft.tags.BlockTags
@@ -51,6 +52,7 @@ object ModBlocks {
         3, "from_resin_block"
       )
     }
+    .blockstate(BlockstatePresets.creakingHeart())
 //      .blockstate { c, p ->
 //        p.getVariantBuilder(c.get())
 //          .forAllStatesExcept( { state ->

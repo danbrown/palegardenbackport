@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "palegardenbackport:block/creaking_heart"
+    "end": "palegardenbackport:block/creaking_heart_top",
+    "side": "palegardenbackport:block/creaking_heart"
   }
 }
