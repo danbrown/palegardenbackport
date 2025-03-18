@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/resin_clump",
   "textures": {
-    "all": "palegardenbackport:block/resin_clump"
+    "face": "palegardenbackport:block/resin_clump"
   }
 }

@@ -53,26 +53,6 @@ object ModBlocks {
       )
     }
     .blockstate(BlockstatePresets.creakingHeart())
-//      .blockstate { c, p ->
-//        p.getVariantBuilder(c.get())
-//          .forAllStatesExcept( { state ->
-//            val active = state.getValue(CreakingHeartBlock.ACTIVE)
-//            val axis = state.getValue(CreakingHeartBlock.AXIS)
-//            val activeSuffix = if (active) "_active" else ""
-//            val axisSuffix = if(axis == Direction.Axis.Y) "" else "_horizontal"
-//
-//            ConfiguredModel.builder()
-//              .modelFile(p.models()
-//                .withExistingParent(c.name + activeSuffix + axisSuffix, p.mcLoc(if(axis == Direction.Axis.Y) "block/cube_column" else "block/cube_column_horizontal"))
-//                .texture("side", p.modLoc("block/creaking_heart$activeSuffix"))
-//                .texture("end", p.modLoc("block/creaking_heart_top$activeSuffix"))
-//                .renderType("cutout_mipped")
-//              )
-//              .rotationX(if(axis == Direction.Axis.Y) 0 else 90)
-//              .rotationY(if(axis == Direction.Axis.X) 90 else 0)
-//              .build()
-//          }, CreakingHeartBlock.NATURAL)
-//      }
     .register()
 
 
@@ -126,7 +106,8 @@ object ModBlocks {
     .properties { c, p ->
       p.strength(0.1F).sound(SoundType.MOSS_CARPET).pushReaction(PushReaction.DESTROY).instabreak().noOcclusion()
     }
-//    .blockstate(PaleMossCarpetBlock.generatePaleMossCarpetBlockState()) // TODO: moss carpet blockstate definition
+    .blockstate(BlockstatePresets.paleMossCarpetBlock())
+    .cutoutRender()
 //    .loot { lt, b ->
 //      lt.add(
 //        b,
@@ -236,7 +217,7 @@ object ModBlocks {
     }
     .color(MapColor.COLOR_ORANGE)
     .cutoutRender()
-//      .blockstate(BlockstatePresets.simpleMultifaceBlock("resin_clump")) // TODO: multiface blockstate definition
+    .blockstate(BlockstatePresets.resinClump())
     .itemTags(ItemTags.TRIM_MATERIALS)
     .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, false)
     .loot { lt, b -> lt.dropItself(b.get()) }

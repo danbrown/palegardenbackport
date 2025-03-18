@@ -189,11 +189,11 @@ class PaleMossCarpetBlock(props: Properties) : CarpetBlock(props), BonemealableB
 
   companion object {
     val BASE: BooleanProperty = BlockStateProperties.BOTTOM
-    private val NORTH: EnumProperty<WallSide> = BlockStateProperties.NORTH_WALL
-    private val EAST: EnumProperty<WallSide> = BlockStateProperties.EAST_WALL
-    private val SOUTH: EnumProperty<WallSide> = BlockStateProperties.SOUTH_WALL
-    private val WEST: EnumProperty<WallSide> = BlockStateProperties.WEST_WALL
-    private val PROPERTY_BY_DIRECTION: Map<Direction, EnumProperty<WallSide>> = ImmutableMap.copyOf(
+    val NORTH: EnumProperty<WallSide> = BlockStateProperties.NORTH_WALL
+    val EAST: EnumProperty<WallSide> = BlockStateProperties.EAST_WALL
+    val SOUTH: EnumProperty<WallSide> = BlockStateProperties.SOUTH_WALL
+    val WEST: EnumProperty<WallSide> = BlockStateProperties.WEST_WALL
+    val PROPERTY_BY_DIRECTION: Map<Direction, EnumProperty<WallSide>> = ImmutableMap.copyOf(
       Util.make(
         Maps.newEnumMap(Direction::class.java)
       ) { enumMap ->
