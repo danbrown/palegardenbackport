@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/mossy_carpet_side",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "side": "minecraft:block/pale_moss_carpet_side_small"
   }

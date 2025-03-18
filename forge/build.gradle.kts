@@ -32,6 +32,7 @@ configurations {
 }
 
 repositories {
+  mavenCentral()
   // KFF
   maven {
     name = "Kotlin for Forge"
@@ -69,6 +70,14 @@ dependencies {
       }.jar"
     )
   )
+
+  modImplementation(
+    "com.github.glitchfiend:TerraBlender-forge:${rootProject.property("minecraft_version")}-${
+      rootProject.property(
+        "terrablender_version"
+      )
+    }"
+  )
 }
 
 archivesName.set("${rootProject.property("mod_id")}-${rootProject.property("minecraft_version")}-${project.name}")
@@ -92,6 +101,7 @@ tasks.processResources {
         "java_version_range" to project.property("java_version_range"),
         "deltaboxlib_version" to project.property("deltaboxlib_version"),
         "deltaboxlib_version_range" to project.property("deltaboxlib_version_range_forge"),
+        "terrablender_version_range" to project.property("terrablender_version_range_forge"),
 
         "mod_id" to project.property("mod_id"),
         "mod_name" to project.property("mod_name"),

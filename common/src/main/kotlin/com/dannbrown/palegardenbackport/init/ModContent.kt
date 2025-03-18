@@ -16,6 +16,7 @@ object ModContent {
 
   fun init() {
     ModSounds.register()
+    ModTags.register()
     ModBlocks.register()
     ModEntityTypes.register()
     ModItems.register()
@@ -27,6 +28,7 @@ object ModContent {
     ModPlacerTypes.register()
     ModBiomes.register()
     ModLang.register()
+    ModBiomeModifiers.register()
     REGISTRATE.buildRegistries()
   }
 }

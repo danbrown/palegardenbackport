@@ -37,3 +37,10 @@ mandatory = true
 versionRange = "${kff_version_range}"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "terrablender"
+mandatory = true
+versionRange = "${terrablender_version_range}"
+ordering = "AFTER"
+side = "BOTH"

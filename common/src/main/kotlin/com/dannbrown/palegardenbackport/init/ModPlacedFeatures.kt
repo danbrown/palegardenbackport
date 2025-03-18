@@ -11,6 +11,7 @@ import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter
 import net.minecraft.world.level.levelgen.placement.CountPlacement
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement
 import net.minecraft.world.level.levelgen.placement.RarityFilter
+import net.minecraft.world.level.levelgen.placement.SurfaceWaterDepthFilter
 
 object ModPlacedFeatures {
   val PALE_OAK_CHECKED = REGISTRATE.placedFeature("pale_oak_checked") { k, c, u ->
@@ -58,10 +59,11 @@ object ModPlacedFeatures {
 
   val PALE_GARDEN_VEGETATION = REGISTRATE.placedFeature("pale_garden_vegetation") { k, c, u ->
     u.register(
-      c, k, u.lookupConfiguredFeature(c, ModConfiguredFeatures.PALE_MOSS_VEGETATION), listOf(
-        CountPlacement.of(14),
+      c, k, u.lookupConfiguredFeature(c, ModConfiguredFeatures.PALE_GARDEN_VEGETATION), listOf(
+        CountPlacement.of(16),
         InSquarePlacement.spread(),
         PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
+        SurfaceWaterDepthFilter.forMaxDepth(0),
         BiomeFilter.biome()
       )
     )
@@ -71,6 +73,17 @@ object ModPlacedFeatures {
     u.register(
       c, k, u.lookupConfiguredFeature(c, ModConfiguredFeatures.PALE_GARDEN_PATCH), listOf(
         RarityFilter.onAverageOnceEvery(2),
+        InSquarePlacement.spread(),
+        PlacementUtils.HEIGHTMAP,
+        BiomeFilter.biome()
+      )
+    )
+  }
+
+  val PALE_MOSS_PATCH = REGISTRATE.placedFeature("pale_moss_patch") { k, c, u ->
+    u.register(
+      c, k, u.lookupConfiguredFeature(c, ModConfiguredFeatures.PALE_MOSS_PATCH), listOf(
+        CountPlacement.of(1),
         InSquarePlacement.spread(),
         PlacementUtils.HEIGHTMAP,
         BiomeFilter.biome()

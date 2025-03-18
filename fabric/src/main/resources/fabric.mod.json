@@ -26,6 +26,12 @@
         "value": "com.dannbrown.${mod_id}.fabric.init.ModContentFabric"
       }
     ],
+    "terrablender": [
+      {
+        "adapter": "kotlin",
+        "value": "com.dannbrown.${mod_id}.fabric.init.ModContentFabric"
+      }
+    ],
     "fabric-datagen": [
       "com.dannbrown.${mod_id}.fabric.init.ModContentDatagenFabric"
     ]
@@ -38,6 +44,7 @@
     "fabric": "*",
     "minecraft": "${minecraft_version_range}",
     "fabric-language-kotlin": "${fabric_kotlin_version_range}",
-    "architectury": "${architectury_version_range}"
+    "architectury": "${architectury_version_range}",
+    "terrablender": "${terrablender_version_range}"
   }
 }

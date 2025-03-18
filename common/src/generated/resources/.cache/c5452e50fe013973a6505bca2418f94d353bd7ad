@@ -1,7 +1,8 @@
-// 1.20.1	2025-03-18T10:38:43.899324	Pale Garden Backport/worldgen/placed_feature
+// 1.20.1	2025-03-18T14:05:48.4881	Pale Garden Backport/worldgen/placed_feature
 336adcc6332bab567921b5bb43c2cebc14271cb1 data/palegardenbackport/worldgen/placed_feature/pale_garden_flowers.json
 8f255ef69fe05e53707b647db5a91808d9f726c1 data/palegardenbackport/worldgen/placed_feature/pale_oak_checked.json
 0f6b8473eba678b674c02fb214274a5d2bd4a75e data/palegardenbackport/worldgen/placed_feature/pale_oak_heart_checked.json
 5cbb6725e6204087b54a9805d6bb4587d5a64833 data/palegardenbackport/worldgen/placed_feature/pale_oak_placed.json
 0e4bbe4de8156ae38b3e9682af550de0d50447b4 data/palegardenbackport/worldgen/placed_feature/pale_oak_heart_placed.json
-dbfe8ecf8d0afccf0c3273b3b5718e056e008b7b data/palegardenbackport/worldgen/placed_feature/pale_garden_vegetation.json
+bda905d22603216a2e58a20704bc253bfc6ba195 data/palegardenbackport/worldgen/placed_feature/pale_moss_patch.json
+babcee12d4f3b42e41fc8ce8f14b2cf53ef576a3 data/palegardenbackport/worldgen/placed_feature/pale_garden_vegetation.json

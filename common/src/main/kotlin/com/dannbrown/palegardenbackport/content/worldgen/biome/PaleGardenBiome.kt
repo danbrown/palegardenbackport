@@ -40,7 +40,11 @@ object PaleGardenBiome : AbstractBiome() {
     biomeGenerationSettingsBuilder.addFeature(
       GenerationStep.Decoration.VEGETAL_DECORATION,
       ModPlacedFeatures.PALE_GARDEN_FLOWERS
-    );
+    )
+    biomeGenerationSettingsBuilder.addFeature(
+      GenerationStep.Decoration.VEGETAL_DECORATION,
+      ModPlacedFeatures.PALE_MOSS_PATCH
+    )
     BiomeDefaultFeatures.addDefaultOres(biomeGenerationSettingsBuilder)
     BiomeDefaultFeatures.addDefaultSoftDisks(biomeGenerationSettingsBuilder)
     BiomeDefaultFeatures.addForestGrass(biomeGenerationSettingsBuilder)

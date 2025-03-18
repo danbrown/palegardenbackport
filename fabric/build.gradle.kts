@@ -4,12 +4,6 @@ plugins {
   id("com.github.johnrengelman.shadow")
 }
 
-repositories {
-  maven {
-    url = uri("https://maven.quiltmc.org/repository/release/")
-  }
-}
-
 architectury {
   platformSetupLoomIde()
   fabric()
@@ -43,6 +37,13 @@ configurations {
   compileOnly.configure { extendsFrom(common) }
   runtimeOnly.configure { extendsFrom(common) }
   developmentFabric.extendsFrom(common)
+}
+
+repositories {
+  mavenCentral()
+  maven {
+    url = uri("https://maven.quiltmc.org/repository/release/")
+  }
 }
 
 dependencies {
@@ -80,6 +81,14 @@ dependencies {
       }.jar"
     )
   )
+
+  modApi(
+    "com.github.glitchfiend:TerraBlender-fabric:${rootProject.property("minecraft_version")}-${
+      rootProject.property(
+        "terrablender_version"
+      )
+    }"
+  )
 }
 
 archivesName.set("${rootProject.property("mod_id")}-${rootProject.property("minecraft_version")}-${project.name}")
@@ -103,6 +112,7 @@ tasks.processResources {
         "java_version_range" to project.property("java_version_range"),
         "deltaboxlib_version" to project.property("deltaboxlib_version"),
         "deltaboxlib_version_range" to project.property("deltaboxlib_version_range_fabric"),
+        "terrablender_version_range" to project.property("terrablender_version_range_fabric"),
 
         "mod_id" to project.property("mod_id"),
         "mod_name" to project.property("mod_name"),

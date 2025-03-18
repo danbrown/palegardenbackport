@@ -46,8 +46,25 @@ allprojects {
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
+    mavenCentral()
+    maven {
+      setUrl("https://maven.tterrag.com/")
+    }
+    maven {
+      setUrl("https://maven.minecraftforge.net")
+    }
+    maven { setUrl("https://repo.spongepowered.org/maven") }
+    // location of the maven that hosts JEI files since January 2023
+    maven {
+      setUrl("https://maven.blamejared.com/")
+    }
+    // location of a maven mirror for JEI files, as a fallback
+    maven {
+      setUrl("https://modmaven.dev")
+    }
     // add curseforge maven for other mods
     maven {
+
       setUrl("https://cursemaven.com")
       content {
         includeGroup("curse.maven")

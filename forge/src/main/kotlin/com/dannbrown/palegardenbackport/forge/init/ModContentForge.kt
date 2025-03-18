@@ -2,6 +2,7 @@ package com.dannbrown.palegardenbackport.forge.init
 
 
 import com.dannbrown.deltaboxlib.forge.registrate.RegistrateInitForge
+import com.dannbrown.palegardenbackport.forge.compat.ModTerraBlenderAPIForge
 import com.dannbrown.palegardenbackport.init.ModContent
 import dev.architectury.platform.forge.EventBuses
 import net.minecraftforge.common.MinecraftForge
@@ -39,6 +40,8 @@ object ModContentForge {
     EventBuses.registerModEventBus(ModContent.MOD_ID, MOD_BUS)
     ModContent.init()
     registrateInit.init()
+
+    ModTerraBlenderAPIForge.registerRegions()
 
     MOD_BUS.addListener(::commonSetup)
     modBus.addListener(registrateInit::onRegisterEntityAttributes)

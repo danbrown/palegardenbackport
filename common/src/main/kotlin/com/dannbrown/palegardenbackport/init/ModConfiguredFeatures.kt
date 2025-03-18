@@ -30,13 +30,6 @@ import net.minecraft.world.level.levelgen.placement.CaveSurface
 import java.util.OptionalInt
 
 object ModConfiguredFeatures {
-
-//  val PALE_MOSS_VEGETATION: ResourceKey<ConfiguredFeature<*, *>> = registerKey("pale_moss_vegetation")
-//  val PALE_OAK_TREE: ResourceKey<ConfiguredFeature<*, *>> = registerKey("pale_oak_tree")
-//  val PALE_OAK_TREE_HEART: ResourceKey<ConfiguredFeature<*, *>> = registerKey("pale_oak_tree_heart")
-//  val PALE_GARDEN_PATCH: ResourceKey<ConfiguredFeature<*, *>> = registerKey("pale_garden_patch")
-//  val PALE_GARDEN_VEGETATION: ResourceKey<ConfiguredFeature<*, *>> = registerKey("pale_garden_vegetation")
-
   val PALE_MOSS_PATCH_BONEMEAL = REGISTRATE.configuredFeature("pale_moss_patch_bonemeal") { k, c, u ->
     val configuredFeatures = c.lookup(Registries.CONFIGURED_FEATURE)
     u.register(
@@ -56,7 +49,7 @@ object ModConfiguredFeatures {
     )
   }
 
-  val PALE_MOSS_VEGETATION = REGISTRATE.configuredFeature("pale_moss_vegetation") { k, c, u ->
+  val PALE_MOSS_PATCH = REGISTRATE.configuredFeature("pale_moss_patch") { k, c, u ->
     u.register(
       c, k, Feature.SIMPLE_BLOCK,
       SimpleBlockConfiguration(
