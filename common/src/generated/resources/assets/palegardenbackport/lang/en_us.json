@@ -1,4 +1,5 @@
 {
+  "biome.palegardenbackport.pale_garden": "Pale Garden",
   "block.palegardenbackport.block_of_resin": "Block of Resin",
   "block.palegardenbackport.chiseled_resin_bricks": "Chiseled Resin Bricks",
   "block.palegardenbackport.closed_eyeblossom": "Closed Eyeblossom",
@@ -74,5 +75,6 @@
   "sounds.palegardenbackport.resin_bricks_fall": "Resin Bricks Fall",
   "sounds.palegardenbackport.resin_bricks_hit": "Resin Bricks Hit",
   "sounds.palegardenbackport.resin_bricks_place": "Resin Bricks Place",
-  "sounds.palegardenbackport.resin_bricks_step": "Resin Bricks Step"
+  "sounds.palegardenbackport.resin_bricks_step": "Resin Bricks Step",
+  "trim_material.palegardenbackport.resin_clump": "Resin Clump Material"
 }

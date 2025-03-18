@@ -26,6 +26,7 @@ object ModContent {
     ModModelLayers.register()
     ModPlacerTypes.register()
     ModBiomes.register()
+    ModLang.register()
     REGISTRATE.buildRegistries()
   }
 }
