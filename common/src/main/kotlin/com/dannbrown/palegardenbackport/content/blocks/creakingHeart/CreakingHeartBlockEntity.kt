@@ -2,7 +2,7 @@ package com.dannbrown.palegardenbackport.content.blocks.creakingHeart
 
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingEntity
 import com.dannbrown.palegardenbackport.init.ModBlocks
-import com.dannbrown.palegardenbackport.init.ModCommonConfig
+import com.dannbrown.palegardenbackport.init.ModConfig
 import com.dannbrown.palegardenbackport.init.ModEntityTypes
 import com.dannbrown.palegardenbackport.init.ModSounds
 import com.mojang.datafixers.util.Either
@@ -361,8 +361,8 @@ class CreakingHeartBlockEntity(
             val entityOptional: Optional<CreakingEntity> = blockEntity.getCreakingProtector()
             if (entityOptional.isPresent) {
               if ((!CreakingHeartBlock.isNaturalNight(level, blockPos) && !blockEntity.getCreakingProtector().get()
-                  .hasCustomName()) || blockEntity.distanceToCreaking() > (ModCommonConfig.CREAKING_DISTANCE_TO_HEART
-                  ?: 32.0) || entityOptional.get().playerIsStuckInYou()
+                  .hasCustomName()) || blockEntity.distanceToCreaking() > (ModConfig.CREAKING_DISTANCE_TO_HEART.get()) || entityOptional.get()
+                  .playerIsStuckInYou()
               ) {
                 blockEntity.removeProtector(null)
                 return

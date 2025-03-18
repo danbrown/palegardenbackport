@@ -1,7 +1,7 @@
 package com.dannbrown.palegardenbackport.forge.compat
 
 import com.dannbrown.palegardenbackport.content.worldgen.biome.PaleGardenBiome
-import com.dannbrown.palegardenbackport.init.ModCommonConfig
+import com.dannbrown.palegardenbackport.init.ModConfig
 import com.mojang.datafixers.util.Pair
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
@@ -18,7 +18,7 @@ class ModOverworldRegionForge(name: ResourceLocation, weight: Int) : Region(name
     registry: Registry<Biome>?,
     mapper: Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>>?
   ) {
-    if (ModCommonConfig.PALE_GARDEN_ENABLED) {
+    if (ModConfig.PALE_GARDEN_ENABLED.get()) {
       this.addModifiedVanillaOverworldBiomes(mapper) { builder ->
         builder.replaceBiome(
           Biomes.DARK_FOREST,

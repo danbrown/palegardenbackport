@@ -4,7 +4,7 @@ import com.dannbrown.deltaboxlib.content.particle.trail.TrailParticleOption
 import com.dannbrown.deltaboxlib.registrate.presets.family.BlockFamily
 import com.dannbrown.palegardenbackport.init.ModBlockEntities
 import com.dannbrown.palegardenbackport.init.ModBlocks
-import com.dannbrown.palegardenbackport.init.ModCommonConfig
+import com.dannbrown.palegardenbackport.init.ModConfig
 import com.dannbrown.palegardenbackport.init.ModSounds
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -224,7 +224,7 @@ class CreakingHeartBlock(props: Properties) : BaseEntityBlock(props) {
     fun isNaturalNight(level: Level, pPos: BlockPos): Boolean {
       val type = level.dimensionType()
       val natural = type.natural()
-      val requiresNatural = ModCommonConfig.REQUIRE_NATURAL == true
+      val requiresNatural = ModConfig.REQUIRE_NATURAL.get() == true
       val isNight = level.skyDarken >= 4
       return ((natural && requiresNatural) || !requiresNatural) && (isNight || level.isThundering)
     }

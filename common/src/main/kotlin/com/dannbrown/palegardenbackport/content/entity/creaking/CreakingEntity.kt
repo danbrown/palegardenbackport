@@ -4,7 +4,7 @@ import com.dannbrown.deltaboxlib.registrate.presets.family.BlockFamily
 import com.dannbrown.palegardenbackport.content.blocks.creakingHeart.CreakingHeartBlock
 import com.dannbrown.palegardenbackport.content.blocks.creakingHeart.CreakingHeartBlockEntity
 import com.dannbrown.palegardenbackport.init.ModBlocks
-import com.dannbrown.palegardenbackport.init.ModCommonConfig
+import com.dannbrown.palegardenbackport.init.ModConfig
 import com.dannbrown.palegardenbackport.init.ModItems
 import com.dannbrown.palegardenbackport.init.ModSounds
 import com.mojang.serialization.Dynamic
@@ -229,7 +229,7 @@ class CreakingEntity(type: EntityType<out AbstractCreaking>, level: Level) : Abs
 
     val d1 = vec3.dot(vec31)
     val fovThreshold =
-      Math.cos(Math.toRadians(ModCommonConfig.PLAYER_FOV_ANGLE ?: 45.0)) // 45 degrees field of view
+      Math.cos(Math.toRadians(ModConfig.PLAYER_FOV_ANGLE.get().toDouble())) // 45 degrees field of view
     return if (d1 > fovThreshold / d0) {
       hasLineOfSight(player, mob) && !player.armorSlots.any { it.`is`(Items.CARVED_PUMPKIN) }
     } else false
@@ -241,7 +241,7 @@ class CreakingEntity(type: EntityType<out AbstractCreaking>, level: Level) : Abs
     } else {
       val vec3 = Vec3(player.x, player.eyeY, player.z)
       val vec31 = Vec3(mob.x, mob.eyeY, mob.z)
-      return if (vec31.distanceTo(vec3) > (ModCommonConfig.CREAKING_FREEZE_DISTANCE ?: 128.0)) {
+      return if (vec31.distanceTo(vec3) > (ModConfig.CREAKING_FREEZE_DISTANCE.get().toDouble())) {
         false
       } else {
         player.level()

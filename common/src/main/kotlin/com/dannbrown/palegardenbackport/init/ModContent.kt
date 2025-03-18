@@ -15,6 +15,7 @@ object ModContent {
   })
 
   fun init() {
+    ModConfig.register()
     ModSounds.register()
     ModTags.register()
     ModBlocks.register()
