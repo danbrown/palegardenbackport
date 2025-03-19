@@ -81,7 +81,7 @@ dependencies {
       }.jar"
     )
   )
-
+  // Terrablender
   modApi(
     "com.github.glitchfiend:TerraBlender-fabric:${rootProject.property("minecraft_version")}-${
       rootProject.property(
@@ -89,6 +89,11 @@ dependencies {
       )
     }"
   )
+  // compile against the JEI API but do not include it at runtime
+  modCompileOnly("mezz.jei:jei-${rootProject.property("minecraft_version")}-common-api:${rootProject.property("jei_version")}")
+  modCompileOnly("mezz.jei:jei-${rootProject.property("minecraft_version")}-fabric-api:${rootProject.property("jei_version")}")
+  // at runtime, use the full JEI jar for Fabric
+  modRuntimeOnly("mezz.jei:jei-${rootProject.property("minecraft_version")}-fabric:${rootProject.property("jei_version")}")
 }
 
 archivesName.set("${rootProject.property("mod_id")}-${rootProject.property("minecraft_version")}-${project.name}")

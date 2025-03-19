@@ -70,14 +70,19 @@ dependencies {
       }.jar"
     )
   )
-
-  modImplementation(
+  // Terrablender
+  modApi(
     "com.github.glitchfiend:TerraBlender-forge:${rootProject.property("minecraft_version")}-${
       rootProject.property(
         "terrablender_version"
       )
     }"
   )
+  // compile against the JEI API but do not include it at runtime
+  modCompileOnly("mezz.jei:jei-${rootProject.property("minecraft_version")}-common-api:${rootProject.property("jei_version")}")
+  modCompileOnly("mezz.jei:jei-${rootProject.property("minecraft_version")}-forge-api:${rootProject.property("jei_version")}")
+  // at runtime, use the full JEI jar for Forge
+  modRuntimeOnly("mezz.jei:jei-${rootProject.property("minecraft_version")}-forge:${rootProject.property("jei_version")}")
 }
 
 archivesName.set("${rootProject.property("mod_id")}-${rootProject.property("minecraft_version")}-${project.name}")

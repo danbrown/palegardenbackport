@@ -29,4 +29,6 @@ dependencies {
       }.jar"
     )
   )
+  // compile against the JEI API but do not include it at runtime
+  modCompileOnly("mezz.jei:jei-${rootProject.property("minecraft_version")}-common-api:${rootProject.property("jei_version")}")
 }
