@@ -8,7 +8,6 @@ object ModParticles {
   val PALE_OAK_LEAVES =
     REGISTRATE.particleType("pale_oak_leaves", { PaleOakParticleOption() }, { LeavesParticle.Provider(it) })
 
-
   fun register() {
     // init
   }

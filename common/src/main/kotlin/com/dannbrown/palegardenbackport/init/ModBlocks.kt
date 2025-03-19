@@ -157,7 +157,7 @@ object ModBlocks {
     .cutoutRender()
     .compostable(0.3f)
     .item()
-    .model { g, i -> g.flatItemBlock(i.get(), "pale_hanging_moss_tip") }
+    .model { g, i -> g.flatItemBlock(i.get(), "pale_hanging_moss") }
     .build()
     .loot { g, b -> g.dropSelfSilkOtherLoot(b.get()) }
     .register() as BlockEntry<PaleVineBlock>

@@ -1,8 +1,8 @@
 package com.dannbrown.palegardenbackport.content.blocks.eyeblossom
 
 
-import com.dannbrown.deltaboxlib.init.DeltaboxLibMod
 import com.dannbrown.palegardenbackport.init.ModBlocks
+import com.dannbrown.palegardenbackport.init.ModContent
 import com.dannbrown.palegardenbackport.init.ModModelLayers
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.model.geom.ModelPart
@@ -63,7 +63,7 @@ class EyeBlossomRenderer(pContext: BlockEntityRendererProvider.Context) : BlockE
   companion object {
     val TEXTURE: Material = Material(
       TextureAtlas.LOCATION_BLOCKS,
-      ResourceLocation(DeltaboxLibMod.MOD_ID, "block/open_eyeblossom_emissive")
+      ResourceLocation(ModContent.MOD_ID, "block/open_eyeblossom_emissive")
     )
 
     fun getBlockOffset(blockState: BlockState, blockPos: BlockPos): Vec3 {
