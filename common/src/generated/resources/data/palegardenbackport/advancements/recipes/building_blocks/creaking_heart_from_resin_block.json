@@ -20,7 +20,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "palegardenbackport:creaking_heartfrom_resin_block"
+        "recipe": "palegardenbackport:creaking_heart_from_resin_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -33,7 +33,7 @@
   ],
   "rewards": {
     "recipes": [
-      "palegardenbackport:creaking_heartfrom_resin_block"
+      "palegardenbackport:creaking_heart_from_resin_block"
     ]
   },
   "sends_telemetry_event": false

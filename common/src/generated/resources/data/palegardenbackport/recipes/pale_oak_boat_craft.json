@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "I": {
+      "item": "palegardenbackport:pale_oak_planks"
+    }
+  },
+  "pattern": [
+    "I I",
+    "III"
+  ],
+  "result": {
+    "item": "palegardenbackport:pale_oak_boat"
+  },
+  "show_notification": true
+}

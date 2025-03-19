@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-18T14:05:48.478857	Pale Garden Backport/Tags for minecraft:block
+// 1.20.1	2025-03-19T11:02:51.294559	Pale Garden Backport/Tags for minecraft:block
 86e0d6085f2909b7a9892f23fdd7569d772f2268 data/minecraft/tags/blocks/wooden_buttons.json
 22565b50e812035684f0f6ed12ef702f49b92407 data/minecraft/tags/blocks/wooden_trapdoors.json
 38cf8cb4e9d267a0af78b3da2c3dfacbfdcd57f6 data/minecraft/tags/blocks/pressure_plates.json
@@ -12,15 +12,15 @@ a0e697e83bfb64cfa57bc268be8fd7adb6db2b74 data/c/tags/blocks/storage_blocks/block
 57fe83168ac76611a3408a0909217b1943e2c139 data/minecraft/tags/blocks/stairs.json
 70dd5519e2ebb0ae70da49addf400f528efe3f75 data/minecraft/tags/blocks/standing_signs.json
 a0e697e83bfb64cfa57bc268be8fd7adb6db2b74 data/forge/tags/blocks/storage_blocks.json
-81272825ef96aab1a9523ea120d070e7184a6bd9 data/minecraft/tags/blocks/sword_efficient.json
 f6fe4ad816f67e7b34f04d411daa4718f57e3dc1 data/minecraft/tags/blocks/logs_that_burn.json
+81272825ef96aab1a9523ea120d070e7184a6bd9 data/minecraft/tags/blocks/sword_efficient.json
 38cf8cb4e9d267a0af78b3da2c3dfacbfdcd57f6 data/minecraft/tags/blocks/wooden_pressure_plates.json
 5be5fa70b12a92069b245e68de52dd2fb8196c00 data/forge/tags/blocks/leaves.json
 a0e697e83bfb64cfa57bc268be8fd7adb6db2b74 data/neoforge/tags/blocks/storage_blocks/block_of_resin.json
 22565b50e812035684f0f6ed12ef702f49b92407 data/minecraft/tags/blocks/trapdoors.json
 194600f1b1b3ef8d1b3291501e2f7294c956c9f5 data/minecraft/tags/blocks/wall_signs.json
-5194ab1de6e32d1a9b0d21a3a6dedfb2c89a8a0b data/forge/tags/blocks/stripped_logs.json
 5be5fa70b12a92069b245e68de52dd2fb8196c00 data/deltaboxlib/tags/blocks/leaves.json
+5194ab1de6e32d1a9b0d21a3a6dedfb2c89a8a0b data/forge/tags/blocks/stripped_logs.json
 b5291d780c1d8bc478cc7b9b23b50f0527e1f179 data/minecraft/tags/blocks/mineable/hoe.json
 f6fe4ad816f67e7b34f04d411daa4718f57e3dc1 data/minecraft/tags/blocks/logs.json
 db6553e920cfcaa885b2e2deb6fc0e49a638b45a data/minecraft/tags/blocks/mangrove_roots_can_grow_through.json

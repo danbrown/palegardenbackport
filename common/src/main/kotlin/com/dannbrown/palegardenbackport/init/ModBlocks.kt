@@ -50,7 +50,7 @@ object ModBlocks {
         mapOf(
           'X' to Supplier { Ingredient.of(BLOCK_OF_RESIN.get()) },
           'Y' to Supplier { Ingredient.of(PALE_OAK.blockFamily.blocks[BlockFamily.Type.LOG]!!.get()) }),
-        3, "from_resin_block"
+        1, "_from_resin_block"
       )
     }
     .blockstate(BlockstatePresets.creakingHeart())
@@ -88,6 +88,7 @@ object ModBlocks {
       BlockTags.SMALL_DRIPLEAF_PLACEABLE,
       BlockTags.SNIFFER_EGG_HATCH_BOOST
     )
+    .compostable(0.65f)
     .itemTags(ItemTags.DIRT)
     .toolAndTier(BlockTags.MINEABLE_WITH_HOE, null, false)
     .properties { c, p -> p.strength(0.1F).sound(SoundType.MOSS).pushReaction(PushReaction.DESTROY) }
@@ -109,6 +110,7 @@ object ModBlocks {
     }
     .blockstate(BlockstatePresets.paleMossCarpetBlock())
     .cutoutRender()
+    .compostable(0.3f)
     .loot { g, b ->
       g.add(
         b.get(), g.createSecondaryDispatchTable(
@@ -153,6 +155,7 @@ object ModBlocks {
     }
     .blockstate { g, b -> g.crossBlock(b.get(), "pale_hanging_moss_tip") }
     .cutoutRender()
+    .compostable(0.3f)
     .item()
     .model { g, i -> g.flatItemBlock(i.get(), "pale_hanging_moss_tip") }
     .build()
@@ -172,6 +175,7 @@ object ModBlocks {
     .blockTags(BlockTags.FLOWERS)
     .itemTags(ItemTags.FLOWERS)
     .cutoutRender()
+    .compostable(0.65f)
     .item()
     .model { g, i -> g.flatItemBlock(i.get(), "open_eyeblossom_item") }
     .build()
@@ -188,6 +192,7 @@ object ModBlocks {
     .blockTags(BlockTags.FLOWERS)
     .itemTags(ItemTags.FLOWERS)
     .cutoutRender()
+    .compostable(0.65f)
     .item()
     .model { g, i -> g.flatItemBlock(i.get(), "closed_eyeblossom") }
     .build()
