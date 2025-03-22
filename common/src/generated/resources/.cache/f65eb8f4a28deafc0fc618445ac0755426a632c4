@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-19T11:47:17.726557	Pale Garden Backport/Tags for minecraft:item
+// 1.20.1	2025-03-22T13:16:02.87874	Pale Garden Backport/Tags for minecraft:item
 5be5fa70b12a92069b245e68de52dd2fb8196c00 data/neoforge/tags/items/leaves.json
 f6fe4ad816f67e7b34f04d411daa4718f57e3dc1 data/minecraft/tags/items/logs.json
 afb989afd7cd39dcbd3171f01a309b983f83e0cd data/minecraft/tags/items/wooden_stairs.json
@@ -13,8 +13,8 @@ a0e697e83bfb64cfa57bc268be8fd7adb6db2b74 data/forge/tags/items/storage_blocks.js
 9b805b0fc24b3ad7170ee7f8404b73766fb98631 data/minecraft/tags/items/walls.json
 9c9e5ede145e26e61644a614c40f0ea82f6ff917 data/minecraft/tags/items/flowers.json
 a0e697e83bfb64cfa57bc268be8fd7adb6db2b74 data/forge/tags/items/storage_blocks/block_of_resin.json
-bda8d8b42950fa029891027283c0d28a391545bb data/minecraft/tags/items/doors.json
 f6fe4ad816f67e7b34f04d411daa4718f57e3dc1 data/palegardenbackport/tags/items/pale_oak_log_blocks.json
+bda8d8b42950fa029891027283c0d28a391545bb data/minecraft/tags/items/doors.json
 57fe83168ac76611a3408a0909217b1943e2c139 data/minecraft/tags/items/stairs.json
 22565b50e812035684f0f6ed12ef702f49b92407 data/minecraft/tags/items/wooden_trapdoors.json
 75145f82fe787e9371442ad14c2e80de937d1415 data/minecraft/tags/items/fences.json
@@ -24,8 +24,8 @@ a0e697e83bfb64cfa57bc268be8fd7adb6db2b74 data/deltaboxlib/tags/items/storage_blo
 a0e697e83bfb64cfa57bc268be8fd7adb6db2b74 data/c/tags/items/storage_blocks/block_of_resin.json
 5be5fa70b12a92069b245e68de52dd2fb8196c00 data/deltaboxlib/tags/items/leaves.json
 7ffb6fae67b14fe00a62d379812f5ecf16d06e6a data/minecraft/tags/items/trim_materials.json
-bda8d8b42950fa029891027283c0d28a391545bb data/minecraft/tags/items/wooden_doors.json
 38cf8cb4e9d267a0af78b3da2c3dfacbfdcd57f6 data/minecraft/tags/items/wooden_pressure_plates.json
+bda8d8b42950fa029891027283c0d28a391545bb data/minecraft/tags/items/wooden_doors.json
 22565b50e812035684f0f6ed12ef702f49b92407 data/minecraft/tags/items/trapdoors.json
 d3bd42e2e0242a6e380b490cbc17a1d94e35926b data/minecraft/tags/items/saplings.json
 ae21616260294f8dc4202c598f03246485310364 data/minecraft/tags/items/wooden_slabs.json
