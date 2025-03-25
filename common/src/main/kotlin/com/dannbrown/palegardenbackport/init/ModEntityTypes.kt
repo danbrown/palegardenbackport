@@ -1,6 +1,5 @@
 package com.dannbrown.palegardenbackport.init
 
-import com.dannbrown.deltaboxlib.registrate.util.AttributesUtil
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingEntity
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingRenderer
 import com.dannbrown.palegardenbackport.init.ModContent.REGISTRATE
@@ -16,13 +15,13 @@ object ModEntityTypes {
         .clientTrackingRange(8)
     }
     .renderer(::CreakingRenderer)
-    .attributes(
-      AttributesUtil.createMonsterAttributes()
+    .attributes { u ->
+      u.createMonsterAttributes()
         .add(Attributes.MAX_HEALTH, 1.0)
         .add(Attributes.MOVEMENT_SPEED, 0.4000000059604645)
         .add(Attributes.ATTACK_DAMAGE, 3.0)
         .add(Attributes.FOLLOW_RANGE, 32.0)
-    )
+    }
     .register()
 
   fun register() {

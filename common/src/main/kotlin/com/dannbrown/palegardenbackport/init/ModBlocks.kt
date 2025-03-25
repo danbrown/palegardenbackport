@@ -14,18 +14,28 @@ import com.dannbrown.palegardenbackport.content.presets.BlockstatePresets
 import com.dannbrown.palegardenbackport.init.ModContent.MOD_ID
 import com.dannbrown.palegardenbackport.init.ModContent.REGISTRATE
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
+import net.minecraft.core.Direction
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.FlowerPotBlock
+import net.minecraft.world.level.block.MultifaceBlock
 import net.minecraft.world.level.block.SoundType
+import net.minecraft.world.level.block.WallBlock
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument
 import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
+import net.minecraft.world.level.storage.loot.LootPool
+import net.minecraft.world.level.storage.loot.LootTable
+import net.minecraft.world.level.storage.loot.entries.LootItem
+import net.minecraft.world.level.storage.loot.functions.LootItemFunction
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctions
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import java.util.Optional
 import java.util.function.Supplier
 
@@ -223,7 +233,34 @@ object ModBlocks {
     .blockstate(BlockstatePresets.resinClump())
     .itemTags(ItemTags.TRIM_MATERIALS)
     .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, false)
-    .loot { lt, b -> lt.dropItself(b.get()) }
+    .loot { lt, b ->
+      val pool = LootTable.lootTable()
+        .withPool(
+          LootPool.lootPool()
+            .add(
+              lt.applyExplosionDecay(
+                b.get(),
+                LootItem.lootTableItem(b.get())
+                  .apply(
+                    Direction.values(),
+                    { dir ->
+                      SetItemCountFunction.setCount(ConstantValue.exactly(1.0F), true)
+                        .`when`(
+                          LootItemBlockStatePropertyCondition.hasBlockStateProperties(b.get())
+                            .setProperties(
+                              StatePropertiesPredicate.Builder.properties()
+                                .hasProperty(MultifaceBlock.getFaceProperty(dir), true)
+                            )
+                        )
+                    }
+                  )
+                  .apply(SetItemCountFunction.setCount(ConstantValue.exactly(-1.0F), true))
+              )
+            )
+        )
+
+      lt.add(b.get(), pool)
+    }
     .item()
     .model { g, i -> g.flatItem(i.get(), "resin_clump") }
     .build()
@@ -247,15 +284,15 @@ object ModBlocks {
 
   val RESIN_BRICKS = REGISTRATE.blockfamily("resin")
     .color(MapColor.COLOR_ORANGE, MapColor.COLOR_ORANGE)
-    .sharedProps { c, p -> p.sound(ModSounds.RESIN_BRICK_SOUNDS.get()) }
     .copyFrom { Blocks.BRICKS }
+    .sharedProps { c, p -> p.sound(ModSounds.RESIN_BRICK_SOUNDS.get()) }
     .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, false)
     .bricksFamily { ModItems.RESIN_BRICK.get() }
 
   val CHISELED_RESIN_BRICKS = REGISTRATE.block<Block>("chiseled_resin_bricks")
     .itemTags(DeltaboxUtil.TAGS.modItemTag(MOD_ID, "resin_blocks"))
-    .properties { c, p -> p.sound(ModSounds.RESIN_BRICK_SOUNDS.get()) }
     .copyFrom { Blocks.BRICKS }
+    .properties { c, p -> p.sound(ModSounds.RESIN_BRICK_SOUNDS.get()) }
     .color(MapColor.COLOR_ORANGE)
     .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, false)
     .recipe { c, p ->
