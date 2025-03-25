@@ -1,7 +1,7 @@
-// 1.20.1	2025-03-22T13:16:02.87874	Pale Garden Backport/Tags for minecraft:item
+// 1.20.1	2025-03-24T22:28:54.491153	Pale Garden Backport/Tags for minecraft:item
 5be5fa70b12a92069b245e68de52dd2fb8196c00 data/neoforge/tags/items/leaves.json
-f6fe4ad816f67e7b34f04d411daa4718f57e3dc1 data/minecraft/tags/items/logs.json
 afb989afd7cd39dcbd3171f01a309b983f83e0cd data/minecraft/tags/items/wooden_stairs.json
+f6fe4ad816f67e7b34f04d411daa4718f57e3dc1 data/minecraft/tags/items/logs.json
 a0e697e83bfb64cfa57bc268be8fd7adb6db2b74 data/neoforge/tags/items/storage_blocks.json
 542da6d79352ffd71a878bb0d757605fa05a986a data/palegardenbackport/tags/items/resin_blocks.json
 a0e697e83bfb64cfa57bc268be8fd7adb6db2b74 data/c/tags/items/storage_blocks.json
@@ -34,8 +34,8 @@ a0e697e83bfb64cfa57bc268be8fd7adb6db2b74 data/deltaboxlib/tags/items/storage_blo
 5be5fa70b12a92069b245e68de52dd2fb8196c00 data/minecraft/tags/items/leaves.json
 d20bbf96270233ad8368a98081248cc6628bee2c data/deltaboxlib/tags/items/exclude_from_creative.json
 70dd5519e2ebb0ae70da49addf400f528efe3f75 data/minecraft/tags/items/signs.json
-86e0d6085f2909b7a9892f23fdd7569d772f2268 data/minecraft/tags/items/buttons.json
 5be5fa70b12a92069b245e68de52dd2fb8196c00 data/forge/tags/items/leaves.json
+86e0d6085f2909b7a9892f23fdd7569d772f2268 data/minecraft/tags/items/buttons.json
 a0e697e83bfb64cfa57bc268be8fd7adb6db2b74 data/neoforge/tags/items/storage_blocks/block_of_resin.json
 86e0d6085f2909b7a9892f23fdd7569d772f2268 data/minecraft/tags/items/wooden_buttons.json
 5be5fa70b12a92069b245e68de52dd2fb8196c00 data/c/tags/items/leaves.json

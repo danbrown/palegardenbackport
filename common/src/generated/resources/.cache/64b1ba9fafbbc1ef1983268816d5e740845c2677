@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-22T13:16:02.87586	Pale Garden Backport/Tags for minecraft:block
+// 1.20.1	2025-03-24T22:28:54.487467	Pale Garden Backport/Tags for minecraft:block
 86e0d6085f2909b7a9892f23fdd7569d772f2268 data/minecraft/tags/blocks/wooden_buttons.json
 22565b50e812035684f0f6ed12ef702f49b92407 data/minecraft/tags/blocks/wooden_trapdoors.json
 38cf8cb4e9d267a0af78b3da2c3dfacbfdcd57f6 data/minecraft/tags/blocks/pressure_plates.json
@@ -37,8 +37,8 @@ db6553e920cfcaa885b2e2deb6fc0e49a638b45a data/minecraft/tags/blocks/combination_
 0f62c6250d5ce64291e83336e0ddde020249dc9e data/minecraft/tags/blocks/fence_gates.json
 ae21616260294f8dc4202c598f03246485310364 data/minecraft/tags/blocks/wooden_slabs.json
 7ce7aaa2e0b517228c1f30d4baeb048a1d80f54d data/minecraft/tags/blocks/mineable/pickaxe.json
-75145f82fe787e9371442ad14c2e80de937d1415 data/minecraft/tags/blocks/fences.json
 62cf0f1d77adab718d0da893bb1ed4aa1fd3a954 data/minecraft/tags/blocks/dirt.json
+75145f82fe787e9371442ad14c2e80de937d1415 data/minecraft/tags/blocks/fences.json
 df5d7ee6e44ddadf616c9e6171d0d3eb490fd0c0 data/minecraft/tags/blocks/signs.json
 7e02c0071028803ea41d8b3dded5a69216050a31 data/minecraft/tags/blocks/planks.json
 afb989afd7cd39dcbd3171f01a309b983f83e0cd data/minecraft/tags/blocks/wooden_stairs.json

@@ -4,6 +4,7 @@ import com.dannbrown.deltaboxlib.content.worldgen.tree.DeltaboxTreeGrower
 import com.dannbrown.deltaboxlib.registrate.presets.family.BlockFamily
 import com.dannbrown.deltaboxlib.content.block.FallingLeavesBlock
 import com.dannbrown.deltaboxlib.registrate.registry.BlockEntry
+import com.dannbrown.deltaboxlib.registrate.util.DataIngredient
 import com.dannbrown.deltaboxlib.registrate.util.DeltaboxUtil
 import com.dannbrown.palegardenbackport.content.blocks.*
 import com.dannbrown.palegardenbackport.content.blocks.creakingHeart.CreakingHeartBlock
@@ -15,7 +16,6 @@ import com.dannbrown.palegardenbackport.init.ModContent.REGISTRATE
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.FlowerPotBlock
@@ -48,8 +48,8 @@ object ModBlocks {
         { p.get() },
         arrayOf("Y", "X", "Y"),
         mapOf(
-          'X' to Supplier { Ingredient.of(BLOCK_OF_RESIN.get()) },
-          'Y' to Supplier { Ingredient.of(PALE_OAK.blockFamily.blocks[BlockFamily.Type.LOG]!!.get()) }),
+          'X' to Supplier { DataIngredient(BLOCK_OF_RESIN.get()) },
+          'Y' to Supplier { DataIngredient(PALE_OAK.blockFamily.blocks[BlockFamily.Type.LOG]!!.get()) }),
         1, "_from_resin_block"
       )
     }
@@ -123,7 +123,7 @@ object ModBlocks {
       c.simpleShapedRecipe(
         { p.get() },
         arrayOf("SS"),
-        mapOf('S' to Supplier { Ingredient.of(PALE_MOSS_BLOCK.get()) }),
+        mapOf('S' to Supplier { DataIngredient(PALE_MOSS_BLOCK.get()) }),
         3
       )
     }
@@ -230,7 +230,7 @@ object ModBlocks {
     .register() as BlockEntry<ResinClumpBlock>
 
   val BLOCK_OF_RESIN = REGISTRATE.blockPreset<Block>("block_of_resin")
-    .storageBlock({ RESIN_CLUMP.get() }, { Ingredient.of(RESIN_CLUMP.get()) }, "")
+    .storageBlock({ RESIN_CLUMP.get() }, { DataIngredient(RESIN_CLUMP.get()) }, "")
     .copyFrom { Blocks.WHITE_CARPET }
     .properties { c, p ->
       p
@@ -259,7 +259,7 @@ object ModBlocks {
     .color(MapColor.COLOR_ORANGE)
     .toolAndTier(BlockTags.MINEABLE_WITH_PICKAXE, null, false)
     .recipe { c, p ->
-      c.slabToChiseledRecipe({ p.get() }, { Ingredient.of(RESIN_BRICKS.blocks[BlockFamily.Type.BRICK_SLAB]!!.get()) })
+      c.slabToChiseledRecipe({ p.get() }, { DataIngredient(RESIN_BRICKS.blocks[BlockFamily.Type.BRICK_SLAB]!!.get()) })
       c.simpleStonecuttingRecipe({ p.get() }, { RESIN_BRICKS.blocks[BlockFamily.Type.BRICKS]!!.get() }, 1)
     }
     .loot { lt, b -> lt.dropSelf(b.get()) }

@@ -3,11 +3,11 @@ package com.dannbrown.palegardenbackport.init
 import com.dannbrown.deltaboxlib.content.item.DeltaboxSpawnEggItem
 import com.dannbrown.deltaboxlib.init.DeltaboxTags
 import com.dannbrown.deltaboxlib.registrate.datagen.RegistrateRecipes
+import com.dannbrown.deltaboxlib.registrate.util.DataIngredient
 import com.dannbrown.palegardenbackport.init.ModContent.REGISTRATE
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.SpawnEggItem
-import net.minecraft.world.item.crafting.Ingredient
 
 object ModItems {
   val MOD_ICON = REGISTRATE.item<Item>("mod_icon").itemTags(DeltaboxTags.ITEM.EXCLUDE_FROM_CREATIVE).register()
@@ -15,7 +15,7 @@ object ModItems {
     .recipe { g, i ->
       g.simpleCookingRecipe(
         { i.get() },
-        { Ingredient.of(ModBlocks.RESIN_CLUMP.get()) },
+        { DataIngredient(ModBlocks.RESIN_CLUMP.get()) },
         RecipeCategory.DECORATIONS,
         RegistrateRecipes.CookingRecipeType.SMELTING,
         0.1f, 200

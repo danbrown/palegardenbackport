@@ -9,6 +9,7 @@ object ModTags {
   val TAGS = REGISTRATE
     .biomeTags(HAS_PALE_OAK)
     .add(PaleGardenBiome.BIOME_KEY)
+    .register()
 
   fun register() {
     // init
