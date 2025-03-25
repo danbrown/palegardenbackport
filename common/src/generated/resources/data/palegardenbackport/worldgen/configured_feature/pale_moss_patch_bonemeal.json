@@ -14,7 +14,7 @@
     "surface": "floor",
     "vegetation_chance": 0.6,
     "vegetation_feature": {
-      "feature": "palegardenbackport:pale_moss_patch_bonemeal",
+      "feature": "palegardenbackport:pale_moss_patch",
       "placement": []
     },
     "vertical_range": 5,

@@ -30,24 +30,6 @@ import net.minecraft.world.level.levelgen.placement.CaveSurface
 import java.util.OptionalInt
 
 object ModConfiguredFeatures {
-  val PALE_MOSS_PATCH_BONEMEAL = REGISTRATE.configuredFeature("pale_moss_patch_bonemeal") { k, c, u ->
-    val configuredFeatures = c.lookup(Registries.CONFIGURED_FEATURE)
-    u.register(
-      c, k, Feature.VEGETATION_PATCH,
-      VegetationPatchConfiguration(
-        BlockTags.MOSS_REPLACEABLE,
-        BlockStateProvider.simple(ModBlocks.PALE_MOSS_BLOCK.get()),
-        PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(k)),
-        CaveSurface.FLOOR,
-        ConstantInt.of(1),
-        0.0f,
-        5,
-        0.6f,
-        UniformInt.of(1, 2),
-        0.75f
-      )
-    )
-  }
 
   val PALE_MOSS_PATCH = REGISTRATE.configuredFeature("pale_moss_patch") { k, c, u ->
     u.register(
@@ -59,6 +41,25 @@ object ModConfiguredFeatures {
             .add(Blocks.GRASS.defaultBlockState(), 50)
             .add(Blocks.TALL_GRASS.defaultBlockState(), 10)
         )
+      )
+    )
+  }
+
+  val PALE_MOSS_PATCH_BONEMEAL = REGISTRATE.configuredFeature("pale_moss_patch_bonemeal") { k, c, u ->
+    val configuredFeatures = c.lookup(Registries.CONFIGURED_FEATURE)
+    u.register(
+      c, k, Feature.VEGETATION_PATCH,
+      VegetationPatchConfiguration(
+        BlockTags.MOSS_REPLACEABLE,
+        BlockStateProvider.simple(ModBlocks.PALE_MOSS_BLOCK.get()),
+        PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(PALE_MOSS_PATCH)),
+        CaveSurface.FLOOR,
+        ConstantInt.of(1),
+        0.0f,
+        5,
+        0.6f,
+        UniformInt.of(1, 2),
+        0.75f
       )
     )
   }
