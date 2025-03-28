@@ -4,6 +4,7 @@ import com.dannbrown.palegardenbackport.content.blocks.creakingHeart.CreakingHea
 import com.dannbrown.palegardenbackport.content.blocks.eyeblossom.EyeBlossomBlockEntity
 import com.dannbrown.palegardenbackport.content.blocks.eyeblossom.EyeBlossomRenderer
 import com.dannbrown.palegardenbackport.init.ModContent.REGISTRATE
+import java.util.function.Function
 
 object ModBlockEntities {
 
@@ -11,7 +12,7 @@ object ModBlockEntities {
     .blockEntity<EyeBlossomBlockEntity>("eyeblossom")
     .factory { t, p, s -> EyeBlossomBlockEntity(t.get(), p, s) }
     .validBlocks(ModBlocks.EYE_BLOSSOM, ModBlocks.CLOSED_EYE_BLOSSOM)
-    .renderer { ctx -> EyeBlossomRenderer(ctx) }
+    .renderer { Function { ctx -> EyeBlossomRenderer(ctx) } }
     .register()
 
   val CREAKING_HEART_BLOCK_ENTITY = REGISTRATE

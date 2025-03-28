@@ -4,6 +4,7 @@ import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingEntity
 import com.dannbrown.palegardenbackport.content.entity.creaking.CreakingRenderer
 import com.dannbrown.palegardenbackport.init.ModContent.REGISTRATE
 import net.minecraft.world.entity.ai.attributes.Attributes
+import java.util.function.Function
 
 object ModEntityTypes {
   val CREAKING = REGISTRATE.entityType<CreakingEntity>("creaking")
@@ -14,7 +15,7 @@ object ModEntityTypes {
         .sized(0.9F, 2.7F)
         .clientTrackingRange(8)
     }
-    .renderer(::CreakingRenderer)
+    .renderer { Function { ctx -> CreakingRenderer(ctx) } }
     .attributes { u ->
       u.createMonsterAttributes()
         .add(Attributes.MAX_HEALTH, 1.0)
