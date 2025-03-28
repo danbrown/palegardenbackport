@@ -1,6 +1,5 @@
 package com.dannbrown.palegardenbackport.content.blocks.eyeblossom
 
-
 import com.dannbrown.palegardenbackport.init.ModBlocks
 import com.dannbrown.palegardenbackport.init.ModContent
 import com.dannbrown.palegardenbackport.init.ModModelLayers
@@ -26,7 +25,7 @@ import net.minecraft.world.phys.Vec3
 import org.joml.Quaternionf
 
 class EyeBlossomRenderer(pContext: BlockEntityRendererProvider.Context) : BlockEntityRenderer<EyeBlossomBlockEntity> {
-  private val shell: ModelPart = pContext.bakeLayer(ModModelLayers.EYE_BLOSSOM)
+  private val shell: ModelPart = pContext.bakeLayer(ModModelLayers.EYE_BLOSSOM.get())
   private val renderer: BlockEntityRenderDispatcher = pContext.blockEntityRenderDispatcher
 
   override fun render(

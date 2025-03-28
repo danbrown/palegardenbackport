@@ -10,7 +10,7 @@ class CreakingRenderer(ctx: EntityRendererProvider.Context, model: CreakingModel
   MobRenderer<CreakingEntity, CreakingModel>(ctx, model, shadowRadius) {
   constructor(ctx: EntityRendererProvider.Context) : this(
     ctx,
-    CreakingModel(ctx.bakeLayer(ModModelLayers.CREAKING)),
+    CreakingModel(ctx.bakeLayer(ModModelLayers.CREAKING.get())),
     0.5f
   ) {
     this.addLayer(CreakingEyesLayer(this))
