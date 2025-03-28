@@ -2,6 +2,7 @@ package com.dannbrown.palegardenbackport.content.blocks.eyeblossom
 
 import com.dannbrown.palegardenbackport.init.ModBlocks
 import com.dannbrown.palegardenbackport.init.ModContent
+import com.dannbrown.palegardenbackport.init.ModContent.REGISTRATE
 import com.dannbrown.palegardenbackport.init.ModModelLayers
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.model.geom.ModelPart

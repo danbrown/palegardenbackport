@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation
 
 class CreakingRenderer(ctx: EntityRendererProvider.Context, model: CreakingModel, shadowRadius: Float) :
   MobRenderer<CreakingEntity, CreakingModel>(ctx, model, shadowRadius) {
+
   constructor(ctx: EntityRendererProvider.Context) : this(
     ctx,
     CreakingModel(ctx.bakeLayer(ModModelLayers.CREAKING.get())),

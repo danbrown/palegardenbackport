@@ -22,6 +22,7 @@ object ModContentFabric : ModInitializer, ClientModInitializer, TerraBlenderApi 
 
   @Environment(EnvType.CLIENT)
   override fun onInitializeClient() {
+    ModContent.initClient()
     registrateInit.initClient()
   }
 

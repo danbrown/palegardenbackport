@@ -25,11 +25,14 @@ object ModContent {
     ModConfiguredFeatures.register()
     ModPlacedFeatures.register()
     ModBlockEntities.register()
-    ModModelLayers.register()
     ModPlacerTypes.register()
     ModBiomes.register()
     ModLang.register()
     ModBiomeModifiers.register()
     REGISTRATE.buildRegistries()
+  }
+
+  fun initClient() {
+    ModModelLayers.register()
   }
 }

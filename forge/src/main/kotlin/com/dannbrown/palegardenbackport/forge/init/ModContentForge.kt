@@ -48,6 +48,7 @@ object ModContentForge {
   }
 
   private fun registerClient(modBus: IEventBus, forgeEventBus: IEventBus) {
+    ModContent.initClient()
     modBus.addListener(::clientSetup)
     modBus.addListener(registrateInit::onRegisterBlockBiomeColors)
     modBus.addListener(registrateInit::onRegisterItemBiomeColors)
